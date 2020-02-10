@@ -5,8 +5,8 @@ Follow these instructions to deploy this application to a Kubernetes cluster and
 ## Download
 
 ```bash
-git clone https://github.com/IBM-Cloud/get-started-node
-cd get-started-node
+https://github.com/IBM-Cloud/get-started-python
+cd get-started-python
 ```
 
 ## Build Docker Image
@@ -20,7 +20,7 @@ cd get-started-node
    ```sh
    docker build . -t <REGISTRY>/<NAMESPACE>/myapp:v1.0.0
    ```
-   Example: `docker build . -t registry.ng.bluemix.net/mynamespace/myapp:v1.0.0`
+   Example: `docker build . -t registry.ng.bluemix.net/mynamespace/myapp:v1.0.0
 
 4. Push the docker image to your Container Registry on IBM Cloud
 
@@ -43,14 +43,14 @@ cd get-started-node
 
 3. Create new credentials under **Service Credentials** and copy value of the **url** field.
 
-4. Create a Kubernetes secret with your Cloudant credentials.
+4. Create a Kubernetes secret with your Cloudant credentials (url, username and password).
 
 ```bash
-kubectl create secret generic cloudant --from-literal=url=<URL>
+kubectl create secret generic cloudant --from-literal=url=<URL> --from-literal=username=<USERNAME> --from-literal=password=<PASSWORD>
 ```
 Example:
 ```bash
-kubectl create secret generic cloudant --from-literal=url=https://username:passw0rdf@username-bluemix.cloudant.com
+kubectl create secret generic cloudant --from-literal=url=https://myusername:passw0rdf@username-bluemix.cloudant.com  --from-literal=username=myusername --from-literal=password=passw0rd
 ```
 
 #### Create the deployment
@@ -62,12 +62,12 @@ kubectl create secret generic cloudant --from-literal=url=https://username:passw
   ```
 - **Paid Cluster**: Expose the service using an External IP and Loadbalancer
   ```
-  kubectl expose deployment get-started-node --type LoadBalancer --port 8080 --target-port 8080
+  kubectl expose deployment get-started-python --type LoadBalancer --port 8000 --target-port 8000
   ```
 
 - **Free Cluster**: Use the Worker IP and NodePort
   ```bash
-  kubectl expose deployment get-started-node --type NodePort --port 8080 --target-port 8080
+  kubectl expose deployment get-started-python --type NodePort --port 8000 --target-port 8000
   ```
 
 ### Access the application
@@ -75,23 +75,23 @@ kubectl create secret generic cloudant --from-literal=url=https://username:passw
 Verify **STATUS** of pod is `RUNNING`
 
 ```shell
-kubectl get pods -l app=get-started-node
+kubectl get pods -l app=get-started-python
 ```
 
 **Standard (Paid) Cluster:**
 
-1. Identify your LoadBalancer Ingress IP using `kubectl get service get-started-node`
-2. Access your application at t `http://<EXTERNAL-IP>:8080/`
+1. Identify your LoadBalancer Ingress IP using `kubectl get service get-started-python`
+2. Access your application at t `http://<EXTERNAL-IP>:8000/`
 
 **Free Cluster:**
 
 1. Identify your Worker Public IP using `ibmcloud cs workers YOUR_CLUSTER_NAME`
-2. Identify the Node Port using `kubectl describe service get-started-node`
+2. Identify the Node Port using `kubectl describe service get-started-python`
 3. Access your application at `http://<WORKER-PUBLIC-IP>:<NODE-PORT>/`
 
 
 ## Clean Up
 ```bash
-kubectl delete deployment,service -l app=get-started-node
+kubectl delete deployment,service -l app=get-started-python
 kubectl delete secret cloudant
 ```

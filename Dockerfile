@@ -1,14 +1,18 @@
-FROM node:6-alpine
+FROM python:2-alpine
 
-ADD views /app/views
-ADD package.json /app
-ADD server.js /app
+COPY ./requirements.txt /app/requirements.txt
 
-RUN cd /app; npm install
+WORKDIR /app
 
-ENV NODE_ENV production
-ENV PORT 8080
-EXPOSE 8080
+RUN apk --update add python py-pip openssl ca-certificates py-openssl wget bash linux-headers
+RUN apk --update add --virtual build-dependencies libffi-dev openssl-dev python-dev py-pip build-base \
+  && pip install --upgrade pip \
+  && pip install --upgrade pipenv\
+  && pip install --upgrade -r /app/requirements.txt\
+  && apk del build-dependencies
 
-WORKDIR "/app"
-CMD [ "npm", "start" ]
+COPY . /app
+
+ENTRYPOINT [ "python" ]
+
+CMD [ "hello.py" ]

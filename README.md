@@ -1,21 +1,139 @@
-# Node.js getting started application
-The Getting Started tutorial for Node.js uses this sample application to provide you with a sample workflow for working with any Node.js app on IBM Cloud or in IBM Cloud Private; you set up a development environment, deploy an app locally and on the cloud, and then integrate a IBM Cloud database service in your app.
+# Getting Started with Python on IBM Cloud
 
-The Node.js app uses [Express Framework](https://expressjs.com) and [Cloudant noSQL DB service](https://console.bluemix.net/catalog/services/cloudant-nosql-db) or the [MongoDB Service](http://mongodb.github.io/node-mongodb-native/) to add information to a database and then return information from a database to the UI. To learn more about how the app connects to Cloudant, see the [Cloudant library for Node.js](https://www.npmjs.com/package/cloudant).
+To get started, we'll take you through a sample Python Flask app, help you set up a development environment, deploy to IBM Cloud and add a Cloudant database.
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/IBM-Cloud/get-started-java/master/docs/GettingStarted.gif" width="300" alt="Gif of the sample app contains a title that says, Welcome, a prompt asking the user to enter their name, and a list of the database contents which are the names Joe, Jane, and Bob. The user enters the name, Mary and the screen refreshes to display, Hello, Mary, I've added you to the database. The database contents listed are now Mary, Joe, Jane, and Bob.">
-</p>
+The following instructions are for deploying the application as a Cloud Foundry application. To deploy as a container to **IBM Cloud Kubernetes Service** instead, [see README-kubernetes.md](README-kubernetes.md)
 
-## Before you begin
+## Prerequisites
 
-You'll need a [IBM Cloud account](https://console.ng.bluemix.net/registration/), [Git](https://git-scm.com/downloads), [Cloud Foundry CLI](https://github.com/cloudfoundry/cli#downloads), and [Node](https://nodejs.org/en/) installed. If you use [IBM Cloud Private](https://www.ibm.com/cloud-computing/products/ibm-cloud-private/), you need access to the [IBM Cloud Private Cloud Foundry](https://www.ibm.com/support/knowledgecenter/en/SSBS6K_2.1.0/cloud_foundry/overview.html) environment.
+You'll need the following:
+* [IBM Cloud account](https://console.ng.bluemix.net/registration/)
+* [Cloud Foundry CLI](https://github.com/cloudfoundry/cli#downloads)
+* [Git](https://git-scm.com/downloads)
+* [Python](https://www.python.org/downloads/)
 
-## Instructions
+## 1. Clone the sample app
 
-**IBM Cloud Cloud Foundry**: [Getting started tutorial for Node.js](https://console.bluemix.net/docs/runtimes/nodejs/getting-started.html).
+Now you're ready to start working with the app. Clone the repo and change to the directory where the sample app is located.
+  ```
+git clone https://github.com/IBM-Cloud/get-started-python
+cd get-started-python
+  ```
 
+  Peruse the files in the *get-started-python* directory to familiarize yourself with the contents.
 
-**IBM Cloud Kubernetes Service**: [README-kubernetes.md](README-kubernetes.md)
+## 2. Run the app locally
 
-**IBM Cloud Private**: The starter application for IBM Cloud Private guides you through a similar process. However, instead of hosting both your service and application in the same cloud environment, you use a user-provided service. This guide shows you how to deploy your application to IBM Cloud Private and bind it to a Cloudant Database in IBM Cloud. For the complete procedure, see [Working with user-provided services and the Node.js starter app](https://www.ibm.com/support/knowledgecenter/SSBS6K_2.1.0/cloud_foundry/buildpacks/buildpacks_using_nodejsapp.html).
+Install the dependencies listed in the [requirements.txt](https://pip.readthedocs.io/en/stable/user_guide/#requirements-files) file to be able to run the app locally.
+
+You can optionally use a [virtual environment](https://packaging.python.org/installing/#creating-and-using-virtual-environments) to avoid having these dependencies clash with those of other Python projects or your operating system.
+  ```
+pip install -r requirements.txt
+  ```
+
+Run the app.
+  ```
+python hello.py
+  ```
+
+ View your app at: http://localhost:8000
+
+## 3. Prepare the app for deployment
+
+To deploy to IBM Cloud, it can be helpful to set up a manifest.yml file. One is provided for you with the sample. Take a moment to look at it.
+
+The manifest.yml includes basic information about your app, such as the name, how much memory to allocate for each instance and the route. In this manifest.yml **random-route: true** generates a random route for your app to prevent your route from colliding with others.  You can replace **random-route: true** with **host: myChosenHostName**, supplying a host name of your choice. [Learn more...](https://console.bluemix.net/docs/manageapps/depapps.html#appmanifest)
+ ```
+ applications:
+ - name: GetStartedPython
+   random-route: true
+   memory: 128M
+ ```
+
+## 4. Deploy the app
+
+You can use the Cloud Foundry CLI to deploy apps.
+
+Choose your API endpoint
+   ```
+cf api <API-endpoint>
+   ```
+
+Replace the *API-endpoint* in the command with an API endpoint from the following list.
+
+|URL                             |Region          |
+|:-------------------------------|:---------------|
+| https://api.ng.bluemix.net     | US South       |
+| https://api.eu-de.bluemix.net  | Germany        |
+| https://api.eu-gb.bluemix.net  | United Kingdom |
+| https://api.au-syd.bluemix.net | Sydney         |
+
+Login to your IBM Cloud account
+
+  ```
+cf login
+  ```
+
+From within the *get-started-python* directory push your app to IBM Cloud
+  ```
+cf push
+  ```
+
+This can take a minute. If there is an error in the deployment process you can use the command `cf logs <Your-App-Name> --recent` to troubleshoot.
+
+When deployment completes you should see a message indicating that your app is running.  View your app at the URL listed in the output of the push command.  You can also issue the
+  ```
+cf apps
+  ```
+  command to view your apps status and see the URL.
+
+## 5. Add a database
+
+Next, we'll add a NoSQL database to this application and set up the application so that it can run locally and on IBM Cloud.
+
+1. Log in to IBM Cloud in your Browser. Browse to the `Dashboard`. Select your application by clicking on its name in the `Name` column.
+2. Click on `Connections` then `Connect new`.
+2. In the `Data & Analytics` section, select `Cloudant NoSQL DB` and `Create` the service.
+3. Select `Restage` when prompted. IBM Cloud will restart your application and provide the database credentials to your application using the `VCAP_SERVICES` environment variable. This environment variable is only available to the application when it is running on IBM Cloud.
+
+Environment variables enable you to separate deployment settings from your source code. For example, instead of hardcoding a database password, you can store this in an environment variable which you reference in your source code. [Learn more...](/docs/manageapps/depapps.html#app_env)
+
+## 6. Use the database
+
+We're now going to update your local code to point to this database. We'll create a json file that will store the credentials for the services the application will use. This file will get used ONLY when the application is running locally. When running in IBM Cloud, the credentials will be read from the VCAP_SERVICES environment variable.
+
+1. Create a file called `vcap-local.json` in the `get-started-python` directory with the following content:
+  ```
+  {
+    "services": {
+      "cloudantNoSQLDB": [
+        {
+          "credentials": {
+            "username":"CLOUDANT_DATABASE_USERNAME",
+            "password":"CLOUDANT_DATABASE_PASSWORD",
+            "host":"CLOUDANT_DATABASE_HOST"
+          },
+          "label": "cloudantNoSQLDB"
+        }
+      ]
+    }
+  }
+  ```
+
+2. Back in the IBM Cloud UI, select your App -> Connections -> Cloudant -> View Credentials
+
+3. Copy and paste the `username`, `password`, and `host` from the credentials to the same fields of the `vcap-local.json` file replacing **CLOUDANT_DATABASE_USERNAME**, **CLOUDANT_DATABASE_PASSWORD**, and **CLOUDANT_DATABASE_URL**.
+
+4. Run your application locally.
+  ```
+python hello.py
+  ```
+
+  View your app at: http://localhost:8000. Any names you enter into the app will now get added to the database.
+
+5. Make any changes you want and re-deploy to IBM Cloud!
+  ```
+cf push
+  ```
+
+  View your app at the URL listed in the output of the push command, for example, *myUrl.mybluemix.net*.
