@@ -1,5 +1,4 @@
----
-applications:
- - name: eXeplore
-   random-route: true
-   memory: 128M
+  applications:
+  - name: eXeplore
+    random-route: true
+    memory: 128M
