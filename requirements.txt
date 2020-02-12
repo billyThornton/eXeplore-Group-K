@@ -1,3 +1,0 @@
-Flask
-cloudant
-ibm_db

@@ -1,18 +1,19 @@
-FROM python:2-alpine
-
-COPY ./requirements.txt /app/requirements.txt
+FROM registry.access.redhat.com/ubi8/python-36
 
 WORKDIR /app
 
-RUN apk --update add python py-pip openssl ca-certificates py-openssl wget bash linux-headers
-RUN apk --update add --virtual build-dependencies libffi-dev openssl-dev python-dev py-pip build-base \
-  && pip install --upgrade pip \
+COPY Pipfile* /app/
+
+## NOTE - rhel enforces user container permissions stronger ##
+USER root
+RUN yum install python3-pip wget
+
+RUN pip install --upgrade pip \
   && pip install --upgrade pipenv\
-  && pip install --upgrade -r /app/requirements.txt\
-  && apk del build-dependencies
+  && pipenv install --system --deploy
+
+USER 1001
 
 COPY . /app
-
-ENTRYPOINT [ "python" ]
-
-CMD [ "hello.py" ]
+ENV FLASK_APP=server/__init__.py
+CMD ["python", "manage.py", "start", "0.0.0.0:3000"]
