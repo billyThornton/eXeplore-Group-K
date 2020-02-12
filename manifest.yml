@@ -1,4 +1,7 @@
-  applications:
-  - name: eXeplore
-    random-route: true
-    memory: 128M
+applications:
+- name: eXeplore
+  memory: 256M
+  command: python worldcities.py
+  random-route: true
+  services:
+  - exeploreDB2
