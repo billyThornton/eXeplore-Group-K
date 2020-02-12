@@ -1,5 +1,5 @@
 FROM alpine:3.11
-ENV PYTHON_VERSION 3.7.6
+ENV PYTHON_VERSION 3.7.4
 COPY ./requirements.txt /app/requirements.txt
 
 WORKDIR /app
