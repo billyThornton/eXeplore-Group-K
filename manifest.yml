@@ -3,6 +3,5 @@ applications:
  - name: eXeplore
    random-route: true
    memory: 128M
-services:
-- exeploreDB2
+
 
