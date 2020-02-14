@@ -17,3 +17,48 @@ port = int(os.getenv('PORT', 8000))
 @app.route('/')
 def root():
     return app.send_static_file('Game_s_Keeper_Login.html')
+
+# /* Endpoint to greet and add a new visitor to database.
+# * Send a POST request to localhost:8000/api/visitors with body
+# * {
+# *     "name": "Bob"
+# * }
+# */
+@app.route('/api/visitors', methods=['GET'])
+def get_visitor():
+    if client:
+        return jsonify(list(map(lambda doc: doc['name'], db)))
+    else:
+        print('No database')
+        return jsonify([])
+
+# /**
+#  * Endpoint to get a JSON array of all the visitors in the database
+#  * REST API example:
+#  * <code>
+#  * GET http://localhost:8000/api/visitors
+#  * </code>
+#  *
+#  * Response:
+#  * [ "Bob", "Jane" ]
+#  * @return An array of all the visitor names
+#  */
+@app.route('/api/visitors', methods=['POST'])
+def put_visitor():
+    user = request.json['name']
+    data = {'name':user}
+    if client:
+        my_document = db.create_document(data)
+        data['_id'] = my_document['_id']
+        return jsonify(data)
+    else:
+        print('No database')
+        return jsonify(data)
+
+@atexit.register
+def shutdown():
+    if client:
+        client.disconnect()
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=port, debug=True)
