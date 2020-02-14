@@ -37,23 +37,30 @@ def get_visitor():
 #  * REST API example:
 #  * <code>
 #  * GET http://localhost:8000/api/visitors
-#  * </code>
-#  *
-#  * Response:
-#  * [ "Bob", "Jane" ]
-#  * @return An array of all the visitor names
-#  */
-@app.route('/api/visitors', methods=['POST'])
-def put_visitor():
-    user = request.json['name']
-    data = {'name':user}
-    if client:
-        my_document = db.create_document(data)
-        data['_id'] = my_document['_id']
-        return jsonify(data)
-    else:
-        print('No database')
-        return jsonify(data)
+#  * </code>from flask import Flask, render_template, request, jsonify
+import atexit
+import os
+import json
+
+app = Flask(__name__, static_url_path='')
+
+db_name = 'mydb'
+client = None
+db = None
+
+
+# On IBM Cloud Cloud Foundry, get the port number from the environment variable PORT
+# When running this app on the local machine, default the port to 8000
+port = int(os.getenv('PORT', 8000))
+
+@app.route('/')
+def root():
+    return app.send_static_file('Game_s_Keeper_Login.html')
+
+
+@app.route('../dashboard')
+def dashboard():
+    return app.send_static_file('Game_Keeper_Page')
 
 @atexit.register
 def shutdown():
