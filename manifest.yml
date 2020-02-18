@@ -3,4 +3,5 @@ applications:
   memory: 256M
   command: python3 manage.py
   random-route: true
- 
+  services:
+  - exeploreDB2
