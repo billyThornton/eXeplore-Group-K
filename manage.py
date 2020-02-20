@@ -5,7 +5,7 @@ import json
 import ibm_db
 
 app = Flask(__name__, static_url_path='')
-localFlag = False
+localFlag = True
 db_name = 'mydb'
 client = None
 db = None
