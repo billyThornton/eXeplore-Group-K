@@ -58,7 +58,7 @@ def root():
 
 @app.route('/dashboard')
 def dashboard():
-    return app.send_static_file('Game_Keeper_Page.html')
+    return render_template('Game_Keeper_Page.html')
     
 @app.route('/api/visitors', methods=['GET'])
 def get_visitor():
