@@ -4,16 +4,16 @@
 <meta charset="utf-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Game Keeper Page</title>
+<title>Manage Routes Page</title>
 <style id="applicationStylesheet" type="text/css">
 	.mediaViewInfo {
-		--web-view-name: Game Keeper Page;
-		--web-view-id: Game_Keeper_Page;
+		--web-view-name: Manage Routes Page;
+		--web-view-id: Manage_Routes_Page;
 		--web-scale-on-resize: true;
 		--web-enable-deep-linking: true;
 	}
 	:root {
-		--web-view-ids: Game_Keeper_Page;
+		--web-view-ids: Manage_Routes_Page;
 	}
 	* {
 		margin: 0;
@@ -21,366 +21,40 @@
 		box-sizing: border-box;
 		border: none;
 	}
-	#Game_Keeper_Page {
+	#Manage_Routes_Page {
 		position: absolute;
-		width: 1920px;
-		height: 1080px;
+		width: 1418px;
+		height: 890px;
 		overflow: hidden;
 		cursor: pointer;
-		--web-view-name: Game Keeper Page;
-		--web-view-id: Game_Keeper_Page;
+		--web-view-name: Manage Routes Page;
+		--web-view-id: Manage_Routes_Page;
 		--web-scale-on-resize: true;
 		--web-enable-deep-linking: true;
 	}
-	@keyframes slide-in {
-	
-		0% {
-			transform: translateX(100%);
-		}
-	
-	}
-	@keyframes fadein {
-	
-		0% {
-			opacity: 0;
-		}
-		100% {
-			opacity: 1;
-		}
-	
-	}
-	@keyframes fadein {
-	
-		0% {
-			opacity: 0;
-		}
-		100% {
-			opacity: 1;
-		}
-	
-	}
-	.Rectangle_13 {
-		position: absolute;
-		overflow: visible;
-		width: 1920px;
-		height: 190px;
-		left: 0px;
-		top: 0px;
-	}
-	#white_logo_vector {
-		position: absolute;
-		width: 362px;
-		height: 139px;
-		left: 43px;
-		top: 35px;
-		overflow: visible;
-	}
-	# {
-		position: absolute;
-		left: 69px;
-		top: 260px;
-		overflow: visible;
-		width: 87px;
-		height: 9px;
-		text-align: center;
-		font-family: Segoe UI;
-		font-style: normal;
-		font-weight: normal;
-		font-size: 50px;
-		color: rgba(255,255,255,1);
-	}
-	#_ {
-		position: absolute;
-		left: -15px;
-		top: 267px;
-		overflow: visible;
-		width: 72px;
-		height: 2px;
-		text-align: center;
-		font-family: Segoe UI;
-		font-style: normal;
-		font-weight: normal;
-		font-size: 50px;
-		color: rgba(255,255,255,1);
-	}
-	#_ba {
-		position: absolute;
-		left: 172px;
-		top: 581px;
-		overflow: visible;
-		width: 11px;
-		height: 2px;
-		text-align: center;
-		font-family: Segoe UI;
-		font-style: normal;
-		font-weight: normal;
-		font-size: 50px;
-		color: rgba(255,255,255,1);
-	}
-	#Menu_button {
-		position: absolute;
-		width: 74px;
-		height: 66px;
-		left: 1743px;
-		top: 62px;
-		overflow: visible;
-		cursor: pointer;
-		--web-animation: slide-in 0.3s ease-out forwards;
-		--web-action-type: page;
-		--web-action-target: Game_keeper_side_menu.html;
-	}
-	.Line_3 {
-		overflow: visible;
-		position: absolute;
-		width: 74px;
-		height: 3px;
-		left: 0px;
-		top: 0px;
-		transform: matrix(1,0,0,1,0,0);
-	}
-	.Line_4 {
-		overflow: visible;
-		position: absolute;
-		width: 74px;
-		height: 3px;
-		left: 0px;
-		top: 34px;
-		transform: matrix(1,0,0,1,0,0);
-	}
-	.Line_5 {
-		overflow: visible;
-		position: absolute;
-		width: 74px;
-		height: 3px;
-		left: 0px;
-		top: 66px;
-		transform: matrix(1,0,0,1,0,0);
-	}
-	#Group_7 {
-		position: absolute;
-		width: 502px;
-		height: 178px;
-		left: 0px;
-		top: 190px;
-		overflow: visible;
-		cursor: pointer;
-		--web-animation: ;
-		--web-action-type: page;
-		--web-action-target: Manage_Locations_Page.html;
-	}
-	.Rectangle_14 {
-		position: absolute;
-		overflow: visible;
-		width: 502px;
-		height: 178px;
-		left: 0px;
-		top: 0px;
-	}
-	#Manage_Locations {
-		position: absolute;
-		left: 50px;
-		top: 55.959px;
-		overflow: visible;
-		width: 403px;
-		white-space: nowrap;
-		text-align: center;
-		font-family: Segoe UI;
-		font-style: normal;
-		font-weight: normal;
-		font-size: 50px;
-		color: rgba(255,255,255,1);
-	}
-	#Group_7_ba {
-		position: absolute;
-		width: 502px;
-		height: 178px;
-		left: 0px;
-		top: 368px;
-		overflow: visible;
-		cursor: pointer;
-		--web-animation: fadein 0.3s ease-out;
-		--web-action-type: page;
-		--web-action-target: Manage_Groups_Page.html;
-	}
-	.Rectangle_14_bb {
-		position: absolute;
-		overflow: visible;
-		width: 502px;
-		height: 178px;
-		left: 0px;
-		top: 0px;
-	}
-	#Manage_Groups {
-		position: absolute;
-		left: 74px;
-		top: 55.959px;
-		overflow: visible;
-		width: 355px;
-		white-space: nowrap;
-		text-align: center;
-		font-family: Segoe UI;
-		font-style: normal;
-		font-weight: normal;
-		font-size: 50px;
-		color: rgba(255,255,255,1);
-	}
-	#Group_7_bd {
-		position: absolute;
-		width: 502px;
-		height: 178px;
-		left: 0px;
-		top: 546px;
-		overflow: visible;
-		cursor: pointer;
-		--web-animation: fadein 0.3s ease-out;
-		--web-action-type: page;
-		--web-action-target: Leaderboard_Page.html;
-	}
-	.Rectangle_14_be {
-		position: absolute;
-		overflow: visible;
-		width: 502px;
-		height: 178px;
-		left: 0px;
-		top: 0px;
-	}
-	#Leaderboard {
-		position: absolute;
-		left: 111px;
-		top: 55.959px;
-		overflow: visible;
-		width: 281px;
-		white-space: nowrap;
-		text-align: center;
-		font-family: Segoe UI;
-		font-style: normal;
-		font-weight: normal;
-		font-size: 50px;
-		color: rgba(255,255,255,1);
-	}
-	#Group_7_bg {
-		position: absolute;
-		width: 502px;
-		height: 356px;
-		left: 0px;
-		top: 724px;
-		overflow: visible;
-	}
-	.Rectangle_14_bh {
-		position: absolute;
-		overflow: visible;
-		width: 502px;
-		height: 356px;
-		left: 0px;
-		top: 0px;
-	}
-	.Rectangle_43 {
+	.Rectangle_50_z {
 		position: absolute;
 		overflow: visible;
 		width: 1418px;
 		height: 890px;
-		left: 502px;
-		top: 190px;
-	}
-	.Rectangle_52_bk {
-		position: absolute;
-		overflow: visible;
-		width: 1418px;
-		height: 890px;
-		left: 502px;
-		top: 190px;
-	}
-	#Group_48 {
-		position: absolute;
-		width: 502px;
-		height: 178px;
-		left: 0px;
-		top: 724px;
-		overflow: visible;
-		--web-animation: fadein 0.3s ease-out;
-		--web-action-type: page;
-		--web-action-target: Manage_Routes_Page.html;
-		cursor: pointer;
-	}
-	.Rectangle_14_bm {
-		position: absolute;
-		overflow: visible;
-		width: 502px;
-		height: 178px;
 		left: 0px;
 		top: 0px;
 	}
-	#Manage_Routes {
+	.Rectangle_53 {
 		position: absolute;
-		left: 79px;
-		top: 55.959px;
 		overflow: visible;
-		width: 345px;
+		width: 381px;
+		height: 626px;
+		left: 459px;
+		top: 124px;
+	}
+	#Locations {
+		position: absolute;
+		left: 470px;
+		top: 73px;
+		overflow: visible;
+		width: 161px;
 		white-space: nowrap;
-		text-align: center;
-		font-family: Segoe UI;
-		font-style: normal;
-		font-weight: normal;
-		font-size: 50px;
-		color: rgba(255,255,255,1);
-	}
-	#Group_59 {
-		position: absolute;
-		width: 502px;
-		height: 178px;
-		left: 0px;
-		top: 902px;
-		overflow: visible;
-		--web-animation: fadein 0.3s ease-out;
-		--web-action-type: page;
-		--web-action-target: Assign_Routes_Page.html;
-		cursor: pointer;
-	}
-	.Rectangle_14_bp {
-		position: absolute;
-		overflow: visible;
-		width: 502px;
-		height: 178px;
-		left: 0px;
-		top: 0px;
-	}
-	#Assign_Routes {
-		position: absolute;
-		left: 97px;
-		top: 55.959px;
-		overflow: visible;
-		width: 309px;
-		white-space: nowrap;
-		text-align: center;
-		font-family: Segoe UI;
-		font-style: normal;
-		font-weight: normal;
-		font-size: 50px;
-		color: rgba(255,255,255,1);
-	}
-	#Welcome_Game_Keeper_ {
-		position: absolute;
-		left: 947px;
-		top: 243px;
-		overflow: visible;
-		width: 529px;
-		white-space: nowrap;
-		text-align: center;
-		font-family: Segoe UI;
-		font-style: normal;
-		font-weight: normal;
-		font-size: 50px;
-		color: rgba(255,255,255,1);
-	}
-	#Please_see_on_the_left_of_your {
-		position: absolute;
-		left: 643px;
-		top: 349px;
-		overflow: visible;
-		width: 1137px;
-		white-space: nowrap;
-		line-height: 50px;
-		margin-top: -6px;
 		text-align: center;
 		font-family: Segoe UI;
 		font-style: normal;
@@ -388,22 +62,659 @@
 		font-size: 38px;
 		color: rgba(255,255,255,1);
 	}
-	#Key_features_____You_have_the_ {
+	#Create_Route {
 		position: absolute;
-		left: 643px;
+		left: 114px;
+		top: 73px;
+		overflow: visible;
+		width: 219px;
+		white-space: nowrap;
+		text-align: center;
+		font-family: Segoe UI;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 38px;
+		color: rgba(255,255,255,1);
+	}
+	#Name_ {
+		position: absolute;
+		left: 56px;
+		top: 133px;
+		overflow: visible;
+		width: 109px;
+		white-space: nowrap;
+		text-align: center;
+		font-family: Segoe UI;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 38px;
+		color: rgba(255,255,255,1);
+	}
+	#Locations__ {
+		position: absolute;
+		left: 56px;
+		top: 193px;
+		overflow: visible;
+		width: 179px;
+		white-space: nowrap;
+		text-align: center;
+		font-family: Segoe UI;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 38px;
+		color: rgba(255,255,255,1);
+	}
+	.Rectangle_54 {
+		position: absolute;
+		overflow: visible;
+		width: 349px;
+		height: 165px;
+		left: 56px;
+		top: 253px;
+	}
+	#Transparent_Button {
+		position: absolute;
+		width: 113px;
+		height: 40px;
+		left: 56px;
+		top: 437px;
+		overflow: visible;
+	}
+	#Component_1___6 {
+		position: absolute;
+		width: 113px;
+		height: 40px;
+		left: 0px;
+		top: 0px;
+		overflow: visible;
+	}
+	.Rectangle_2 {
+		position: absolute;
+		overflow: visible;
+		width: 113px;
+		height: 40px;
+		left: 0px;
+		top: 0px;
+	}
+	#Save {
+		position: absolute;
+		left: 31px;
+		top: 3px;
+		overflow: visible;
+		width: 51px;
+		white-space: nowrap;
+		line-height: 30px;
+		margin-top: -3px;
+		text-align: center;
+		font-family: Segoe UI;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 24px;
+		color: rgba(49,117,14,1);
+	}
+	.Rectangle_55 {
+		position: absolute;
+		overflow: visible;
+		width: 236px;
+		height: 39px;
+		left: 169px;
+		top: 145px;
+	}
+	.Rectangle_32 {
+		position: absolute;
+		overflow: visible;
+		width: 232px;
+		height: 40px;
+		left: 173px;
+		top: 505px;
+	}
+	#Name__bc {
+		position: absolute;
+		left: 54px;
+		top: 496px;
+		overflow: visible;
+		width: 109px;
+		white-space: nowrap;
+		text-align: center;
+		font-family: Segoe UI;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 38px;
+		color: rgba(255,255,255,1);
+	}
+	#Transparent_Button_bd {
+		position: absolute;
+		width: 157px;
+		height: 40px;
+		left: 173px;
+		top: 554px;
+		overflow: visible;
+	}
+	#Component_1___6_be {
+		position: absolute;
+		width: 157px;
+		height: 40px;
+		left: 0px;
+		top: 0px;
+		overflow: visible;
+	}
+	.Rectangle_2_bf {
+		position: absolute;
+		overflow: visible;
+		width: 157px;
+		height: 40px;
+		left: 0px;
+		top: 0px;
+	}
+	#Delete_Route {
+		position: absolute;
+		left: 13px;
+		top: 4px;
+		overflow: visible;
+		width: 137px;
+		white-space: nowrap;
+		line-height: 30px;
+		margin-top: -3px;
+		text-align: center;
+		font-family: Segoe UI;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 24px;
+		color: rgba(255,59,59,1);
+	}
+	.Rectangle_56 {
+		position: absolute;
+		overflow: visible;
+		width: 381px;
+		height: 626px;
+		left: 946px;
+		top: 124px;
+	}
+	#Routes {
+		position: absolute;
+		left: 952px;
+		top: 73px;
+		overflow: visible;
+		width: 115px;
+		white-space: nowrap;
+		text-align: center;
+		font-family: Segoe UI;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 38px;
+		color: rgba(255,255,255,1);
+	}
+	#Route_name {
+		position: absolute;
+		left: 967px;
+		top: 133px;
+		overflow: visible;
+		width: 149px;
+		white-space: nowrap;
+		line-height: 30px;
+		margin-top: -1px;
+		text-align: center;
+		font-family: Segoe UI;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 28px;
+		color: rgba(178,174,174,1);
+	}
+	#__Route_locaitons {
+		position: absolute;
+		left: 982px;
+		top: 174px;
+		overflow: visible;
+		width: 181px;
+		white-space: nowrap;
+		line-height: 30px;
+		margin-top: -3px;
+		text-align: center;
+		font-family: Segoe UI;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 24px;
+		color: rgba(178,174,174,1);
+	}
+	#Route_name_bl {
+		position: absolute;
+		left: 967px;
+		top: 210px;
+		overflow: visible;
+		width: 149px;
+		white-space: nowrap;
+		line-height: 30px;
+		margin-top: -1px;
+		text-align: center;
+		font-family: Segoe UI;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 28px;
+		color: rgba(178,174,174,1);
+	}
+	#__Route_locaitons_bm {
+		position: absolute;
+		left: 982px;
+		top: 251px;
+		overflow: visible;
+		width: 181px;
+		white-space: nowrap;
+		line-height: 30px;
+		margin-top: -3px;
+		text-align: center;
+		font-family: Segoe UI;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 24px;
+		color: rgba(178,174,174,1);
+	}
+	#Route_name_bn {
+		position: absolute;
+		left: 970px;
+		top: 287px;
+		overflow: visible;
+		width: 149px;
+		white-space: nowrap;
+		line-height: 30px;
+		margin-top: -1px;
+		text-align: center;
+		font-family: Segoe UI;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 28px;
+		color: rgba(178,174,174,1);
+	}
+	#__Route_locaitons_bo {
+		position: absolute;
+		left: 985px;
+		top: 328px;
+		overflow: visible;
+		width: 181px;
+		white-space: nowrap;
+		line-height: 30px;
+		margin-top: -3px;
+		text-align: center;
+		font-family: Segoe UI;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 24px;
+		color: rgba(178,174,174,1);
+	}
+	#Route_name_bp {
+		position: absolute;
+		left: 970px;
+		top: 364px;
+		overflow: visible;
+		width: 149px;
+		white-space: nowrap;
+		line-height: 30px;
+		margin-top: -1px;
+		text-align: center;
+		font-family: Segoe UI;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 28px;
+		color: rgba(178,174,174,1);
+	}
+	#__Route_locaitons_bq {
+		position: absolute;
+		left: 985px;
+		top: 405px;
+		overflow: visible;
+		width: 181px;
+		white-space: nowrap;
+		line-height: 30px;
+		margin-top: -3px;
+		text-align: center;
+		font-family: Segoe UI;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 24px;
+		color: rgba(178,174,174,1);
+	}
+	#Route_name_br {
+		position: absolute;
+		left: 970px;
+		top: 441px;
+		overflow: visible;
+		width: 149px;
+		white-space: nowrap;
+		line-height: 30px;
+		margin-top: -1px;
+		text-align: center;
+		font-family: Segoe UI;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 28px;
+		color: rgba(178,174,174,1);
+	}
+	#__Route_locaitons_bs {
+		position: absolute;
+		left: 985px;
+		top: 482px;
+		overflow: visible;
+		width: 181px;
+		white-space: nowrap;
+		line-height: 30px;
+		margin-top: -3px;
+		text-align: center;
+		font-family: Segoe UI;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 24px;
+		color: rgba(178,174,174,1);
+	}
+	#Route_name_bt {
+		position: absolute;
+		left: 969px;
+		top: 518px;
+		overflow: visible;
+		width: 149px;
+		white-space: nowrap;
+		line-height: 30px;
+		margin-top: -1px;
+		text-align: center;
+		font-family: Segoe UI;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 28px;
+		color: rgba(178,174,174,1);
+	}
+	#__Route_locaitons_bu {
+		position: absolute;
+		left: 984px;
+		top: 559px;
+		overflow: visible;
+		width: 181px;
+		white-space: nowrap;
+		line-height: 30px;
+		margin-top: -3px;
+		text-align: center;
+		font-family: Segoe UI;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 24px;
+		color: rgba(178,174,174,1);
+	}
+	#Route_name_bv {
+		position: absolute;
+		left: 967px;
+		top: 595px;
+		overflow: visible;
+		width: 149px;
+		white-space: nowrap;
+		line-height: 30px;
+		margin-top: -1px;
+		text-align: center;
+		font-family: Segoe UI;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 28px;
+		color: rgba(178,174,174,1);
+	}
+	#__Route_locaitons_bw {
+		position: absolute;
+		left: 982px;
+		top: 636px;
+		overflow: visible;
+		width: 181px;
+		white-space: nowrap;
+		line-height: 30px;
+		margin-top: -3px;
+		text-align: center;
+		font-family: Segoe UI;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 24px;
+		color: rgba(178,174,174,1);
+	}
+	#Location {
+		position: absolute;
+		left: 478px;
+		top: 133px;
+		overflow: visible;
+		width: 107px;
+		white-space: nowrap;
+		line-height: 30px;
+		margin-top: -1px;
+		text-align: center;
+		font-family: Segoe UI;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 28px;
+		color: rgba(178,174,174,1);
+	}
+	#Location_by {
+		position: absolute;
+		left: 478px;
+		top: 190px;
+		overflow: visible;
+		width: 107px;
+		white-space: nowrap;
+		line-height: 30px;
+		margin-top: -1px;
+		text-align: center;
+		font-family: Segoe UI;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 28px;
+		color: rgba(178,174,174,1);
+	}
+	#Location_bz {
+		position: absolute;
+		left: 478px;
+		top: 247px;
+		overflow: visible;
+		width: 107px;
+		white-space: nowrap;
+		line-height: 30px;
+		margin-top: -1px;
+		text-align: center;
+		font-family: Segoe UI;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 28px;
+		color: rgba(178,174,174,1);
+	}
+	#Location_b {
+		position: absolute;
+		left: 478px;
+		top: 304px;
+		overflow: visible;
+		width: 107px;
+		white-space: nowrap;
+		line-height: 30px;
+		margin-top: -1px;
+		text-align: center;
+		font-family: Segoe UI;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 28px;
+		color: rgba(178,174,174,1);
+	}
+	#Location_ca {
+		position: absolute;
+		left: 478px;
+		top: 361px;
+		overflow: visible;
+		width: 107px;
+		white-space: nowrap;
+		line-height: 30px;
+		margin-top: -1px;
+		text-align: center;
+		font-family: Segoe UI;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 28px;
+		color: rgba(178,174,174,1);
+	}
+	#Location_cb {
+		position: absolute;
+		left: 478px;
+		top: 418px;
+		overflow: visible;
+		width: 107px;
+		white-space: nowrap;
+		line-height: 30px;
+		margin-top: -1px;
+		text-align: center;
+		font-family: Segoe UI;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 28px;
+		color: rgba(178,174,174,1);
+	}
+	#Location_cc {
+		position: absolute;
+		left: 478px;
 		top: 475px;
 		overflow: visible;
-		width: 1203px;
+		width: 107px;
 		white-space: nowrap;
-		line-height: 50px;
-		margin-top: -6px;
-		text-align: left;
+		line-height: 30px;
+		margin-top: -1px;
+		text-align: center;
 		font-family: Segoe UI;
 		font-style: normal;
 		font-weight: normal;
-		font-size: 38px;
+		font-size: 28px;
+		color: rgba(178,174,174,1);
+	}
+	#Location_cd {
+		position: absolute;
+		left: 478px;
+		top: 532px;
+		overflow: visible;
+		width: 107px;
+		white-space: nowrap;
+		line-height: 30px;
+		margin-top: -1px;
+		text-align: center;
+		font-family: Segoe UI;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 28px;
+		color: rgba(178,174,174,1);
+	}
+	#Location_ce {
+		position: absolute;
+		left: 478px;
+		top: 589px;
+		overflow: visible;
+		width: 107px;
+		white-space: nowrap;
+		line-height: 30px;
+		margin-top: -1px;
+		text-align: center;
+		font-family: Segoe UI;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 28px;
+		color: rgba(178,174,174,1);
+	}
+	#Location_cf {
+		position: absolute;
+		left: 478px;
+		top: 646px;
+		overflow: visible;
+		width: 107px;
+		white-space: nowrap;
+		line-height: 30px;
+		margin-top: -1px;
+		text-align: center;
+		font-family: Segoe UI;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 28px;
+		color: rgba(178,174,174,1);
+	}
+	#Location_cg {
+		position: absolute;
+		left: 478px;
+		top: 703px;
+		overflow: visible;
+		width: 107px;
+		white-space: nowrap;
+		line-height: 30px;
+		margin-top: -1px;
+		text-align: center;
+		font-family: Segoe UI;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 28px;
+		color: rgba(178,174,174,1);
+	}
+	#Route_name_b {
+		position: absolute;
+		left: 967px;
+		top: 665px;
+		overflow: visible;
+		width: 149px;
+		white-space: nowrap;
+		line-height: 30px;
+		margin-top: -1px;
+		text-align: center;
+		font-family: Segoe UI;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 28px;
+		color: rgba(178,174,174,1);
+	}
+	#__Route_locaitons_b {
+		position: absolute;
+		left: 982px;
+		top: 706px;
+		overflow: visible;
+		width: 181px;
+		white-space: nowrap;
+		line-height: 30px;
+		margin-top: -3px;
+		text-align: center;
+		font-family: Segoe UI;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 24px;
+		color: rgba(178,174,174,1);
+	}
+	#Transparent_Button_ca {
+		position: absolute;
+		width: 113px;
+		height: 40px;
+		left: 1214px;
+		top: 79px;
+		overflow: visible;
+	}
+	#Component_1___6_cb {
+		position: absolute;
+		width: 113px;
+		height: 40px;
+		left: 0px;
+		top: 0px;
+		overflow: visible;
+	}
+	.Rectangle_2_cc {
+		position: absolute;
+		overflow: visible;
+		width: 113px;
+		height: 40px;
+		left: 0px;
+		top: 0px;
+	}
+	#Edit {
+		position: absolute;
+		left: 36px;
+		top: 3px;
+		overflow: visible;
+		width: 41px;
+		white-space: nowrap;
+		line-height: 30px;
+		margin-top: -3px;
+		text-align: center;
+		font-family: Segoe UI;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 24px;
 		color: rgba(255,255,255,1);
-		text-decoration: true;
 	}
 </style>
 <script id="applicationScript">
@@ -2830,106 +3141,166 @@ window.application = new Application();
 </script>
 </head>
 <body>
-<div id="Game_Keeper_Page" onclick="application.goBack()">
-	<svg class="Rectangle_13">
-		<rect fill="rgba(16,56,25,1)" stroke="rgba(112,112,112,1)" stroke-width="1px" stroke-linejoin="miter" stroke-linecap="butt" stroke-miterlimit="4" shape-rendering="auto" id="Rectangle_13" rx="0" ry="0" x="0" y="0" width="1920" height="190">
-		</rect>
-	</svg>
-	<img id="white_logo_vector" src="white_logo_vector.png" srcset="white_logo_vector.png 1x, white_logo_vector@2x.png 2x">
-	<div id="">
-		<span></span>
-	</div>
-	<div id="_">
-		<span></span>
-	</div>
-	<div id="_ba">
-		<span></span>
-	</div>
-	<div onclick="application.showOverlay('Game_keeper_side_menu',1527,190, event)" id="Menu_button" class="Menu_button">
-		<svg class="Line_3" viewBox="0 0 74 3">
-			<path fill="transparent" stroke="rgba(255,255,255,1)" stroke-width="3px" stroke-linejoin="miter" stroke-linecap="butt" stroke-miterlimit="4" shape-rendering="auto" id="Line_3" d="M 0 0 L 74 0">
-			</path>
-		</svg>
-		<svg class="Line_4" viewBox="0 0 74 3">
-			<path fill="transparent" stroke="rgba(255,255,255,1)" stroke-width="3px" stroke-linejoin="miter" stroke-linecap="butt" stroke-miterlimit="4" shape-rendering="auto" id="Line_4" d="M 0 0 L 74 0">
-			</path>
-		</svg>
-		<svg class="Line_5" viewBox="0 0 74 3">
-			<path fill="transparent" stroke="rgba(255,255,255,1)" stroke-width="3px" stroke-linejoin="miter" stroke-linecap="butt" stroke-miterlimit="4" shape-rendering="auto" id="Line_5" d="M 0 0 L 74 0">
-			</path>
-		</svg>
-	</div>
-	<div onclick="application.showOverlay('Manage_Locations_Page',502,190, event)" id="Group_7">
-		<svg class="Rectangle_14">
-			<rect fill="rgba(16,70,0,1)" stroke="rgba(112,112,112,1)" stroke-width="1px" stroke-linejoin="miter" stroke-linecap="butt" stroke-miterlimit="4" shape-rendering="auto" id="Rectangle_14" rx="0" ry="0" x="0" y="0" width="502" height="178">
-			</rect>
-		</svg>
-		<div id="Manage_Locations">
-			<span>Manage Locations</span>
-		</div>
-	</div>
-	<div onclick="application.showOverlay('Manage_Groups_Page',502,190, event)" id="Group_7_ba">
-		<svg class="Rectangle_14_bb">
-			<rect fill="rgba(16,70,0,1)" stroke="rgba(112,112,112,1)" stroke-width="1px" stroke-linejoin="miter" stroke-linecap="butt" stroke-miterlimit="4" shape-rendering="auto" id="Rectangle_14_bb" rx="0" ry="0" x="0" y="0" width="502" height="178">
-			</rect>
-		</svg>
-		<div id="Manage_Groups">
-			<span>Manage Groups</span>
-		</div>
-	</div>
-	<div onclick="application.showOverlay('Leaderboard_Page',502,190, event)" id="Group_7_bd">
-		<svg class="Rectangle_14_be">
-			<rect fill="rgba(16,70,0,1)" stroke="rgba(112,112,112,1)" stroke-width="1px" stroke-linejoin="miter" stroke-linecap="butt" stroke-miterlimit="4" shape-rendering="auto" id="Rectangle_14_be" rx="0" ry="0" x="0" y="0" width="502" height="178">
-			</rect>
-		</svg>
-		<div id="Leaderboard">
-			<span>Leaderboard</span>
-		</div>
-	</div>
-	<div id="Group_7_bg">
-		<svg class="Rectangle_14_bh">
-			<rect fill="rgba(16,70,0,1)" stroke="rgba(112,112,112,1)" stroke-width="1px" stroke-linejoin="miter" stroke-linecap="butt" stroke-miterlimit="4" shape-rendering="auto" id="Rectangle_14_bh" rx="0" ry="0" x="0" y="0" width="502" height="356">
-			</rect>
-		</svg>
-	</div>
-	<svg class="Rectangle_43">
-		<rect fill="rgba(230,230,230,1)" stroke="rgba(112,112,112,1)" stroke-width="1px" stroke-linejoin="miter" stroke-linecap="butt" stroke-miterlimit="4" shape-rendering="auto" id="Rectangle_43" rx="0" ry="0" x="0" y="0" width="1418" height="890">
-		</rect>
-	</svg>
-	<svg class="Rectangle_52_bk">
-		<linearGradient id="Rectangle_52_bk" spreadMethod="pad" x1="0.5" x2="0.5" y1="0" y2="1">
+<div id="Manage_Routes_Page" onclick="application.goBack()">
+	<svg class="Rectangle_50_z">
+		<linearGradient id="Rectangle_50_z" spreadMethod="pad" x1="0.5" x2="0.5" y1="0" y2="1">
 			<stop offset="0" stop-color="#6c6c6c" stop-opacity="1"></stop>
 			<stop offset="1" stop-color="#c1c1c1" stop-opacity="1"></stop>
 		</linearGradient>
-		<rect fill="url(#Rectangle_52_bk)" stroke="rgba(112,112,112,1)" stroke-width="1px" stroke-linejoin="miter" stroke-linecap="butt" stroke-miterlimit="4" shape-rendering="auto" id="Rectangle_52_bk" rx="0" ry="0" x="0" y="0" width="1418" height="890">
+		<rect fill="url(#Rectangle_50_z)" stroke="rgba(112,112,112,1)" stroke-width="1px" stroke-linejoin="miter" stroke-linecap="butt" stroke-miterlimit="4" shape-rendering="auto" id="Rectangle_50_z" rx="0" ry="0" x="0" y="0" width="1418" height="890">
 		</rect>
 	</svg>
-	<div onclick="application.goToTargetView(event)" id="Group_48">
-		<svg class="Rectangle_14_bm">
-			<rect fill="rgba(16,70,0,1)" stroke="rgba(112,112,112,1)" stroke-width="1px" stroke-linejoin="miter" stroke-linecap="butt" stroke-miterlimit="4" shape-rendering="auto" id="Rectangle_14_bm" rx="0" ry="0" x="0" y="0" width="502" height="178">
-			</rect>
-		</svg>
-		<div id="Manage_Routes">
-			<span>Manage Routes</span>
+	<svg class="Rectangle_53">
+		<rect fill="rgba(255,255,255,1)" stroke="rgba(112,112,112,1)" stroke-width="1px" stroke-linejoin="miter" stroke-linecap="butt" stroke-miterlimit="4" shape-rendering="auto" id="Rectangle_53" rx="18" ry="18" x="0" y="0" width="381" height="626">
+		</rect>
+	</svg>
+	<div id="Locations">
+		<span>Locations</span>
+	</div>
+	<div id="Create_Route">
+		<span>Create Route</span>
+	</div>
+	<div id="Name_">
+		<span>Name:</span>
+	</div>
+	<div id="Locations__">
+		<span>Locations: </span>
+	</div>
+	<svg class="Rectangle_54">
+		<rect fill="rgba(255,255,255,1)" stroke="rgba(112,112,112,1)" stroke-width="1px" stroke-linejoin="miter" stroke-linecap="butt" stroke-miterlimit="4" shape-rendering="auto" id="Rectangle_54" rx="14" ry="14" x="0" y="0" width="349" height="165">
+		</rect>
+	</svg>
+	<div id="Transparent_Button" class="Transparent_Button">
+		<div id="Component_1___6" class="Component_1___6">
+			<svg class="Rectangle_2">
+				<rect fill="transparent" stroke="rgba(49,117,14,1)" stroke-width="2px" stroke-linejoin="miter" stroke-linecap="butt" stroke-miterlimit="4" shape-rendering="auto" id="Rectangle_2" rx="20" ry="20" x="0" y="0" width="113" height="40">
+				</rect>
+			</svg>
+		</div>
+		<div id="Save">
+			<span>Save</span>
 		</div>
 	</div>
-	<div onclick="application.goToTargetView(event)" id="Group_59">
-		<svg class="Rectangle_14_bp">
-			<rect fill="rgba(16,70,0,1)" stroke="rgba(112,112,112,1)" stroke-width="1px" stroke-linejoin="miter" stroke-linecap="butt" stroke-miterlimit="4" shape-rendering="auto" id="Rectangle_14_bp" rx="0" ry="0" x="0" y="0" width="502" height="178">
-			</rect>
-		</svg>
-		<div id="Assign_Routes">
-			<span>Assign Routes</span>
+	<svg class="Rectangle_55">
+		<rect fill="rgba(255,255,255,1)" stroke="rgba(112,112,112,1)" stroke-width="1px" stroke-linejoin="miter" stroke-linecap="butt" stroke-miterlimit="4" shape-rendering="auto" id="Rectangle_55" rx="13" ry="13" x="0" y="0" width="236" height="39">
+		</rect>
+	</svg>
+	<svg class="Rectangle_32">
+		<rect fill="rgba(255,255,255,1)" stroke="rgba(112,112,112,1)" stroke-width="1px" stroke-linejoin="miter" stroke-linecap="butt" stroke-miterlimit="4" shape-rendering="auto" id="Rectangle_32" rx="11" ry="11" x="0" y="0" width="232" height="40">
+		</rect>
+	</svg>
+	<div id="Name__bc">
+		<span>Name:</span>
+	</div>
+	<div id="Transparent_Button_bd" class="Transparent_Button">
+		<div id="Component_1___6_be" class="Component_1___6">
+			<svg class="Rectangle_2_bf">
+				<rect fill="transparent" stroke="rgba(255,59,59,1)" stroke-width="2px" stroke-linejoin="miter" stroke-linecap="butt" stroke-miterlimit="4" shape-rendering="auto" id="Rectangle_2_bf" rx="20" ry="20" x="0" y="0" width="157" height="40">
+				</rect>
+			</svg>
+		</div>
+		<div id="Delete_Route">
+			<span>Delete Route</span>
 		</div>
 	</div>
-	<div id="Welcome_Game_Keeper_">
-		<span>Welcome Game Keeper!</span>
+	<svg class="Rectangle_56">
+		<rect fill="rgba(255,255,255,1)" stroke="rgba(112,112,112,1)" stroke-width="1px" stroke-linejoin="miter" stroke-linecap="butt" stroke-miterlimit="4" shape-rendering="auto" id="Rectangle_56" rx="18" ry="18" x="0" y="0" width="381" height="626">
+		</rect>
+	</svg>
+	<div id="Routes">
+		<span>Routes</span>
 	</div>
-	<div id="Please_see_on_the_left_of_your">
-		<span>Please see on the left of your screen the features you've been given.<br/>Use these pages to configure, update and change the game.</span>
+	<div id="Route_name">
+		<span>Route name</span>
 	</div>
-	<div id="Key_features_____You_have_the_">
-		<span>Key features</span><span>:<br/> - You have the ability to Create/Add, Edit, Delete and View all locations,<br/>Groups and Routes.<br/> - View the leaderboard<br/> - Assign Groups to Routes</span><br>
+	<div id="__Route_locaitons">
+		<span>- Route locaitons</span>
+	</div>
+	<div id="Route_name_bl">
+		<span>Route name</span>
+	</div>
+	<div id="__Route_locaitons_bm">
+		<span>- Route locaitons</span>
+	</div>
+	<div id="Route_name_bn">
+		<span>Route name</span>
+	</div>
+	<div id="__Route_locaitons_bo">
+		<span>- Route locaitons</span>
+	</div>
+	<div id="Route_name_bp">
+		<span>Route name</span>
+	</div>
+	<div id="__Route_locaitons_bq">
+		<span>- Route locaitons</span>
+	</div>
+	<div id="Route_name_br">
+		<span>Route name</span>
+	</div>
+	<div id="__Route_locaitons_bs">
+		<span>- Route locaitons</span>
+	</div>
+	<div id="Route_name_bt">
+		<span>Route name</span>
+	</div>
+	<div id="__Route_locaitons_bu">
+		<span>- Route locaitons</span>
+	</div>
+	<div id="Route_name_bv">
+		<span>Route name</span>
+	</div>
+	<div id="__Route_locaitons_bw">
+		<span>- Route locaitons</span>
+	</div>
+	<div id="Location">
+		<span>Location</span>
+	</div>
+	<div id="Location_by">
+		<span>Location</span>
+	</div>
+	<div id="Location_bz">
+		<span>Location</span>
+	</div>
+	<div id="Location_b">
+		<span>Location</span>
+	</div>
+	<div id="Location_ca">
+		<span>Location</span>
+	</div>
+	<div id="Location_cb">
+		<span>Location</span>
+	</div>
+	<div id="Location_cc">
+		<span>Location</span>
+	</div>
+	<div id="Location_cd">
+		<span>Location</span>
+	</div>
+	<div id="Location_ce">
+		<span>Location</span>
+	</div>
+	<div id="Location_cf">
+		<span>Location</span>
+	</div>
+	<div id="Location_cg">
+		<span>Location</span>
+	</div>
+	<div id="Route_name_b">
+		<span>Route name</span>
+	</div>
+	<div id="__Route_locaitons_b">
+		<span>- Route locaitons</span>
+	</div>
+	<div id="Transparent_Button_ca" class="Transparent_Button">
+		<div id="Component_1___6_cb" class="Component_1___6">
+			<svg class="Rectangle_2_cc">
+				<rect fill="transparent" stroke="rgba(255,255,255,1)" stroke-width="2px" stroke-linejoin="miter" stroke-linecap="butt" stroke-miterlimit="4" shape-rendering="auto" id="Rectangle_2_cc" rx="20" ry="20" x="0" y="0" width="113" height="40">
+				</rect>
+			</svg>
+		</div>
+		<div id="Edit">
+			<span>Edit</span>
+		</div>
 	</div>
 </div>
 </body>
