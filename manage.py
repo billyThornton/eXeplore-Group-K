@@ -5,7 +5,7 @@ import json
 import ibm_db
 
 app = Flask(__name__, static_url_path='')
-localFlag = True
+localFlag = False
 db_name = 'mydb'
 client = None
 db = None
@@ -52,6 +52,7 @@ def getStudent():
 def root():
     rows = getStudent()
     return render_template('Game_s_Keeper_Login.html', returner=rows)
+    #return app.send_static_file('Game_s_Keeper_Login.html')
 
 
 
