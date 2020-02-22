@@ -50,10 +50,14 @@ def getStudent():
 
 @app.route('/')
 def root():
-    rows = getStudent()
+    rows = []
     return render_template('Game_s_Keeper_Login.html', returner=rows)
     #return app.send_static_file('Game_s_Keeper_Login.html')
 
+
+@app.route('/Exeter_University.png')
+def ExeterUniBackGround():
+    return render_template('Exeter_University.png')
 
 @app.route('/dashboard')
 def dashboard():
