@@ -55,7 +55,6 @@ def root():
     #return app.send_static_file('Game_s_Keeper_Login.html')
 
 
-
 @app.route('/dashboard')
 def dashboard():
     return render_template('Game_Keeper_Page.html')
