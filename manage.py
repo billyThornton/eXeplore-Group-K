@@ -9,7 +9,7 @@ from flask_httpauth import HTTPBasicAuth
 from flask_pyoidc.flask_pyoidc import OIDCAuthentication
 from flask_pyoidc.provider_configuration import ProviderConfiguration, ClientMetadata
 
-app = Flask(__name__, static_url_path='')
+app = Flask(__name__)
 localFlag = False
 db_name = 'mydb'
 client = None
