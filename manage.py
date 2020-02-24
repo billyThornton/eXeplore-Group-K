@@ -6,7 +6,7 @@ import ibm_db
 import jwt
 
 app = Flask(__name__, static_url_path='')
-localFlag = True
+localFlag = False
 db_name = 'mydb'
 client = None
 db = None
@@ -197,7 +197,7 @@ def verifyToken(token,pemVal):
         payload = jwt.decode(token, pemVal, algorithms=['RS256'], options={'verify_aud':False})
         print('verified')
         return payload
- except:
+    except:
         print ('not verified')
         return False
 def retrievePublicKey(serverUrl):
