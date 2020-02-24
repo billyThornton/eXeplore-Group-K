@@ -11,6 +11,7 @@ db_name = 'mydb'
 client = None
 db = None
 
+
 class ServiceConfig():
     REDIRECT_URI = "redirectUri"
     def getParamFromVcap(parsedVcap,serviceName,field):
@@ -117,8 +118,13 @@ def dashboard():
 def shutdown():
     if client:
         client.disconnect()
-        
-WebAppStrategy['AUTH_CONTEXT'] = "APPID_AUTH_CONTEXT";
+
+WebAppStrategy={}
+WebAppStrategy['DEFAULT_SCOPE'] = "appid_default";
+WebAppStrategy['ORIGINAL_URL'] = "APPID_ORIGINAL_URL";
+WebAppStrategy['AUTH_CONTEXT'] = "APPID_AUTH_CONTEXT";        
+AUTHORIZATION_PATH = "/authorization"
+TOKEN_PATH = "/token"
 
 @app.route('/protected')
 def protected():
