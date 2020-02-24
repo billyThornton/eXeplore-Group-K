@@ -6,7 +6,7 @@ import ibm_db
 import jwt
 
 app = Flask(__name__, static_url_path='')
-localFlag = True
+localFlag = False
 db_name = 'mydb'
 client = None
 db = None
