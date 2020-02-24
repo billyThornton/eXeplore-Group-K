@@ -11,6 +11,8 @@ db_name = 'mydb'
 client = None
 db = None
 
+execfile("utils/token-utils.py")
+
 
 class ServiceConfig():
     REDIRECT_URI = "redirectUri"
@@ -125,6 +127,11 @@ WebAppStrategy['ORIGINAL_URL'] = "APPID_ORIGINAL_URL";
 WebAppStrategy['AUTH_CONTEXT'] = "APPID_AUTH_CONTEXT";        
 AUTHORIZATION_PATH = "/authorization"
 TOKEN_PATH = "/token"
+
+def validateToken(token):
+    publickey = retrievePublicKey(ServiceConfig.serverUrl)
+    pem = getPublicKeyPem(publickey)
+    return verifyToken(token,pem)
 
 @app.route('/protected')
 def protected():
