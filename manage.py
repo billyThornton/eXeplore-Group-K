@@ -13,7 +13,7 @@ db_name = 'mydb'
 client = None
 db = None
 
-execfile("utils/token-utils.py")
+exec(open("utils/token-utils.py").read())
 
 
 class ServiceConfig():
