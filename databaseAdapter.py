@@ -3,14 +3,10 @@ import atexit
 import os
 import json
 import ibm_db
-import jwt
 import requests
-from flask_httpauth import HTTPBasicAuth
-from flask_pyoidc.flask_pyoidc import OIDCAuthentication
-from flask_pyoidc.provider_configuration import ProviderConfiguration, ClientMetadata
 
 app = Flask(__name__)
-localFlag = False
+localFlag = True 
 db_name = 'mydb'
 client = None
 db = None
@@ -58,5 +54,5 @@ def getStudent():
         # close database connection
         ibm_db.close(db2conn)
         #Print to screen the result
-		print(rows)
+        print(rows)
     return rows
