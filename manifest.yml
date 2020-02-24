@@ -1,7 +1,8 @@
 applications:
-- name: eXeplore
+- name: eXeploreDev
   memory: 256M
   command: python3 manage.py
   random-route: true
   services:
   - exeploreDB2
+  - App ID-2a
