@@ -6,7 +6,8 @@ import base64
 import six
 import json
 PUBLIC_KEY_PATH = "/publickey";
-import urllib2
+import requests
+from bs4 import BeautifulSoup
 print("Initializing");
 global publicKeyJson
 publicKeyJson=None
@@ -27,8 +28,10 @@ def intarr2long(arr):
 
 def retrievePublicKey(serverUrl):
   serverUrl = serverUrl + PUBLIC_KEY_PATH;
-  content = urllib2.urlopen(serverUrl).read()
-  publicKeyJson=content;
+  content = requests.get(serverUrl)
+  print(content)
+  publicKeyJson=BeautifulSoup(content.content,"html.parser");
+  print(publicKeyJson)
   return  publicKeyJson
 
 def base64_to_long(data):
