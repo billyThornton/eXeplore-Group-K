@@ -1,14 +1,67 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, session
 import atexit
 import os
 import json
 import ibm_db
+import jwt
 
 app = Flask(__name__, static_url_path='')
 localFlag = True
 db_name = 'mydb'
 client = None
 db = None
+
+class ServiceConfig():
+    REDIRECT_URI = "redirectUri"
+    def getParamFromVcap(parsedVcap,serviceName,field):
+        return parsedVcap.get(serviceName)[0]['credentials'][field]
+    def getRedirectUri():
+        redirectUri=os.environ.get('REDIRECT_URI')
+        if not redirectUri:
+            vcapApplication=os.environ.get('VCAP_APPLICATION')
+            if vcapApplication:
+                vcapApplication=json.loads(vcapApplication)
+                redirectUri = "https://{}/afterauth".format(vcapApplication["application_uris"][0]);
+            else:
+                redirectUri='http://localhost:5000/afterauth'
+        return redirectUri
+    serverUrl='https://appid-oauth.ng.bluemix.net/oauth/v3/stub'
+    VCAP_SERVICES=os.environ.get('VCAP_SERVICES')
+    if VCAP_SERVICES:
+        parsedVcap = json.loads(VCAP_SERVICES)
+        serviceName=None
+        if (parsedVcap.get('AdvancedMobileAccess')):
+            serviceName='AdvancedMobileAccess'
+        elif (parsedVcap.get('AppID')):
+            serviceName='AppID'
+        if(serviceName):
+            serverUrl=getParamFromVcap(parsedVcap,serviceName,'oauthServerUrl')
+            secret=getParamFromVcap(parsedVcap,serviceName,'secret')
+            clientId=getParamFromVcap(parsedVcap,serviceName,'clientId')
+            redirectUri=getRedirectUri()
+    if (not serverUrl):
+        raise 'please choose server url'
+
+
+    @property
+    def get_clientId(self):
+        return 'clientId'
+
+    @property
+    def get_secret(self):
+        return secret
+
+    @property
+    def get_serverUrl(self):
+        return serverUrl
+
+    def get_redirectUri(self):
+        return redirectUri
+
+    def __repr__(self):
+        print ('{} {} {} {} '.format(clientId,secret,tokenEndpoint,redirectUri))
+        return '<serviceConfig %r>' % (self.client_id)
+
 
 if 'VCAP_SERVICES' in os.environ:
     db2info = json.loads(os.environ['VCAP_SERVICES'])['dashDB For Transactions'][0]
@@ -59,18 +112,100 @@ def root():
 def dashboard():
     return render_template('Game_Keeper_Page.html')
     
-@app.route('/api/visitors', methods=['GET'])
-def get_visitor():
-    if client:
-        return jsonify(list(map(lambda doc: doc['name'], db)))
-    else:
-        print('No database')
-        return jsonify([])
 
 @atexit.register
 def shutdown():
     if client:
         client.disconnect()
+        
+WebAppStrategy['AUTH_CONTEXT'] = "APPID_AUTH_CONTEXT";
+
+@app.route('/protected')
+def protected():
+    tokens = session.get(WebAppStrategy['AUTH_CONTEXT'])
+    if (tokens):
+        publickey = retrievePublicKey(ServiceConfig.serverUrl)
+        pem = getPublicKeyPem(publickey)
+        idToken = tokens.get('id_token')
+        accessToken = tokens.get('access_token')
+        idTokenPayload = verifyToken(idToken,pem)
+        accessTokenPayload = verifyToken(accessToken,pem)
+        if (not idTokenPayload or not accessTokenPayload):
+            session[WebAppStrategy['AUTH_CONTEXT']] = None
+            return startAuthorization()
+        else:
+            print('idTokenPayload')
+            print (idTokenPayload)
+            return render_template('Add_Location_Page.html')
+    else:
+        return startAuthorization()
+       
+@app.route('/startAuthorization')
+def startAuthorization():
+    serviceConfig = ServiceConfig()
+    clientId = serviceConfig.clientId
+
+    authorizationEndpoint = serviceConfig.serverUrl + AUTHORIZATION_PATH
+    redirectUri = serviceConfig.redirectUri
+    return redirect("{}?client_id={}&response_type=code&redirect_uri={}&scope=appid_default".format(authorizationEndpoint,clientId,redirectUri))
+    
+@app.route('/afterauth')
+def afterauth():
+    error = request.args.get('error')
+    code = request.args.get('code')
+    if error:
+        return error
+    elif code:
+        return handleCallback(code)
+    else:
+        return '?'
+        
+        
+def retriveTokens(grantCode):
+    serviceConfig = ServiceConfig()
+    clientId = serviceConfig.clientId
+    secret = serviceConfig.secret
+    tokenEndpoint = serviceConfig.serverUrl + TOKEN_PATH
+    redirectUri = serviceConfig.redirectUri
+#    requests.post(url, data={}, auth=('user', 'pass'))
+    r = requests.post(tokenEndpoint, data={"client_id": clientId,"grant_type": "authorization_code","redirect_uri": redirectUri,"code": grantCode
+		}, auth = HTTPBasicAuth(clientId, secret))
+    print(r.status_code, r.reason)
+    if (r.status_code is not 200):
+        return 'fail'
+    else:
+        return r.json()
+
+def handleCallback(grantCode):
+    tokens = retriveTokens(grantCode)
+    if (type(tokens) is str):
+        return tokens#it's error
+    else:
+        if (tokens['access_token']):
+            session[WebAppStrategy['AUTH_CONTEXT']] = tokens
+            return protected()
+        else:
+            return 'fail'
+        
+PUBLIC_KEY_PATH = "/publickey";
+publickey = retrievePublicKey(ServiceConfig.serverUrl)
+pem = getPublicKeyPem(publickey)
+token = '{{some token}}'
+verifyToken(token,pem)
+def verifyToken(token,pemVal):
+    try:
+        payload = jwt.decode(token, pemVal, algorithms=['RS256'], options={'verify_aud':False})
+        print('verified')
+        return payload
+ except:
+        print ('not verified')
+        return False
+def retrievePublicKey(serverUrl):
+    serverUrl = serverUrl + PUBLIC_KEY_PATH;
+    content = urllib2.urlopen(serverUrl).read()
+    publicKeyJson = content;
+    return  publicKeyJson
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=port, debug=True,use_reloader=False)
