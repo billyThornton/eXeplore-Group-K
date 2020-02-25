@@ -20,6 +20,7 @@ h3 {
   border-radius:20px;
   table-layout: fixed;
   margin-left: 50px;
+  padding: 6px;
 }
 .table tbody{
   display:block;
