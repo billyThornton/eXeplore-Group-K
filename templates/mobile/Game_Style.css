@@ -32,11 +32,10 @@ body {
 	margin-right: 60px;
 }
 
-
 #progress_bar {
 	width: 301px;
 	margin-left: 29px;
-	margin-top: 90px;
+	margin-top: 20px;
 	border-style: solid;
 	border-color: black;
 	border-radius: 10px;

@@ -14,12 +14,12 @@
 		<!-- POP UP SIDE BAR -->
 		<div id="mySidebar" class="sidebar">
 	      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-	      <a href="#">Map</a>
-	      <a href="#">Leaderboard</a>
-	      <a href="#">Profile</a>
-	      <a href="#">Help</a>
-	      <a href="#">FAQ</a>
-	      <a href="#">Resources</a>
+	      <a href="#" onclick="appConstruction()">Map</a>
+	      <a href="#" onclick="appConstruction()">Leaderboard</a>
+	      <a href="#" onclick="appConstruction()">Profile</a>
+	      <a href="Help_Page.html">Help</a>
+	      <a href="#" onclick="appConstruction()">FAQ</a>
+	      <a href="#" onclick="appConstruction()">Resources</a>
 	      <a href="#">Logout</a>
 	    </div>
 
@@ -32,19 +32,7 @@
 			<span>Progress bar value: {{progress_value}}</span>
 		</div>
 		
-		<!-- Please put the inline CSS into the page's CSS file, it is left here for referencing purposes, please remove inline styling after -->
-		<!--<div id="progress_bar_box_container">
-			<rect id="progress_box_rect" fill="rgba(255,255,255,1)" stroke="rgba(112,112,112,1)" stroke-width="1px" stroke-linejoin="miter" stroke-linecap="butt" stroke-miterlimit="4" shape-rendering="auto" id="Rectangle_22" rx="11.5" ry="11.5" x="0" y="0" width="301" height="23">
-			</rect>
-		</div>-->
-		
 		<img id="Exeterforum" src="../Exeterforum.jpg">
-		
-		<!-- Please put the inline CSS into the page's CSS file, it is left here for referencing purposes, please remove inline styling after -->
-		<!--<svg id="clue_text_box_container">
-			<rect id="clue_text_rect" fill="rgba(214,214,214,1)" stroke="rgba(112,112,112,1)" stroke-width="1px" stroke-linejoin="miter" stroke-linecap="butt" stroke-miterlimit="4" shape-rendering="auto" id="Rectangle_35" rx="9" ry="9" x="0" y="0" width="301" height="97">
-			</rect>
-		</svg>-->
 		
 		<div id="clue_text">
 			<span>Clue for next location: {{clue_message}}</span>

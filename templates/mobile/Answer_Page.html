@@ -8,87 +8,6 @@
 <script src="../JSFunctions.js"></script>
 <title>Answer Page</title>
 
-<!--<style id="applicationStylesheet" type="text/css">
-
-	#white_menu_button {
-		position: absolute;
-		left: 15.5px;
-		top: 20.5px;
-	}
-	
-	#green_box_rect {
-		position: absolute;
-		overflow: visible;
-		width: 375px;
-		height: 62px;
-		left: 0px;
-		top: 0px;
-	}
-
-	#white_logo_vector {
-		position: absolute;
-		width: 132px;
-		height: 51px;
-		left: 126px;
-		top: 6px;
-		overflow: visible;
-	}
-	
-	#Exeterforum {
-		overflow: visible;
-		width: 301px;
-		height: 206px;
-		left: 37px;
-		top: 81px;
-	}
-	
-
-	/* HTML5 Boilerplate accessible hidden styles */
-	[type="radio"] {
-	  border: 0; 
-	  clip: rect(0 0 0 0); 
-	  height: 1px; margin: -1px; 
-	  overflow: hidden; 
-	  padding: 0; 
-	  position: absolute; 
-	  width: 1px;
-	}
-
-	/* One radio button per line */
-	label {
-	  display: block;
-	  cursor: pointer;
-	  line-height: 2.5;
-	  font-size: 1.5em;
-	}
-
-	[type="radio"] + span {
-	  display: block;
-	}
-
-	/* the basic, unchecked style */
-	[type="radio"] + span:before {
-	  content: '';
-	  display: inline-block;
-	  width: 1em;
-	  height: 1em;
-	  vertical-align: -0.25em;
-	  border-radius: 1em;
-	  border: 0.125em solid #fff;
-	  box-shadow: 0 0 0 0.15em #000;
-	  margin-right: 0.75em;
-	  transition: 0.5s ease all;
-	}
-
-	/* the checked style using the :checked pseudo class */
-	[type="radio"]:checked + span:before {
-	  background: green;
-	  box-shadow: 0 0 0 0.25em #000;
-	}
-
-	
-</style>-->
-
 </head>
 
 <body>
@@ -97,13 +16,13 @@
 		<!-- POP UP SIDE BAR -->
 		<div id="mySidebar" class="sidebar">
 	      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-	      <a href="#">Map</a>
-	      <a href="#">Leaderboard</a>
-	      <a href="#">Profile</a>
-	      <a href="#">Help</a>
-	      <a href="#">FAQ</a>
-	      <a href="#">Resources</a>
-	      <a href="#">Logout</a>
+	      <a href="#" onclick="appConstruction()">Map</a>
+	      <a href="#" onclick="appConstruction()">Leaderboard</a>
+	      <a href="#" onclick="appConstruction()">Profile</a>
+	      <a href="Help_Page.html">Help</a>
+	      <a href="#" onclick="appConstruction()">FAQ</a>
+	      <a href="#" onclick="appConstruction()">Resources</a>
+	      <a href="#" onclick="appConstruction()">Logout</a>
 	    </div>
 
 		<div class="navbar">
@@ -115,20 +34,8 @@
 			<span>Progress bar value: {{progress_value}}</span>
 		</div>
 		
-		<!-- Please put the inline CSS into the page's CSS file, it is left here for referencing purposes, please remove inline styling after -->
-		<!--<svg id="progress_bar_box_container">
-			<rect id="progress_box_rect" fill="rgba(255,255,255,1)" stroke="rgba(112,112,112,1)" stroke-width="1px" stroke-linejoin="miter" stroke-linecap="butt" stroke-miterlimit="4" shape-rendering="auto" id="Rectangle_22" rx="11.5" ry="11.5" x="0" y="0" width="301" height="23">
-			</rect>
-		</svg>-->
-		
 		<img id="Exeterforum" src="../Exeterforum.jpg">
 		
-		<!-- Please put the inline CSS into the page's CSS file, it is left here for referencing purposes, please remove inline styling after -->
-		<!--<svg id="task_box_container">
-			<rect id="task_box_rect" fill="rgba(214,214,214,1)" stroke="rgba(112,112,112,1)" stroke-width="1px" stroke-linejoin="miter" stroke-linecap="butt" stroke-miterlimit="4" shape-rendering="auto" id="Rectangle_35" rx="9" ry="9" x="0" y="0" width="301" height="97">
-			</rect>
-		</svg>-->
-
 		<div id="answer_text">
 			<span>Question: {{clue_message}}</span>
 		</div>
@@ -138,11 +45,6 @@
 			<div>
 				<label for="a">
 					<input type="radio" name="answer" value="a" id="a"> <span>A: {{answer_a}}</span>
-				
-				<!--<svg id="answer_a_box_container" onclick="highLight(this.id)">
-					<rect id="answer_a_rect" onclick="highLight(this.id)" fill="rgba(214,214,214,1)" stroke="rgba(112,112,112,1)" stroke-width="1px" stroke-linejoin="miter" stroke-linecap="butt" stroke-miterlimit="4" shape-rendering="auto" rx="9" ry="9" x="0" y="0" width="249" height="40" class="">
-					</rect>
-				</svg>-->
 				</label>
 			</div>
 			<div>
