@@ -3,12 +3,16 @@ from flask import Flask, render_template, request, session, redirect, url_for
 import atexit
 import os
 import json
+<<<<<<< Updated upstream
 import ibm_db
 import jwt
 import requests
 from flask_httpauth import HTTPBasicAuth
 from flask_pyoidc.flask_pyoidc import OIDCAuthentication
 from flask_pyoidc.provider_configuration import ProviderConfiguration, ClientMetadata
+=======
+#import ibm_db
+>>>>>>> Stashed changes
 
 app = Flask(__name__)
 localFlag = False
