@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>End Game Page</title>
+
+<style id="applicationStylesheet" type="text/css">
+
+	#white_menu_button {
+		position: absolute;
+		left: 15.5px;
+		top: 20.5px;
+	}
+	
+	#green_box_rect {
+		position: absolute;
+		overflow: visible;
+		width: 375px;
+		height: 62px;
+		left: 0px;
+		top: 0px;
+	}
+
+	#white_logo_vector {
+		position: absolute;
+		width: 132px;
+		height: 51px;
+		left: 126px;
+		top: 6px;
+		overflow: visible;
+	}
+	
+	
+</style>
+
+<body>
+	<div id="answer_page_container">
+	
+		<svg id="green_box_container">
+			<rect id="green_box_rect" fill="rgba(0,128,1)" stroke="rgba(112,112,112,1)"></rect>
+		</svg>
+	
+		<div id="white_menu_container">
+			<img id="white_menu_button" src="white_menu_button.png" width="40" height="40" left="15.5px" top="20.5px">
+		</div>
+		
+		<div id="exeter_logo_container">
+			<img id="white_logo_vector" src="white_logo_vector.png" width="150" height="60">
+		</div>
+		
+		<div id="finish_massage">
+			<p>Congratulations {{group_name}}!!! You've completed our eXeplore induction game.</p>
+			<p>Your final score is: {{final_score}}</p>
+			<p>You positioned: {{final_position}}</p>
+		</div>
+		
+		
+		<div id="finish_leaderboard_container">
+			<!-- Please put the inline CSS into the page's CSS file, it is left here for referencing purposes, please remove inline styling after -->
+			<svg id="clue_text_box_container">
+				<rect id="clue_text_rect" fill="rgba(214,214,214,1)" stroke="rgba(112,112,112,1)" stroke-width="1px" stroke-linejoin="miter" stroke-linecap="butt" stroke-miterlimit="4" shape-rendering="auto" id="Rectangle_35" rx="9" ry="9" x="0" y="0" width="301" height="150">
+				</rect>
+			</svg>			
+			
+			<span>Leaderboard</span>
+		</div>
+		
+		<div id="transparent_button_container">
+			<button type="button" id="transparent_button" name="logout_button">Logout</button>
+		</div>		
+		
+	</div>
+</body>
+</html>

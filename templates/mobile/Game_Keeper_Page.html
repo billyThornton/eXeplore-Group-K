@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta name="viewport" content="width=device-width, user-scalable=no"/>
+     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link href="Game_Keeper_Style.css" rel='stylesheet' type='text/css'/>
+    <script src="JSFunctions.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <title>Gamekeeper Dashboard</title>
+  </head>
+
+  <body>
+
+    <!-- Pop up sidebar -->
+    <div id="mySidebar" class="sidebar">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+      <a href="Game_Keeper_Page.html">Homepage</a>
+      <a href="#">Logout</a>
+    </div>
+
+
+  <!-- Topbar -->
+    <div id="topbar">
+      <img src="White_logo_vector.png" alt="Exeter Uni Logo" id="exeter_logo">
+      <a>
+       <input type="image" src="menu_icon.png" onclick="openNav()" class="openbtn" alt="Menu Icon" id="menu_icon">
+      </a>
+    </div>
+     
+    <!-- Sidebar -->
+    <div id="sidebar">
+
+      <a href="#" onclick="loadDoc('Manage_Locations.html')">
+        Manage Locations
+      </a>
+      <a href="#" onclick="loadDoc('manage_groups1.html')">
+         Manage Groups
+      </a>
+      <a href="#" onclick="loadDoc('leaderboard_page1.html')">
+         Leaderboard
+      </a>
+      <a href="#" onclick="loadDoc('manage_routes1.html')">
+        Manage Routes
+      </a>
+      <a href="#" onclick="loadDoc('assign_routes1.html')">
+        Assign Routes
+      </a>
+
+      </div>
+
+    </div>
+    <!-- Content -->
+    <div id="content">
+       <h1>Welcome Game Keeper!</h1>
+        <p>
+           Please see on the left of your screen the features you've been given.
+            Use these pages to configure, update and change the game.
+        </p>
+        <h2>Key features:</h2>
+        <ul>
+          <li>You have the ability to Create/Add, Edit, Delete and View all locations,
+          Groups and Routes.</li>
+          <li>View the leaderboard</li>
+          <li>Assign Groups to Routes</li>
+
+          <p>Make sure to keep all page content within the 
+            <code>#content</code>.
+          </p>
+        </p>
+    </div>
+
+  </body>
+<html>

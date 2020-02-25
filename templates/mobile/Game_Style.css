@@ -1,0 +1,87 @@
+body {
+	/*background-image: url("Exeter_University.jpg");*/
+	background: grey;
+	color: white;
+	text-align: center;
+}
+
+.navbar {
+  overflow: hidden;
+  background-color: #103819;
+  position: fixed; /* Set the navbar to fixed position */
+  top: 0; /* Position the navbar at the top of the page */
+  left: 0;
+  width: 100%; /* Full width */
+  text-align: center;
+  border-style: solid;
+  border-color: #707070;
+  border-top: 0px;
+  border-left: 0px;
+  border-width: 1px;
+}
+
+#menu_icon {
+	height: 40px;
+	width: 40px;
+	float: left;
+	margin-top: 15px;
+	margin-left: 20px;
+}
+
+#white_logo_vector {
+	margin-top: 5px;
+	margin-right: 40px;
+}
+
+#progress_box_rect {
+	margin-top: 200px;
+}
+
+#Exeterforum {
+	overflow: visible;
+	width: 301px;
+	height: 206px;
+	left: 37px;
+	top: 81px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: white;
+	border-radius: 15px;
+	margin-bottom: 15px;
+}
+
+#clue_text_rect {
+	height: 110px;
+}
+
+#clue_text {
+	border-style: solid;
+	border-color: #707070;
+	border-width: 1px;
+	border-radius: 15px;
+	background: #D6D6D6;
+	color: white;
+	height: 97px;
+	width: 301px;
+	margin-left: 30px;
+}
+
+.transparent_button {
+	border-style: solid;
+	border-width: 1px;
+	border-color: white;
+	border-radius: 20px;
+	height: 40px;
+	width:90px;
+	font-size: 15px;
+	color: white;
+	margin-top: 20px;
+}
+
+#goback {
+	background: #415CE1;
+}
+
+#here {
+	background: #FFB916;
+}
