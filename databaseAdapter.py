@@ -40,7 +40,7 @@ def getStudent():
         db2conn = ibm_db.connect("DATABASE="+db2cred['db']+";HOSTNAME="+db2cred['hostname']+";PORT="+str(db2cred['port'])+";UID="+db2cred['username']+";PWD="+db2cred['password']+";","","")
     if db2conn:
         # if we have a Db2 connection, query the database
-        sql="select * from STUDENT"
+        sql="select * from locations"
         #Prepare the statement 
         stmt = ibm_db.prepare(db2conn,sql)
 		#Execute the sql
@@ -56,3 +56,4 @@ def getStudent():
         #Print to screen the result
         print(rows)
     return rows
+getStudent()
