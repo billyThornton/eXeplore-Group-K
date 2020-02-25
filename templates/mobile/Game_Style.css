@@ -1,6 +1,5 @@
 body {
-	/*background-image: url("Exeter_University.jpg");*/
-	background: grey;
+	background-image: url("../Exeter_University.jpg");
 	color: white;
 	text-align: center;
 }
@@ -24,17 +23,26 @@ body {
 	height: 40px;
 	width: 40px;
 	float: left;
-	margin-top: 15px;
-	margin-left: 20px;
+	margin-top: 5px;
+	margin-left: 10px;
 }
 
 #white_logo_vector {
-	margin-top: 5px;
-	margin-right: 40px;
+	margin-top: 10px;
+	margin-right: 60px;
 }
 
-#progress_box_rect {
-	margin-top: 200px;
+
+#progress_bar {
+	width: 301px;
+	margin-left: 29px;
+	margin-top: 90px;
+	border-style: solid;
+	border-color: black;
+	border-radius: 10px;
+	border-width: 1px;
+	background: white;
+	color: black;
 }
 
 #Exeterforum {
@@ -42,16 +50,12 @@ body {
 	width: 301px;
 	height: 206px;
 	left: 37px;
-	top: 81px;
+	margin-top: 20px;
 	border-style: solid;
 	border-width: 1px;
 	border-color: white;
 	border-radius: 15px;
 	margin-bottom: 15px;
-}
-
-#clue_text_rect {
-	height: 110px;
 }
 
 #clue_text {
@@ -62,6 +66,18 @@ body {
 	background: #D6D6D6;
 	color: white;
 	height: 97px;
+	width: 301px;
+	margin-left: 30px;
+}
+
+#answer_text {
+	border-style: solid;
+	border-color: #707070;
+	border-width: 1px;
+	border-radius: 15px;
+	background: #D6D6D6;
+	color: white;
+	height: 50px;
 	width: 301px;
 	margin-left: 30px;
 }
@@ -82,6 +98,105 @@ body {
 	background: #415CE1;
 }
 
-#here {
+#next {
 	background: #FFB916;
 }
+
+/* ----POP UP SIDEBAR---- */
+.sidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left:0;
+  border-left-style: : 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidebar a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidebar a:hover {
+  color: #f1f1f1;
+}
+
+.sidebar .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+.openbtn {
+  font-size: 20px;
+  cursor: pointer;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+}
+
+#main {
+  transition: margin-left .5s;
+  padding: 16px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidebar {padding-top: 15px;}
+  .sidebar a {font-size: 18px;}
+}
+
+/* -- radio buttons --*/
+
+	[type="radio"] {
+	  border: 0; 
+	  clip: rect(0 0 0 0); 
+	  height: 1px; margin: -1px; 
+	  overflow: hidden; 
+	  padding: 0; 
+	  position: absolute; 
+	  width: 1px;
+	}
+
+	/* One radio button per line */
+	label {
+	  display: block;
+	  cursor: pointer;
+	  line-height: 2.5;
+	  font-size: 1.5em;
+	}
+
+	[type="radio"] + span {
+	  display: block;
+	}
+
+	/* the basic, unchecked style */
+	[type="radio"] + span:before {
+	  content: '';
+	  display: inline-block;
+	  width: 1em;
+	  height: 1em;
+	  vertical-align: -0.25em;
+	  border-radius: 1em;
+	  border: 0.125em solid #fff;
+	  box-shadow: 0 0 0 0.15em #000;
+	  margin-right: 0.75em;
+	  transition: 0.5s ease all;
+	}
+
+	/* the checked style using the :checked pseudo class */
+	[type="radio"]:checked + span:before {
+	  background: green;
+	  box-shadow: 0 0 0 0.25em #000;
+	}

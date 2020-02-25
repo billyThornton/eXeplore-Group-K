@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link href="Location_Style.css" rel='stylesheet' type='text/css'/>
 <meta charset="utf-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="JSFunctions.js"></script>
-<title>Add Location Page</title>
+<link href="Location_Style.css" rel='stylesheet' type='text/css'/>
+<script src="../JSFunctions.js"></script>
 
+<title>Add Location Page</title>
 </head>
+
+
 <body>
-	<div id="edit_location_page" onclick="application.goBack()">
+	<div id="add_location_page">
 
 		<form>
 			<div class="location_inputs" id="add_location_container">
@@ -69,11 +71,12 @@
 		</form>
 
 		<div id="transparent_button_container">
-			<button type="button" id="save_transparent_button" name="save_location_button">Save Location</button>
-			<button type="button" href="#" id="transparent_button" onclick="loadDoc('Manage_Locations.html')" name="goback_button">Go Back</button>
+			<button type="button" id="save_transparent_button" name="add_location_button">Add Location</button>
+			<button type="button" href="#" id="transparent_button" onclick="loadDoc('Manage_Locations_Page.html')" name="goback_button">Go Back</button>
 		</div>
 
 
 	</div>
 </body>
+
 </html>
