@@ -1,8 +1,22 @@
+# -*- coding: utf-8 -*-
+"""
+Created on 19/02/2020 
+@author: Billy Thornton
+@Last Edited: 26/02/2020
+@edited by: Billy Thornton
+
+This file contains all the URL routing for the backend/front end, it takes urls
+and displays the required html files.
+It also processes data passed using post/get request.
+"""
 import flask
 from flask import Flask, render_template, redirect, url_for, request, flash, Blueprint,send_file,session
+from werkzeug.security import generate_password_hash, check_password_hash
+from itsdangerous import URLSafeTimedSerializer
 import os
 import json
 import models
+import auth
 
 
 app = Flask(__name__)
@@ -19,11 +33,13 @@ def login_post():
     password = request.form.get('password')
     print("Email:",email,"Password:",password)
     print(user.email,user.password)
-    if(user.email == email and user.password == password):
-        currentUser = user
-        print("Email:",email,"Password:",password)
+    if(auth.verifyUser(password,email)):
+        if(password == "password"):
+            currentUser = user2
+        else:
+            currentUser = user
     else:
-        currentUser = user2
+        print("AUTH FAILED")
     if(currentUser.role == "Staff"):
         return redirect(url_for('dashboard'))
     elif(currentUser.role == "Student"):
@@ -105,7 +121,9 @@ def showLocationClue():
     cluemessage = "Clue to location "+str(progress)
     #progress value = get User.progress from db
     #clue message = get clue for position = progress from db
-    return render_template('mobile/Clue_Page.html',progress_value = progress,clue_message = cluemessage)
+    imageLocation = url_for('static',filename='images/Exeterforum.jpg')
+    print(imageLocation)
+    return render_template('mobile/Clue_Page.html',progress_value = progress,clue_message = cluemessage,clue_location=imageLocation)
 
 @app.route('/getQuestion',methods = ['POST'])
 def getQuestion():
@@ -150,4 +168,5 @@ def loadHelpPage():
 #Runs the app locally if not deployed to the server
 if __name__ == '__main__':
     app.secret_key = 'eXeplore_241199_brjbtk' 
+    app.SECURITY_PASSWORD_SALT = 'BFR241199'
     app.run(host='0.0.0.0', port=port, debug=True,use_reloader=False)
