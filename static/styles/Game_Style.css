@@ -242,24 +242,27 @@ label {
 	margin-bottom: 30px;
 	padding: 6px;
 }
+
 .table tbody{
 	display:block;
 	overflow: auto;
 	height: 200px;
 }
+
 .table thead tr {
 	display: block;
 	border-style: solid;
 	border-width: 0px;
 	border-radius: 20px;
 }
+
 .table thead {
 	background: #104600;
 	color:#fff;
 }
+
 .table th, .table td {
 	padding: 5px;
 	text-align: left;
 	width: 400px;
-
 }
