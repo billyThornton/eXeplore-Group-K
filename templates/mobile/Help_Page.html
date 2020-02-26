@@ -4,8 +4,8 @@
 <meta charset="utf-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="Game_Style.css" rel='stylesheet' type='text/css'/>
-<script src="../JSFunctions.js"></script>
+<link href="{{url_for('static',filename='styles/Game_Style.css')}}" rel='stylesheet' type='text/css'/>
+<script src="{{url_for('static',filename='js/JSFunctions.js')}}"></script>
 <title>Help Page</title>
 
 <body>
@@ -25,8 +25,8 @@
 	    </div>
 	
 		<div class="navbar">
-			<input type="image" src="../menu_icon.png" onclick="openNav()" class="openbtn" alt="Menu Icon" id="menu_icon">
-			<img id="white_logo_vector" src="../white_logo_vector.png" width="150" height="60">
+			<input type="image" src="{{url_for('static',filename='images/menu_icon.png')}}" onclick="openNav()" class="openbtn" alt="Menu Icon" id="menu_icon">
+			<img id="white_logo_vector" src="{{url_for('static',filename='images/white_logo_vector.png')}}" width="150" height="60">
 		</div>
 			
 		<div id="help_title">
@@ -42,7 +42,7 @@
 		
 		
 		<div id="transparent_button_container">
-			<button type="button" class="transparent_button" name="contine_button">Continue</button>
+			<button type="button" onclick="location.href='Game'" class="transparent_button" name="contine_button">Continue</button>
 		</div>		
 		
 	</div>

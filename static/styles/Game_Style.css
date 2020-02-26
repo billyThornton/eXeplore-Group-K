@@ -1,5 +1,5 @@
 body {
-	background-image: url("../Exeter_University.jpg");
+	background-image: url('/Exeter_University.jpg');
 	color: white;
 	text-align: center;
 }

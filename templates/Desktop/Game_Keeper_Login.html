@@ -4,7 +4,7 @@
 <meta charset="utf-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="Game_Keeper_Login_Style.css" rel='stylesheet' type='text/css'/>
+<link href="{{url_for('static',filename='styles/Game_Keeper_Login_Style.css')}}" rel='stylesheet' type='text/css'/>
 <title>Game's Keeper Login</title>
 
 <!-- <style id="applicationStylesheet" type="text/css">
@@ -38,7 +38,7 @@
 	<div id="green_box">
 
 	<div id="exeter_logo_container">
-		<img id="white_logo_vector" src="../white_logo_vector.png">
+		<img id="white_logo_vector" src={{url_for('static',filename='images/white_logo_vector.png')}}>
 	</div>
 
 	<div id="game_name">
@@ -55,8 +55,8 @@
 
 			<label>Log in as:</label>
 			<p>
-			<button type="submit">Staff</button>
-			<button type="submit">Student</button>
+			<button type="submit" formmethod="post">Staff</button>
+			<button type="submit" formmethod="post">Student</button>
 			</p>
 
 			<label>

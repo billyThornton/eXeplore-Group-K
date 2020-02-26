@@ -3,8 +3,8 @@
   <head>
     <meta name="viewport" content="width=device-width, user-scalable=no"/>
      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <link href="Game_Keeper_Style.css" rel='stylesheet' type='text/css'/>
-    <script src="../JSFunctions.js"></script>
+    <link href="{{url_for('static',filename='styles/Game_Keeper_Style.css')}}" rel='stylesheet' type='text/css'/>
+    <script src="{{url_for('static',filename='js/JSFunctions.js')}}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <title>Gamekeeper Dashboard</title>
   </head>
@@ -21,28 +21,28 @@
 
   <!-- Topbar -->
     <div id="topbar">
-      <img src="../White_logo_vector.png" alt="Exeter Uni Logo" id="exeter_logo">
+      <img src="{{url_for('static',filename='images/white_logo_vector.png')}}" alt="Exeter Uni Logo" id="exeter_logo">
       <a>
-       <input type="image" src="../menu_icon.png" onclick="openNav()" class="openbtn" alt="Menu Icon" id="menu_icon">
+       <input type="image" src="{{url_for('static',filename='images/menu_icon.png')}}" onclick="openNav()" class="openbtn" alt="Menu Icon" id="menu_icon">
       </a>
     </div>
      
     <!-- Sidebar -->
     <div id="sidebar">
 
-      <a href="#" onclick="loadDoc('Manage_Locations_Page.html')">
+      <a href="#" onclick="loadDoc('/Manage_Locations_Page')">
         Manage Locations
       </a>
-      <a href="#" onclick="loadDoc('Manage_Groups_Page.html')">
+      <a href="#" onclick="loadDoc('/Manage_Groups_Page')">
          Manage Groups
       </a>
-      <a href="#" onclick="loadDoc('Leaderboard_Page.html')">
+      <a href="#" onclick="loadDoc('/Leaderboard_Page')">
          Leaderboard
       </a>
-      <a href="#" onclick="loadDoc('Manage_Routes_Page.html')">
+      <a href="#" onclick="loadDoc('/Manage_Routes_Page')">
         Manage Routes
       </a>
-      <a href="#" onclick="loadDoc('Assign_Routes_Page.html')">
+      <a href="#" onclick="loadDoc('/Assign_Routes_Page')">
         Assign Routes
       </a>
 

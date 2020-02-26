@@ -13,9 +13,11 @@ Flask = ">=1.0.0"
 Flask-SQLAlchemy = "*"
 flask_httpauth = "*"
 flask_pyoidc=">=2.0.0"
+flask-login = "*"
+
 prometheus_client = "*"
 ibm-db = "*"
 pipfile = "*"
 jwt = "*"
 requests = "*"
-bs4 = "*"
+
