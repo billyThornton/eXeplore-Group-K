@@ -21,25 +21,24 @@
 	      <a href="#" >Help</a>
 	      <a href="#" onclick="appConstruction()">FAQ</a>
 	      <a href="#" onclick="appConstruction()">Resources</a>
-	      <a href="#">Logout</a>
+	      <a href="/Logout">Logout</a>
 	    </div>
 	
 		<div class="navbar">
 			<input type="image" src="{{url_for('static',filename='images/menu_icon.png')}}" onclick="openNav()" class="openbtn" alt="Menu Icon" id="menu_icon">
 			<img id="white_logo_vector" src="{{url_for('static',filename='images/white_logo_vector.png')}}" width="150" height="60">
 		</div>
-			
+
 		<div id="help_title">
 			<h1>Help Page</h1>
 		
 		<div id="help_message">
 			<p>How to play:</p>
-			<p>Once you've chosen a type of route you will be presented with a clue to where you need to go next.</p>
+			<p>Once you've chosen a type of route(Not yet implemented) you will be presented with a clue to where you need to go next.</p>
 			<p>Once you think you've reached the next location, tap 'Next' and you will be displayed with your task!</p>
-			<p>Enter your final answer and move on to the next location! Once the progress bar at the top is full you've finished!!!</p>
+			<p>Enter your answer and move on to the next location! Once the progress bar at the top is full you've finished!!!</p>
 			<p>You will be given a score and your leaderboard position.</p>
 		</div>
-		
 		
 		<div id="transparent_button_container">
 			<button type="button" onclick="location.href='Game'" class="transparent_button" name="contine_button">Continue</button>
