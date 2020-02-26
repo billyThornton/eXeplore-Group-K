@@ -7,17 +7,19 @@
 <title>Manage Route Page</title>
 
 </head>
+
 <body>
 	<div id="manage_route_page">
 		
-		
+		<!-- Create Route Column -->
 		<div id="manage_route_container">
 			<h2>Create Route</h2>
 			
 			<p> <label>Name:</label>
 			<input type="text" id="route_name" name="create_route_input"> </p>
 			<p> <label>Locations Selected:</label>
-			<!-- As locations are selected their names will appear here -->
+			
+			<!-- Selected locations holder -->
 			<div style="width:200px;height:60px;border:1px solid #000;">Location order will go here!</div> </p>
 			
 			<div id="transparent_button_container">
@@ -36,7 +38,7 @@
 			</div>
 		</div>
 		
-		
+		<!-- Locations Column -->
 		<h2>Locations</h2>
 		
 			<!-- Make This scrollable overflow-y: scroll; in the css should do this -->
@@ -52,6 +54,7 @@
 			</div>		
 
 		
+		<!-- Routes Column -->
 		<h2>Routes</h2>
 		
 			<!-- Make This scrollable overflow-y: scroll; in the css should do this -->
