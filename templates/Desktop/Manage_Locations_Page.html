@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,30 +7,33 @@
 <script src="{{url_for('static',filename='js/JSFunctions.js')}}"></script>
 <link href="{{url_for('static',filename='styles/Manage_Locations_Style.css')}}" rel='stylesheet' type='text/css'/>
 <title>Manage Locations Page</title>
+
 </head>
+
 <body>
+
 	<div id="manage_location_page">
+	
 		<h3>Locations:</h3>
-			<div id="location_list_container">
-				<input type="radio" id="location_1" name="locations"/><label id="location_label" for="location_1"> Forum</label> <br />
-				<input type="radio" id="location_2" name="locations"/> <label id="location_label" for="location_2"> Sports Park</label> <br/>
-				<input type="radio" id="location_3" name="locations"/> <label id="location_label" for="location_3"> Peter Chalk</label> <br />
-				<input type="radio" id="location_4" name="locations"/> <label id="location_label" for="location_4"> Innovation</label><br />
-				<input type="radio" id="location_1" name="locations"/><label id="location_label" for="location_1"> Forum</label> <br />
-				<input type="radio" id="location_2" name="locations"/> <label id="location_label" for="location_2"> Sports Park</label> <br/>
-				<input type="radio" id="location_3" name="locations"/> <label id="location_label" for="location_3"> Peter Chalk</label> <br />
-				<input type="radio" id="location_4" name="locations"/> <label id="location_label" for="location_4"> Innovation</label><br />
-				<input type="radio" id="location_1" name="locations"/><label id="location_label" for="location_1"> Forum</label> <br />
-				<input type="radio" id="location_2" name="locations"/> <label id="location_label" for="location_2"> Sports Park</label> <br/>
-				<input type="radio" id="location_3" name="locations"/> <label id="location_label" for="location_3"> Peter Chalk</label> <br />
-				<input type="radio" id="location_4" name="locations"/> <label id="location_label" for="location_4"> Innovation</label><br />
-			</div>
+		
+		<div id="location_list_container">
+		
+			<form>
+				{% for location in locations %}
+				<input type="radio" id="{{location}}" name="locations"/><label id="location_label" for="{{location}}">{{Location}}</label> <br />
+				{% endfor %}
+			</form>
+		</div>
+		
 	</div>
+	
+	
 	<div id="transparent_button_container">
 
-			<button type="button" href="#" id="transparent_button" onclick="loadDoc('/Add_Location')" name="new_location_button">Add</button>
-			<button type="button" href="#" id="transparent_button" onclick="loadDoc('/Edit_Location')" name="edit_location_button">Edit</button>
-			<button type="button" href="#" id="delete_transparent_button" name="delete_location_button">Delete</button>
+		<button type="button" href="#" id="transparent_button" onclick="loadDoc('/Add_Location')" name="new_location_button">Add</button>
+		<button type="button" href="#" id="transparent_button" onclick="loadDoc('/Edit_Location')" name="edit_location_button">Edit</button>
+		<button type="button" href="#" id="delete_transparent_button" name="delete_location_button">Delete</button>
 	</div>
+
 </body>
 </html>

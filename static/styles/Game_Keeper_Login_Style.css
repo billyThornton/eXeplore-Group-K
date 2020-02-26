@@ -54,6 +54,21 @@ button[id="btn"]:active {
   outline: none;
 }
 
+select {
+  width: 224px;
+  height: 46px;
+  border-radius: 40px;
+  border-color: white;
+  border-style: solid;
+  border-width: 1px;
+  background-color: #31750E;
+  text-align: center;
+  color: white;
+  opacity: 100%;
+  font-size: 18px;
+  padding-left: 10px;
+}
+
 a {
   display: block;
   margin-top: 10px;
@@ -80,8 +95,8 @@ a:hover {
 }
 
 #white_logo_vector {
-  width: 522px;
-  height: 200px;
+  width: 392px;
+  height: 150px;
 }
 
 #game_name {
@@ -139,5 +154,10 @@ a:hover {
     opacity: 100%;
     font-size: 18px;
   }
+
+  select {
+  width: 200px;
+  height: 33px;
+}
 
 }
