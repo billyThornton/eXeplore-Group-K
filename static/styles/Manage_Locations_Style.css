@@ -15,6 +15,7 @@ h3 {
 	font-weight: lighter;
 }
 
+/* Hide old radio button style */
 input[type=radio]{
 	display: none;
 }
