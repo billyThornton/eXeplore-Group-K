@@ -12,7 +12,7 @@ input[id=text_input] {
   border-radius: 30px;
   border-color: white;
   border-style: solid;
-  border-width: 2px;
+  border-width: 1px;
   background-color: #31750E;
   text-align: center;
   color: white;
@@ -37,22 +37,32 @@ input[id=text_input]:focus {
   font-family: sans-serif;
 }
 
-button[type="submit"] {
+button[id="btn"] {
   font-size: 20px;
   color: white;
   height: 40px;
   width: 113px;
   background: none;
   border-style: solid;
-  border-width: 2px;
+  border-width: 1px;
   border-color: white;
   border-radius: 25px;
+  margin-right: 10px;
 }
-button[type="submit"]:active {
+button[id="btn"]:active {
   border-color: #31750E;
   outline: none;
 }
 
+a {
+  display: block;
+  margin-top: 10px;
+  color: white;
+}
+
+a:hover {
+  color: red;
+}
 
 #green_box {
   width: 802px;
@@ -70,13 +80,13 @@ button[type="submit"]:active {
 }
 
 #white_logo_vector {
-  width: 686px;
-  height: 263px;
+  width: 522px;
+  height: 200px;
 }
 
 #game_name {
   font-family: sans-serif;
-  font-size: 30px;
+  font-size: 25px;
   color: white;
 }
 
