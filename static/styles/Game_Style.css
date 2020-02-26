@@ -34,7 +34,8 @@ body {
 
 #progress_bar {
 	width: 301px;
-	margin-left: 29px;
+	margin-left: autp;
+	margin-right: auto;
 	margin-top: 20px;
 	border-style: solid;
 	border-color: black;
@@ -44,7 +45,7 @@ body {
 	color: black;
 }
 
-#Exeterforum {
+#clue_location {
 	overflow: visible;
 	width: 301px;
 	height: 206px;
@@ -58,6 +59,7 @@ body {
 }
 
 #clue_text {
+	margin: auto;
 	border-style: solid;
 	border-color: #707070;
 	border-width: 1px;
