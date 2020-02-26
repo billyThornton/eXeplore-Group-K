@@ -29,95 +29,98 @@ including text input, buttons and select input.
 */
 
 body {
-  background-image: linear-gradient(#6C6C6C, #C1C1C1);
-  height: 100%;
-  background-repeat: no-repeat;
-  background-size: cover;
+	background-image: linear-gradient(#6C6C6C, #C1C1C1);
+	height: 100%;
+	background-repeat: no-repeat;
+	background-size: cover;
 }
 
 h3 {
-  color: white;
-  font-family: 'Roboto', sans-serif;
-  font-size: 30px;
-  font-weight: lighter;
+	color: white;
+	font-family: 'Roboto', sans-serif;
+	font-size: 30px;
+	font-weight: lighter;
 }
 
+/* Hiding original radio button style */
 input[type=radio]{
-  display: none;
+	display: none;
 }
 
 .active-label {
-  color: #414141;
+	color: #414141;
 }
+
 .active-label:before {
-    background-color: #414141;
-    border-color: green;
-  }
+	background-color: #414141;
+	border-color: green;
+ }
 
 /* How it should look when checked */
 input[type="radio"]:checked + #location_label:before {
-  border-color: white;
-  border: none;
-  background: #31750E;
+	border-color: white;
+	border: none;
+	background: #31750E;
 }
 
-/**
- * How it should look when disabled
- */
+/* How it should look when disabled */
 input[type="radio"]:disabled + #location_label {
-  background: #efefef;
-  color: rgba(0, 0, 0, 0.5);
-  cursor: not-allowed;
-}
-input[type="radio"]:disabled + #location_label:hover {
-  border-color: rgba(0, 0, 0, 0.1);
-}
-input[type="radio"]:disabled + #location_label:before {
-  border-color: white;
-  background: white;
+	background: #efefef;
+	color: rgba(0, 0, 0, 0.5);
+	cursor: not-allowed;
 }
 
+input[type="radio"]:disabled + #location_label:hover {
+	border-color: rgba(0, 0, 0, 0.1);
+}
+
+input[type="radio"]:disabled + #location_label:before {
+	border-color: white;
+	background: white;
+}
+
+/* New radio styling */
 #location_label {
-  font-size: 1rem;
-  font-weight: bold;
-  line-height: 1;
-  cursor: pointer;
-  display: block;
-  color: white;
-  font-family: sans-serif;
-  padding: 1rem 1rem 1rem 3rem;
-  position: relative;
-  border-top: 1px solid rgba(black, 0.1);
-  background: #414141;
-  whitespace: no-wrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  transition: all 0.15s ease;
+	font-size: 1rem;
+	font-weight: bold;
+	line-height: 1;
+	cursor: pointer;
+	display: block;
+	color: white;
+	font-family: sans-serif;
+	padding: 1rem 1rem 1rem 3rem;
+	position: relative;
+	border-top: 1px solid rgba(black, 0.1);
+	background: #414141;
+	whitespace: no-wrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	transition: all 0.15s ease;
 }
 
 #location_label:first-of-type {
-    border: 0;
-  }
-#location_label:before {
-  content: "";
-  position: absolute;
-  left: 1rem;
-  top: 1rem;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  border: 0.2rem solid #ccc;
-  }
+	border: 0;
+}
 
-  .active-label, #location_label:focus, #location_label:hover, #location_label:active, #location_label:checked + #location_label {
+#location_label:before {
+	content: "";
+	position: absolute;
+	left: 1rem;
+	top: 1rem;
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	border: 0.2rem solid #ccc;
+}
+
+.active-label, #location_label:focus, #location_label:hover, #location_label:active, #location_label:checked + #location_label {
     color: #31750E;
-  }
-  .active-label:before, #location_label:focus:before, #location_label:hover:before, #location_label:active:before, #location_label:checked + #location_label:before {
+}
+
+.active-label:before, #location_label:focus:before, #location_label:hover:before, #location_label:active:before, #location_label:checked + #location_label:before {
     background: #414141;
     border-color: #31750E;
-  }
-
-
+}
 
 #manage_location_page{
     width: 100%;
@@ -129,44 +132,26 @@ input[type="radio"]:disabled + #location_label:before {
     padding: 30px;
     overflow-y: scroll;
     height: 500px;
-  }
+}
 
-
+/* Styling of user input on add/edit page*/
 input[type=text] {
-  /* width: 400px; */
-  height: 18px;
-  border: none;
-  border-radius: 20px;
-  text-align: left;
-  padding-left: 5px;
-  color: white;
-  opacity: 100%;
-  font-size: 9px;
-  color: black;
-  /* position: absolute; */
-  width: 60%;
-  float: right;
-  padding-right: 5px;
-  overflow: scroll;
+	height: 18px;
+	border: none;
+	border-radius: 20px;
+	text-align: left;
+	padding-left: 5px;
+	color: white;
+	opacity: 100%;
+	font-size: 9px;
+	color: black;
+	width: 60%;
+	float: right;
+	padding-right: 5px;
+	overflow: scroll;
 }
 
-/* input[type="file"]::before {
-  content: 'Select some files';
-  height: 62px;
-  width: 179px;
-  border-style: solid;
-  border-width: 1px;
-  border-color: #707070;
-  border-radius: 40px;
-  font-size: 32px;
-}
-
-input[type="file"]::-webkit-file-upload-button {
-  visibility: hidden;
-
-} */
-
-
+/* Photo insert */
 .inputfile {
 	width: 0.1px;
 	height: 0.1px;
@@ -174,8 +159,8 @@ input[type="file"]::-webkit-file-upload-button {
 	overflow: hidden;
 	position: absolute;
 	z-index: -1;
-
 }
+
 .inputfile + label {
     color: black;
     background-color: white;
@@ -195,96 +180,93 @@ input[type="file"]::-webkit-file-upload-button {
 .inputfile:focus + label,
 .inputfile + label:hover {
     cursor: pointer;
-
 }
 
+/* Drop down styling on add and edit locations */
 .location_inputs {
-  font-size: 14px;
-  color: white;
-  font-family: sans-serif;
-  width: 200px;
-  margin-bottom: 15px;
-  width: 360px;
-  display: inline-block;
-
-  /* float: left; */
+	font-size: 14px;
+	color: white;
+	font-family: sans-serif;
+	width: 200px;
+	margin-bottom: 15px;
+	width: 360px;
+	display: inline-block;
 }
 
 #input_label {
-  padding: 7px;
-  padding-top: 5px;
-  margin-right: 10px;
-  width:40%;
+	padding: 7px;
+	padding-top: 5px;
+	margin-right: 10px;
+	width:40%;
 }
+
 #not_text_input{
-  margin-left: 5px;
+	margin-left: 5px;
 }
 
 #transparent_button:hover, #save_transparent_button:hover, #delete_transparent_button:hover {
-  cursor: pointer;
+	cursor: pointer;
 }
 
 #transparent_button {
-  font-size: 20px;
-  color: white;
-  height: 30px;
-  width: 250px;
-  background: none;
-  border-style: solid;
-  border-width: 2px;
-  border-color: white;
-  border-radius: 50px;
-  margin-left: auto;
+	font-size: 20px;
+	color: white;
+	height: 30px;
+	width: 250px;
+	background: none;
+	border-style: solid;
+	border-width: 2px;
+	border-color: white;
+	border-radius: 50px;
+	margin-left: auto;
 }
 
 #save_transparent_button {
-  font-size: 20px;
-  color: #31750E;
-  height: 30px;
-  width: 250px;
-  background: none;
-  border-style: solid;
-  border-width: 2px;
-  border-color: #31750E;
-  border-radius: 50px;
-  margin-left: auto;
+	font-size: 20px;
+	color: #31750E;
+	height: 30px;
+	width: 250px;
+	background: none;
+	border-style: solid;
+	border-width: 2px;
+	border-color: #31750E;
+	border-radius: 50px;
+	margin-left: auto;
 }
 
 #delete_transparent_button {
-  font-size: 20px;
-  color: #FF3B3B;
-  height: 30px;
-  width: 250px;
-  background: none;
-  border-style: solid;
-  border-width: 2px;
-  border-color: #FF3B3B;
-  border-radius: 50px;
-  margin-left: auto;
+	font-size: 20px;
+	color: #FF3B3B;
+	height: 30px;
+	width: 250px;
+	background: none;
+	border-style: solid;
+	border-width: 2px;
+	border-color: #FF3B3B;
+	border-radius: 50px;
+	margin-left: auto;
 }
 
 #location_list_container {
-  overflow-y: scroll;
+	overflow-y: scroll;
 }
 
-
-
+/* Drop down correct answer styling */
 .correct_answer select {
-  display: none; /*hide original SELECT element: */
+	display: none; /*hide original SELECT element: */
 }
 
 .correct_answer {
-  height: 20px;
-  background-color: white;
-  width: 40px;
-  padding-left: 10px;
-
+	height: 20px;
+	background-color: white;
+	width: 40px;
+	padding-left: 10px;
 }
 
 .correct_answer:hover{
-  cursor: pointer;
+	cursor: pointer;
 }
 
 .correct_answer-hide {
-  display: none;
+	display: none;
 }
