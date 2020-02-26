@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link href="Location_Style.css" rel='stylesheet' type='text/css'/>
 <meta charset="utf-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="../JSFunctions.js"></script>
+<link href="{{url_for('static',filename='styles/Location_Style.css')}}" rel='stylesheet' type='text/css'/>
 <title>Add Location Page</title>
 
 </head>
@@ -70,7 +70,7 @@
 
 		<div id="transparent_button_container">
 			<button type="button" id="save_transparent_button" name="save_location_button">Save Location</button>
-			<button type="button" href="#" id="transparent_button" onclick="loadDoc('Manage_Locations_Page.html')" name="goback_button">Go Back</button>
+			<button type="button" href="#" id="transparent_button" onclick="loadDoc('/Manage_Locations_Page')" name="goback_button">Go Back</button>
 		</div>
 
 
