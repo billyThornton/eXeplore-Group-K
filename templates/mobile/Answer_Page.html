@@ -25,6 +25,7 @@
 	      <a href="Logout" onclick="appConstruction()">Logout</a>
 	    </div>
 
+		<!-- Top bar -->
 		<div class="navbar">
 			<input type="image" src="{{url_for('static',filename='images/menu_icon.png')}}" onclick="openNav()" class="openbtn" alt="Menu Icon" id="menu_icon">
 			<img id="white_logo_vector" src="{{url_for('static',filename='images/white_logo_vector.png')}}" width="150" height="60">
@@ -34,14 +35,14 @@
 			<span>Progress bar value: {{progress_value}}</span>
 		</div>
 		
-		<img id="Exeterforum" src="{{url_for('static',filename='images/{{clue_location}}')}}">
+		<img id="clue_location" src="{{url_for('static',filename='images/{{clue_location}}')}}">
 		
-		<div id="answer_text">
+		<div id="question_text">
 			<span>Question: {{clue_message}}</span>
 		</div>
 		
+		<!-- Answer form -->
 		<form action="confirmAnswer" method="POST">
-
 			<div>
 				<label for="a">
 					<input type="radio" name="answer" value="a" id="a"> <span>A: {{answer_a}}</span>
@@ -62,14 +63,14 @@
 					<input type="radio" name="answer" value="d" id="d"> <span>D: {{answer_d}}</span>
 				</label>
 			</div>
+			
+			<!-- To pass value of quiz progress -->
 			<input type="hidden" name="progress" value="{{progress_value}}">
 			<button type="button" class="transparent_button" id="goback" onclick="goBack()">Go Back</button>
-			<button type="submit" class="transparent_button" id="next">Submit</button>
+			<button type="submit" class="transparent_button" id="submit">Submit</button>
 		</form>
 	
 	</div>
-	
-	<script type="text/javascript" src="scripts.js"></script>
 
 </body>
 </html>
