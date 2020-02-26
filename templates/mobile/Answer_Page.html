@@ -38,6 +38,7 @@ This page also gives access to a side bar which provides various features such a
 
 </head>
 
+<!-- Throughout this body flask variables ( {{}} ) are used to recieve data from the back-end -->
 <body>
 	<div id="answer_page_container">
 
@@ -54,6 +55,7 @@ This page also gives access to a side bar which provides various features such a
 	    </div>
 
 		<!-- Top bar -->
+		<!-- First example of where flask variables are used to recieve back-end information -->
 		<div class="navbar">
 			<input type="image" src="{{url_for('static',filename='images/menu_icon.png')}}" onclick="openNav()" class="openbtn" alt="Menu Icon" id="menu_icon">
 			<img id="white_logo_vector" src="{{url_for('static',filename='images/white_logo_vector.png')}}" width="150" height="60">
