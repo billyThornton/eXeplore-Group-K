@@ -17,6 +17,7 @@ import os
 import json
 import models
 import auth
+import databaseAdapter
 
 #utils file
 exec(open("utils/utils.py").read())
@@ -74,11 +75,16 @@ def registerSubmit():
     email = request.form.get('email')
     password = request.form.get('password')
     passwordConfirm = request.form.get('passwordConfirmation')
+    tutorName = request.form.get('tutorName')
     if(password != passwordConfirm):
         session['Error Message'] = "Passwords are not the same"
         return redirect(url_for('register'))
     if checkEmail(email):
         if(hasNumbers(email)):
+            teamID = 1
+            tutorID = databaseAdapter.getTutorID(tutorName)
+            hashedPassword = auth.hashPassword(password)
+            databaseAdapter.insertStudentUser(email,name,teamID,tutorID,hashedPassword)
             Role="Student"
             print(Role)
         else:

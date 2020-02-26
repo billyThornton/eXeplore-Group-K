@@ -410,3 +410,85 @@ def getTutorPassword(tutor):
         # Print to screen the result
         print(rows)
     return rows
+
+def getTutorID(tutorName):
+
+    db2conn = createConnection()
+
+    if db2conn:
+        # if we have a Db2 connection, query the database
+        sql = (
+        "SELECT TUTOR_ID"
+        " FROM TUTOR"
+        " WHERE tutor_name = '" + tutorName +
+        "';"
+        )
+        # Prepare the statement
+        stmt = ibm_db.prepare(db2conn,sql)
+		# Execute the sql
+        ibm_db.execute(stmt)
+        rows=[]
+        # fetch the result
+        result = ibm_db.fetch_assoc(stmt)
+        while result != False:
+            rows.append(result.copy())
+            result = ibm_db.fetch_assoc(stmt)
+        # close database connection
+        ibm_db.close(db2conn)
+        # Print to screen the result
+        print(rows)
+    return rows
+
+def getStudentID(email):
+    db2conn = createConnection()
+
+    if db2conn:
+        # if we have a Db2 connection, query the database
+        sql = (
+        "SELECT STUDENT_ID"
+        " FROM STUDENT"
+        " WHERE EMAIL = '" + email +
+        "';"
+        )
+        # Prepare the statement
+        stmt = ibm_db.prepare(db2conn,sql)
+		# Execute the sql
+        ibm_db.execute(stmt)
+        rows=[]
+        # fetch the result
+        result = ibm_db.fetch_assoc(stmt)
+        while result != False:
+            rows.append(result.copy())
+            result = ibm_db.fetch_assoc(stmt)
+        # close database connection
+        ibm_db.close(db2conn)
+        # Print to screen the result
+        print(rows)
+    return rows
+
+
+def insertStudentUser(email,name,TeamID,password,TutorID):
+    db2conn = createConnection()
+
+    if db2conn:
+        # if we have a Db2 connection, query the database
+        sql = (
+        "INSERT INTO STUDENT (NAME,EMAIL,TEAM_ID,TUTOR_ID)"
+        " VALUES ('"+name+"',"+email+","+TeamID+","+TutorID+");"
+        )
+        # Prepare the statement
+        stmt = ibm_db.prepare(db2conn,sql)
+		# Execute the sql
+        ibm_db.execute(stmt)
+        pepper= "fill"
+        studentID = getStudentID(email)
+        sql = (
+        "INSERT INTO STUDENT_PASSWORD (STUDENT_ID,PASSWORD,PEPPER)"
+        " VALUES ('"+studentID+"',"+password+","+pepper+");"
+        )
+        # Prepare the statement
+        stmt = ibm_db.prepare(db2conn,sql)
+		# Execute the sql
+        ibm_db.execute(stmt)
+       
+    return rows

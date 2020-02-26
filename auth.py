@@ -42,6 +42,12 @@ def verifyUser(passwordEntered,emailEntered):
     else:
         return False
     
+def hashPassword(password):
+    global PEPPER
+    password_text = password+PEPPER
+    hashedPass = generate_password_hash(password_text,"sha256")
+    return hashedPass
+    
 def generate_confirmation_token(email,app):
     serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
     return serializer.dumps(email, salt=app.config['SECURITY_PASSWORD_SALT'])
