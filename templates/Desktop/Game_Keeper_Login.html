@@ -13,40 +13,38 @@
 
 	<div id="green_box">
 
-	<div id="exeter_logo_container">
-		<img id="white_logo_vector" src={{url_for('static',filename='images/white_logo_vector.png')}}>
-	</div>
+		<div id="exeter_logo_container">
+			<img id="white_logo_vector" src={{url_for('static',filename='images/white_logo_vector.png')}}>
+		</div>
 
-	<div id="game_name">
-		<h1>eXeplore Game</h1>
-	</div>
+		<div id="game_name">
+			<h1>eXeplore Game</h1>
+		</div>
 
+		<!-- Login form -->
+		<form>
+			<div class="login_container">
 
-	<form>
-		<div class="login_container">
+				<p id="error">{{error_message}}</p>
 
-			<p id="error">{{error_message}}</p>
+				<p> <input id="text_input" type="text" placeholder="Email" name="email" required> </p>
+				<p> <input id="text_input" type="password" placeholder="Password" name="password" required> </p>
 
-			<p> <input id="text_input" type="text" placeholder="Email" name="email" required> </p>
-			<p> <input id="text_input" type="password" placeholder="Password" name="password" required> </p>
+				<label>Log in as:</label>
+				<p>
+					<button id="btn" type="submit" formmethod="post">Staff</button>
+					<button id="btn" type="submit" formmethod="post">Student</button>
+				</p>
 
-			<label>Log in as:</label>
-			<p>
-			<button id="btn" type="submit" formmethod="post">Staff</button>
-			<button id="btn" type="submit" formmethod="post">Student</button>
-			</p>
+				<label>
+					<input type="checkbox" checked="checked" name="remember"> Remember me
+				</label>
+				
+				<a href="/register">Create an account</a>
 
-			<label>
-			  <input type="checkbox" checked="checked" name="remember"> Remember me
-			</label>
+		  </div>
+		</form>
 
-			
-			<a href="/register">Create an account</a>
-
-
-	  </div>
-
-	</form>
 	</div>
 </body>
 
