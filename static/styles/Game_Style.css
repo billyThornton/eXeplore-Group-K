@@ -45,6 +45,7 @@ body {
 	color: black;
 }
 
+/* Clue location image box */
 #clue_location {
 	overflow: visible;
 	width: 301px;
@@ -58,6 +59,7 @@ body {
 	margin-bottom: 15px;
 }
 
+/* Clue message box*/
 #clue_text {
 	margin: auto;
 	border-style: solid;
@@ -70,7 +72,8 @@ body {
 	width: 301px;
 }
 
-#answer_text {
+/* Question box */
+#question_text {
 	border-style: solid;
 	border-color: #707070;
 	border-width: 1px;
@@ -79,9 +82,10 @@ body {
 	color: white;
 	height: 50px;
 	width: 301px;
-	margin-left: 30px;
+	margin: auto;
 }
 
+/* General styling for all transparent butttons */
 .transparent_button {
 	border-style: solid;
 	border-width: 1px;
@@ -99,7 +103,7 @@ body {
 	background: #415CE1;
 }
 
-#next {
+#submit {
 	background: #FFB916;
 }
 
@@ -158,49 +162,49 @@ body {
   .sidebar a {font-size: 18px;}
 }
 
-/* -- radio buttons --*/
+/* Answer radio buttons */
 
-	[type="radio"] {
-	  border: 0; 
-	  clip: rect(0 0 0 0); 
-	  height: 1px; margin: -1px; 
-	  overflow: hidden; 
-	  padding: 0; 
-	  position: absolute; 
-	  width: 1px;
-	}
+[type="radio"] {
+  border: 0; 
+  clip: rect(0 0 0 0); 
+  height: 1px; margin: -1px; 
+  overflow: hidden; 
+  padding: 0; 
+  position: absolute; 
+  width: 1px;
+}
 
-	/* One radio button per line */
-	label {
-	  display: block;
-	  cursor: pointer;
-	  line-height: 2.5;
-	  font-size: 1.5em;
-	}
+/* One radio button per line */
+label {
+  display: block;
+  cursor: pointer;
+  line-height: 2.5;
+  font-size: 1.5em;
+}
 
-	[type="radio"] + span {
-	  display: block;
-	}
+[type="radio"] + span {
+  display: block;
+}
 
-	/* the basic, unchecked style */
-	[type="radio"] + span:before {
-	  content: '';
-	  display: inline-block;
-	  width: 1em;
-	  height: 1em;
-	  vertical-align: -0.25em;
-	  border-radius: 1em;
-	  border: 0.125em solid #fff;
-	  box-shadow: 0 0 0 0.15em #000;
-	  margin-right: 0.75em;
-	  transition: 0.5s ease all;
-	}
+/* the basic, unchecked style */
+[type="radio"] + span:before {
+  content: '';
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.25em;
+  border-radius: 1em;
+  border: 0.125em solid #fff;
+  box-shadow: 0 0 0 0.15em #000;
+  margin-right: 0.75em;
+  transition: 0.5s ease all;
+}
 
-	/* the checked style using the :checked pseudo class */
-	[type="radio"]:checked + span:before {
-	  background: green;
-	  box-shadow: 0 0 0 0.25em #000;
-	}
+/* the checked style using the :checked pseudo class */
+[type="radio"]:checked + span:before {
+  background: #FFB916;
+  box-shadow: 0 0 0 0.25em #000;
+}
 
 /* HELP PAGE CSS */
 
