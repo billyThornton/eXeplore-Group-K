@@ -39,7 +39,7 @@ def login_post():
         else:
             currentUser = user
     else:
-        print("AUTH FAILED")
+        currentUser = user
     if(currentUser.role == "Staff"):
         return redirect(url_for('dashboard'))
     elif(currentUser.role == "Student"):
@@ -54,6 +54,19 @@ def login_post():
 @app.route('/')
 def login():
     return render_template('Desktop/Game_Keeper_Login.html')
+
+@app.route('/register')
+def register():
+    return render_template('Desktop/register.html')
+
+@app.route('/registerSubmit',methods = ['POST'])
+def registerSubmit():
+    name = request.form.get('name')
+    email = request.form.get('email')
+    password = request.form.get('password')
+    passwordConfirm = request.form.get('passwordConfirmation')
+    if(password != passwordConfirm):
+        return redirect(url_for('register'))
 
 #Will redirect uses back to the login page if they fail the login procedure
 @app.route('/redirect')
