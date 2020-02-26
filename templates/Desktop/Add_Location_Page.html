@@ -14,6 +14,7 @@
 <body>
 	<div id="add_location_page">
 
+		<!-- Add location details form -->
 		<form>
 			<div class="location_inputs" id="add_location_container">
 				<div class="location_inputs">
@@ -50,7 +51,8 @@
 					<label id="input_label">Answer d:</label>
 					<input type="text" placeholder="Answer" name="answer_d" required>
 				</div>
-
+				
+				<!-- Drop down for correct Answer -->
 				<div class="location_inputs" >
 					<label id="input_label">Correct Answer:</label>
 					<select id ="not_text_input" class="correct_answer">
@@ -62,10 +64,9 @@
  				</div>
 
 				<div class="location_inputs"> <label id="input_label">Upload Image:</label>
-				<!-- <input type="file" name="location_photo"> -->
-				<input type="file" name="location_photo" id ="not_text_input" class="inputfile" />
-				<label for="file">Upload</label>
-			</div>
+					<input type="file" name="location_photo" id ="not_text_input" class="inputfile" />
+					<label for="file">Upload</label>
+				</div>
 
 			</div>
 		</form>
@@ -74,7 +75,6 @@
 			<button type="button" id="save_transparent_button" name="add_location_button">Add Location</button>
 			<button type="button" href="#" id="transparent_button" onclick="loadDoc('/Manage_Locations_Page')" name="goback_button">Go Back</button>
 		</div>
-
 
 	</div>
 </body>
