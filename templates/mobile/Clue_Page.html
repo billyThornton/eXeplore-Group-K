@@ -1,3 +1,30 @@
+<!--
+Created on 20/02/2020 
+@author: Ben Trotter
+@Last Edited: 26/02/2020
+@edited by: Teo Reed
+
+Copyright (c) “2020, by Group K
+Contributors: Jamie Butler, Rahul Pankhania, Teo Reed, Billy Thornton, Ben Trotter, Kristian Woolhouse
+URL: https://github.com/billyThornton/eXeplore-Group-K ” 
+All rights reserved.
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following
+conditions are met:
+ 
+Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer
+in the documentation and/or other materials
+provided with the distribution. 
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
+BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAT PURPOSE ARE DISCLAIMED. IN NO EVENT 
+SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INLUDING NEGLIGENCE
+OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+This file contains a clue and an image for a given location and is a key stepping stone for players to progress through the
+eXeplore game. Additionally it also gives access to a side bar which provides various features such as Help,  FAQ & Logout.
+-->
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,6 +35,7 @@
 <script src="{{url_for('static',filename='js/JSFunctions.js')}}"></script>
 <title>Clue Page</title>
 
+<!-- Throughout this body flask variables ( {{}} ) are used to recieve data from the back-end -->
 <body>
 	<div id="answer_page_container">
 
@@ -34,6 +62,7 @@
 		
 		<img id="clue_location" src="{{clue_location}}">
 		
+		<!-- Further example of flask variable to load in the correct clue message from database -->
 		<div id="clue_text">
 			<span>Clue for next location: {{clue_message}}</span>
 		</div>

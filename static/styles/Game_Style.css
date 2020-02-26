@@ -1,26 +1,57 @@
+/*
+Created on 22/02/2020 
+@author: Ben Trotter
+@Last Edited: 26/02/2020
+@edited by: Jamie Butler
+
+Copyright (c) “2020, by Group K
+Contributors: Jamie Butler, Rahul Pankhania, Teo Reed, Billy Thornton, Ben Trotter, Kristian Woolhouse
+URL: https://github.com/billyThornton/eXeplore-Group-K ” 
+All rights reserved.
+Redistribution and use in source and binary forms, with or without modification, are permitted provided
+that the following conditions are met:
+ 
+Redistributions of source code must retain the above copyright notice, this list of conditions and the
+following disclaimer. Redistributions in binary form must reproduce the above copyright notice, this
+list of conditions and the following disclaimer in the documentation and/or other materials provided
+with the distribution. 
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR IMPLIED
+WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
+TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+This file contains the CSS to style the Answer_Page.html, Clue_Page.html, End_Game_Page.html and
+Help_Page.html. It styles the buttons, input sections, top navigation bar, the content for the game
+and the pop-up sidebar. 
+*/
 body {
-	 background: url('../Exeter_University.jpg') no-repeat center center fixed; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+	background: url('../Exeter_University.jpg') no-repeat center center fixed; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
 	color: white;
 	text-align: center;
 }
 
+/* Top navigation bar */
 .navbar {
-  overflow: hidden;
-  background-color: #103819;
-  position: fixed; /* Set the navbar to fixed position */
-  top: 0; /* Position the navbar at the top of the page */
-  left: 0;
-  width: 100%; /* Full width */
-  text-align: center;
-  border-style: solid;
-  border-color: #707070;
-  border-top: 0px;
-  border-left: 0px;
-  border-width: 1px;
+	overflow: hidden;
+	background-color: #103819;
+	position: fixed; /* Set the navbar to fixed position */
+	top: 0; /* Position the navbar at the top of the page */
+	left: 0;
+	width: 100%; /* Full width */
+	text-align: center;
+	border-style: solid;
+	border-color: #707070;
+	border-top: 0px;
+	border-left: 0px;
+	border-width: 1px;
 }
 
 #menu_icon {
@@ -114,105 +145,106 @@ body {
 
 /* ----POP UP SIDEBAR---- */
 .sidebar {
-  height: 100%;
-  width: 0;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left:0;
-  border-left-style: : 0;
-  background-color: #111;
-  overflow-x: hidden;
-  transition: 0.5s;
-  padding-top: 60px;
+	height: 100%;
+	width: 0;
+	position: fixed;
+	z-index: 1;
+	top: 0;
+	left:0;
+	border-left-style: : 0;
+	background-color: #111;
+	overflow-x: hidden;
+	transition: 0.5s;
+	padding-top: 60px;
 }
 
 .sidebar a {
-  padding: 8px 8px 8px 32px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #818181;
-  display: block;
-  transition: 0.3s;
+	padding: 8px 8px 8px 32px;
+	text-decoration: none;
+	font-size: 25px;
+	color: #818181;
+	display: block;
+	transition: 0.3s;
 }
 
 .sidebar a:hover {
-  color: #f1f1f1;
+	color: #f1f1f1;
 }
 
+/* Pop up side bar exit button */
 .sidebar .closebtn {
-  position: absolute;
-  top: 0;
-  right: 25px;
-  font-size: 36px;
-  margin-left: 50px;
+	position: absolute;
+	top: 0;
+	right: 25px;
+	font-size: 36px;
+	margin-left: 50px;
 }
 
 .openbtn {
-  font-size: 20px;
-  cursor: pointer;
-  color: white;
-  padding: 10px 15px;
-  border: none;
+	font-size: 20px;
+	cursor: pointer;
+	color: white;
+	padding: 10px 15px;
+	border: none;
 }
 
 #main {
-  transition: margin-left .5s;
-  padding: 16px;
+	transition: margin-left .5s;
+	padding: 16px;
 }
 
 #error {
-  color: red;
+	color: red;
 }
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
 @media screen and (max-height: 450px) {
-  .sidebar {padding-top: 15px;}
-  .sidebar a {font-size: 18px;}
+	.sidebar {padding-top: 15px;}
+	.sidebar a {font-size: 18px;}
 }
 
 /* Answer radio buttons */
 
 [type="radio"] {
-  border: 0; 
-  clip: rect(0 0 0 0); 
-  height: 1px; margin: -1px; 
-  overflow: hidden; 
-  padding: 0; 
-  position: absolute; 
-  width: 1px;
+	border: 0; 
+	clip: rect(0 0 0 0); 
+	height: 1px; margin: -1px; 
+	overflow: hidden; 
+	padding: 0; 
+	position: absolute; 
+	width: 1px;
 }
 
 /* One radio button per line */
 label {
-  display: block;
-  cursor: pointer;
-  line-height: 2.5;
-  font-size: 1.5em;
+	display: block;
+	cursor: pointer;
+	line-height: 2.5;
+	font-size: 1.5em;
 }
 
 [type="radio"] + span {
-  display: block;
+	display: block;
 }
 
 /* the basic, unchecked style */
 [type="radio"] + span:before {
-  content: '';
-  display: inline-block;
-  width: 1em;
-  height: 1em;
-  vertical-align: -0.25em;
-  border-radius: 1em;
-  border: 0.125em solid #fff;
-  box-shadow: 0 0 0 0.15em #000;
-  margin-right: 0.75em;
-  transition: 0.5s ease all;
+	content: '';
+	display: inline-block;
+	width: 1em;
+	height: 1em;
+	vertical-align: -0.25em;
+	border-radius: 1em;
+	border: 0.125em solid #fff;
+	box-shadow: 0 0 0 0.15em #000;
+	margin-right: 0.75em;
+	transition: 0.5s ease all;
 }
 
 /* the checked style using the :checked pseudo class */
 [type="radio"]:checked + span:before {
-  background: #FFB916;
-  box-shadow: 0 0 0 0.25em #000;
+	background: #FFB916;
+	box-shadow: 0 0 0 0.25em #000;
 }
 
 /* HELP PAGE CSS */
@@ -227,38 +259,40 @@ label {
 }
 
 /* END GAME PAGE CSS */
-
-
+/* End game leaderboard styling */
 .table{
-  color: black;
-  background-color: white;
-  width: 80%;
-  border-collapse:separate;
-  border:solid black 1px;
-  border-radius:20px;
-  table-layout: fixed;
-  margin-left: 40px;
-  margin-bottom: 30px;
-  padding: 6px;
+	color: black;
+	background-color: white;
+	width: 80%;
+	border-collapse:separate;
+	border:solid black 1px;
+	border-radius:20px;
+	table-layout: fixed;
+	margin-left: 40px;
+	margin-bottom: 30px;
+	padding: 6px;
 }
-.table tbody{
-  display:block;
-  overflow: auto;
-  height: 200px;
-}
-.table thead tr {
-   display: block;
-   border-style: solid;
-   border-width: 0px;
-   border-radius: 20px;
-}
-.table thead {
-  background: #104600;
-  color:#fff;
-}
-.table th, .table td {
-  padding: 5px;
-  text-align: left;
-  width: 400px;
 
+.table tbody{
+	display:block;
+	overflow: auto;
+	height: 200px;
+}
+
+.table thead tr {
+	display: block;
+	border-style: solid;
+	border-width: 0px;
+	border-radius: 20px;
+}
+
+.table thead {
+	background: #104600;
+	color:#fff;
+}
+
+.table th, .table td {
+	padding: 5px;
+	text-align: left;
+	width: 400px;
 }
