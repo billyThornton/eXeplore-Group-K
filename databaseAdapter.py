@@ -1,16 +1,39 @@
-from flask import Flask, render_template, request, session
-import atexit
+"""
+Copyright (c) “2020, by Group K
+Contributors: Jamie Butler, Rahul Pankhania, Teo Reed, Billy Thornton, Ben Trotter, Kristian Woolhouse
+URL: https://github.com/billyThornton/eXeplore-Group-K ” 
+All rights reserved.
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+ 
+Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials
+provided with the distribution. 
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAT PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+Created on 19/02/2020 
+@author: Kris Woolhouse + Billy Thornton (Pair Programming)
+@Last Edited: 26/02/2020
+@edited by: Billy Thornton Added insert functions for passwords
+
+This file contains the necessary information to make queries and enter data to/from
+the datbase
+"""
+
+from flask import Flask
 import os
 import json
 import ibm_db
-import requests
+
 
 app = Flask(__name__)
+#Set to tru if running on local enviroment
 localFlag = True
+
 db_name = 'mydb'
 client = None
 db = None
 
+#Loads the service credentials form the cloud envorioment if applicable
 if 'VCAP_SERVICES' in os.environ:
     vcapEnv = json.loads(os.environ['VCAP_SERVICES'])
     db2info = vcapEnv['dashDB For Transactions'][0]
@@ -28,12 +51,13 @@ if 'VCAP_SERVICES' in os.environ:
         "client_id": appIDInfo['clientId'],
         "client_secret": appIDInfo['secret']
     }
+#If running Locally run suing hardcoded values
 elif localFlag:
     connectionInfo = ["DATABASE=BLUDB;HOSTNAME=dashdb-txn-sbox-yp-lon02-02.services.eu-gb.bluemix.net;PORT=50000;UID=xkm27482;PWD=70852r6bqw-s8dgn;", "", ""]
 else:
     raise ValueError('Expected cloud environment')
 
-
+#Create a connection to the database
 def createConnection():
     if localFlag:
         db2conn= ibm_db.connect(connectionInfo[0],connectionInfo[1],connectionInfo[2])
@@ -136,7 +160,7 @@ def getRouteLocations(routeName): #Need to check the SQL - might be confusing ro
     return rows
 
 
-def getTeamFromStudent(student):
+def getTeamFromStudentID(student):
 
 
     db2conn = createConnection()
@@ -144,14 +168,14 @@ def getTeamFromStudent(student):
     if db2conn:
         # if we have a Db2 connection, query the database
         sql = (
-        "SELECT t.team_name, t.progress, r.route_name"
+        "SELECT t.team_id,t.team_name, t.progress, r.route_name"
         " FROM team t"
         " INNER JOIN student s"
         " ON t.team_id = s.team_id"
         " INNER JOIN route r"
         " ON t.route_id = r.route_id"
-        " WHERE s.name = '" + student +
-        "';"
+        " WHERE s.student_id = " + str(student) +
+        ";"
         )
         # Prepare the statement
         stmt = ibm_db.prepare(db2conn,sql)
@@ -170,8 +194,6 @@ def getTeamFromStudent(student):
     return rows
 
 def getTeamFromID(teamID):
-
-
     db2conn = createConnection()
 
     if db2conn:
@@ -275,6 +297,7 @@ def getRouteID(teamID):
         " WHERE team_id = " + str(teamID) +
         ";"
         )
+        print(sql)
         # Prepare the statement
         stmt = ibm_db.prepare(db2conn,sql)
 		# Execute the sql
@@ -349,6 +372,59 @@ def getLocationClues(locationID):
         print(rows)
     return rows
 
+def getLocation(routeID,progress):
+    db2conn = createConnection()
+
+    if db2conn:
+        # if we have a Db2 connection, query the database
+        sql = (
+        "SELECT location_id"
+        " FROM routelocationbridge"
+        " WHERE route_id = " + str(routeID) + 
+        " and sequence_order = "+str(progress)+";"
+        )
+        # Prepare the statement
+        stmt = ibm_db.prepare(db2conn,sql)
+		# Execute the sql
+        ibm_db.execute(stmt)
+        rows=[]
+        # fetch the result
+        result = ibm_db.fetch_assoc(stmt)
+        while result != False:
+            rows.append(result.copy())
+            result = ibm_db.fetch_assoc(stmt)
+        # close database connection
+        ibm_db.close(db2conn)
+        # Print to screen the result
+        print(rows)
+    return rows
+
+def getQuestion(locationID):
+    db2conn = createConnection()
+
+    if db2conn:
+     # if we have a Db2 connection, query the database
+        sql = (
+        "SELECT question_content,MULTIPLE_CHOICE_A,MULTIPLE_CHOICE_B,MULTIPLE_CHOICE_C,MULTIPLE_CHOICE_D,ANSWER"
+        " FROM question"
+        " WHERE location_id = " + str(locationID)+";"
+        )
+        print("getQuestion ",sql)
+        # Prepare the statement
+        stmt = ibm_db.prepare(db2conn,sql)
+		# Execute the sql
+        ibm_db.execute(stmt)
+        rows=[]
+        # fetch the result
+        result = ibm_db.fetch_assoc(stmt)
+        while result != False:
+            rows.append(result.copy())
+            result = ibm_db.fetch_assoc(stmt)
+        # close database connection
+        ibm_db.close(db2conn)
+        # Print to screen the result
+        print("Get Question Result",rows)
+    return rows
 
 def getStudentPassword(student):
 
@@ -361,7 +437,7 @@ def getStudentPassword(student):
         " FROM student_password p"
         " INNER JOIN student s"
         " ON s.student_id = p.student_id"
-        " WHERE name = '" + student +
+        " WHERE email = '" + student +
         "';"
         )
         # Prepare the statement
@@ -390,11 +466,12 @@ def getTutorPassword(tutor):
         sql = (
         "SELECT p.password"
         " FROM tutor_password p"
-        " INNER JOIN student s"
+        " INNER JOIN tutor t"
         " ON t.tutor_id = p.tutor_id"
-        " WHERE tutor_name = '" + tutor +
+        " WHERE email = '" + tutor +
         "';"
         )
+        print(sql)
         # Prepare the statement
         stmt = ibm_db.prepare(db2conn,sql)
 		# Execute the sql
@@ -423,6 +500,7 @@ def getTutorID(tutorName):
         " WHERE tutor_name = '" + tutorName +
         "';"
         )
+        print(sql)
         # Prepare the statement
         stmt = ibm_db.prepare(db2conn,sql)
 		# Execute the sql
@@ -467,28 +545,64 @@ def getStudentID(email):
     return rows
 
 
-def insertStudentUser(email,name,TeamID,password,TutorID):
+def insertStudentUser(email,name,TeamID,TutorID):
     db2conn = createConnection()
 
     if db2conn:
         # if we have a Db2 connection, query the database
         sql = (
         "INSERT INTO STUDENT (NAME,EMAIL,TEAM_ID,TUTOR_ID)"
-        " VALUES ('"+name+"',"+email+","+TeamID+","+TutorID+");"
+        " VALUES ('"+name+"','"+email+"',"+str(TeamID)+","+str(TutorID)+");"
         )
+        print(sql)
         # Prepare the statement
         stmt = ibm_db.prepare(db2conn,sql)
 		# Execute the sql
         ibm_db.execute(stmt)
-        pepper= "fill"
-        studentID = getStudentID(email)
-        sql = (
+        
+        
+        
+
+def insertPasswordStudent(password,studentID):
+    db2conn = createConnection()
+    pepper= "fill"
+    sql = (
         "INSERT INTO STUDENT_PASSWORD (STUDENT_ID,PASSWORD,PEPPER)"
-        " VALUES ('"+studentID+"',"+password+","+pepper+");"
+        " VALUES ("+str(studentID)+",'"+password+"','"+pepper+"');"
+        )
+    # Prepare the statement
+    stmt = ibm_db.prepare(db2conn,sql)
+	# Execute the sql
+    ibm_db.execute(stmt)
+    
+def insertTutorUser(email,office,name):
+    db2conn = createConnection()
+    
+    #Override office to be 1 as office input isnt setup yet
+    office = 1
+    if db2conn:
+        # if we have a Db2 connection, query the database
+        sql = (
+        "INSERT INTO TUTOR (OFFICE_ID,TUTOR_NAME,EMAIL)"
+        " VALUES ("+str(office)+",'"+name+"','"+email+"');"
         )
         # Prepare the statement
         stmt = ibm_db.prepare(db2conn,sql)
 		# Execute the sql
         ibm_db.execute(stmt)
-       
-    return rows
+
+#Saves the hashed password
+def insertPasswordTutor(password,tutorID):
+    db2conn = createConnection()
+    #pepper currently not implemented
+    pepper= "fill"
+    sql = (
+        "INSERT INTO TUTOR_PASSWORD (TUTOR_ID,PASSWORD,PEPPER)"
+        " VALUES ("+str(tutorID)+",'"+password+"','"+pepper+"');"
+        )
+    print(sql)
+    # Prepare the statement
+    stmt = ibm_db.prepare(db2conn,sql)
+	# Execute the sql
+    ibm_db.execute(stmt)
+        
