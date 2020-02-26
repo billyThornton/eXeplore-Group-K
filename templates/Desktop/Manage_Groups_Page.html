@@ -6,89 +6,107 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="{{url_for('static',filename='styles/Manage_Groups_Style.css')}}" rel='stylesheet' type='text/css'/>
 <title>Manage Group Page</title>
-
 </head>
+
 <body>
 	<div id="create_group_page">
 
 		<table style="width:100%">
-  <tr>
-    <th><h2>Create Group</h2></th>
-    <th><h2>Students</h2></th>
-    <th>	<h2>Groups</h2></th>
-  </tr>
-  <tr>
-    <td>
-			<div id="create_group_container">
+		
+		  <!-- Headers -->
+			<tr>
+				<th><h2>Create Group</h2></th>
+				<th><h2>Students</h2></th>
+				<th><h2>Groups</h2></th>
+			</tr>
+		  
+			<tr>
+			
+			<!-- Create Group Column -->
+				<td>
+					<div id="create_group_container">
+						<p> <label>Name:</label>
+						<input type="text" id="group_name" name="create_group_input"> </p>
+						
+						<p> <label>Students Selected:</label>
+						<div id="search_results">Students will go here!</div> </p>
 
+						<div id="transparent_button_container">
+							<button type="button" id="transparent_button" name="save_group_button">Save Group</button>
+						</div>
+					</div>
 
-				<p> <label>Name:</label>
-				<input type="text" id="group_name" name="create_group_input"> </p>
-				<p> <label>Students Selected:</label>
-				<!-- As students are selected their names will appear here -->
-				<div id="search_results">Students will go here!</div> </p>
+					<div id="delete_group_container">
+						<h2>Delete Group</h2>
 
-				<div id="transparent_button_container">
-					<button type="button" id="transparent_button" name="save_group_button">Save Group</button>
-				</div>
-			</div>
+						<p> <label>Name:</label>
+						<input type="text" id="group_name" name="delete_group_input"> </p>
 
-			<div id="delete_group_container">
-				<h2>Delete Group</h2>
+						<div id="transparent_button_container">
+							<button type="button" id="delete_transparent_button" name="delete_group_button">Delete Group</button>
+						</div>
+					</div>
+				</td>
+			
+			<!-- Students Column -->
+				<td>
+					<div id="student_list_container">
+						<input type="checkbox" id="students1"/><label id="student_label" for="students1"> Example Student</label> <br />
+						<input type="checkbox" id="students2"/><label id="student_label" for="students2"> Example Student</label><br />
+						<input type="checkbox" id="students3"/><label id="student_label" for="students3"> Example Student</label><br />
+						<input type="checkbox" id="students4"/><label id="student_label" for="students4"> Example Student</label><br />
+						<input type="checkbox" id="students5"/><label id="student_label" for="students5"> Example Student</label><br />
+						<input type="checkbox" id="students6"/><label id="student_label" for="students6"> Example Student</label><br />
+						<input type="checkbox" id="students7"/><label id="student_label" for="students7"> Example Student</label> <br />
+						<input type="checkbox" id="students8"/><label id="student_label" for="students8"> Example Student</label> <br />
+						<input type="checkbox" id="students9"/><label id="student_label" for="students9"> Example Student</label><br />
+						<input type="checkbox" id="students10"/><label id="student_label" for="students10"> Example Student</label><br />
+						<input type="checkbox" id="students11"/><label id="student_label" for="students11"> Example Student</label><br />
+						<input type="checkbox" id="students12"/><label id="student_label" for="students12"> Example Student</label><br />
+						<input type="checkbox" id="students13"/><label id="student_label" for="students13"> Example Student</label><br />
+						<input type="checkbox" id="students14"/><label id="student_label" for="students14"> Example Student</label> <br />
+					</div>
+				</td>
+			
+			<!-- Groups Column -->
+				<td>
+					<div id="group_list_container">
+						<input type="radio" id="example_group1" name="groups"/><label for="example_group1" id="group_label"> Example Group</label> <br />
+						
+						<input type="radio" id="example_group2" name="groups"/><label for="example_group2" id="group_label"> Example Group</label><br />
+						
+						<input type="radio" id="example_group3" name="groups"/><label for="example_group3" id="group_label"> Example Group</label><br />
+						
+						<input type="radio" id="example_group4" name="groups"/><label for="example_group4" id="group_label"> Example Group</label><br />
+						
+						<input type="radio" id="example_group5" name="groups"/><label for="example_group5" id="group_label"> Example Group</label><br />
+						
+						<input type="radio" id="example_group6" name="groups"/><label for="example_group6" id="group_label"> Example Group</label><br />
+						
+						<input type="radio" id="example_group7" name="groups"/><label for="example_group7" id="group_label"> Example Group</label><br />
+						
+						<input type="radio" id="example_group8" name="groups"/><label for="example_group8" id="group_label"> Example Group</label> <br />
+						
+						<input type="radio" id="example_group9" name="groups"/><label for="example_group9" id="group_label"> Example Group</label><br />
+						
+						<input type="radio" id="example_group10" name="groups"/><label for="example_group10" id="group_label"> Example Group</label><br />
+						
+						<input type="radio" id="example_group11" name="groups"/><label for="example_group11" id="group_label"> Example Group</label><br />
+						
+						<input type="radio" id="example_group12" name="groups"/><label for="example_group12" id="group_label"> Example Group</label><br />
+						
+						<input type="radio" id="example_group13" name="groups"/><label for="example_group13" id="group_label"> Example Group</label><br />
+						
+						<input type="radio" id="example_group13" name="groups"/><label for="example_group14" id="group_label"> Example Group</label><br />
+					</div>
+					
+					<div id="transparent_button_container">
+						<button type="button" id="transparent_button" name="check_results_button">Check Results</button>
+					</div>
+				</td>
+			</tr>
+		</table>
 
-				<p> <label>Name:</label>
-				<input type="text" id="group_name" name="delete_group_input"> </p>
-
-				<div id="transparent_button_container">
-					<button type="button" id="delete_transparent_button" name="delete_group_button">Delete Group</button>
-				</div>
-			</div>
-
-		</td>
-    <td>
-			<!-- Make This scrollable overflow-y: scroll; in the css should do this -->
-			<div id="student_list_container">
-				<input type="checkbox" id="students1"/><label id="student_label" for="students1"> Example Student</label> <br />
-				<input type="checkbox" id="students2"/><label id="student_label" for="students2"> Example Student</label><br />
-				<input type="checkbox" id="students3"/><label id="student_label" for="students3"> Example Student</label><br />
-				<input type="checkbox" id="students4"/><label id="student_label" for="students4"> Example Student</label><br />
-				<input type="checkbox" id="students5"/><label id="student_label" for="students5"> Example Student</label><br />
-				<input type="checkbox" id="students6"/><label id="student_label" for="students6"> Example Student</label><br />
-				<input type="checkbox" id="students7"/><label id="student_label" for="students7"> Example Student</label> <br />
-				<input type="checkbox" id="students8"/><label id="student_label" for="students8"> Example Student</label> <br />
-				<input type="checkbox" id="students9"/><label id="student_label" for="students9"> Example Student</label><br />
-				<input type="checkbox" id="students10"/><label id="student_label" for="students10"> Example Student</label><br />
-				<input type="checkbox" id="students11"/><label id="student_label" for="students11"> Example Student</label><br />
-				<input type="checkbox" id="students12"/><label id="student_label" for="students12"> Example Student</label><br />
-				<input type="checkbox" id="students13"/><label id="student_label" for="students13"> Example Student</label><br />
-				<input type="checkbox" id="students14"/><label id="student_label" for="students14"> Example Student</label> <br />
-			</div>
-		</td>
-    <td>
-			<!-- Make This scrollable overflow-y: scroll; in the css should do this -->
-			<div id="group_list_container">
-				<input type="radio" id="example_group1" name="groups"/><label for="example_group1" id="group_label"> Example Group</label> <br />
-				<input type="radio" id="example_group2" name="groups"/><label for="example_group2" id="group_label"> Example Group</label><br />
-				<input type="radio" id="example_group3" name="groups"/><label for="example_group3" id="group_label"> Example Group</label><br />
-				<input type="radio" id="example_group4" name="groups"/><label for="example_group4" id="group_label"> Example Group</label><br />
-				<input type="radio" id="example_group5" name="groups"/><label for="example_group5" id="group_label"> Example Group</label><br />
-				<input type="radio" id="example_group6" name="groups"/><label for="example_group6" id="group_label"> Example Group</label><br />
-				<input type="radio" id="example_group7" name="groups"/><label for="example_group7" id="group_label"> Example Group</label><br />
-				<input type="radio" id="example_group8" name="groups"/><label for="example_group8" id="group_label"> Example Group</label> <br />
-				<input type="radio" id="example_group9" name="groups"/><label for="example_group9" id="group_label"> Example Group</label><br />
-				<input type="radio" id="example_group10" name="groups"/><label for="example_group10" id="group_label"> Example Group</label><br />
-				<input type="radio" id="example_group11" name="groups"/><label for="example_group11" id="group_label"> Example Group</label><br />
-				<input type="radio" id="example_group12" name="groups"/><label for="example_group12" id="group_label"> Example Group</label><br />
-				<input type="radio" id="example_group13" name="groups"/><label for="example_group13" id="group_label"> Example Group</label><br />
-				<input type="radio" id="example_group13" name="groups"/><label for="example_group14" id="group_label"> Example Group</label><br />
-			</div>
-			<div id="transparent_button_container">
-				<button type="button" id="transparent_button" name="check_results_button">Check Results</button>
-			</div>
-		</td>
-  </tr>
-</table>
-
-</div>
+	</div>
 </body>
 </html>
