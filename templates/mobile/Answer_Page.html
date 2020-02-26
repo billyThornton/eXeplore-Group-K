@@ -34,7 +34,7 @@
 			<span>Progress bar value: {{progress_value}}</span>
 		</div>
 		
-		<img id="Exeterforum" src="{{url_for('static',filename='images/Exeterforum.jpg')}}">
+		<img id="Exeterforum" src="{{url_for('static',filename='images/{{clue_location}}')}}">
 		
 		<div id="answer_text">
 			<span>Question: {{clue_message}}</span>
@@ -68,6 +68,7 @@
 		</form>
 	
 	</div>
+	
 	<script type="text/javascript" src="scripts.js"></script>
 
 </body>
