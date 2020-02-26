@@ -37,16 +37,18 @@
 				<p>You positioned: {{final_position}}</p>
 			</div>
 		
+   			<table class="table">
 			
-   			 <table class="table">
-     			 <thead>
+				<!-- Headers -->
+     			<thead>
         			<tr>
          				<th>Position</th>
           				<th>Team Name</th>
           				<th>Score</th>
         			</tr>
       			</thead>
-      			<!-- This will be dynamically loaded from db -->
+				
+      			<!-- Examples -->
       			<tr>
               		<td>1</td>
               		<td>The Best Team</td>
@@ -57,7 +59,8 @@
               		<td>Ben is the best team</td>
               		<td>270</td>
             	</tr>
-		
+			</table>
+			
 			<div id="transparent_button_container">
 				<button type="button" onclick="location.href='/Logout'" class="transparent_button" name="logout_button">Logout</button>
 			</div>	
