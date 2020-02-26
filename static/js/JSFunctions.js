@@ -25,3 +25,7 @@ function closeNav() {
 function appConstruction() {
 	alert("Application currently under construction.\nFeature not added yet.")
 }
+
+function goBack() {
+  window.history.back();
+}
