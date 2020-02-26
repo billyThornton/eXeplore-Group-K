@@ -18,9 +18,11 @@ import json
 import models
 import auth
 
-
+#utils file
+exec(open("utils/utils.py").read())
 app = Flask(__name__)
 port = int(os.getenv('PORT', 8000))
+
 
 #Handles the [post] method for login
 #Will be passed a username and a password
@@ -53,19 +55,38 @@ def login_post():
 #This is the first page of the app currently the login page but we could add a splash screen if wanted
 @app.route('/')
 def login():
+    session.clear()
     return render_template('Desktop/Game_Keeper_Login.html')
 
 @app.route('/register')
 def register():
-    return render_template('Desktop/register.html')
+    if('Error Message' in session):
+        errorMessage = session['Error Message']
+    else:
+        session['Error Message'] = ""
+        errorMessage = ""
+    return render_template('Desktop/register.html',error_message = errorMessage)
 
 @app.route('/registerSubmit',methods = ['POST'])
 def registerSubmit():
+    global EMAILEXTENSION
     name = request.form.get('name')
     email = request.form.get('email')
     password = request.form.get('password')
     passwordConfirm = request.form.get('passwordConfirmation')
     if(password != passwordConfirm):
+        session['Error Message'] = "Passwords are not the same"
+        return redirect(url_for('register'))
+    if checkEmail(email):
+        if(hasNumbers(email)):
+            Role="Student"
+            print(Role)
+        else:
+            Role = "Staff"
+            print(Role)
+        return redirect(url_for('login'))
+    else:
+        session['Error Message'] = ("Please use an email of extension "+EMAILEXTENSION)
         return redirect(url_for('register'))
 
 #Will redirect uses back to the login page if they fail the login procedure
@@ -93,6 +114,15 @@ def imageUniStatic():
 @app.route('/dashboard')
 def dashboard():
     return render_template('Desktop/Game_Keeper_Page.html')
+
+@app.route('/Add_Location')
+def addLocation():
+    return render_template('Desktop/Add_Location_Page.html')
+
+@app.route('/Edit_Location')
+def editLocation():
+    return render_template('Desktop/Edit_Location_Page.html')
+
 
 #Loads the gamekeepers dashboard tool
 @app.route('/Manage_Locations_Page')
@@ -141,13 +171,15 @@ def showLocationClue():
 @app.route('/getQuestion',methods = ['POST'])
 def getQuestion():
     progress = request.form.get('progress')
+    imageLocation = url_for('static',filename='images/Exeterforum.jpg')
     print(progress)
-    return render_template('mobile/Answer_Page.html',progress_value = progress,clue_message = "Question: "+str(progress))
+    return render_template('mobile/Answer_Page.html',progress_value = progress,clue_message = "Question: "+str(progress),clue_location=imageLocation)
 
 @app.route('/getQuestionRedirect')
 def retryQuestion():
     progress = request.form.get('progress')
-    return render_template('mobile/AnswerPage.html',progress_value = progress,clue_message = "Question: "+str(progress))
+    imageLocation = url_for('static',filename='images/Exeterforum.jpg')
+    return render_template('mobile/AnswerPage.html',progress_value = progress,clue_message = "Question: "+str(progress),clue_location=imageLocation)
 
 @app.route('/confirmAnswer',methods = ['POST'])
 def checkQuestion():
