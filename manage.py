@@ -54,6 +54,7 @@ def requires_access_level(access_level):
 #Will be passed a username and a password
 @app.route('/',methods = ['POST'])
 def login_post():
+    
     email = request.form.get('email')
     password = request.form.get('password')
     #Checks the username and password are correct
@@ -83,6 +84,7 @@ def login_post():
             session['Role'] = 'staff'
             # session['tutorID'] = token['tutorID']
     else:
+        session['loginerror'] = "User does not exist"
         session['Role'] = 'NO_ROLE'
 
     print(session['Role'])
@@ -101,8 +103,13 @@ def login_post():
 #This is the first page of the app currently the login page but we could add a splash screen if wanted
 @app.route('/')
 def login():
+    if 'loginerror' in session:
+        errormessage = session['loginerror']
+    else:
+        errormessage = ""
+        session['loginerror'] = ""
     session.clear()
-    return render_template('Desktop/Game_Keeper_Login.html')
+    return render_template('Desktop/Game_Keeper_Login.html',error_message = errormessage)
 
 #Load registration window
 @app.route('/register')
@@ -167,6 +174,7 @@ def registerSubmit():
                 session['Error Message'] = ("Email is already used")
                 return redirect(url_for('register'))
         #Regsitration successful TODO add Success message
+        session['loginerror'] = "registration successful"
         return redirect(url_for('login'))
     #Catch email of wrong extension
     else:
@@ -402,13 +410,14 @@ def endScreen():
     progress = session['progress']
     routeID = session['routeID']
     tutorID = databaseAdapter.getTutorIDFromStudentID(session['studentID'])[0]['TUTOR_ID']
-    print(tutorID)
-    print(routeID)
+    
     databaseAdapter.insertTeam(username,teamscore,progress,routeID,tutorID)
-    groupName = "Group1"
-    finalScore = "100"
-    finalPosition = "1st"
-    return render_template('mobile/End_Game_Page.html',group_name = groupName,final_score = finalScore,final_position = finalPosition)
+    teamreturn = databaseAdapter.getTeams()
+    teams = []
+    for team in teamreturn:
+        teams.append({'group_name':team['TEAM_NAME'],'final_score':team['TEAM_SCORE']})
+    
+    return render_template('mobile/End_Game_Page.html',group_name = username,final_score = teamscore,final_position = "1st",teams=teams)
 
 @app.route('/HelpPage')
 def loadHelpPage():

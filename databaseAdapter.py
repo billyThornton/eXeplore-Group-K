@@ -673,6 +673,27 @@ def getLocationID(locationName):
     return rows
 
 
+
+def getTeams():
+    db2conn = createConnection()
+    # Query all locations
+    if db2conn:
+        # if we have a Db2 connection, query the database
+        sql = "SELECT team_name,team_score FROM Team;"
+        # Prepare the statement
+        stmt = ibm_db.prepare(db2conn,sql)
+        # Execute the sql
+        ibm_db.execute(stmt)
+        rows=[]
+        # fetch the result
+        result = ibm_db.fetch_assoc(stmt)
+        while result != False:
+            rows.append(result.copy())
+            result = ibm_db.fetch_assoc(stmt)
+        # close database connection
+        ibm_db.close(db2conn)
+    return rows
+
 def insertStudentUser(email,name,TeamID,TutorID):
     db2conn = createConnection()
     name = name.lower()
