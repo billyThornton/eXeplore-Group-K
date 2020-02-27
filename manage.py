@@ -76,6 +76,7 @@ def login_post():
             #Get the total number of questions so end screen can be displayed at the end
             numOfQuestions = databaseAdapter.getNumLocationOnRoute(session['routeID'])
             session['numOfQuestions'] = numOfQuestions[0]['1']
+            session['teamScore'] = 100
             print("num of questions ",session['numOfQuestions'])
 
         elif(token['Role']=='tutor'):
@@ -389,13 +390,21 @@ def checkQuestion():
             session['progress'] = session.get('progress')+1
             return redirect(url_for('showLocationClue'))
     else:
+        session['teamScore'] = session['teamScore'] - 3
         session['QuestionMessage'] = 'Wrong answer try again'
         #redirect to the question page but with error message
         return redirect(url_for('retryQuestion'))
 
 @app.route('/finished')
 def endScreen():
-    
+    username = databaseAdapter.getStudentName(session['studentID'])[0]['NAME']
+    teamscore = session['teamScore']
+    progress = session['progress']
+    routeID = session['routeID']
+    tutorID = databaseAdapter.getTutorIDFromStudentID(session['studentID'])[0]['TUTOR_ID']
+    print(tutorID)
+    print(routeID)
+    databaseAdapter.insertTeam(username,teamscore,progress,routeID,tutorID)
     groupName = "Group1"
     finalScore = "100"
     finalPosition = "1st"

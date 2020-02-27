@@ -67,6 +67,34 @@ def createConnection():
     return db2conn
 
 
+def getStudentName(studentID):
+
+    db2conn = createConnection()
+
+    if db2conn:
+        # if we have a Db2 connection, query the database
+        sql = (
+        "SELECT name"
+        " FROM student "
+        " WHERE student_ID  = " + str(studentID) +
+        ";"
+        )
+        # Prepare the statement
+        stmt = ibm_db.prepare(db2conn,sql)
+		# Execute the sql
+        ibm_db.execute(stmt)
+        rows=[]
+        # fetch the result
+        result = ibm_db.fetch_assoc(stmt)
+        while result != False:
+            rows.append(result.copy())
+            result = ibm_db.fetch_assoc(stmt)
+        # close database connection
+        ibm_db.close(db2conn)
+        # Print to screen the result
+        print(rows)
+    return rows
+
 def getStudent(tutor):
 
     db2conn = createConnection()
@@ -548,6 +576,34 @@ def getTutorID(tutorName):
         print(rows)
     return rows
 
+def getTutorIDFromStudentID(studentID):
+    db2conn = createConnection()
+
+    if db2conn:
+        # if we have a Db2 connection, query the database
+        sql = (
+        "SELECT TUTOR_ID"
+        " FROM STUDENT"
+        " WHERE Student_id = " + str(studentID) +
+        ";"
+        )
+        print(sql)
+        # Prepare the statement
+        stmt = ibm_db.prepare(db2conn,sql)
+		# Execute the sql
+        ibm_db.execute(stmt)
+        rows=[]
+        # fetch the result
+        result = ibm_db.fetch_assoc(stmt)
+        while result != False:
+            rows.append(result.copy())
+            result = ibm_db.fetch_assoc(stmt)
+        # close database connection
+        ibm_db.close(db2conn)
+        # Print to screen the result
+        print(rows)
+    return rows
+
 def getStudentID(email):
     db2conn = createConnection()
 
@@ -742,13 +798,13 @@ def insertClue(locationID, clue):
         ibm_db.close(db2conn)
         
 
-def insertClue(teamName,teamScore,progress,routeID,tutorID):
+def insertTeam(teamName,teamScore,progress,routeID,tutorID):
     db2conn = createConnection()
 
     if db2conn:
         sql = (
             "INSERT INTO TEAM (TEAM_NAME,TEAM_SCORE,PROGRESS,ROUTE_ID,TUTOR_ID)"
-            " VALUES('" + teamName + "', " + str(teamScore) + ", "+str(progress)+
+            " VALUES('" + teamName + "', " + str(teamScore) + ", "+str(progress)
             +", "+str(routeID)+", "+str(tutorID)+");"
             )
         print(sql)
