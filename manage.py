@@ -131,6 +131,7 @@ def registerSubmit():
     global EMAILEXTENSION
     name = request.form.get('name')
     email = request.form.get('email')
+    name=name.lower()
     email=email.lower()
     password = request.form.get('password')
     passwordConfirm = request.form.get('passwordConfirmation')
