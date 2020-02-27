@@ -195,7 +195,7 @@ def imageUniStatic():
 ######################
 #Loads the dashboard for game masters
 @app.route('/dashboard')
-# @requires_access_level('staff')
+@requires_access_level('staff')
 def dashboard():
     return render_template('Desktop/Game_Keeper_Page.html')
 

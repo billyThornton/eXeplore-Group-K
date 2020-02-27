@@ -35,7 +35,7 @@ def verifyEmail(email):
     #Gets a result set for all students with the gievn email
     studentID = databaseAdapter.getStudentID(email)
     #Gets a result set for all the tutors of a given email
-    tutorID = databaseAdapter.getStudentID(email)
+    tutorID = databaseAdapter.getTutorPassword(email)
     
     #Check if the email belongs to a student of staff
     if(studentID is not None and len(studentID)>0):
