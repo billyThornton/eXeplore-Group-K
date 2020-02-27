@@ -1,0 +1,202 @@
+/*
+Created on 19/02/2020 
+@author: Teo Reed
+@Last Edited: 26/02/2020
+@edited by: Ben Trotter
+
+Copyright (c) “2020, by Group K
+Contributors: Jamie Butler, Rahul Pankhania, Teo Reed, Billy Thornton, Ben Trotter, Kristian Woolhouse
+URL: https://github.com/billyThornton/eXeplore-Group-K ” 
+All rights reserved.
+Redistribution and use in source and binary forms, with or without modification, are permitted provided
+that the followingvconditions are met:
+ 
+Redistributions of source code must retain the above copyright notice, this list of conditions and the
+following disclaimer. Redistributions in binary form must reproduce the above copyright notice, this
+list of conditions and the following disclaimer in the documentation and/or other materials provided
+with the distribution. 
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR IMPLIED
+WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+File contains CSS for the Game_Keeper_Login.html. The CSS responsively changes depending on the screen
+width. This allows this page's style to be used correctly on smaller screen widths and mobile devices.
+This is necessary as the login page will be accessed using both desktop and mobile devices.
+*/
+
+body {
+	height: 100%;
+	background: url('../Exeter_University.jpg') no-repeat center center fixed; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;}
+
+/* Styling for user inputted text */
+input[id=text_input] {
+	width: 258px;
+	height: 46px;
+	border-radius: 30px;
+	border-color: white;
+	border-style: solid;
+	border-width: 1px;
+	background-color: #31750E;
+	text-align: center;
+	color: white;
+	opacity: 100%;
+	font-size: 18px;
+}
+
+input[id=text_input]::-webkit-input-placeholder {
+	color: inherit;
+}
+
+input[id=text_input]:focus {
+	outline: none;
+	border-width: 3px;
+}
+
+/* Box holding input fields */
+.login_container {
+	font-size: 18px;
+	color: white;
+	font-family: sans-serif;
+}
+
+/* Staff and Student button styling */
+button[id="btn"] {
+	font-size: 20px;
+	color: white;
+	height: 40px;
+	width: 113px;
+	background: none;
+	border-style: solid;
+	border-width: 1px;
+	border-color: white;
+	border-radius: 25px;
+	margin-right: 10px;
+}
+
+/* When staff or studetn buttons are pressed */
+button[id="btn"]:active {
+	border-color: #31750E;
+	outline: none;
+}
+
+select {
+	width: 224px;
+	height: 46px;
+	border-radius: 40px;
+	border-color: white;
+	border-style: solid;
+	border-width: 1px;
+	background-color: #31750E;
+	text-align: center;
+	color: white;
+	opacity: 100%;
+	font-size: 18px;
+	padding-left: 10px;
+}
+
+/* Create an account link */
+a {
+	display: block;
+	margin-top: 10px;
+	color: white;
+}
+
+a:hover {
+	color: red;
+}
+
+#green_box {
+	width: 802px;
+	height: 683px;
+	background-color: #2E3920;
+	opacity: 79%;
+	border-radius: 40px;
+	text-align: center;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -401px;
+	margin-top: -360px;
+	padding-top: 40px;
+}
+
+/* Exeter university logo */
+#white_logo_vector {
+	width: 392px;
+	height: 150px;
+}
+
+#game_name {
+	font-family: sans-serif;
+	font-size: 25px;
+	color: white;
+	margin-top: -30px;
+}
+
+/*Error messaging styling */
+#error {
+	color: red;
+}
+
+
+/*Responsive resizing for mobile devices*/
+@media screen and (max-width: 750px) {
+  
+	#green_box {
+		width: 80%;
+		height: 510px;
+		background-color: #2E3920;
+		opacity: 79%;
+		border-radius: 40px;
+		text-align: center;
+		position: absolute;
+		margin-top: 0px;
+		margin-left: auto;
+		margin-right: 10%;
+		padding-top: 40px;
+		left: 10%;
+		top: 5%;
+	}
+
+	#white_logo_vector {
+		width: 70%;
+		height: 30%;
+	}
+
+	#game_name {
+		font-family: sans-serif;
+		font-weight: lighter;
+		font-size: 15px;
+		color: white;
+		margin-top: -20px;
+	}
+
+	input[id=text_input] {
+		width: 200px;
+		height: 30px;
+		border-radius: 30px;
+		border-color: white;
+		border-style: solid;
+		border-width: 1px;
+		background-color: #31750E;
+		text-align: center;
+		color: white;
+		opacity: 100%;
+		font-size: 18px;
+	}
+
+	select {
+		width: 200px;
+		height: 33px;
+	}
+
+}

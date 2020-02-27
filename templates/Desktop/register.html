@@ -1,0 +1,83 @@
+<!--
+Created on 26/02/2020
+@author: Ben Trotter
+@Last Edited: 26/02/2020
+@edited by: Ben Trotter
+
+Copyright (c) “2020, by Group K
+Contributors: Jamie Butler, Rahul Pankhania, Teo Reed, Billy Thornton, Ben Trotter, Kristian Woolhouse
+URL: https://github.com/billyThornton/eXeplore-Group-K ”
+All rights reserved.
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following
+conditions are met:
+
+Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer
+in the documentation and/or other materials
+provided with the distribution.
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
+BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAT PURPOSE ARE DISCLAIMED. IN NO EVENT
+SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INLUDING NEGLIGENCE
+OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+This file contains the html for users to create new details to login. New credentials, if valid, are saved onto the database.
+Users must have an @exeter email. Uses Game_Keeper_Login_Style.css for styling and layout.
+-->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="{{url_for('static',filename='styles/Game_Keeper_Login_Style.css')}}" rel='stylesheet' type='text/css'/>
+<title>Game's Keeper Login</title>
+
+</head>
+
+<body>
+
+	<div id="green_box">
+
+		<div id="exeter_logo_container">
+			<img id="white_logo_vector" src={{url_for('static',filename='images/white_logo_vector.png')}}>
+		</div>
+
+		<div id="game_name">
+			<h1>eXeplore Game</h1>
+		</div>
+
+		<!-- Register form -->
+		<form action="registerSubmit">
+			<div class="login_container">
+
+				<!-- Error Message for invalid entry of email or password -->
+				<p id="error">{{error_message}}</p>
+
+				<p> <input id="text_input" type="text" placeholder="Name" name="name" required> </p>
+				<p> <input id="text_input" type="text" placeholder="Email" name="email" required> </p>
+				<p> <input id="text_input" type="password" placeholder="Password" name="password" required> </p>
+				<p> <input id="text_input" type="password" placeholder="Confirm Password" name="passwordConfirmation" required> </p>
+				<p> <select id="text_input" name="tutorName">
+						<option value="0">Select a tutor:</option>
+					  	<option value="ronaldo">Ronaldo</option>
+					  	<option value="matt">Matt</option>
+					  	<option value="david">David</option>
+					  	<option value="jacq">Jacq</option>
+					  	<option value="na">Not applicable</option>
+					</select>
+				</p>
+
+				<p>
+				<button type="button" id="btn" name="goBack" onclick="window.location.href = '/';">Go Back</button>
+				<button type="submit" id="btn" formmethod="post">Register</button>
+				</p>
+
+			</div>
+		</form>
+
+	</div>
+
+</body>
+</html>

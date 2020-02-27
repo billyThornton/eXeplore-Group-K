@@ -1,0 +1,90 @@
+<!--
+Created on 19/02/2020 
+@author: Jamie Butler
+@Last Edited: 26/02/2020
+@edited by: Teo Reed
+
+Copyright (c) “2020, by Group K
+Contributors: Jamie Butler, Rahul Pankhania, Teo Reed, Billy Thornton, Ben Trotter, Kristian Woolhouse
+URL: https://github.com/billyThornton/eXeplore-Group-K ” 
+All rights reserved.
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following
+conditions are met:
+ 
+Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer
+in the documentation and/or other materials
+provided with the distribution. 
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
+BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAT PURPOSE ARE DISCLAIMED. IN NO EVENT 
+SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INLUDING NEGLIGENCE
+OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+This file contains html is dynamically loaded into the content div from Game_Keeper_Page.html when assign routes button is
+clicked from Game_Keeper_Page.html. It allows a gamekeeper to assign routes for certain groups that. This is done by 
+using select boxes which are obtained from the database..
+-->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add Location Page</title>
+
+</head>
+
+<body>
+	<div id="assign_routes_page">
+		
+		<!-- Assign Route Column -->
+		<div id="assign_route_container">
+		
+			<h2>Assign Route</h2>
+				<p> <label>Group:</label>
+				<!-- As route and group boxes are selected their names will appear here -->
+				<div style="width:100px;height:30px;border:1px solid #000;">Group here!</div>
+				</p>
+				
+				<p> <label>Route:</label>
+				<!-- As route and group boxes are selected their names will appear here -->
+				<div style="width:100px;height:30px;border:1px solid #000;">Route here!</div>
+				</p>
+				
+			<div id="transparent_button_container">
+				<button type="button" id="transparent_button" name="assign_button">Assign</button>
+			</div>
+		</div>
+		
+		<!-- Routes Column -->
+		<h2>Routes</h2>
+		
+			<div id="route_list_container">
+				<input type="radio" id="example_route" name="routes"/> Example Route <br />
+				<input type="radio" id="example_route" name="routes"/> Example Route <br />
+				<input type="radio" id="example_route" name="routes"/> Example Route <br />
+				<input type="radio" id="example_route" name="routes"/> Example Route <br />
+				<input type="radio" id="example_route" name="routes"/> Example Route <br />
+				<input type="radio" id="example_route" name="routes"/> Example Route <br />
+				<input type="radio" id="example_route" name="routes"/> Example Route <br />
+			</div>		
+		<p></p>
+		
+		<!-- Groups -->
+		<h2>Groups</h2>
+		
+			<div id="group_list_container">
+				<input type="radio" id="example_group" name="groups"/> Example Group <br />
+				<input type="radio" id="example_group" name="groups"/> Example Group <br />
+				<input type="radio" id="example_group" name="groups"/> Example Group <br />
+				<input type="radio" id="example_group" name="groups"/> Example Group <br />
+				<input type="radio" id="example_group" name="groups"/> Example Group <br />
+				<input type="radio" id="example_group" name="groups"/> Example Group <br />
+				<input type="radio" id="example_group" name="groups"/> Example Group <br />
+			</div>	
+		
+	</div>
+</body>
+</html>

@@ -1,0 +1,285 @@
+/*
+Created on 19/02/2020 
+@author: Teo Reed
+@Last Edited: 26/02/2020
+@edited by: Teo Reed
+
+Copyright (c) “2020, by Group K
+Contributors: Jamie Butler, Rahul Pankhania, Teo Reed, Billy Thornton, Ben Trotter, Kristian Woolhouse
+URL: https://github.com/billyThornton/eXeplore-Group-K ” 
+All rights reserved.
+Redistribution and use in source and binary forms, with or without modification, are permitted provided
+that the following conditions are met:
+ 
+Redistributions of source code must retain the above copyright notice, this list of conditions and the
+following disclaimer. Redistributions in binary form must reproduce the above copyright notice, this
+list of conditions and the following disclaimer in the documentation and/or other materials provided with
+the distribution. 
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR IMPLIED
+WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
+TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.
+
+Provides style for the Manage_Groups_Page.html. The stylesheet uses the scroll bar webkit in order to
+present the scrollbar track and thumb in a way that doesn’t obstruct or disrupt the styling of the webpage.
+A near transparent track is used and a thumb in keeping to the general colour pallette is used. Provides
+style for buttons and input forms. The radio buttons used have been styled using a label that links to the
+radio button, this has allowed a much more customisable checkbox to be used.
+*/
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
+#create_group_page {
+	font-family: 'Open Sans';
+	background-image: linear-gradient(#6C6C6C, #C1C1C1);
+	height: 100%;
+	width: 90%;
+	background-repeat: no-repeat;
+	background-size: cover;
+	box-sizing: border-box;
+	font-size: 95%;
+	line-height: 1;
+	color: white;
+	float: left;
+}
+
+::-webkit-scrollbar-track {
+	opacity: 0.1;
+}
+
+::-webkit-scrollbar {
+	width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #d0d0d0;
+	border-radius: 5px;
+}
+
+table {
+	margin-left: 10px;
+}
+
+table, th, td {
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 0px;
+}
+
+
+th, td {
+	padding-left: 10px;
+}
+
+td {
+	height: 500px;
+}
+
+#create_group_container {
+	height: 370px;
+	margin-bottom: 0px;
+}
+
+#delete_group_container {
+	height: 100px;
+	top: 0px;
+	margin-bottom: 20px;
+}
+
+#student_list_container {
+	height: 500px;
+	overflow-y: scroll;
+	scrollbar-color: black;
+	background-color: white;
+	border-radius: 10px;
+	color: #414141;
+}
+
+#group_list_container {
+	height: 450px;
+	overflow-y: scroll;
+	scrollbar-color: black;
+	background-color: white;
+	border-radius: 10px;
+	color: #414141;
+	margin-bottom: 20px;
+}
+
+/* Box for students to appear in once selected */
+#search_results {
+	border: solid white 1px;
+	color: #414141;
+	background-color: white;
+	width: 100%;
+	height: 150px;
+	margin: auto;
+	overflow-y: scroll;
+	padding-top: 5px;
+	border-radius: 10px;
+}
+
+/* Styling for user input text */
+input[type=text] {
+	height: 18px;
+	width: 60%;
+	border: none;
+	border-radius: 10px;
+	text-align: left;
+	padding-left: 5px;
+	color: white;
+	opacity: 100%;
+	font-size: 9px;
+	color: black;
+	padding-right: 5px;
+	overflow: scroll;
+}
+
+#transparent_button:hover,#delete_group_button:hover{
+	cursor: pointer;
+}
+
+#transparent_button {
+	font-size: 20px;
+	color: white;
+	height: 30px;
+	width: 200px;
+	background: none;
+	border-style: solid;
+	border-width: 2px;
+	border-color: white;
+	border-radius: 50px;
+	margin-left: auto;
+}
+
+#delete_transparent_button {
+	font-size: 20px;
+	color: #FF3B3B;
+	height: 30px;
+	width: 200px;
+	background: none;
+	border-style: solid;
+	border-width: 2px;
+	border-color: #FF3B3B;
+	border-radius: 50px;
+	margin-left: auto;
+}
+
+/* Hide old radio button style */
+input[type="checkbox"]{
+	display: none;
+}
+
+.active-label {
+	color: #414141;
+}
+
+.active-label:before {
+	background-color: #414141;
+	border-color: green;
+}
+
+/**
+ * How it should look when checked
+ */
+input[type="checkbox"]:checked + #student_label:before {
+	border-color: white;
+	border: none;
+	background: #31750E;
+	padding: 3px;
+}
+
+/**
+ * How it should look when disabled
+ */
+input[type="checkbox"]:disabled + #student_label {
+	background: #efefef;
+	color: rgba(0, 0, 0, 0.5);
+	cursor: not-allowed;
+}
+
+input[type="checkbox"]:disabled + #student_label:hover {
+	border-color: rgba(0, 0, 0, 0.1);
+}
+
+input[type="checkbox"]:disabled + #student_label:before {
+	border-color: white;
+	background: white;
+}
+
+#student_label, #group_label {
+	font-size: 1rem;
+	font-weight: bold;
+	line-height: 1;
+	cursor: pointer;
+	display: block;
+	color: #414141;
+	font-family: sans-serif;
+	padding: 1rem 1rem 1rem 3rem;
+	position: relative;
+	border-top: 1px solid rgba(black, 0.1);
+	background: none;
+	whitespace: no-wrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	transition: all 0.15s ease;
+}
+
+#student_label:first-of-type, #group_label:first-of-type {
+	border: 0;
+}
+
+#student_label:before, #group_label:before {
+	content: "";
+	position: absolute;
+	left: 1rem;
+	top: 1rem;
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	border: 0.2rem solid #ccc;
+}
+
+.active-label, #student_label:focus, #student_label:hover, #student_label:active, #student_label:checked + #student_label, #group_label :focus, #group_label:hover, #group_label:active, #group_label:checked + #group_label {
+	color: #31750E;
+}
+
+.active-label:before, #student_label:focus:before, #student_label:hover:before, #student_label:active:before, #student_label:checked + #student_label:before, #group_label:focus:before, #group_label:hover:before, #group_label:active:before, #group_label:checked + #group_label:before {
+    background: none;
+    border-color: #31750E;
+}
+
+input[type="radio"]{
+    display: none;
+}
+
+/**
+* How it should look when checked
+*/
+input[type="radio"]:checked + #group_label:before {
+	border-color: white;
+	border: none;
+	background: #31750E;
+	padding: 3px;
+}
+
+/**
+* How it should look when disabled
+*/
+input[type="radio"]:disabled + #group_label {
+	background: #efefef;
+	color: rgba(0, 0, 0, 0.5);
+	cursor: not-allowed;
+}
+
+input[type="radio"]:disabled + #group_label:hover {
+	border-color: rgba(0, 0, 0, 0.1);
+}
+
+input[type="radio"]:disabled + #group_label:before {
+	border-color: white;
+	background: white;
+}
