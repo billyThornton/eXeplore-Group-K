@@ -104,8 +104,10 @@ body {
 	border-radius: 15px;
 	background: #D6D6D6;
 	color: white;
-	height: 97px;
+	height: 110px;
 	width: 301px;
+	overflow-y: scroll;
+	padding-top: 5px;
 }
 
 /* Question box */
@@ -116,9 +118,10 @@ body {
 	border-radius: 15px;
 	background: #D6D6D6;
 	color: white;
-	height: 50px;
+	height: 70px;
 	width: 301px;
 	margin: auto;
+	overflow-y: scroll;
 }
 
 /* General styling for all transparent butttons */
@@ -256,6 +259,7 @@ label {
 	border-width: 1px;
 	border-color: black;
 	border-radius: 20px;
+	font-family: "Sans-serif", Arial, Serif;
 }
 
 /* END GAME PAGE CSS */

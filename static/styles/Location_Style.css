@@ -95,7 +95,6 @@ input[type="radio"]:disabled + #location_label:before {
 	whitespace: no-wrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	transition: all 0.15s ease;
 }
 
 #location_label:first-of-type {
@@ -259,7 +258,7 @@ input[type=text] {
 .correct_answer {
 	height: 20px;
 	background-color: white;
-	width: 40px;
+	width: 50px;
 	padding-left: 10px;
 }
 
