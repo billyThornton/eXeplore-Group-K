@@ -321,6 +321,7 @@ def getOfficeLocation(officeID):
 
     if db2conn:
         # if we have a Db2 connection, query the database
+        
         sql = (
         "SELECT office_name, location_id"
         " FROM office"
@@ -378,8 +379,10 @@ def getLocation(routeID,progress):
     if db2conn:
         # if we have a Db2 connection, query the database
         sql = (
-        "SELECT location_id"
-        " FROM routelocationbridge"
+        "SELECT l.location_id,l.location_image_url"
+        " FROM location l"
+        " INNER JOIN routelocationbridge r"
+        " ON l.location_id = r.location_id"
         " WHERE route_id = " + str(routeID) +
         " and sequence_order = "+str(progress)+";"
         )

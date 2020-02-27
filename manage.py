@@ -241,9 +241,13 @@ def editLocation():
 def deleteLocation():
     name = request.form.get('locations')
     databaseAdapter.removeLocation(name)
-    
+    locationNames = []
     locations = databaseAdapter.getLocations()
-    render_template('Desktop/Manage_Locations_Page.html', locations = locations)
+    locationNames=[]
+    for location in locations:
+        locationNames.append(location['LOCATION_NAME'])
+    
+    return redirect(url_for('manageLocations'))
 
 
 
@@ -253,7 +257,11 @@ def deleteLocation():
 def manageLocations():
     #Creates a list of locations from the db
     locations = databaseAdapter.getLocations()
-    return render_template('Desktop/Manage_Locations_Page.html', locations = locations)
+    locationNames=[]
+    for location in locations:
+        locationNames.append(location['LOCATION_NAME'])
+        
+    return render_template('Desktop/Manage_Locations_Page.html', locations = locationNames)
 
 #Loads the gamekeepers dashboard tool
 @app.route('/Manage_Groups_Page')
@@ -299,7 +307,11 @@ def showLocationClue():
     print(progress)
 
     #Get the location ID for the clue
-    locationID = databaseAdapter.getLocation(routeID,progress)[0]['LOCATION_ID']
+    locationData= databaseAdapter.getLocation(session['routeID'],session['progress'])
+    locationID = locationData[0]['LOCATION_ID']
+    #Shows the next locations image
+    imageURL = databaseAdapter.getLocation(session['routeID'],session['progress']+1)[0]['LOCATION_IMAGE_URL']
+    imageLocation = url_for('static',filename='images/'+imageURL)
     print("LocationID",locationID)
     #check if there are no maore lcations
     if(len(databaseAdapter.getLocationClues(locationID))==0):
@@ -309,7 +321,7 @@ def showLocationClue():
     print(cluemessage)
     #progress value = get User.progress from db
     #clue message = get clue for position = progress from db
-    imageLocation = url_for('static',filename='images/Exeterforum.jpg')
+    
     print(imageLocation)
     return render_template('mobile/Clue_Page.html',progress_value = progress,clue_message = cluemessage,clue_location=imageLocation)
 
@@ -318,10 +330,12 @@ def getQuestion():
     progress = session['progress']
     print("progress: ", progress)
     #Get the location ID for the clue
-    locationID = databaseAdapter.getLocation(session['routeID'],session['progress']+1)[0]['LOCATION_ID']
+    locationData= databaseAdapter.getLocation(session['routeID'],session['progress']+1)
+    locationID = locationData[0]['LOCATION_ID']
     questionData = databaseAdapter.getQuestion(locationID)
     print("questionData: ", questionData)
-    imageLocation = url_for('static',filename='images/Exeterforum.jpg')
+    imageURL = locationData[0]['LOCATION_IMAGE_URL']
+    imageLocation = url_for('static',filename='images/'+imageURL)
     print(questionData[0]['QUESTION_CONTENT'])
     questionText = questionData[0]['QUESTION_CONTENT']
     a= questionData[0]['MULTIPLE_CHOICE_A']
@@ -342,9 +356,10 @@ def retryQuestion():
         error_message = ""
     
     progress = session['progress']
-    locationID = databaseAdapter.getLocation(session['routeID'],session['progress']+1)[0]['LOCATION_ID']
-    questionData = databaseAdapter.getQuestion(locationID)
-    imageLocation = url_for('static',filename='images/Exeterforum.jpg')
+    locationData= databaseAdapter.getLocation(session['routeID'],session['progress'])
+    locationID = locationData[0]['LOCATION_ID']
+    imageURL = locationData[0]['LOCATION_IMAGE_URL']
+    imageLocation = url_for('static',filename='images/'+imageURL)
     questionText = questionData[0]['QUESTION_CONTENT']
     a= questionData[0]['MULTIPLE_CHOICE_A']
     b= questionData[0]['MULTIPLE_CHOICE_B']
