@@ -65,7 +65,7 @@ provides various features such as Help, FAQ & Logout.
 				<p>You positioned: {{final_position}}</p>
 			</div>
 		
-   			<table class="table">
+   			<table id="table">
 			
 				<!-- Headers -->
      			<thead>
@@ -78,22 +78,23 @@ provides various features such as Help, FAQ & Logout.
 				
       			<!-- Examples -->
       			<tr>
-              		<td>1</td>
-              		<td>The Best Team</td>
-              		<td>300</td>
+              		<td>X</td>
+              		<td>Example Team</td>
+              		<td>200</td>
             	</tr>
+				
+				{% for team in teams %}
             	<tr>
-              		<td>2</td>
-              		<td>Ben is the best team</td>
-              		<td>270</td>
+              		<td>{{final_position}}</td>
+              		<td>{{group_name}}</td>
+              		<td>{{final_score}}</td>
             	</tr>
+				{% endfor %}
 			</table>
 			
 			<div id="transparent_button_container">
-				<button type="button" onclick="location.href='/Logout'" class="transparent_button" name="logout_button">Logout</button>
+				<button type="button" onclick="location.href='/Logout'" class="transparent_button" name="logout_button" id="submit">Logout</button>
 			</div>	
-
-			<span>Leaderboard:</span><br><br>
 
 		</div>
 	</div>
