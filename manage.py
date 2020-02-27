@@ -356,7 +356,7 @@ def retryQuestion():
         error_message = ""
     
     progress = session['progress']
-    locationData= databaseAdapter.getLocation(session['routeID'],session['progress'])
+    locationData= databaseAdapter.getLocation(session['routeID'],session['progress']+1)
     locationID = locationData[0]['LOCATION_ID']
     questionData = databaseAdapter.getQuestion(locationID)
     imageURL = locationData[0]['LOCATION_IMAGE_URL']
