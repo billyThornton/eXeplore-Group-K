@@ -260,7 +260,7 @@ label {
 
 /* END GAME PAGE CSS */
 /* End game leaderboard styling */
-.table{
+#table{
 	color: black;
 	background-color: white;
 	width: 80%;
@@ -273,25 +273,25 @@ label {
 	padding: 6px;
 }
 
-.table tbody{
+#table tbody{
 	display:block;
 	overflow: auto;
 	height: 200px;
 }
 
-.table thead tr {
+#table thead tr {
 	display: block;
 	border-style: solid;
 	border-width: 0px;
 	border-radius: 20px;
 }
 
-.table thead {
+#table thead {
 	background: #104600;
 	color:#fff;
 }
 
-.table th, .table td {
+#table th, #table td {
 	padding: 5px;
 	text-align: left;
 	width: 400px;
