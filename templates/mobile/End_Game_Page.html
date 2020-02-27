@@ -70,7 +70,6 @@ provides various features such as Help, FAQ & Logout.
 				<!-- Headers -->
      			<thead>
         			<tr>
-         				<th>Position</th>
           				<th>Team Name</th>
           				<th>Score</th>
         			</tr>
@@ -78,16 +77,14 @@ provides various features such as Help, FAQ & Logout.
 				
       			<!-- Examples -->
       			<tr>
-              		<td>X</td>
               		<td>Example Team</td>
               		<td>200</td>
             	</tr>
 				
 				{% for team in teams %}
             	<tr>
-              		<td>{{final_position}}</td>
-              		<td>{{group_name}}</td>
-              		<td>{{final_score}}</td>
+              		<td>{{team.group_name}}</td>
+              		<td>{{team.final_score}}</td>
             	</tr>
 				{% endfor %}
 			</table>
