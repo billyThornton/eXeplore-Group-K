@@ -740,6 +740,24 @@ def insertClue(locationID, clue):
         ibm_db.execute(stmt)
         # close database connection
         ibm_db.close(db2conn)
+        
+
+def insertClue(teamName,teamScore,progress,routeID,tutorID):
+    db2conn = createConnection()
+
+    if db2conn:
+        sql = (
+            "INSERT INTO TEAM (TEAM_NAME,TEAM_SCORE,PROGRESS,ROUTE_ID,TUTOR_ID)"
+            " VALUES('" + teamName + "', " + str(teamScore) + ", "+str(progress)+
+            +", "+str(routeID)+", "+str(tutorID)+");"
+            )
+        print(sql)
+        # Prepare the statement
+        stmt = ibm_db.prepare(db2conn,sql)
+    	# Execute the sql
+        ibm_db.execute(stmt)
+        # close database connection
+        ibm_db.close(db2conn)
 
 
 def removeLocation(locationName):

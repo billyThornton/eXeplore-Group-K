@@ -358,6 +358,7 @@ def retryQuestion():
     progress = session['progress']
     locationData= databaseAdapter.getLocation(session['routeID'],session['progress'])
     locationID = locationData[0]['LOCATION_ID']
+    questionData = databaseAdapter.getQuestion(locationID)
     imageURL = locationData[0]['LOCATION_IMAGE_URL']
     imageLocation = url_for('static',filename='images/'+imageURL)
     questionText = questionData[0]['QUESTION_CONTENT']
@@ -394,6 +395,7 @@ def checkQuestion():
 
 @app.route('/finished')
 def endScreen():
+    
     groupName = "Group1"
     finalScore = "100"
     finalPosition = "1st"
