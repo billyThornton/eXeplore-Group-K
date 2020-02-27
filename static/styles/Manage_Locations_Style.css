@@ -105,7 +105,6 @@ input[type="radio"]:disabled + #location_label:before {
 	whitespace: no-wrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	transition: all 0.15s ease;
 }
 
 #location_label:first-of-type {
@@ -193,5 +192,5 @@ input[type="radio"]:disabled + #location_label:before {
 
 /* Give container scroller */
 #location_list_container {
-	overflow-y: scroll;
+
 }
