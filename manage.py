@@ -63,19 +63,26 @@ def login_post():
         #Sets the role of the user in the session
         if(token['Role']=='student'):
             session['Role'] = 'student'
-            # print(token)
+            
             session['studentID'] = token['ID'][0]['STUDENT_ID']
             #get group ID
-            # print("session",session['studentID'])
+            
             groupID = databaseAdapter.getTeamFromStudentID(session['studentID'])[0]['TEAM_ID']
-            # print("groupID",groupID)
+            
             session['groupID'] = groupID
+            #get the ID of the route the students are on
             routeID = databaseAdapter.getRouteID(session['groupID'])
             session['routeID'] = routeID[0]['ROUTE_ID']
+            #Get the total number of questions so end screen can be displayed at the end
+            numOfQuestions = databaseAdapter.getNumLocationOnRoute(session['routeID'])
+            session['numOfQuestions'] = numOfQuestions[0]['1']
+            print("num of questions ",session['numOfQuestions'])
 
-        if(token['Role']=='tutor'):
+        elif(token['Role']=='tutor'):
             session['Role'] = 'staff'
             # session['tutorID'] = token['tutorID']
+    else:
+        session['Role'] = 'NO_ROLE'
 
     print(session['Role'])
     if(session['Role'] == "staff"):
@@ -128,7 +135,6 @@ def registerSubmit():
     if checkEmail(email):
         #Check if email has numbers if yes they must be a student
         if(hasNumbers(email)):
-
             #Check if the email is already registered
             if(len(databaseAdapter.getStudentID(email))==0):
                 #TODO set team id by user preference
@@ -292,8 +298,8 @@ def showLocationClue():
 
     print(progress)
 
+    #Get the location ID for the clue
     locationID = databaseAdapter.getLocation(routeID,progress)[0]['LOCATION_ID']
-    session['locationID'] = locationID
     print("LocationID",locationID)
     #check if there are no maore lcations
     if(len(databaseAdapter.getLocationClues(locationID))==0):
@@ -309,10 +315,11 @@ def showLocationClue():
 
 @app.route('/getQuestion',methods = ['POST'])
 def getQuestion():
-    print("ENTERED getQuestion()")
-    progress = request.form.get('progress')
+    progress = session['progress']
     print("progress: ", progress)
-    questionData = databaseAdapter.getQuestion(session['locationID']+1)
+    #Get the location ID for the clue
+    locationID = databaseAdapter.getLocation(session['routeID'],session['progress']+1)[0]['LOCATION_ID']
+    questionData = databaseAdapter.getQuestion(locationID)
     print("questionData: ", questionData)
     imageLocation = url_for('static',filename='images/Exeterforum.jpg')
     print(questionData[0]['QUESTION_CONTENT'])
@@ -333,9 +340,10 @@ def retryQuestion():
         #If no message set set the message to be empty (No message)
         session['QuestionMessage'] = ""
         error_message = ""
-    progress = request.form.get('progress')
-    progress = request.form.get('progress')
-    questionData = databaseAdapter.getQuestion(session['locationID']+1)
+    
+    progress = session['progress']
+    locationID = databaseAdapter.getLocation(session['routeID'],session['progress']+1)[0]['LOCATION_ID']
+    questionData = databaseAdapter.getQuestion(locationID)
     imageLocation = url_for('static',filename='images/Exeterforum.jpg')
     questionText = questionData[0]['QUESTION_CONTENT']
     a= questionData[0]['MULTIPLE_CHOICE_A']
@@ -346,21 +354,22 @@ def retryQuestion():
                            answer_a = a, answer_b = b, answer_c = c, answer_d = d)
 @app.route('/confirmAnswer',methods = ['POST'])
 def checkQuestion():
-    maxProgress = 10
-    progress = request.form.get('progress')
+    #chscks he progress of the student to ensure the correct question is loaded
+    progress = session['progress']
+    #Get their answer to the question
     answer = request.form.get('answer')
-    questionData = databaseAdapter.getQuestion(session['locationID']+1)
+    #Retreive the correct answer
+    locationID = databaseAdapter.getLocation(session['routeID'],session['progress']+1)[0]['LOCATION_ID']
+    questionData = databaseAdapter.getQuestion(locationID)
     answer = answer.upper()
     correctAnswer = questionData[0]['ANSWER'];
-    print(type(answer),type(correctAnswer))
-    print("answer",answer[0])
-    print("Wesution",correctAnswer[0])
+
     if(str(answer[0]) == str(correctAnswer[0])):
-        print("SAME")
-        #print(int(progress), answer, int(maxProgress))
-        if (int(progress) == int(maxProgress)):
+        #If it was the las question load the end screen
+        if (int(progress) == int(session['numOfQuestions'])):
             return redirect(url_for('endScreen'))
         else:
+            #If not load the lext location clue
             session['progress'] = session.get('progress')+1
             return redirect(url_for('showLocationClue'))
     else:

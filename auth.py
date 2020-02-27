@@ -44,7 +44,7 @@ def verifyEmail(email):
         return {'VerificationToken':False,'Role':'student','hashedpass':hashedPassword[0]['PASSWORD'],
                 'ID':studentID}
     
-    elif(tutorID is not None):
+    elif(tutorID is not None and len(tutorID)>0):
         hashedPassword = databaseAdapter.getTutorPassword(email)
         #if tutor return hashed password and set role to tutor
         return {'VerificationToken':False,'Role':'tutor','hashedpass':hashedPassword[0]['PASSWORD'],

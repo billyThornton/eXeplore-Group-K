@@ -383,6 +383,34 @@ def getLocation(routeID,progress):
         " WHERE route_id = " + str(routeID) +
         " and sequence_order = "+str(progress)+";"
         )
+        
+        # Prepare the statement
+        stmt = ibm_db.prepare(db2conn,sql)
+		# Execute the sql
+        ibm_db.execute(stmt)
+        rows=[]
+        # fetch the result
+        result = ibm_db.fetch_assoc(stmt)
+        while result != False:
+            rows.append(result.copy())
+            result = ibm_db.fetch_assoc(stmt)
+        # close database connection
+        ibm_db.close(db2conn)
+        # Print to screen the result
+        print(rows)
+    return rows
+
+def getNumLocationOnRoute(routeID):
+    db2conn = createConnection()
+
+    if db2conn:
+        # if we have a Db2 connection, query the database
+        sql = (
+        "SELECT MAX(sequence_order)"
+        " FROM routelocationbridge"
+        " WHERE route_id = " + str(routeID) +";"
+        )
+        print(sql)
         # Prepare the statement
         stmt = ibm_db.prepare(db2conn,sql)
 		# Execute the sql
@@ -588,7 +616,8 @@ def getLocationID(locationName):
 
 def insertStudentUser(email,name,TeamID,TutorID):
     db2conn = createConnection()
-
+    name = name.lower()
+    email = email.lower()
     if db2conn:
         # if we have a Db2 connection, query the database
         sql = (
@@ -622,7 +651,8 @@ def insertPasswordStudent(password,studentID):
 
 def insertTutorUser(email,office,name):
     db2conn = createConnection()
-
+    name = name.lower()
+    email = email.lower()
     #Override office to be 1 as office input isnt setup yet
     office = 1
     if db2conn:
@@ -660,7 +690,7 @@ def insertPasswordTutor(password,tutorID):
 
 def insertLocation(locationName):
     db2conn = createConnection()
-
+    locationName = locationName.lower()
     if db2conn:
         sql = (
             "INSERT INTO location(location_name)"
