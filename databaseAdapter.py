@@ -1,16 +1,16 @@
 """
 Copyright (c) “2020, by Group K
 Contributors: Jamie Butler, Rahul Pankhania, Teo Reed, Billy Thornton, Ben Trotter, Kristian Woolhouse
-URL: https://github.com/billyThornton/eXeplore-Group-K ” 
+URL: https://github.com/billyThornton/eXeplore-Group-K ”
 All rights reserved.
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
- 
+
 Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
 Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials
-provided with the distribution. 
+provided with the distribution.
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAT PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-Created on 19/02/2020 
+Created on 19/02/2020
 @author: Kris Woolhouse + Billy Thornton (Pair Programming)
 @Last Edited: 26/02/2020
 @edited by: Billy Thornton Added insert functions for passwords
@@ -380,7 +380,7 @@ def getLocation(routeID,progress):
         sql = (
         "SELECT location_id"
         " FROM routelocationbridge"
-        " WHERE route_id = " + str(routeID) + 
+        " WHERE route_id = " + str(routeID) +
         " and sequence_order = "+str(progress)+";"
         )
         # Prepare the statement
@@ -544,6 +544,47 @@ def getStudentID(email):
         print(rows)
     return rows
 
+# Collects all locations for game keeper
+def getLocations():
+    db2conn = createConnection()
+    # Query all locations
+    if db2conn:
+        # if we have a Db2 connection, query the database
+        sql = "SELECT location_name FROM location;"
+        # Prepare the statement
+        stmt = ibm_db.prepare(db2conn,sql)
+        # Execute the sql
+        ibm_db.execute(stmt)
+        rows=[]
+        # fetch the result
+        result = ibm_db.fetch_assoc(stmt)
+        while result != False:
+            rows.append(result.copy())
+            result = ibm_db.fetch_assoc(stmt)
+        # close database connection
+        ibm_db.close(db2conn)
+    return rows
+
+def getLocationID(locationName):
+    db2conn = createConnection()
+    # Query all locations
+    if db2conn:
+        # if we have a Db2 connection, query the database
+        sql = "SELECT location_id FROM location WHERE location_name = '" + str(locationName) + "';"
+        # Prepare the statement
+        stmt = ibm_db.prepare(db2conn,sql)
+        # Execute the sql
+        ibm_db.execute(stmt)
+        rows=[]
+        # fetch the result
+        result = ibm_db.fetch_assoc(stmt)
+        while result != False:
+            rows.append(result.copy())
+            result = ibm_db.fetch_assoc(stmt)
+        # close database connection
+        ibm_db.close(db2conn)
+    return rows
+
 
 def insertStudentUser(email,name,TeamID,TutorID):
     db2conn = createConnection()
@@ -559,25 +600,29 @@ def insertStudentUser(email,name,TeamID,TutorID):
         stmt = ibm_db.prepare(db2conn,sql)
 		# Execute the sql
         ibm_db.execute(stmt)
-        
-        
-        
+        # close database connection
+        ibm_db.close(db2conn)
+
 
 def insertPasswordStudent(password,studentID):
     db2conn = createConnection()
     pepper= "fill"
-    sql = (
-        "INSERT INTO STUDENT_PASSWORD (STUDENT_ID,PASSWORD,PEPPER)"
-        " VALUES ("+str(studentID)+",'"+password+"','"+pepper+"');"
-        )
-    # Prepare the statement
-    stmt = ibm_db.prepare(db2conn,sql)
-	# Execute the sql
-    ibm_db.execute(stmt)
-    
+
+    if db2conn:
+        sql = (
+            "INSERT INTO STUDENT_PASSWORD (STUDENT_ID,PASSWORD,PEPPER)"
+            " VALUES ("+str(studentID)+",'"+password+"','"+pepper+"');"
+            )
+        # Prepare the statement
+        stmt = ibm_db.prepare(db2conn,sql)
+    	# Execute the sql
+        ibm_db.execute(stmt)
+        # close database connection
+        ibm_db.close(db2conn)
+
 def insertTutorUser(email,office,name):
     db2conn = createConnection()
-    
+
     #Override office to be 1 as office input isnt setup yet
     office = 1
     if db2conn:
@@ -590,19 +635,92 @@ def insertTutorUser(email,office,name):
         stmt = ibm_db.prepare(db2conn,sql)
 		# Execute the sql
         ibm_db.execute(stmt)
+        # close database connection
+        ibm_db.close(db2conn)
 
-#Saves the hashed password
+
+# Saves the hashed password
 def insertPasswordTutor(password,tutorID):
     db2conn = createConnection()
     #pepper currently not implemented
     pepper= "fill"
-    sql = (
-        "INSERT INTO TUTOR_PASSWORD (TUTOR_ID,PASSWORD,PEPPER)"
-        " VALUES ("+str(tutorID)+",'"+password+"','"+pepper+"');"
-        )
-    print(sql)
-    # Prepare the statement
-    stmt = ibm_db.prepare(db2conn,sql)
-	# Execute the sql
-    ibm_db.execute(stmt)
-        
+
+    if db2conn:
+        sql = (
+            "INSERT INTO TUTOR_PASSWORD (TUTOR_ID,PASSWORD,PEPPER)"
+            " VALUES ("+str(tutorID)+",'"+password+"','"+pepper+"');"
+            )
+
+        # Prepare the statement
+        stmt = ibm_db.prepare(db2conn,sql)
+    	# Execute the sql
+        ibm_db.execute(stmt)
+        # close database connection
+        ibm_db.close(db2conn)
+
+def insertLocation(locationName):
+    db2conn = createConnection()
+
+    if db2conn:
+        sql = (
+            "INSERT INTO location(location_name)"
+            " VALUES('" + str(locationName) + "');"
+            )
+
+        # Prepare the statement
+        stmt = ibm_db.prepare(db2conn,sql)
+    	# Execute the sql
+        ibm_db.execute(stmt)
+        # close database connection
+        ibm_db.close(db2conn)
+
+def insertQuestion(locationID, task, answerA, answerB, answerC, answerD, correctAnswer):
+    db2conn = createConnection()
+
+    if db2conn:
+        sql = (
+            "INSERT INTO question(location_id, question_content, multiple_choice_a, multiple_choice_b, multiple_choice_c, multiple_choice_d, answer)"
+            " VALUES(" + str(locationID) + ", '" + str(task) + "', '" + str(answerA) + "', '" + str(answerB) + "', '" + str(answerC) + "', '" + str(answerD) + "', '" + str(correctAnswer) + "');"
+            )
+
+        print("SQL INSERT STATEMENT: ", sql)
+
+        # Prepare the statement
+        stmt = ibm_db.prepare(db2conn,sql)
+    	# Execute the sql
+        ibm_db.execute(stmt)
+        # close database connection
+        ibm_db.close(db2conn)
+
+def insertClue(locationID, clue):
+    db2conn = createConnection()
+
+    if db2conn:
+        sql = (
+            "INSERT INTO clue(location_id, contents)"
+            " VALUES(" + str(location_id) + ", '" + str(clue) + "');"
+            )
+
+        # Prepare the statement
+        stmt = ibm_db.prepare(db2conn,sql)
+    	# Execute the sql
+        ibm_db.execute(stmt)
+        # close database connection
+        ibm_db.close(db2conn)
+
+
+def removeLocation(locationName):
+    db2conn = createConnection()
+
+    if db2conn:
+        sql = (
+            "DELETE FROM location"
+            " WHERE location_name = '" + locationName + "';"
+            )
+
+        # Prepare the statement
+        stmt = ibm_db.prepare(db2conn,sql)
+    	# Execute the sql
+        ibm_db.execute(stmt)
+        # close database connection
+        ibm_db.close(db2conn)

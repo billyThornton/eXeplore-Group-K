@@ -2,16 +2,16 @@
 """
 Copyright (c) “2020, by Group K
 Contributors: Jamie Butler, Rahul Pankhania, Teo Reed, Billy Thornton, Ben Trotter, Kristian Woolhouse
-URL: https://github.com/billyThornton/eXeplore-Group-K ” 
+URL: https://github.com/billyThornton/eXeplore-Group-K ”
 All rights reserved.
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
- 
+
 Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
 Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials
-provided with the distribution. 
+provided with the distribution.
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAT PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-Created on 19/02/2020 
+Created on 19/02/2020
 @author: Billy Thornton
 @Last Edited: 26/02/2020
 @edited by: Billy Thornton
@@ -58,37 +58,38 @@ def login_post():
     password = request.form.get('password')
     #Checks the username and password are correct
     token = auth.verifyUser(password,email)
-    
+
     if(token['VerificationToken']):
         #Sets the role of the user in the session
         if(token['Role']=='student'):
             session['Role'] = 'student'
-            print(token)
+            # print(token)
             session['studentID'] = token['ID'][0]['STUDENT_ID']
             #get group ID
-            print("session",session['studentID'])
+            # print("session",session['studentID'])
             groupID = databaseAdapter.getTeamFromStudentID(session['studentID'])[0]['TEAM_ID']
-            print("groupID",groupID)
+            # print("groupID",groupID)
             session['groupID'] = groupID
             routeID = databaseAdapter.getRouteID(session['groupID'])
             session['routeID'] = routeID[0]['ROUTE_ID']
-            
+
         if(token['Role']=='tutor'):
             session['Role'] = 'staff'
-            session['tutorID'] = token['tutorID']
-        
+            # session['tutorID'] = token['tutorID']
+
+    print(session['Role'])
     if(session['Role'] == "staff"):
         #If staff redirect to the dashboard
         return redirect(url_for('dashboard'))
-    
+
     elif(session['Role'] == "student"):
         #If student redirect to the game
         return redirect(url_for('showLocationClue'))
     else:
-        #If neither redirect to lgoin page
+        #If neither redirect to login page
         return redirect(url_for('login'))
 
-    
+
 #This is the first page of the app currently the login page but we could add a splash screen if wanted
 @app.route('/')
 def login():
@@ -118,7 +119,7 @@ def registerSubmit():
     password = request.form.get('password')
     passwordConfirm = request.form.get('passwordConfirmation')
     tutorName = request.form.get('tutorName')
-    
+
     #Check if passwords match if not reload page with error message
     if(password != passwordConfirm):
         session['Error Message'] = "Passwords are not the same"
@@ -127,18 +128,19 @@ def registerSubmit():
     if checkEmail(email):
         #Check if email has numbers if yes they must be a student
         if(hasNumbers(email)):
-            
+
             #Check if the email is already registered
             if(len(databaseAdapter.getStudentID(email))==0):
                 #TODO set team id by user preference
-                teamID = 1
+                teamID = 2
                 #Get the tutor ID for the current student
+                print(databaseAdapter.getTutorID(tutorName))
                 tutorID = databaseAdapter.getTutorID(tutorName)[0]['TUTOR_ID']
                 #Hash the password
                 hashedPassword = auth.hashPassword(password)
-                #Inser the student to the database
+                #Insert the student to the database
                 databaseAdapter.insertStudentUser(email,name,teamID,tutorID)
-                
+
                 #Insert the password to the database
                 studentID = databaseAdapter.getStudentID(email)[0]['STUDENT_ID']
                 databaseAdapter.insertPasswordStudent(hashedPassword,studentID)
@@ -146,7 +148,7 @@ def registerSubmit():
                 #Catches if email is registered
                 session['Error Message'] = ("Email is already used")
                 return redirect(url_for('register'))
-                
+
         else:
             #Check if the email is already registered
             if(len(databaseAdapter.getTutorID(name))==0):
@@ -176,25 +178,51 @@ def logout():
 
 @app.route('/images/Exeter_University.jpg')
 def imageUni():
-    return send_file('static/images/Exeter_University.jpg',mimetype='image/jpg') 
+    return send_file('static/images/Exeter_University.jpg',mimetype='image/jpg')
 
 @app.route('/static/Exeter_University.jpg')
 def imageUniStatic():
     u = 2
-    return send_file('static/images/Exeter_University.jpg',mimetype='image/jpg')     
+    return send_file('static/images/Exeter_University.jpg',mimetype='image/jpg')
 ######################
 #GAMEMASTER DASHBOARD#
 ######################
 #Loads the dashboard for game masters
 @app.route('/dashboard')
-@requires_access_level('staff')
+# @requires_access_level('staff')
 def dashboard():
     return render_template('Desktop/Game_Keeper_Page.html')
 
+# Loads the add location form page
 @app.route('/Add_Location')
 @requires_access_level('staff')
 def addLocation():
-    return render_template('Desktop/Add_Location_Page.html')
+    return render_template('Desktop/add_location_page.html')
+
+@app.route('/Add_Location_Submit',methods = ['POST'])
+@requires_access_level('staff')
+def addLocationSubmit():
+    location = request.form.get('location')
+    task = request.form.get('task')
+    hint = request.form.get('hint')
+    answerA = request.form.get('answer_a')
+    answerB = request.form.get('answer_b')
+    answerC = request.form.get('answer_c')
+    answerD = request.form.get('answer_d')
+    correctAnswer = request.form.get('correct_answer')
+    photo = request.form.get('location_photo')
+
+    #No checks for now
+    databaseAdapter.insertLocation(location)
+    locationID = databaseAdapter.getLocationID(location)
+    print("Location ID: ", locationID)
+    databaseAdapter.insertQuestion(locationID, task, answerA, answerB, answerC, answerD, correctAnswer)
+
+    if(hint != None):
+        databaseAdapter.insertClue(locationID, hint)
+
+    return render_template('Desktop/Manage_Locations_Page.html', locations = locations)
+
 
 @app.route('/Edit_Location')
 @requires_access_level('staff')
@@ -202,11 +230,24 @@ def editLocation():
     return render_template('Desktop/Edit_Location_Page.html')
 
 
+@app.route('/Delete_Location', methods = ['POST'])
+@requires_access_level('staff')
+def deleteLocation():
+    name = request.form.get('locations')
+    databaseAdapter.removeLocation(name)
+    
+    locations = databaseAdapter.getLocations()
+    render_template('Desktop/Manage_Locations_Page.html', locations = locations)
+
+
+
 #Loads the gamekeepers dashboard tool
 @app.route('/Manage_Locations_Page')
 @requires_access_level('staff')
 def manageLocations():
-    return render_template('Desktop/Manage_Locations_Page.html')
+    #Creates a list of locations from the db
+    locations = databaseAdapter.getLocations()
+    return render_template('Desktop/Manage_Locations_Page.html', locations = locations)
 
 #Loads the gamekeepers dashboard tool
 @app.route('/Manage_Groups_Page')
@@ -243,19 +284,21 @@ def showLocationClue():
     else:
         session['progress'] = 0
         progress = 0
-        
+
     #Check if route id is in session
     if 'routeID' in session:
         routeID = session['routeID']
-    
+
+
     print(progress)
+
     locationID = databaseAdapter.getLocation(routeID,progress)[0]['LOCATION_ID']
     session['locationID'] = locationID
     print("LocationID",locationID)
     #check if there are no maore lcations
     if(len(databaseAdapter.getLocationClues(locationID))==0):
         return redirect(url_for('endScreen'))
-    
+
     cluemessage = databaseAdapter.getLocationClues(locationID)[0]['CONTENTS']
     print(cluemessage)
     #progress value = get User.progress from db
@@ -266,9 +309,13 @@ def showLocationClue():
 
 @app.route('/getQuestion',methods = ['POST'])
 def getQuestion():
+    print("ENTERED getQuestion()")
     progress = request.form.get('progress')
+    print("progress: ", progress)
     questionData = databaseAdapter.getQuestion(session['locationID']+1)
+    print("questionData: ", questionData)
     imageLocation = url_for('static',filename='images/Exeterforum.jpg')
+    print(questionData[0]['QUESTION_CONTENT'])
     questionText = questionData[0]['QUESTION_CONTENT']
     a= questionData[0]['MULTIPLE_CHOICE_A']
     b= questionData[0]['MULTIPLE_CHOICE_B']
@@ -320,7 +367,7 @@ def checkQuestion():
         session['QuestionMessage'] = 'Wrong answer try again'
         #redirect to the question page but with error message
         return redirect(url_for('retryQuestion'))
-    
+
 @app.route('/finished')
 def endScreen():
     groupName = "Group1"
@@ -335,6 +382,6 @@ def loadHelpPage():
 
 #Runs the app locally if not deployed to the server
 if __name__ == '__main__':
-    app.secret_key = 'eXeplore_241199_brjbtk' 
+    app.secret_key = 'eXeplore_241199_brjbtk'
     app.SECURITY_PASSWORD_SALT = 'BFR241199'
     app.run(host='0.0.0.0', port=port, debug=True,use_reloader=False)
