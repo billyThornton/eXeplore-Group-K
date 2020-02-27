@@ -33,6 +33,7 @@ clicked from  the side bar. It allows a gamekeeper to view the current leaderboa
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="{{url_for('static',filename='styles/Leaderboard_Style.css')}}" rel='stylesheet' type='text/css'/>
 <title>Leaderboard Page</title>
+
 </head>
 
 <body>
@@ -55,14 +56,18 @@ clicked from  the side bar. It allows a gamekeeper to view the current leaderboa
 				<!-- Examples -->
 				<tr>
 					<td>1</td>
-					<td>The Best Team</td>
-					<td>300</td>
+					<td>Example Group</td>
+					<td>10</td>
 				</tr>
+				
+				{% for team in teams %}
 				<tr>
-					<td>2</td>
-					<td>Ben is the best team</td>
-					<td>270</td>
+					<td>{{team_position}}</td>
+					<td>{{team_name}}</td>
+					<td>{{team_score}}</td>
 				</tr>
+				{% endfor %}
+
 			</table>
 		</div>
 		
