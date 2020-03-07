@@ -31,6 +31,7 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to delete or create r
 <meta charset="utf-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="{{url_for('static',filename='styles/Manage_Groups_Style.css')}}" rel='stylesheet' type='text/css'/>
 <title>Manage Route Page</title>
 
 </head>
@@ -38,63 +39,75 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to delete or create r
 <body>
 	<div id="manage_route_page">
 		
-		<!-- Create Route Column -->
-		<div id="manage_route_container">
-			<h2>Create Route</h2>
-			
-			<p> <label>Name:</label>
-			<input type="text" id="route_name" name="create_route_input"> </p>
-			<p> <label>Locations Selected:</label>
-			
-			<!-- Selected locations holder -->
-			<div style="width:200px;height:60px;border:1px solid #000;">Location order will go here!</div> </p>
-			
-			<div id="transparent_button_container">
-				<button type="button" id="transparent_button" name="save_route_button">Save Route</button>
-			</div>
-		</div>
+		<table style="width:100%">
 		
-		<div id="delete_route_container">
-			<h2>Delete Route</h2>
+		  <!-- Headers -->
+			<tr>
+				<th><h2>Create Route</h2></th>
+				<th><h2>Locations</h2></th>
+				<th><h2>Routes</h2></th>
+			</tr>
+		  
+			<tr>
 			
-			<p> <label>Name:</label>
-			<input type="text" id="route_name" name="delete_route_input"> </p>
-			
-			<div id="transparent_button_container">
-				<button type="button" id="transparent_button" name="delete_route_button">Delete route</button>
-			</div>
-		</div>
-		
-		<!-- Locations Column -->
-		<h2>Locations</h2>
-		
-			<!-- Make This scrollable overflow-y: scroll; in the css should do this -->
-			<div id="location_list_container">
-				<input type="checkbox" id="locations"/> Example location <br />
-				<input type="checkbox" id="locations"/> Example location <br />
-				<input type="checkbox" id="locations"/> Example location <br />
-				<input type="checkbox" id="locations"/> Example location <br />
-				<input type="checkbox" id="locations"/> Example location <br />
-				<input type="checkbox" id="locations"/> Example location <br />
-				<input type="checkbox" id="locations"/> Example location <br />
-				<input type="checkbox" id="locations"/> Example location <br />
-			</div>		
+			<!-- Create Route Column -->
+				<td>
+					<div id="create_group_container">
+						<p> <label>Name:</label>
+						<input type="text" id="group_name" name="create_group_input"> </p>
+						
+						<p> <label>Locations Selected:</label>
+						<div id="search_results">Locations will go here!</div> </p>
 
-		
-		<!-- Routes Column -->
-		<h2>Routes</h2>
-		
-			<!-- Make This scrollable overflow-y: scroll; in the css should do this -->
-			<div id="route_list_container">
-				<input type="radio" id="example_routes" name="routes"/> Example Route <br />
-				<input type="radio" id="example_routes" name="routes"/> Example Route <br />
-				<input type="radio" id="example_routes" name="routes"/> Example Route <br />
-				<input type="radio" id="example_routes" name="routes"/> Example Route <br />
-				<input type="radio" id="example_routes" name="routes"/> Example Route <br />
-				<input type="radio" id="example_routes" name="routes"/> Example Route <br />
-				<input type="radio" id="example_routes" name="routes"/> Example Route <br />
-				<input type="radio" id="example_routes" name="routes"/> Example Route <br />
-			</div>	
+						<div id="transparent_button_container">
+							<button type="button" id="transparent_button" name="save_group_button">Save Route</button>
+						</div>
+					</div>
+
+					<div id="delete_group_container">
+						<h2>Delete Route</h2>
+
+						<p> <label>Name:</label>
+							<select id="Groups">
+  								<option value="route1">Route 1</option>
+ 								<option value="route2">Route 2</option>
+  								<option value="route3">Route 3</option>
+  								<option value="route4">Route 4</option>
+							</select>
+
+						<div id="transparent_button_container">
+							<button type="button" id="delete_transparent_button" name="delete_group_button">Delete Route</button>
+						</div>
+					</div>
+				</td>
+			
+			<!-- Locations Column -->
+				<td>
+					<div id="student_list_container">
+						<input type="checkbox" id="students1"/><label id="student_label" for="students1"> Example Location</label> <br />
+						
+						{% for student in students %}
+						<input type="checkbox" id="{{student}}"/><label id="student_label" for="{{student}}">{{student}}</label><br />
+						{% endfor %}
+					</div>
+				</td>
+			
+			<!-- Routes Column -->
+				<td>
+					<div id="group_list_container">
+						<input type="radio" id="example_group1" name="groups"/><label for="example_group1" id="group_label"> Example Route</label> <br />
+						
+						{% for team in teams %}
+						<input type="radio" id="{{team}}" name="groups"/><label for="{{team}}" id="group_label">{{team}}</label><br />
+						{% endfor %}
+					</div>
+					<div id="transparent_button_container">
+						<button type="button" id="transparent_button" name="check_results_button">Edit Route</button>
+					</div>
+				</td>
+			</tr>
+		</table>
+
 		
 	</div>
 </body>
