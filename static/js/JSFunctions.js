@@ -236,6 +236,9 @@ function validateConfirmation()
  */
 function validateCreate()
 {
+  initialMessage = document.getElementById("initial_message");
+  initialMessage.innerHTML = "";
+
   if(validateName() == false)
   {
     text = "Please enter a valid name";
