@@ -27,7 +27,7 @@ import ibm_db
 
 app = Flask(__name__)
 #Set to tru if running on local enviroment
-localFlag = False
+localFlag = True
 
 db_name = 'mydb'
 client = None

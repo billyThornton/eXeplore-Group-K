@@ -81,3 +81,215 @@ function appConstruction() {
 function goBack() {
   window.history.back();
 }
+
+/**
+* Ensures that the name field is valid. If it isn't suitable
+* an error class is added to the form input so the client knows which field has
+* raised a mistake and an error message is produced saying what the error is.
+*
+* @return {boolean} true if a the entered field is valid otherwise false.
+*/
+function validateName()
+{
+  var name = document.forms["newAccountForm"]["name"].value;
+  nameField = document.getElementById("name_input");
+  // Removing the initial message
+  initialMessage = document.getElementById("initial_message");
+  initialMessage.innerHTML = "";
+
+  if(!/^[a-zA-Z]+$/.test(name))
+  {
+    text = "Name should only contain letters";
+    nameField.classList.add("input-error");
+    document.getElementById("error").innerHTML = text;
+    document.getElementById("error").style.color="red";
+    return false;
+  }
+  else
+  {
+    nameField.classList.remove("input-error");
+    document.getElementById("error").innerHTML = "Please enter your details below:";
+    document.getElementById("error").style.color="white";
+    return true;
+  }
+}
+
+/**
+* Ensures that the email field is valid. If it isn't suitable
+* an error class is added to the form input so the client knows which field has
+* raised a mistake and an error message is produced saying what the error is.
+*
+* @return {boolean} true if a the entered field is valid otherwise false.
+*/
+function validateEmail()
+{
+  var email = document.forms["newAccountForm"]["email"].value;
+  emailField = document.getElementById("email_input");
+  // Removing the initial message
+  initialMessage = document.getElementById("initial_message");
+  initialMessage.innerHTML = "";
+
+  if(!email.includes("@exeter.ac.uk"))
+  {
+    text = "Please enter an Exeter University email";
+    emailField.classList.add("input-error");
+    document.getElementById("error").innerHTML = text;
+    document.getElementById("error").style.color="red";
+    return false;
+  }
+  else
+  {
+    emailField.classList.remove("input-error");
+    document.getElementById("error").innerHTML = "Please enter your details below:";
+    document.getElementById("error").style.color="white";
+    return true;
+  }
+}
+
+/**
+* Ensures that the password field is valid. If it isn't suitable
+* an error class is added to the form input so the client knows which field has
+* raised a mistake and an error message is produced saying what the error is.
+*
+* @return {boolean} true if a the entered field is valid otherwise false.
+*/
+function validatePassword()
+{
+  // Variables that the client enters into the field in the form.
+  var pass = document.forms["newAccountForm"]["password"].value;
+  passField = document.getElementById("pass_input");
+  // Removing the initial message
+  initialMessage = document.getElementById("initial_message");
+  initialMessage.innerHTML = "";
+
+  if (pass.length < 8)
+  {
+    text = "Password should be 8 characters or more";
+    passField.classList.add("input-error");
+    document.getElementById("error").innerHTML = text;
+    document.getElementById("error").style.color="red";
+    return false;
+  }
+  else if (noMixedCase(pass))
+  {
+    text = "Password should contain an upper and lower case character";
+    passField.classList.add("input-error");
+    document.getElementById("error").innerHTML = text;
+    document.getElementById("error").style.color="red";
+    return false;
+  }
+  else if (noNumber(pass))
+  {
+    text = "Password should contain a number";
+    passField.classList.add("input-error");
+    document.getElementById("error").innerHTML = text;
+    document.getElementById("error").style.color="red";
+    return false;
+  }
+  else
+  {
+    passField.classList.remove("input-error");
+    document.getElementById("error").innerHTML = "Please enter your details below:";
+    document.getElementById("error").style.color="white";
+    return true;
+  }
+}
+
+/**
+* Ensures that the password confirmation field is valid. If it isn't suitable
+* an error class is added to the form input so the client knows which field has
+* raised a mistake and an error message is produced saying what the error is.
+*
+* @return {boolean} true if a the entered field is valid otherwise false.
+*/
+function validateConfirmation()
+{
+  var pass = document.forms["newAccountForm"]["password"].value;
+  var confirm = document.forms["newAccountForm"]["passwordConfirmation"].value;
+  confirmField = document.getElementById("confirm_input");
+  // Removing the initial message
+  initialMessage = document.getElementById("initial_message");
+  initialMessage.innerHTML = "";
+
+  if (confirm != pass)
+  {
+    text = "Passwords do not match, please try again";
+    confirmField.classList.add("input-error");
+    document.getElementById("error").innerHTML = text;
+    document.getElementById("error").style.color="red";
+    return false;
+  }
+  else
+  {
+    confirmField.classList.remove("input-error");
+    document.getElementById("error").innerHTML = "Please enter your details below:";
+    document.getElementById("error").style.color="white";
+    return true;
+  }
+}
+
+/**
+ * Ensures that the entire form is valid before it is submitted to the backend.
+ * The submission of the form is prevented if false is returned.
+ *
+ * @return {boolean} true if a the all entered fields are valid otherwise false.
+ */
+function validateCreate()
+{
+  if(validateName() == false)
+  {
+    text = "Please enter a valid name";
+    document.getElementById("error").innerHTML = text;
+    document.getElementById("error").style.color="red";
+    return false;
+  }
+  else if (validateEmail() == false)
+  {
+    text = "Please enter an Exeter University email";
+    document.getElementById("error").innerHTML = text;
+    document.getElementById("error").style.color="red";
+    return false;
+  }
+  else if(validatePassword() == false)
+  {
+    text = "Please enter a stronger password";
+    document.getElementById("error").innerHTML = text;
+    document.getElementById("error").style.color="red";
+    return false;
+  }
+  else if (validateConfirmation() == false)
+  {
+    text = "Passwords do not match, please try again";
+    document.getElementById("error").innerHTML = text;
+    document.getElementById("error").style.color="red";
+    return false;
+  }
+  else
+  {
+    return true;
+  }
+}
+
+/**
+* Checks to see if there isn't an uppercase or lowercase letter in a string.
+*
+* @param {string} Str String to be checked.
+*
+* @return {boolean} true if there is no upper or lower case letter in the string.
+*/
+function noMixedCase(str)
+{
+  return !(/[a-z]/.test(str)) || !(/[A-Z]/.test(str));
+}
+
+/**
+* Checks to see if there isn't a number in a string.
+*
+* @param {string} Str String to be checked.
+*
+* @return {boolean} true if there is no number in the string.
+*/
+function noNumber(str)
+{
+  return !(/[0-9]/.test(str));
+}
