@@ -133,6 +133,11 @@ input[type="radio"]:disabled + #location_label:before {
     height: 500px;
 }
 
+#form {
+	margin-left: 50px;
+	margin-top: 50px;
+}
+
 /* Styling of user input on add/edit page*/
 input[type=text] {
 	height: 18px;
@@ -217,7 +222,7 @@ input[type=text] {
 	border-width: 2px;
 	border-color: white;
 	border-radius: 50px;
-	margin-left: auto;
+	margin-left: 50px;
 }
 
 #save_transparent_button {
@@ -230,7 +235,7 @@ input[type=text] {
 	border-width: 2px;
 	border-color: #31750E;
 	border-radius: 50px;
-	margin-left: auto;
+	margin-left: 15px;
 }
 
 #delete_transparent_button {
@@ -243,7 +248,7 @@ input[type=text] {
 	border-width: 2px;
 	border-color: #FF3B3B;
 	border-radius: 50px;
-	margin-left: auto;
+	margin-left: 30px;
 }
 
 #location_list_container {
