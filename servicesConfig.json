@@ -2,10 +2,10 @@
   "dashDB For Transactions": [{
     "credentials": {
       "db": "BLUDB",
-      "hostname": "dashdb-txn-sbox-yp-lon02-02.services.eu-gb.bluemix.net",
-      "password": "70852r6bqw-s8dgn",
+      "hostname": "",
+      "password": "",
       "port": 50000,
-      "username": "xkm27482"
+      "username": ""
     }
   }]
 }
