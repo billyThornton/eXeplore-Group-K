@@ -688,7 +688,26 @@ def getTeams():
     # Query all locations
     if db2conn:
         # if we have a Db2 connection, query the database
-        sql = "SELECT team_name,team_score FROM Team;"
+        sql = "SELECT team_name,team_score,route_id FROM Team;"
+        # Prepare the statement
+        stmt = ibm_db.prepare(db2conn,sql)
+        # Execute the sql
+        ibm_db.execute(stmt)
+        rows=[]
+        # fetch the result
+        result = ibm_db.fetch_assoc(stmt)
+        while result != False:
+            rows.append(result.copy())
+            result = ibm_db.fetch_assoc(stmt)
+        # close database connection
+        ibm_db.close(db2conn)
+    return rows
+
+def getRoutes():
+    db2conn = createConnection()
+    if db2conn:
+        # if we have a Db2 connection, query the database
+        sql = "SELECT route_id,route_name FROM Route;"
         # Prepare the statement
         stmt = ibm_db.prepare(db2conn,sql)
         # Execute the sql

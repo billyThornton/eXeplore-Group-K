@@ -301,7 +301,10 @@ def manageRoutes():
 @app.route('/Assign_Routes_Page')
 @requires_access_level('staff')
 def assignRoutes():
-    return render_template('Desktop/Assign_Routes_Page.html')
+    gameTeams = getTeams()
+    gameRoutes = getRoutes()
+
+    return render_template('Desktop/Assign_Routes_Page.html', teams = gameTeams, routes = gameRoutes)
 
 ######################
 #Student Game Pages  #
