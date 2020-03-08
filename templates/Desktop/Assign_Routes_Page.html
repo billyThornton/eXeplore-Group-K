@@ -32,6 +32,7 @@ using select boxes which are obtained from the database..
 <meta charset="utf-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="{{url_for('static',filename='styles/Assign_Routes_Style.css')}}" rel='stylesheet' type='text/css'/>
 <title>Add Location Page</title>
 
 </head>
@@ -45,12 +46,22 @@ using select boxes which are obtained from the database..
 			<h2>Assign Route</h2>
 				<p> <label>Group:</label>
 				<!-- As route and group boxes are selected their names will appear here -->
-				<div style="width:100px;height:30px;border:1px solid #000;">Group here!</div>
+				<select id="Groups">
+  					<option value="group1">Group 1</option>
+ 					<option value="group2">Group 2</option>
+  					<option value="group3">Group 3</option>
+  					<option value="group4">Group 4</option>
+				</select>
 				</p>
 				
 				<p> <label>Route:</label>
 				<!-- As route and group boxes are selected their names will appear here -->
-				<div style="width:100px;height:30px;border:1px solid #000;">Route here!</div>
+				<select id="Groups">
+  					<option value="route1">Route 1</option>
+ 					<option value="route2">Route 2</option>
+  					<option value="route3">Route 3</option>
+  					<option value="route4">Route 4</option>
+				</select>
 				</p>
 				
 			<div id="transparent_button_container">
@@ -59,32 +70,31 @@ using select boxes which are obtained from the database..
 		</div>
 		
 		<!-- Routes Column -->
-		<h2>Routes</h2>
-		
-			<div id="route_list_container">
-				<input type="radio" id="example_route" name="routes"/> Example Route <br />
-				<input type="radio" id="example_route" name="routes"/> Example Route <br />
-				<input type="radio" id="example_route" name="routes"/> Example Route <br />
-				<input type="radio" id="example_route" name="routes"/> Example Route <br />
-				<input type="radio" id="example_route" name="routes"/> Example Route <br />
-				<input type="radio" id="example_route" name="routes"/> Example Route <br />
-				<input type="radio" id="example_route" name="routes"/> Example Route <br />
-			</div>		
-		<p></p>
-		
-		<!-- Groups -->
-		<h2>Groups</h2>
-		
-			<div id="group_list_container">
-				<input type="radio" id="example_group" name="groups"/> Example Group <br />
-				<input type="radio" id="example_group" name="groups"/> Example Group <br />
-				<input type="radio" id="example_group" name="groups"/> Example Group <br />
-				<input type="radio" id="example_group" name="groups"/> Example Group <br />
-				<input type="radio" id="example_group" name="groups"/> Example Group <br />
-				<input type="radio" id="example_group" name="groups"/> Example Group <br />
-				<input type="radio" id="example_group" name="groups"/> Example Group <br />
-			</div>	
-		
+		<table class="table">
+			
+				<!-- Headers -->
+				<thead>
+					<tr>
+						<th>Group Name</th>
+						<th>Route Name</th>
+					</tr>
+				</thead>
+				
+				<!-- Examples -->
+				<tr>
+					<td>Example Group</td>
+					<td>Example Route</td>
+				</tr>
+				
+				<!--{% for team in teams %}
+				<tr>
+					<td>{{team_position}}</td>
+					<td>{{team_name}}</td>
+					<td>{{team_score}}</td>
+				</tr>
+				{% endfor %}-->
+
+			</table>
 	</div>
 </body>
 </html>

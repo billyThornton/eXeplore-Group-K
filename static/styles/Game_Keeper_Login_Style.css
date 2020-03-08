@@ -38,7 +38,7 @@ body {
 	background-size: cover;}
 
 /* Styling for user inputted text */
-input[id=text_input] {
+input[class=text_input] {
 	width: 258px;
 	height: 46px;
 	border-radius: 30px;
@@ -52,13 +52,28 @@ input[id=text_input] {
 	font-size: 18px;
 }
 
-input[id=text_input]::-webkit-input-placeholder {
+input[class=text_input]::-webkit-input-placeholder {
 	color: inherit;
 }
 
-input[id=text_input]:focus {
+input[class=text_input]:focus {
 	outline: none;
 	border-width: 3px;
+}
+
+/*Error for when create user fields aren't valid*/
+.input-error{
+	width: 258px;
+	height: 46px;
+	border-radius: 30px;
+	border-style: solid;
+	border-width: 1px;
+	background-color: #31750E;
+	text-align: center;
+	color: white;
+	opacity: 100%;
+	font-size: 18px;
+  	box-shadow: 0 0 20px red;
 }
 
 /* Box holding input fields */
@@ -140,11 +155,17 @@ a:hover {
 	font-size: 25px;
 	color: white;
 	margin-top: -30px;
+	margin-bottom: -15px;
 }
 
 /*Error messaging styling */
 #error {
 	color: red;
+}
+
+/*Returns error text to white*/
+.correct {
+	color: white;
 }
 
 
@@ -153,7 +174,7 @@ a:hover {
   
 	#green_box {
 		width: 80%;
-		height: 510px;
+		height: 610px;
 		background-color: #2E3920;
 		opacity: 79%;
 		border-radius: 40px;

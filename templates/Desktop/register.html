@@ -32,6 +32,7 @@ Users must have an @exeter email. Uses Game_Keeper_Login_Style.css for styling a
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="{{url_for('static',filename='styles/Game_Keeper_Login_Style.css')}}" rel='stylesheet' type='text/css'/>
+<script src="{{url_for('static',filename='js/JSFunctions.js')}}"></script>
 <title>Game's Keeper Login</title>
 
 </head>
@@ -49,17 +50,23 @@ Users must have an @exeter email. Uses Game_Keeper_Login_Style.css for styling a
 		</div>
 
 		<!-- Register form -->
-		<form action="registerSubmit">
+		<form name="newAccountForm" action="registerSubmit" onsubmit="return validateCreate()">
 			<div class="login_container">
 
-				<!-- Error Message for invalid entry of email or password -->
+				<!-- Initial message which gets hidden when values are entered by the user -->
+				<p id="initial_message">Please enter your details below:</p>
+				<!-- Replaces intial message. Error Message for invalid entry of email or password -->
 				<p id="error">{{error_message}}</p>
 
-				<p> <input id="text_input" type="text" placeholder="Name" name="name" required> </p>
-				<p> <input id="text_input" type="text" placeholder="Email" name="email" required> </p>
-				<p> <input id="text_input" type="password" placeholder="Password" name="password" required> </p>
-				<p> <input id="text_input" type="password" placeholder="Confirm Password" name="passwordConfirmation" required> </p>
-				<p> <select id="text_input" name="tutorName">
+				<p> <input class="text_input" id="name_input" type="text" placeholder="Name" name="name" onchange="validateName()" required> </p>
+
+				<p> <input class="text_input" id="email_input" type="text" placeholder="Email" name="email" onchange="validateEmail()" required> </p>
+
+				<p> <input class="text_input" id="pass_input" type="password" placeholder="Password" name="password" onchange="validatePassword()" required> </p>
+
+				<p> <input class="text_input" id="confirm_input" type="password" placeholder="Confirm Password" name="passwordConfirmation" onchange="validateConfirmation()"required> </p>
+
+				<p> <select class="text_input" name="tutorName">
 						<option value="0">Select a tutor:</option>
 					  	<option value="ronaldo">Ronaldo</option>
 					  	<option value="matt">Matt</option>
@@ -71,7 +78,7 @@ Users must have an @exeter email. Uses Game_Keeper_Login_Style.css for styling a
 
 				<p>
 				<button type="button" id="btn" name="goBack" onclick="window.location.href = '/';">Go Back</button>
-				<button type="submit" id="btn" formmethod="post">Register</button>
+				<button type="submit" id="btn" formmethod="post" >Register</button>
 				</p>
 
 			</div>

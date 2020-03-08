@@ -1,8 +1,8 @@
 <!--
-Created on 21/02/2020 
+Created on 08/03/2020 
 @author: Ben Trotter
-@Last Edited: 26/02/2020
-@edited by: Jamie Butler
+@Last Edited: 08/03/2020
+@edited by: Ben Trotter
 
 Copyright (c) “2020, by Group K
 Contributors: Jamie Butler, Rahul Pankhania, Teo Reed, Billy Thornton, Ben Trotter, Kristian Woolhouse
@@ -22,8 +22,9 @@ DAMGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVIC
 INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INLUDING NEGLIGENCE
 OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-This file contains information and help on how the application works in order to assist the player. This page is accessed from
-the pop up sidebar in the game. It also provides a access to a side bar which provides various features such as Help, FAQ & Logout.
+This file will be reached once a player has completed the hunt. It contains the player’s score, a table showing the leaderboard
+and the players place within it and a means of navigation away from it. Additionally it also gives access to a side bar which
+provides various features such as Help, FAQ & Logout.
 -->
 <!DOCTYPE html>
 <html>
@@ -33,29 +34,34 @@ the pop up sidebar in the game. It also provides a access to a side bar which pr
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="{{url_for('static',filename='styles/Game_Style.css')}}" rel='stylesheet' type='text/css'/>
 <script src="{{url_for('static',filename='js/JSFunctions.js')}}"></script>
-<title>Help Page</title>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAtu0H0JzyaPPd7E-wJh1WkESv9k1XDYqM"></script>
 
-<body>
+<script type="text/javascript">
 
+    function initMap() {
+        new google.maps.Map(document.getElementById('map'), {
+            center: {lat: 50.7365675, lng: -3.5372353},
+            zoom: 16
+          });
+    }
+
+</script>
+
+<title>Map</title>
+
+<body onload="initMap()">
 	<div id="answer_page_container">
 	
-		{% include "mobile/Game_Nav.html" %}
+	{% include "mobile/Game_Nav.html" %}
 
-		<div id="help_title">
-			<h1>Help Page</h1>
-		
-		<div id="help_message">
-			<p>How to play:</p>
-			<p>Once you've logged in, you will be presented with a clue to where you need to go next.</p>
-			<p>Once you think you've reached the next location, tap 'Next' and you will be displayed with your task!</p>
-			<p>Enter your answer and move on to the next location! Once the progress bar at the top is full you've finished!!!</p>
-			<p>You will be given a score and your leaderboard position.</p>
-		</div>
-		
+	<p id="finish_message">Here is the Google Maps for Exeter campus:</p>
+
+	<div class="container">
+    	<div id="map" style="width:90%; height:400px; margin-left: 5%; border-radius: 10px;"></div>
+	</div>		
 		<div id="transparent_button_container">
 			<button type="button" onclick="location.href='Game'" id="submit" class="transparent_button" name="contine_button">Continue</button>
-		</div>		
-		
+		</div>	
 	</div>
 </body>
 </html>

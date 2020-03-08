@@ -1,0 +1,18 @@
+<!-- Top bar -->
+<!-- First example of where flask variables are used to recieve back-end information -->
+<div class="navbar">
+	<input type="image" src="{{url_for('static',filename='images/menu_icon.png')}}" onclick="openNav()" class="openbtn" alt="Menu Icon" id="menu_icon">
+	<img id="white_logo_vector" src="{{url_for('static',filename='images/white_logo_vector.png')}}" width="150" height="60">
+</div>
+
+<!-- POP UP SIDE BAR -->
+<div id="mySidebar" class="sidebar">
+	<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+	<a href="Map">Map</a>
+	<a href="Leaderboard">Leaderboard</a>
+    <a href="#" onclick="appConstruction()">Profile</a>
+	<a href="HelpPage">Help</a>
+	<a href="#" onclick="appConstruction()">FAQ</a>
+	<a href="#" onclick="appConstruction()">Resources</a>
+	<a href="/Logout">Logout</a>
+</div>
