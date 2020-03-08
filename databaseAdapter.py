@@ -18,7 +18,6 @@ Created on 19/02/2020
 This file contains the necessary information to make queries and enter data to/from
 the datbase
 """
-
 from flask import Flask
 import os
 import json
@@ -27,7 +26,7 @@ import ibm_db
 
 app = Flask(__name__)
 #Set to tru if running on local enviroment
-localFlag = False
+localFlag = True
 
 db_name = 'mydb'
 client = None
@@ -38,31 +37,19 @@ if 'VCAP_SERVICES' in os.environ:
     vcapEnv = json.loads(os.environ['VCAP_SERVICES'])
     db2info = vcapEnv['dashDB For Transactions'][0]
     db2cred = db2info["credentials"]
-    appIDInfo = vcapEnv['AppID'][0]['credentials']
 
-    provider_config={
-     "issuer": "appid-oauth.ng.bluemix.net",
-     "authorization_endpoint": appIDInfo['oauthServerUrl']+"/authorization",
-     "token_endpoint": appIDInfo['oauthServerUrl']+"/token",
-     "userinfo_endpoint": appIDInfo['profilesUrl']+"/api/v1/attributes",
-     "jwks_uri": appIDInfo['oauthServerUrl']+"/publickeys"
-    }
-    client_info={
-        "client_id": appIDInfo['clientId'],
-        "client_secret": appIDInfo['secret']
-    }
-#If running Locally run suing hardcoded values
-elif localFlag:
-    connectionInfo = ["DATABASE=BLUDB;HOSTNAME=dashdb-txn-sbox-yp-lon02-02.services.eu-gb.bluemix.net;PORT=50000;UID=xkm27482;PWD=70852r6bqw-s8dgn;", "", ""]
+
+elif os.path.exists("servicesConfig.json"):
+    with open('servicesConfig.json') as json_file:
+        data = json.load(json_file)
+        db2cred = data['dashDB For Transactions'][0]['credentials']
+
 else:
     raise ValueError('Expected cloud environment')
 
 #Create a connection to the database
 def createConnection():
-    if localFlag:
-        db2conn= ibm_db.connect(connectionInfo[0],connectionInfo[1],connectionInfo[2])
-    else:
-        db2conn = ibm_db.connect("DATABASE="+db2cred['db']+";HOSTNAME="+db2cred['hostname']+";PORT="+str(db2cred['port'])+";UID="+db2cred['username']+";PWD="+db2cred['password']+";","","")
+    db2conn = ibm_db.connect("DATABASE="+db2cred['db']+";HOSTNAME="+db2cred['hostname']+";PORT="+str(db2cred['port'])+";UID="+db2cred['username']+";PWD="+db2cred['password']+";","","")
 
     return db2conn
 
@@ -458,7 +445,7 @@ def getNumLocationOnRoute(routeID):
         print(rows)
     return rows
 
-def getQuestion(locationID):
+def getQuestionLocationID(locationID):
     db2conn = createConnection()
 
     if db2conn:
@@ -516,7 +503,7 @@ def getStudentPassword(student):
     return rows
 
 
-def getTutorPassword(tutor):
+def getTutorPassword(tutorEmail):
 
     db2conn = createConnection()
 
@@ -527,7 +514,7 @@ def getTutorPassword(tutor):
         " FROM tutor_password p"
         " INNER JOIN tutor t"
         " ON t.tutor_id = p.tutor_id"
-        " WHERE email = '" + tutor +
+        " WHERE email = '" + tutorEmail +
         "';"
         )
         print(sql)

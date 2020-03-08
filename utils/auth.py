@@ -22,7 +22,7 @@ This file contains all the necessary function to authorise a user for the app
 from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import URLSafeTimedSerializer
 
-import databaseAdapter
+from databaseAdapter import getStudentID,getTutorPassword,getStudentPassword
 
 #Appended to all passwords before hashing
 PEPPER = "B24B11T99" 
@@ -33,19 +33,19 @@ def verifyEmail(email):
 
     global PEPPER
     #Gets a result set for all students with the gievn email
-    studentID = databaseAdapter.getStudentID(email)
+    studentID = getStudentID(email)
     #Gets a result set for all the tutors of a given email
-    tutorID = databaseAdapter.getTutorPassword(email)
+    tutorID = getTutorPassword(email)
     
     #Check if the email belongs to a student of staff
     if(studentID is not None and len(studentID)>0):
-        hashedPassword = databaseAdapter.getStudentPassword(email)
+        hashedPassword = getStudentPassword(email)
         #If student return the hased password and set role to staff
         return {'VerificationToken':False,'Role':'student','hashedpass':hashedPassword[0]['PASSWORD'],
                 'ID':studentID}
     
     elif(tutorID is not None and len(tutorID)>0):
-        hashedPassword = databaseAdapter.getTutorPassword(email)
+        hashedPassword = getTutorPassword(email)
         #if tutor return hashed password and set role to tutor
         return {'VerificationToken':False,'Role':'tutor','hashedpass':hashedPassword[0]['PASSWORD'],
                 'ID':tutorID}

@@ -1,0 +1,11 @@
+{
+  "dashDB For Transactions": [{
+    "credentials": {
+      "db": "BLUDB",
+      "hostname": "",
+      "password": "",
+      "port": 50000,
+      "username": ""
+    }
+  }]
+}

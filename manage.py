@@ -20,15 +20,12 @@ This file contains all the URL routing for the backend/front end, it takes urls
 and displays the required html files.
 It also processes data passed using post/get request.
 """
-import flask
-from flask import Flask, render_template, redirect, url_for, request,send_file,session
-from itsdangerous import URLSafeTimedSerializer
-import os
-import auth
-import databaseAdapter
+from flask import render_template, redirect, url_for, request,send_file,session
+from utils.auth import *
+from databaseAdapter import *
 from functools import wraps
 
-exec(open('utils/utils.py').read())
+from utils.utils import *
 
 app = Flask(__name__)
 port = int(os.getenv('PORT', 8000))
@@ -58,7 +55,7 @@ def login_post():
     email = request.form.get('email')
     password = request.form.get('password')
     #Checks the username and password are correct
-    token = auth.verifyUser(password,email)
+    token = verifyUser(password,email)
 
     if(token['VerificationToken']):
         #Sets the role of the user in the session
@@ -68,14 +65,14 @@ def login_post():
             session['studentID'] = token['ID'][0]['STUDENT_ID']
             #get group ID
             
-            groupID = databaseAdapter.getTeamFromStudentID(session['studentID'])[0]['TEAM_ID']
+            groupID = getTeamFromStudentID(session['studentID'])[0]['TEAM_ID']
             
             session['groupID'] = groupID
             #get the ID of the route the students are on
-            routeID = databaseAdapter.getRouteID(session['groupID'])
+            routeID = getRouteID(session['groupID'])
             session['routeID'] = routeID[0]['ROUTE_ID']
             #Get the total number of questions so end screen can be displayed at the end
-            numOfQuestions = databaseAdapter.getNumLocationOnRoute(session['routeID'])
+            numOfQuestions = getNumLocationOnRoute(session['routeID'])
             session['numOfQuestions'] = numOfQuestions[0]['1']
             session['teamScore'] = 100
             print("num of questions ",session['numOfQuestions'])
@@ -131,14 +128,11 @@ def registerSubmit():
     global EMAILEXTENSION
     name = request.form.get('name')
     email = request.form.get('email')
-
     name=name.lower()
     email=email.lower()
-
     password = request.form.get('password')
     passwordConfirm = request.form.get('passwordConfirmation')
     tutorName = request.form.get('tutorName')
-
     #Check if passwords match if not reload page with error message
     if(password != passwordConfirm):
         session['Error Message'] = "Passwords are not the same"
@@ -148,20 +142,23 @@ def registerSubmit():
         #Check if email has numbers if yes they must be a student
         if(hasNumbers(email)):
             #Check if the email is already registered
-            if(len(databaseAdapter.getStudentID(email))==0):
+            if(len(getStudentID(email))==0):
                 #TODO set team id by user preference
                 teamID = 2
                 #Get the tutor ID for the current student
-                print(databaseAdapter.getTutorID(tutorName))
-                tutorID = databaseAdapter.getTutorID(tutorName)[0]['TUTOR_ID']
+                tutorID = getTutorID(tutorName)
+                if(len(tutorID) == 0):
+                    session['Error Message'] = ("That tutor does not exist")
+                    return redirect(url_for("register"))
+                tutorID = tutorID[0]['TUTOR_ID']
                 #Hash the password
-                hashedPassword = auth.hashPassword(password)
+                hashedPassword = hashPassword(password)
                 #Insert the student to the database
-                databaseAdapter.insertStudentUser(email,name,teamID,tutorID)
+                insertStudentUser(email,name,teamID,tutorID)
 
                 #Insert the password to the database
-                studentID = databaseAdapter.getStudentID(email)[0]['STUDENT_ID']
-                databaseAdapter.insertPasswordStudent(hashedPassword,studentID)
+                studentID = getStudentID(email)[0]['STUDENT_ID']
+                insertPasswordStudent(hashedPassword,studentID)
             else:
                 #Catches if email is registered
                 session['Error Message'] = ("Email is already used")
@@ -169,16 +166,17 @@ def registerSubmit():
 
         else:
             #Check if the email is already registered
-            if(len(databaseAdapter.getTutorID(name))==0):
-                databaseAdapter.insertTutorUser(email,1,name)
-                hashedPassword = auth.hashPassword(password)
-                tutorID = databaseAdapter.getTutorID(name)[0]['TUTOR_ID']
-                databaseAdapter.insertPasswordTutor(hashedPassword,tutorID)
+            if(len(getTutorID(name))==0):
+                insertTutorUser(email,1,name)
+                hashedPassword = hashPassword(password)
+                tutorID = getTutorID(name)[0]['TUTOR_ID']
+                insertPasswordTutor(hashedPassword,tutorID)
             else:
                 session['Error Message'] = ("Email is already used")
                 return redirect(url_for('register'))
         #Regsitration successful TODO add Success message
         session['loginerror'] = "registration successful"
+        print(session)
         return redirect(url_for('login'))
     #Catch email of wrong extension
     else:
@@ -232,13 +230,13 @@ def addLocationSubmit():
     photo = request.form.get('location_photo')
 
     #No checks for now
-    databaseAdapter.insertLocation(location)
-    locationID = databaseAdapter.getLocationID(location)
+    insertLocation(location)
+    locationID = getLocationID(location)
     print("Location ID: ", locationID)
-    databaseAdapter.insertQuestion(locationID, task, answerA, answerB, answerC, answerD, correctAnswer)
+    insertQuestion(locationID, task, answerA, answerB, answerC, answerD, correctAnswer)
 
     if(hint != None):
-        databaseAdapter.insertClue(locationID, hint)
+        insertClue(locationID, hint)
 
     return render_template('Desktop/Manage_Locations_Page.html', locations = locations)
 
@@ -253,9 +251,9 @@ def editLocation():
 @requires_access_level('staff')
 def deleteLocation():
     name = request.form.get('locations')
-    databaseAdapter.removeLocation(name)
+    removeLocation(name)
     locationNames = []
-    locations = databaseAdapter.getLocations()
+    locations = getLocations()
     locationNames=[]
     for location in locations:
         locationNames.append(location['LOCATION_NAME'])
@@ -269,7 +267,7 @@ def deleteLocation():
 @requires_access_level('staff')
 def manageLocations():
     #Creates a list of locations from the db
-    locations = databaseAdapter.getLocations()
+    locations = getLocations()
     locationNames=[]
     for location in locations:
         locationNames.append(location['LOCATION_NAME'])
@@ -302,6 +300,12 @@ def assignRoutes():
 ######################
 #Student Game Pages  #
 ######################
+
+@app.route('/Join')
+def loadMap():
+    return render_template('mobile/Join_Team.html')
+
+
 #Displays the location clue page at an appropriate progression point
 @app.route('/Game')
 def showLocationClue():
@@ -320,17 +324,17 @@ def showLocationClue():
     print(progress)
 
     #Get the location ID for the clue
-    locationData= databaseAdapter.getLocation(session['routeID'],session['progress'])
+    locationData= getLocation(session['routeID'],session['progress'])
     locationID = locationData[0]['LOCATION_ID']
     #Shows the next locations image
-    imageURL = databaseAdapter.getLocation(session['routeID'],session['progress']+1)[0]['LOCATION_IMAGE_URL']
+    imageURL = getLocation(session['routeID'],session['progress']+1)[0]['LOCATION_IMAGE_URL']
     imageLocation = url_for('static',filename='images/'+imageURL)
     print("LocationID",locationID)
     #check if there are no maore lcations
-    if(len(databaseAdapter.getLocationClues(locationID))==0):
+    if(len(getLocationClues(locationID))==0):
         return redirect(url_for('endScreen'))
 
-    cluemessage = databaseAdapter.getLocationClues(locationID)[0]['CONTENTS']
+    cluemessage = getLocationClues(locationID)[0]['CONTENTS']
     print(cluemessage)
     #progress value = get User.progress from db
     #clue message = get clue for position = progress from db
@@ -343,9 +347,9 @@ def getQuestion():
     progress = session['progress']
     print("progress: ", progress)
     #Get the location ID for the clue
-    locationData= databaseAdapter.getLocation(session['routeID'],session['progress']+1)
+    locationData= getLocation(session['routeID'],session['progress']+1)
     locationID = locationData[0]['LOCATION_ID']
-    questionData = databaseAdapter.getQuestion(locationID)
+    questionData = getQuestionLocationID(locationID)
     print("questionData: ", questionData)
     imageURL = locationData[0]['LOCATION_IMAGE_URL']
     imageLocation = url_for('static',filename='images/'+imageURL)
@@ -369,9 +373,9 @@ def retryQuestion():
         error_message = ""
     
     progress = session['progress']
-    locationData= databaseAdapter.getLocation(session['routeID'],session['progress']+1)
+    locationData= getLocation(session['routeID'],session['progress']+1)
     locationID = locationData[0]['LOCATION_ID']
-    questionData = databaseAdapter.getQuestion(locationID)
+    questionData = getQuestionLocationID(locationID)
     imageURL = locationData[0]['LOCATION_IMAGE_URL']
     imageLocation = url_for('static',filename='images/'+imageURL)
     questionText = questionData[0]['QUESTION_CONTENT']
@@ -388,8 +392,8 @@ def checkQuestion():
     #Get their answer to the question
     answer = request.form.get('answer')
     #Retreive the correct answer
-    locationID = databaseAdapter.getLocation(session['routeID'],session['progress']+1)[0]['LOCATION_ID']
-    questionData = databaseAdapter.getQuestion(locationID)
+    locationID = getLocation(session['routeID'],session['progress']+1)[0]['LOCATION_ID']
+    questionData = getQuestionLocationID(locationID)
     answer = answer.upper()
     correctAnswer = questionData[0]['ANSWER'];
 
@@ -409,14 +413,14 @@ def checkQuestion():
 
 @app.route('/finished')
 def endScreen():
-    username = databaseAdapter.getStudentName(session['studentID'])[0]['NAME']
+    username = getStudentName(session['studentID'])[0]['NAME']
     teamscore = session['teamScore']
     progress = session['progress']
     routeID = session['routeID']
-    tutorID = databaseAdapter.getTutorIDFromStudentID(session['studentID'])[0]['TUTOR_ID']
+    tutorID = getTutorIDFromStudentID(session['studentID'])[0]['TUTOR_ID']
     
-    databaseAdapter.insertTeam(username,teamscore,progress,routeID,tutorID)
-    teamreturn = databaseAdapter.getTeams()
+    insertTeam(username,teamscore,progress,routeID,tutorID)
+    teamreturn = getTeams()
     teams = []
     for team in teamreturn:
         teams.append({'group_name':team['TEAM_NAME'],'final_score':team['TEAM_SCORE']})
@@ -427,6 +431,19 @@ def endScreen():
 def loadHelpPage():
     return render_template('mobile/Help_Page.html')
 
+@app.route('/Map')
+def loadMap():
+    return render_template('mobile/Map.html')
+
+
+@app.route('/Leaderboard')
+def loadLeaderboardPage():
+    return render_template('mobile/Leaderboard.html')
+
+
+@app.route('/Map')
+def loadMap():
+    return render_template('mobile/Map.html')
 
 #Runs the app locally if not deployed to the server
 if __name__ == '__main__':
