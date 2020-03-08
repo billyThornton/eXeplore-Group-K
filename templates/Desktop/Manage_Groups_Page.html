@@ -78,8 +78,6 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to configure routes a
 			<!-- Students Column -->
 				<td>
 					<div id="student_list_container">
-						<input type="checkbox" id="students1"/><label id="student_label" for="students1"> Example Student</label> <br />
-						
 						{% for student in students %}
 						<input type="checkbox" id="{{student}}"/><label id="student_label" for="{{student}}">{{student}}</label><br />
 						{% endfor %}

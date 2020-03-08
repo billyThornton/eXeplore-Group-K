@@ -192,5 +192,5 @@ input[type="radio"]:disabled + #location_label:before {
 
 /* Give container scroller */
 #location_list_container {
-
+	margin-left: auto;
 }
