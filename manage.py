@@ -302,7 +302,7 @@ def assignRoutes():
 ######################
 
 @app.route('/Join')
-def loadMap():
+def loadJoinTeamPage():
     return render_template('mobile/Join_Team.html')
 
 
@@ -442,9 +442,6 @@ def loadLeaderboardPage():
     return render_template('mobile/Leaderboard.html')
 
 
-@app.route('/Map')
-def loadMap():
-    return render_template('mobile/Map.html')
 
 #Runs the app locally if not deployed to the server
 if __name__ == '__main__':
