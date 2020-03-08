@@ -423,6 +423,7 @@ def endScreen():
     
     return render_template('mobile/End_Game_Page.html',group_name = username,final_score = teamscore,final_position = "1st",teams=teams)
 
+
 @app.route('/HelpPage')
 def loadHelpPage():
     return render_template('mobile/Help_Page.html')
