@@ -278,7 +278,13 @@ def manageLocations():
 @app.route('/Manage_Groups_Page')
 @requires_access_level('staff')
 def manageGroups():
-    return render_template('Desktop/Manage_Groups_Page.html')
+    #Creates a list of locations from the db
+    students = databaseAdapter.getStudents()
+    studentNames=[]
+    for student in students:
+        studentNames.append(student['NAME'])
+        
+    return render_template('Desktop/Manage_Groups_Page.html', students = studentNames)
 
 #Loads the gamekeepers dashboard tool
 @app.route('/Leaderboard_Page')
