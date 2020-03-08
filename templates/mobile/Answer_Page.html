@@ -1,7 +1,7 @@
 <!--
 Created on 19/02/2020
 @author: Ben Trotter
-@Last Edited: 26/02/2020
+@Last Edited: 08/03/2020
 @edited by: Ben Trotter
 
 Copyright (c) “2020, by Group K
@@ -77,15 +77,16 @@ This page also gives access to a side bar which provides various features such a
 
 		<!-- Answer form -->
 		<form action="confirmAnswer" method="POST">
+		 <div id="form">
 			<div>
-				<label for="a">
+				<label class="radio_button" for="a">
 					<input type="radio" name="answer" value="a" id="a"> <span>A: {{answer_a}}</span>
 				</label>
 			</div>
 			<div>
 				<label for="b">
 					<input type="radio" name="answer" value="b" id="b"> <span>B: {{answer_b}}</span>
-				</label>
+				</label> <br>
 			</div>
 			<div>
 				<label for="c">
@@ -97,7 +98,7 @@ This page also gives access to a side bar which provides various features such a
 					<input type="radio" name="answer" value="d" id="d"> <span>D: {{answer_d}}</span>
 				</label>
 			</div>
-
+		</div>
 			<!-- To pass value of quiz progress -->
 			<input type="hidden" name="progress" value="{{progress_value}}">
 			<button type="button" class="transparent_button" id="goback" onclick="goBack()">Go Back</button>
