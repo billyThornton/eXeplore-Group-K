@@ -52,18 +52,11 @@ provides various features such as Help, FAQ & Logout.
           		<th>Score</th>
         	</tr>
       	</thead>
-				
-      	<!-- Examples -->
-      	<tr>
-            <td>Example Team</td>
-            <td>200</td>
-           </tr>
-				
-				
+								
 		{% for team in teams %}
         <tr>
-            <td>{{team.group_name}}</td>
-            <td>{{team.final_score}}</td>
+            <td>{{team['TEAM_NAME']}}</td>
+            <td>{{team['TEAM_SCORE']}}</td>
         </tr>
 		{% endfor %}
 		</table>

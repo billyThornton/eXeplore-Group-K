@@ -44,11 +44,9 @@ This file contains the html that allows a user to join a team.
 	<p> Teams:
 		<!-- As route ad group boxes are selected their names will appear here -->
 		<select id="teams">
-			<option value="0">Select team</option>
-  			<option value="team1">Team 1</option>
- 			<option value="team2">Team 2</option>
-  			<option value="team3">Team 3</option>
-  			<option value="team4">Team 4</option>
+			{% for team in teams %}
+			<option value="{{team['TEAM_ID']}}">{{team["TEAM_NAME"]}}</option>
+			{% endfor %}
 		</select>
 	</p>
 

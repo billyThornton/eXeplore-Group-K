@@ -279,17 +279,15 @@ def manageLocations():
 @requires_access_level('staff')
 def manageGroups():
     #Creates a list of locations from the db
-    students = databaseAdapter.getStudents()
-    studentNames=[]
-    for student in students:
-        studentNames.append(student['NAME'])
+    studentNames = getStudents()
         
     return render_template('Desktop/Manage_Groups_Page.html', students = studentNames)
 
 #Loads the gamekeepers dashboard tool
 @app.route('/Leaderboard_Page')
 def leaderboard():
-    return render_template('Desktop/Leaderboard_Page.html')
+    gameTeams = getTeams()
+    return render_template('Desktop/Leaderboard_Page.html', teams = gameTeams)
 
 #Loads the gamekeepers dashboard tool
 @app.route('/Manage_Routes_Page')
@@ -312,7 +310,8 @@ def assignRoutes():
 
 @app.route('/Join')
 def loadJoinTeamPage():
-    return render_template('mobile/Join_Team.html')
+    gameTeams = getTeams()
+    return render_template('mobile/Join_Team.html', teams = gameTeams)
 
 
 #Displays the location clue page at an appropriate progression point
@@ -448,7 +447,8 @@ def loadMap():
 
 @app.route('/Leaderboard')
 def loadLeaderboardPage():
-    return render_template('mobile/Leaderboard.html')
+    gameTeams = getTeams()
+    return render_template('mobile/Leaderboard.html',teams = gameTeams)
 
 
 

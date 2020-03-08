@@ -47,24 +47,16 @@ clicked from  the side bar. It allows a gamekeeper to view the current leaderboa
 				<!-- Headers -->
 				<thead>
 					<tr>
-						<th>Position</th>
 						<th>Team Name</th>
 						<th>Score</th>
 					</tr>
 				</thead>
 				
-				<!-- Examples -->
-				<tr>
-					<td>1</td>
-					<td>Example Group</td>
-					<td>10</td>
-				</tr>
-				
 				{% for team in teams %}
 				<tr>
-					<td>{{team_position}}</td>
-					<td>{{team_name}}</td>
-					<td>{{team_score}}</td>
+					<td>{{team['TEAM_NAME']}}</td>
+					<td>{{team['TEAM_SCORE']}}</td>
+					
 				</tr>
 				{% endfor %}
 
