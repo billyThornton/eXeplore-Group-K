@@ -44,21 +44,23 @@ displays a table containing all of the locations that the game keeper can select
 		<h3>Locations:</h3>
 
 		<div id="manage_location_page">
+			<input type="text" id="location_search" onkeyup="searchList('location_search', 'location_list')" placeholder="Search locations..." title="Type in a location">
 
-			<ul>
+			<ul id="location_list">
 				{% for location in locations %}
-				<li type="radio" id="{{location}}" name="locations">{{location}}</li> <br />
+				<li type="radio" id="location_element" name="locations">{{location}}</li> <br />
 				{% endfor %}
 			</ul>
 		</div>
-		
+
 		<h3>Clues:</h3>
 		
 		<div id="manage_location_page">
+			<input type="text" id="clue_search" onkeyup="searchList('clue_search', 'clue_list')" placeholder="Search clues..." title="Type in a clue">
 
-			<ul>
+			<ul id="clue_list">
 				{% for location in locations %}
-				<li type="radio" id="{{location}}" name="locations">{{location}}</li> <br />
+				<li type="radio" id="clue_element" name="locations">{{location}}</li> <br />
 				{% endfor %}
 			</ul>
 		</div>
