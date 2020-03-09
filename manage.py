@@ -47,6 +47,7 @@ def requires_access_level(access_level):
         return decorated_function
     return decorator
 
+
 #Handles the [post] method for login
 #Will be passed a username and a password
 @app.route('/',methods = ['POST'])
@@ -237,7 +238,7 @@ def addLocationSubmit():
 
     if(hint != None):
         insertClue(locationID, hint)
-
+    locations = []
     return render_template('Desktop/Manage_Locations_Page.html', locations = locations)
 
 
@@ -449,8 +450,10 @@ def loadLeaderboardPage():
 
 
 
+
 #Runs the app locally if not deployed to the server
 if __name__ == '__main__':
+
     app.secret_key = 'eXeplore_241199_brjbtk'
     app.SECURITY_PASSWORD_SALT = 'BFR241199'
-    app.run(host='0.0.0.0', port=port, debug=True,use_reloader=False)
+    app.run(host='0.0.0.0', port=port, debug=True,use_reloader=False,ssl_context='adhoc')
