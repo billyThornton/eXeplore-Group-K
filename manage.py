@@ -333,6 +333,10 @@ def assignTeam():
     
     return redirect(url_for('showLocationClue'))
 
+@app.route('/firstChoose')
+def loadFirstChoosePage():
+    gameRoutes = getRoutes()
+    return render_template('mobile/First_Choose.html', routes = gameRoutes)
 
 #Displays the location clue page at an appropriate progression point
 @app.route('/Game')
