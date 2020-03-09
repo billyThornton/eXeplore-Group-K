@@ -241,10 +241,10 @@ def addLocationSubmit():
     return render_template('Desktop/Manage_Locations_Page.html', locations = locations)
 
 
-@app.route('/Edit_Location')
+@app.route('/Add_CLue')
 @requires_access_level('staff')
 def editLocation():
-    return render_template('Desktop/Edit_Location_Page.html')
+    return render_template('Desktop/Add_Clue_Page.html')
 
 
 @app.route('/Delete_Location', methods = ['POST'])
