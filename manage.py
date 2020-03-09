@@ -220,31 +220,36 @@ def addLocation():
 @requires_access_level('staff')
 def addLocationSubmit():
     location = request.form.get('location')
-    task = request.form.get('task')
-    hint = request.form.get('hint')
-    answerA = request.form.get('answer_a')
-    answerB = request.form.get('answer_b')
-    answerC = request.form.get('answer_c')
-    answerD = request.form.get('answer_d')
-    correctAnswer = request.form.get('correct_answer')
+    clue = request.form.get('clue')
+    #maybe add security checks for photo
     photo = request.form.get('location_photo')
 
     #No checks for now
-    insertLocation(location)
-    locationID = getLocationID(location)
-    print("Location ID: ", locationID)
-    insertQuestion(locationID, task, answerA, answerB, answerC, answerD, correctAnswer)
-
-    if(hint != None):
-        insertClue(locationID, hint)
+    insertLocation(location,clue)
 
     return render_template('Desktop/Manage_Locations_Page.html', locations = locations)
 
 
-@app.route('/Add_CLue')
+@app.route('/Add_Question')
 @requires_access_level('staff')
-def editLocation():
-    return render_template('Desktop/Add_Clue_Page.html')
+def addQuestion():
+    gameLocations = getLocations()
+    return render_template('Desktop/Add_Question_Page.html', locations = gameLocations)
+
+@app.route('/Add_Question_Submit',methods = ['POST'])
+@requires_access_level('staff')
+def addQuestionSubmit():
+    location = request.form.get('location')
+    question = request.form.get('question')
+    answer_a = request.form.get('answer_a')
+    answer_b = request.form.get('answer_b')
+    answer_c = request.form.get('answer_c')
+    answer_d = request.form.get('answer_d')
+    correct_answer = request.form.get('correct_answer')
+    #No checks for now
+    insertQuestion(location,question,answer_a,answer_b,answer_c,answer_d,correct_answer)
+
+    return render_template('Desktop/Manage_Locations_Page.html')
 
 
 @app.route('/Delete_Location', methods = ['POST'])

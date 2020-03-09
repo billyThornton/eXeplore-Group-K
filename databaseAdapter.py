@@ -816,13 +816,12 @@ def insertPasswordTutor(password,tutorID):
         # close database connection
         ibm_db.close(db2conn)
 
-def insertLocation(locationName):
+def insertLocation(locationName,clue):
     db2conn = createConnection()
     locationName = locationName.lower()
     if db2conn:
         sql = (
-            "INSERT INTO location(location_name)"
-            " VALUES('" + str(locationName) + "');"
+            "INSERT INTO location(location_name,clue) VALUES('" + str(locationName) + "','"+str(clue)+"');"
             )
 
         # Prepare the statement
@@ -850,7 +849,7 @@ def insertQuestion(locationID, task, answerA, answerB, answerC, answerD, correct
         # close database connection
         ibm_db.close(db2conn)
 
-def insertClue(locationID, clue):
+"""def insertClue(locationID, clue):
     db2conn = createConnection()
 
     if db2conn:
@@ -865,7 +864,7 @@ def insertClue(locationID, clue):
         ibm_db.execute(stmt)
         # close database connection
         ibm_db.close(db2conn)
-        
+"""        
 
 def insertTeam(teamName,routeID,tutorID,teamLeader,progress):
     db2conn = createConnection()

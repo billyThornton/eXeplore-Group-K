@@ -41,11 +41,21 @@ database. This is done by using a form that the game keeper is to fill in.
 	<div id="edit_location_page">
 
 		<!-- Edit location details form -->
-		<form id="form" method="POST">
+		<form id="form" action="Add_Question_Submit" method="POST">
 			<div class="location_inputs" id="add_location_container">
+
 				<div class="location_inputs">
-					<label id="input_label">Clue:</label>
-					<input type="text" placeholder="Clue Description" name="clue" required>
+					<label id="input_label">Location for question:</label>
+					<select name="location">
+						{% for location in locations %}
+	  					<option value="{{location['LOCATION_ID']}}">{{location["LOCATION_NAME"]}}</option>
+	  					{% endfor %}
+					</select>
+				</div>
+
+				<div class="location_inputs">
+					<label id="input_label">Question:</label>
+					<input type="text" placeholder="Clue Description" name="question" required>
 				</div>
 
 				<div class="location_inputs">

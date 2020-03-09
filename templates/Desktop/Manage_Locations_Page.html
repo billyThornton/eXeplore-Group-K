@@ -34,7 +34,7 @@ displays a table containing all of the locations that the game keeper can select
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="{{url_for('static',filename='js/JSFunctions.js')}}"></script>
 <link href="{{url_for('static',filename='styles/Manage_Locations_Style.css')}}" rel='stylesheet' type='text/css'/>
-<title>Add Clues and Locations</title>
+<title>Add Questions and Locations</title>
 
 </head>
 
@@ -53,22 +53,9 @@ displays a table containing all of the locations that the game keeper can select
 			</ul>
 		</div>
 
-		<h3>Clues:</h3>
-		<input type="text" id="clue_search" onkeyup="searchList('clue_search', 'clue_list')" placeholder="Search clues..." title="Type in a clue">
-		
-		<div id="manage_location_page">
-
-			<ul id="clue_list">
-				{% for location in locations %}
-				<li type="radio" id="clue_element" name="locations">{{location}}</li> <br />
-				{% endfor %}
-			</ul>
-		</div>
-
-
 	<div id="transparent_button_container">
 		<button type="button" href="#" id="transparent_button" onclick="loadDoc('/Add_Location')" name="new_location_button">Add Location</button>
-		<button type="button" href="#" id="transparent_button" onclick="loadDoc('/Edit_Location')" name="edit_location_button">Add Clue</button>
+		<button type="button" href="#" id="transparent_button" onclick="loadDoc('/Add_Question')" name="edit_location_button">Add Question</button>
 	</div>
     </form>
 
