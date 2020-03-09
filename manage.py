@@ -307,9 +307,7 @@ def assignRoutes():
 @requires_access_level('staff')
 def assignUpdateRoute():
     teamNameID = request.form['team']
-    print(teamNameID)
     routeNameID = request.form.get('route')
-    print(routeNameID)
     updateTeamRoute(routeNameID,teamNameID)
     
     return redirect(url_for('assignRoutes'))
@@ -489,6 +487,10 @@ def loadLeaderboardPage():
 
 #Runs the app locally if not deployed to the server
 if __name__ == '__main__':
+    #insertTutorUser("testTutor@exeter.ac.uk",1,"TestTutor")
+    #insertStudentUser("test201@exeter.ac.uk","TestBen",1,1)
+    #insertTeam("TestTeam",1,1,1,0)
+    #insertRoute(2,"Reverse")
     app.secret_key = 'eXeplore_241199_brjbtk'
     app.SECURITY_PASSWORD_SALT = 'BFR241199'
     app.run(host='0.0.0.0', port=port, debug=True,use_reloader=False)

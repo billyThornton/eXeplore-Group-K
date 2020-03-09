@@ -688,7 +688,7 @@ def getTeams():
     # Query all locations
     if db2conn:
         # if we have a Db2 connection, query the database
-        sql = "SELECT team_id,team_name FROM Team ;"
+        sql = "SELECT team_id,team_name,current_route_id FROM Team ;"
         # Prepare the statement
         stmt = ibm_db.prepare(db2conn,sql)
         # Execute the sql
@@ -727,7 +727,7 @@ def getRoutes():
     db2conn = createConnection()
     if db2conn:
         # if we have a Db2 connection, query the database
-        sql = "SELECT route_id FROM Route;"
+        sql = "SELECT route_id, route_name FROM Route;"
         # Prepare the statement
         stmt = ibm_db.prepare(db2conn,sql)
         # Execute the sql
@@ -867,14 +867,14 @@ def insertClue(locationID, clue):
         ibm_db.close(db2conn)
         
 
-def insertTeam(teamName,teamScore,progress,routeID,tutorID):
+def insertTeam(teamName,routeID,tutorID,teamLeader,progress):
     db2conn = createConnection()
 
     if db2conn:
         sql = (
-            "INSERT INTO TEAM (TEAM_NAME,TEAM_SCORE,PROGRESS,ROUTE_ID,TUTOR_ID)"
-            " VALUES('" + teamName + "', " + str(teamScore) + ", "+str(progress)
-            +", "+str(routeID)+", "+str(tutorID)+");"
+            "INSERT INTO TEAM (TEAM_NAME,CURRENT_ROUTE_ID,TUTOR_ID,TEAM_LEADER,PROGRESS)"
+            " VALUES('" + teamName + "', " + str(routeID) + ", "+str(tutorID)
+            +", "+str(teamLeader)+", "+str(progress)+");"
             )
         print(sql)
         # Prepare the statement
@@ -902,13 +902,12 @@ def removeLocation(locationName):
         ibm_db.close(db2conn)
 
 
-def insertRoute(routeID, routeName):
+def insertRoute(routeID,routeName):
     db2conn = createConnection()
 
     if db2conn:
         sql = (
-            "INSERT INTO route(ROUTE_ID, ROUTE_NAME)"
-            " VALUES("+str(routeID)+", '"+str(routeName)+"');"
+            "INSERT INTO route (ROUTE_ID, ROUTE_NAME) VALUES("+str(routeID)+",'"+str(routeName)+"');"
             )
 
         print(sql)
@@ -927,7 +926,7 @@ def updateTeamRoute(routeID, teamID):
         print(routeID)
         sql = (
             "UPDATE team"
-            " SET team.route_id = "+str(routeID)+"" 
+            " SET team.current_route_id = "+str(routeID)+"" 
             " WHERE team_id = "+str(teamID)+";"
             )
 
