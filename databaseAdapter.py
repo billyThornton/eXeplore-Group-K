@@ -688,7 +688,7 @@ def getTeams():
     # Query all locations
     if db2conn:
         # if we have a Db2 connection, query the database
-        sql = "SELECT team_id,team_name,team_score,route_id FROM Team;"
+        sql = "SELECT team_id,team_name,team_score,route_id FROM Team ORDER BY team_score DESC;"
         # Prepare the statement
         stmt = ibm_db.prepare(db2conn,sql)
         # Execute the sql
