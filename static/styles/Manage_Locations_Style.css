@@ -131,21 +131,6 @@ input[type="radio"]:disabled + #location_label:before {
 	border-color: #31750E;
 }
 
-
-#manage_location_page{
-    width: 100%;
-    max-width: 400px;
-    margin: 2rem auto;
-    background: none;
-    border: 1px solid white;
-    border-radius: 3px;
-    text-align: left;
-    padding-left: 30px;
-    overflow-y: scroll;
-    height: 500px;
-}
-
-
 /* Button styling */
 #transparent_button:hover, #save_transparent_button:hover, #delete_transparent_button:hover {
 	cursor: pointer;
