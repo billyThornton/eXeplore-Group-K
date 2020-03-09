@@ -22,9 +22,9 @@ DAMGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVIC
 INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INLUDING NEGLIGENCE
 OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-This file will be reached once a player has completed the hunt. It contains the player’s score, a table showing the leaderboard
-and the players place within it and a means of navigation away from it. Additionally it also gives access to a side bar which
-provides various features such as Help, FAQ & Logout.
+This file contains html that displays the google map. The map by default is shown for the exeter campus. Appears when
+the map icon is clicked form the pop-up sidebar. The map uses an api key from google. Developers will need to obtain
+their own api key from google.
 -->
 <!DOCTYPE html>
 <html>
@@ -34,7 +34,7 @@ provides various features such as Help, FAQ & Logout.
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="{{url_for('static',filename='styles/Game_Style.css')}}" rel='stylesheet' type='text/css'/>
 <script src="{{url_for('static',filename='js/JSFunctions.js')}}"></script>
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAtu0H0JzyaPPd7E-wJh1WkESv9k1XDYqM"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR API KEY GOES HERE"></script>
 
 <script type="text/javascript">
 

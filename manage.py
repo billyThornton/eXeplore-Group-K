@@ -328,15 +328,26 @@ def loadJoinTeamPage():
 def assignTeam():
     tutorID = request.form['tutor']
     print(tutorID)
-    teamID = request.form.get('team')
+    teamName = request.form.get('team')
     print(teamID)
-    
-    return redirect(url_for('showLocationClue'))
+    number = getTeamMembers(teamName)
+    if len(number) == 1:
+        return redirect(url_for('loadFirstChoosePage'))
+    else:
+        return redirect(url_for('showLocationClue'))
 
 @app.route('/firstChoose')
 def loadFirstChoosePage():
     gameRoutes = getRoutes()
     return render_template('mobile/First_Choose.html', routes = gameRoutes)
+
+@app.route('/loadFirstTeam', methods = ['POST'])
+def loadFirstTeam():
+    routeID = request.form['route']
+    teamName = request.form['teamName']
+    #add or update database now here maybe
+    return redirect(url_for('showLocationClue'))
+
 
 #Displays the location clue page at an appropriate progression point
 @app.route('/Game')
