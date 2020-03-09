@@ -44,27 +44,29 @@ using select boxes which are obtained from the database..
 		<div id="assign_route_container">
 		
 			<h2>Assign Route</h2>
-				<p> <label>Team:</label>
-				<!-- As route and group boxes are selected their names will appear here -->
-				<select id="Groups">
-					{% for team in teams %}
-  					<option value="{{team['TEAM_ID']}}">{{team["TEAM_NAME"]}}</option>
-  					{% endfor %}
-				</select>
-				</p>
 
-				<p> <label>Route:</label>
-				<!-- As route and group boxes are selected their names will appear here -->
-				<select id="Groups">
-					{% for route in routes %}
-  					<option value="{{route['ROUTE_ID']}}">{{route["ROUTE_NAME"]}}</option>
-  					{% endfor %}
-				</select>
-				</p>
-				
-			<div id="transparent_button_container">
-				<button type="button" id="transparent_button" name="assign_button">Assign</button>
-			</div>
+				<form action="assignRoute" method="POST">
+					<p> <label>Team:</label>
+					<!-- As route and group boxes are selected their names will appear here -->
+					<select name="team" id="Groups">
+						{% for team in teams %}
+	  					<option value="{{team['TEAM_ID']}}">{{team["TEAM_NAME"]}}</option>
+	  					{% endfor %}
+					</select>
+					</p>
+
+					<p> <label>Route:</label>
+					<!-- As route and group boxes are selected their names will appear here -->
+					<select name="route" id="Groups">
+						{% for route in routes %}
+	  					<option value="{{route['ROUTE_ID']}}">{{route["ROUTE_NAME"]}}</option>
+	  					{% endfor %}
+					</select>
+					</p>
+					<div id="transparent_button_container">
+						<button type="submit" id="transparent_button" name="assign_button">Assign</button>
+					</div>
+				</form>
 		</div>
 		
 		<!-- Routes Column -->
@@ -79,6 +81,7 @@ using select boxes which are obtained from the database..
 				</thead>
 				
 				{% for team in teams %}
+				<P>Check1 -> {{team['TEAM_ID']}} -> {{team['ROUTE_ID']}}
 				{% for route in routes %}
 				{% if team['ROUTE_ID'] == route['ROUTE_ID'] %}
 				<tr>

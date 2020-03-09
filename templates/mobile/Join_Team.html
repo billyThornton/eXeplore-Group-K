@@ -40,20 +40,31 @@ This file contains the html that allows a user to join a team.
 
 	{% include "mobile/Game_Nav.html" %}
 
-	<h2>Please select your team</h2>
-	<p> Teams:
-		<!-- As route ad group boxes are selected their names will appear here -->
-		<select id="teams">
-			{% for team in teams %}
-			<option value="{{team['TEAM_ID']}}">{{team["TEAM_NAME"]}}</option>
-			{% endfor %}
-		</select>
-	</p>
+	<form action="assignTeam" method="POST">
 
-	<div id="transparent_button_container">
-		<button type="button" id="transparent_button" name="assign_button">Start Game</button>
-	</div>
+		<h2>Please confirm your tutor</h2>
+		<p> Tutors:
+			<select name="tutor" id="teams">
+				{% for tutor in tutors %}
+				<option value="{{tutor['TUTOR_ID']}}">{{tutor["TUTOR_NAME"]}}</option>
+				{% endfor %}
+			</select>
+		</p>
 
+		<h2>Please select your team</h2>
+		<p> Teams:
+			<select name="team" id="teams">
+				{% for team in teams %}
+				<option value="{{team['TEAM_ID']}}">{{team["TEAM_NAME"]}}</option>
+				{% endfor %}
+			</select>
+		</p>
+
+		<div id="transparent_button_container">
+			<button type="submit" id="transparent_button" name="assign_button">Start Game</button>
+		</div>
+
+	</form>
 	</div>
 </body>
 </html>

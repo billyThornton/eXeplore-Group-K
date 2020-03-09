@@ -688,7 +688,27 @@ def getTeams():
     # Query all locations
     if db2conn:
         # if we have a Db2 connection, query the database
-        sql = "SELECT team_name,team_score,route_id FROM Team;"
+        sql = "SELECT team_id,team_name,team_score,route_id FROM Team;"
+        # Prepare the statement
+        stmt = ibm_db.prepare(db2conn,sql)
+        # Execute the sql
+        ibm_db.execute(stmt)
+        rows=[]
+        # fetch the result
+        result = ibm_db.fetch_assoc(stmt)
+        while result != False:
+            rows.append(result.copy())
+            result = ibm_db.fetch_assoc(stmt)
+        # close database connection
+        ibm_db.close(db2conn)
+    return rows
+
+def getTutors():
+    db2conn = createConnection()
+    # Query all locations
+    if db2conn:
+        # if we have a Db2 connection, query the database
+        sql = "SELECT tutor_id,tutor_name FROM Tutor;"
         # Prepare the statement
         stmt = ibm_db.prepare(db2conn,sql)
         # Execute the sql
@@ -877,6 +897,43 @@ def removeLocation(locationName):
         # Prepare the statement
         stmt = ibm_db.prepare(db2conn,sql)
     	# Execute the sql
+        ibm_db.execute(stmt)
+        # close database connection
+        ibm_db.close(db2conn)
+
+
+def insertRoute(routeID, routeName):
+    db2conn = createConnection()
+
+    if db2conn:
+        sql = (
+            "INSERT INTO route(ROUTE_ID, ROUTE_NAME)"
+            " VALUES("+str(routeID)+", '"+str(routeName)+"');"
+            )
+
+        print(sql)
+        # Prepare the statement
+        stmt = ibm_db.prepare(db2conn,sql)
+        # Execute the sql
+        ibm_db.execute(stmt)
+        # close database connection
+        ibm_db.close(db2conn)
+
+def updateTeamRoute(routeID, teamID):
+    db2conn = createConnection()
+
+    if db2conn:
+        print(teamID)
+        print(routeID)
+        sql = (
+            "UPDATE team"
+            " SET team.route_id = "+str(routeID)+"" 
+            " WHERE team_id = "+str(teamID)+";"
+            )
+
+        print(sql)
+        stmt = ibm_db.prepare(db2conn,sql)
+        # Execute the sql
         ibm_db.execute(stmt)
         # close database connection
         ibm_db.close(db2conn)
