@@ -251,9 +251,6 @@ input[type=text] {
 	margin-left: 30px;
 }
 
-#location_list_container {
-	overflow-y: scroll;
-}
 
 /* Drop down correct answer styling */
 .correct_answer select {

@@ -1,5 +1,5 @@
 # eXeplore - Exeter Exploration game
-> An treasure hunt game to introduce new students to the Exeter University campus.
+> A treasure hunt game to introduce new students to the Exeter University campus.
 
 ## Table of contents
 * [General info](#general-info)

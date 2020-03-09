@@ -262,7 +262,6 @@ def deleteLocation():
     return redirect(url_for('manageLocations'))
 
 
-
 #Loads the gamekeepers dashboard tool
 @app.route('/Manage_Locations_Page')
 @requires_access_level('staff')
@@ -280,17 +279,15 @@ def manageLocations():
 @requires_access_level('staff')
 def manageGroups():
     #Creates a list of locations from the db
-    students = databaseAdapter.getStudents()
-    studentNames=[]
-    for student in students:
-        studentNames.append(student['NAME'])
+    studentNames = getStudents()
         
     return render_template('Desktop/Manage_Groups_Page.html', students = studentNames)
 
 #Loads the gamekeepers dashboard tool
 @app.route('/Leaderboard_Page')
 def leaderboard():
-    return render_template('Desktop/Leaderboard_Page.html')
+    gameTeams = getTeams()
+    return render_template('Desktop/Leaderboard_Page.html', teams = gameTeams)
 
 #Loads the gamekeepers dashboard tool
 @app.route('/Manage_Routes_Page')
@@ -302,7 +299,21 @@ def manageRoutes():
 @app.route('/Assign_Routes_Page')
 @requires_access_level('staff')
 def assignRoutes():
-    return render_template('Desktop/Assign_Routes_Page.html')
+    gameTeams = getTeams()
+    gameRoutes = getRoutes()
+
+    return render_template('Desktop/Assign_Routes_Page.html', teams = gameTeams, routes = gameRoutes)
+
+@app.route('/assignRoute', methods = ['POST'])
+@requires_access_level('staff')
+def assignUpdateRoute():
+    teamNameID = request.form['team']
+    print(teamNameID)
+    routeNameID = request.form.get('route')
+    print(routeNameID)
+    updateTeamRoute(routeNameID,teamNameID)
+    
+    return redirect(url_for('assignRoutes'))
 
 ######################
 #Student Game Pages  #
@@ -310,8 +321,23 @@ def assignRoutes():
 
 @app.route('/Join')
 def loadJoinTeamPage():
-    return render_template('mobile/Join_Team.html')
+    gameTeams = getTeams()
+    gameTutors = getTutors()
+    return render_template('mobile/Join_Team.html', teams = gameTeams, tutors = gameTutors)
 
+@app.route('/assignTeam', methods = ['POST'])
+def assignTeam():
+    tutorID = request.form['tutor']
+    print(tutorID)
+    teamID = request.form.get('team')
+    print(teamID)
+    
+    return redirect(url_for('showLocationClue'))
+
+@app.route('/firstChoose')
+def loadFirstChoosePage():
+    gameRoutes = getRoutes()
+    return render_template('mobile/First_Choose.html', routes = gameRoutes)
 
 #Displays the location clue page at an appropriate progression point
 @app.route('/Game')
@@ -392,6 +418,7 @@ def retryQuestion():
     d= questionData[0]['MULTIPLE_CHOICE_D']
     return render_template('mobile/Answer_Page.html',error_message=error_message,progress_value = progress,clue_message = "Question: "+questionText,clue_location=imageLocation,
                            answer_a = a, answer_b = b, answer_c = c, answer_d = d)
+
 @app.route('/confirmAnswer',methods = ['POST'])
 def checkQuestion():
     #chscks he progress of the student to ensure the correct question is loaded
@@ -443,10 +470,10 @@ def loadHelpPage():
 def loadMap():
     return render_template('mobile/Map.html')
 
-
 @app.route('/Leaderboard')
 def loadLeaderboardPage():
-    return render_template('mobile/Leaderboard.html')
+    gameTeams = getTeams()
+    return render_template('mobile/Leaderboard.html',teams = gameTeams)
 
 
 

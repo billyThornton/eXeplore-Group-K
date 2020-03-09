@@ -44,29 +44,29 @@ using select boxes which are obtained from the database..
 		<div id="assign_route_container">
 		
 			<h2>Assign Route</h2>
-				<p> <label>Group:</label>
-				<!-- As route and group boxes are selected their names will appear here -->
-				<select id="Groups">
-  					<option value="group1">Group 1</option>
- 					<option value="group2">Group 2</option>
-  					<option value="group3">Group 3</option>
-  					<option value="group4">Group 4</option>
-				</select>
-				</p>
-				
-				<p> <label>Route:</label>
-				<!-- As route and group boxes are selected their names will appear here -->
-				<select id="Groups">
-  					<option value="route1">Route 1</option>
- 					<option value="route2">Route 2</option>
-  					<option value="route3">Route 3</option>
-  					<option value="route4">Route 4</option>
-				</select>
-				</p>
-				
-			<div id="transparent_button_container">
-				<button type="button" id="transparent_button" name="assign_button">Assign</button>
-			</div>
+
+				<form action="assignRoute" method="POST">
+					<p> <label>Team:</label>
+					<!-- As route and group boxes are selected their names will appear here -->
+					<select name="team" id="Groups">
+						{% for team in teams %}
+	  					<option value="{{team['TEAM_ID']}}">{{team["TEAM_NAME"]}}</option>
+	  					{% endfor %}
+					</select>
+					</p>
+
+					<p> <label>Route:</label>
+					<!-- As route and group boxes are selected their names will appear here -->
+					<select name="route" id="Groups">
+						{% for route in routes %}
+	  					<option value="{{route['ROUTE_ID']}}">{{route["ROUTE_NAME"]}}</option>
+	  					{% endfor %}
+					</select>
+					</p>
+					<div id="transparent_button_container">
+						<button type="submit" id="transparent_button" name="assign_button">Assign</button>
+					</div>
+				</form>
 		</div>
 		
 		<!-- Routes Column -->
@@ -75,24 +75,22 @@ using select boxes which are obtained from the database..
 				<!-- Headers -->
 				<thead>
 					<tr>
-						<th>Group Name</th>
+						<th>Team Name</th>
 						<th>Route Name</th>
 					</tr>
 				</thead>
 				
-				<!-- Examples -->
+				{% for team in teams %}
+				<P>Check1 -> {{team['TEAM_ID']}} -> {{team['ROUTE_ID']}}
+				{% for route in routes %}
+				{% if team['ROUTE_ID'] == route['ROUTE_ID'] %}
 				<tr>
-					<td>Example Group</td>
-					<td>Example Route</td>
+					<td>{{team["TEAM_NAME"]}}</td>
+					<td>{{route["ROUTE_NAME"]}}</td>
 				</tr>
-				
-				<!--{% for team in teams %}
-				<tr>
-					<td>{{team_position}}</td>
-					<td>{{team_name}}</td>
-					<td>{{team_score}}</td>
-				</tr>
-				{% endfor %}-->
+				{% endif %}
+				{% endfor %}
+				{% endfor %}
 
 			</table>
 	</div>
