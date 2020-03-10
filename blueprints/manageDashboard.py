@@ -106,7 +106,7 @@ def addLocationSubmit():
     # No checks
     insertLocation(location, clue, photo.filename)
 
-    return render_template('Desktop/Manage_Locations_Page.html')
+    return redirect(url_for('dashboard_page.addLocation'))
 
 
 @dashboard_page.route('/Add_Question')
@@ -129,7 +129,7 @@ def addQuestionSubmit():
     # No checks for now
     insertQuestion(location, question, answer_a, answer_b, answer_c, answer_d, correct_answer)
 
-    return render_template('Desktop/Manage_Locations_Page.html')
+    return redirect(url_for('dashboard_page.addQuestion'))
 
 
 @dashboard_page.route('/Delete_Location', methods=['POST'])

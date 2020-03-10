@@ -209,6 +209,9 @@ def checkQuestion():
     progress = session['progress']
     # Get their answer to the question
     answer = request.form.get('answer')
+    if answer is None:
+        session['QuestionMessage'] = 'Please submit an answer try again'
+        return redirect(url_for('game_page.retryQuestion'))
     # Retreive the correct answer
     locationID = getLocation(session['routeID'], session['progress'])[0]['LOCATION_ID']
     questionData = getQuestionLocationID(locationID)
@@ -236,8 +239,8 @@ def endScreen():
     teamscore = session['teamScore']
     routeID = session['routeID']
     routeName = getRouteName(routeID)[0]['ROUTE_NAME']
-
-    insertScore(routeID, routeName, teamID, teamscore)
+    if 'resetTeamFlag' not in session:
+        insertScore(routeID, routeName, teamID, teamscore)
     print(' ')
     print('error here ', teamID)
     print(' ')
@@ -247,8 +250,7 @@ def endScreen():
     """for team in teamreturn:
         teams.append({'group_name': team['TEAM_NAME'], 'final_score': score['VALUE']})
     """
-    updateTeamLeader("null", teamID)
-    updateTeamRoute("null", 0, teamID)
+    session['resetTeamFlag'] = True
 
     return render_template('mobile/End_Game_Page.html', group_name=teamName, final_score=teamscore,
                            final_position="1st", teams=teamreturn)

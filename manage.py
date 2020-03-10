@@ -199,6 +199,11 @@ def redirectLogin():
 
 @app.route('/Logout')
 def logout():
+    if 'resetTeamFlag' in session:
+        if session['resetTeamFlag']:
+            teamID = session['teamID']
+            updateTeamLeader("null", teamID)
+            updateTeamRoute("null", 0, teamID)
     session.clear()
     return redirect(url_for('login'))
 
