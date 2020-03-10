@@ -34,6 +34,16 @@ Subsequent tabs from the side bar have html dynamically loaded into the content 
     <link href="{{url_for('static',filename='styles/Game_Keeper_Style.css')}}" rel='stylesheet' type='text/css'/>
     <script src="{{url_for('static',filename='js/JSFunctions.js')}}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+      $(function(){
+        var currentScreen = localStorage.currentScreen;
+        if(currentScreen != "default")
+        {
+          loadDoc(currentScreen);
+        }
+
+      });
+    </script>
     <title>Gamekeeper Dashboard</title>
   </head>
 
@@ -42,7 +52,7 @@ Subsequent tabs from the side bar have html dynamically loaded into the content 
     <!-- Pop up sidebar -->
     <div id="mySidebar" class="sidebar">
       <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-      <a href="/dashboard">Homepage</a>
+      <a href="javascript:clearRedirect()">Homepage</a>
       <a href="/Logout">Logout</a>
     </div>
 

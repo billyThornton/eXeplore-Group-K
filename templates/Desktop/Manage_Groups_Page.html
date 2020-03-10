@@ -31,95 +31,65 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to configure routes a
 <meta charset="utf-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="{{url_for('static',filename='styles/Manage_Groups_Style.css')}}" rel='stylesheet' type='text/css'/>
-<title>Manage Group Page</title>
+<link href="{{url_for('static',filename='styles/Assign_Routes_Style.css')}}" rel='stylesheet' type='text/css'/>
+<title>Manage Team Page</title>
 </head>
 
 <body>
-	<div id="create_group_page">
+  <div id="assign_routes_page">
+    
+    <div id="assign_route_container">
+    
+      <h2>Manage Teams</h2>
 
-		<table>
+      <form action="assignRoute" method="POST">
+        <p> <label>Tutor:</label>
+        
+        <select name="team" id="Groups">
+            {% for tutor in tutors %}
+            <option value="{{tutor['TUTOR_ID']}}">{{tutor["TUTOR_NAME"]}}</option>
+            {% endfor %}
+        </select>
+        </p>
 
-		  <!-- Headers -->
-			<tr>
-				<th><h2>Tutor</h2></th>
-				<th><h2>Groups</h2></th>
-				<th><h2>Students</h2></th>
-			</tr>
+        <p> <label>Team:</label>
+        
+        <select name="route" id="Groups">
+            {% for group in groups %}
+            <option value="{{team['TEAM_ID']}}">{{team["TEAM_NAME"]}}</option>
+            {% endfor %}
+        </select>
+        </p>
 
-			<tr>
+    </div>
+    
+    
+    <table class="table">
+      
+        <!-- Headers -->
+        <thead>
+          <tr>
+            <th>Students</th>
+          </tr>
+        </thead>
+        
+        {% for team in teams %}
+        {% for route in routes %}
+        {% if team['CURRENT_ROUTE_ID'] == route['ROUTE_ID'] %}
+        <tr>
+          <td>{{student["STUDENT_NAME"]}}</td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+        {% endfor %}
 
-			<!-- Create Group Column -->
-				<td>
-					<div class="manage_container" id="tutor_container">
+      </table>
 
-            <input type="radio" id="example_tutor1" name="tutors"/><label for="example_tutor1" id="tutor_label">tutor1</label>
-						<input type="radio" id="example_tutor2" name="tutors"/><label for="example_tutor2" id="tutor_label">tutor</label>
-						<input type="radio" id="example_tutor3" name="tutors"/><label for="example_tutor3" id="tutor_label">tutor</label>
-						<input type="radio" id="example_tutor4" name="tutors"/><label for="example_tutor4" id="tutor_label">tutor</label>
-						<input type="radio" id="example_tutor5" name="tutors"/><label for="example_tutor5" id="tutor_label">tutor</label>
-          </div>
-        </td>
+      <div id="transparent_button_container">
+        <button type="submit" id="transparent_button" name="assign_button">Assign</button>
+      </div>
+    </form>
 
-        <td>
-          <div class="manage_container" id="groups_container">
-            <input type="radio" id="example_group1" name="groups"/><label for="example_group1" id="group_label">group</label>
-            <input type="radio" id="example_group2" name="groups"/><label for="example_group2" id="group_label">group</label>
-            <input type="radio" id="example_group3" name="groups"/><label for="example_group3" id="group_label">group</label>
-            <input type="radio" id="example_group4" name="groups"/><label for="example_group4" id="group_label">group</label>
-            <input type="radio" id="example_group5" name="groups"/><label for="example_group5" id="group_label">group</label>
-        </div>
-        </td>
-        <td>
-          <div class="manage_container" id="students_container">
-            <ul class="container_content" id="students_list" tabindex="0" role="listbox">
-              <li id="student_el">
-                Neptunium
-              </li>
-              <li id="student_el">
-                Plutonium
-              </li>
-              <li id="student_el">
-                Neptunium
-              </li>
-              <li id="student_el">
-                Plutonium
-              </li>
-              <li id="student_el">
-                Neptunium
-              </li>
-              <li id="student_el">
-                Plutonium
-              </li>
-              <li id="student_el">
-                Neptunium
-              </li>
-              <li id="student_el">
-                Plutonium
-              </li>
-              <li id="student_el">
-                Neptunium
-              </li>
-              <li id="student_el">
-                Plutonium
-              </li>
-              <li id="student_el">
-                Neptunium
-              </li>
-              <li id="student_el">
-                Plutonium
-              </li>
-              <li id="student_el">
-                Neptunium
-              </li>
-              <li id="student_el">
-                Plutonium
-              </li>
-            </ul>
-          </td>
-          </div>
-        <td>
-
-
-        </td>
+  </div>
+</body>
 </html>
