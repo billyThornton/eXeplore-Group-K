@@ -532,7 +532,7 @@ def getTutorPassword(tutorEmail):
         print(rows)
     return rows
 
-def getTutorID(tutorName):
+def getTutorID(tutorName, tutorEmail):
 
     db2conn = createConnection()
 
@@ -541,8 +541,7 @@ def getTutorID(tutorName):
         sql = (
         "SELECT TUTOR_ID"
         " FROM TUTOR"
-        " WHERE tutor_name = '" + tutorName +
-        "';"
+        " WHERE tutor_name = '" + tutorName +"'OR email = '"+tutorEmail+"';"
         )
         print(sql)
         # Prepare the statement
@@ -741,6 +740,26 @@ def insertScore(routeID,routeName,teamID,value):
         ibm_db.close(db2conn)
 
 def getTutors():
+    db2conn = createConnection()
+    # Query all locations
+    if db2conn:
+        # if we have a Db2 connection, query the database
+        sql = "SELECT tutor_id,tutor_name FROM Tutor;"
+        # Prepare the statement
+        stmt = ibm_db.prepare(db2conn,sql)
+        # Execute the sql
+        ibm_db.execute(stmt)
+        rows=[]
+        # fetch the result
+        result = ibm_db.fetch_assoc(stmt)
+        while result != False:
+            rows.append(result.copy())
+            result = ibm_db.fetch_assoc(stmt)
+        # close database connection
+        ibm_db.close(db2conn)
+    return rows
+
+def getTutorEmail():
     db2conn = createConnection()
     # Query all locations
     if db2conn:

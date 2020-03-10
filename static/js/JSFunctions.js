@@ -112,15 +112,15 @@ function validateName()
   {
     text = "Name should only contain letters";
     nameField.classList.add("input-error");
-    document.getElementById("error").innerHTML = text;
-    document.getElementById("error").style.color="red";
+    document.getElementById("invalid").innerHTML = text;
+    document.getElementById("invalid").style.color="red";
     return false;
   }
   else
   {
     nameField.classList.remove("input-error");
-    document.getElementById("error").innerHTML = "Please enter your details below:";
-    document.getElementById("error").style.color="white";
+    document.getElementById("invalid").innerHTML = "Please enter your details below:";
+    document.getElementById("invalid").style.color="white";
     return true;
   }
 }
@@ -144,15 +144,15 @@ function validateEmail()
   {
     text = "Please enter an Exeter University email";
     emailField.classList.add("input-error");
-    document.getElementById("error").innerHTML = text;
-    document.getElementById("error").style.color="red";
+    document.getElementById("invalid").innerHTML = text;
+    document.getElementById("invalid").style.color="red";
     return false;
   }
   else
   {
     emailField.classList.remove("input-error");
-    document.getElementById("error").innerHTML = "Please enter your details below:";
-    document.getElementById("error").style.color="white";
+    document.getElementById("invalid").innerHTML = "Please enter your details below:";
+    document.getElementById("invalid").style.color="white";
     return true;
   }
 }
@@ -177,31 +177,31 @@ function validatePassword()
   {
     text = "Password should be 8 characters or more";
     passField.classList.add("input-error");
-    document.getElementById("error").innerHTML = text;
-    document.getElementById("error").style.color="red";
+    document.getElementById("invalid").innerHTML = text;
+    document.getElementById("invalid").style.color="red";
     return false;
   }
   else if (noMixedCase(pass))
   {
     text = "Password should contain an upper and lower case character";
     passField.classList.add("input-error");
-    document.getElementById("error").innerHTML = text;
-    document.getElementById("error").style.color="red";
+    document.getElementById("invalid").innerHTML = text;
+    document.getElementById("invalid").style.color="red";
     return false;
   }
   else if (noNumber(pass))
   {
     text = "Password should contain a number";
     passField.classList.add("input-error");
-    document.getElementById("error").innerHTML = text;
-    document.getElementById("error").style.color="red";
+    document.getElementById("invalid").innerHTML = text;
+    document.getElementById("invalid").style.color="red";
     return false;
   }
   else
   {
     passField.classList.remove("input-error");
-    document.getElementById("error").innerHTML = "Please enter your details below:";
-    document.getElementById("error").style.color="white";
+    document.getElementById("invalid").innerHTML = "Please enter your details below:";
+    document.getElementById("invalid").style.color="white";
     return true;
   }
 }
@@ -226,15 +226,15 @@ function validateConfirmation()
   {
     text = "Passwords do not match, please try again";
     confirmField.classList.add("input-error");
-    document.getElementById("error").innerHTML = text;
-    document.getElementById("error").style.color="red";
+    document.getElementById("invalid").innerHTML = text;
+    document.getElementById("invalid").style.color="red";
     return false;
   }
   else
   {
     confirmField.classList.remove("input-error");
-    document.getElementById("error").innerHTML = "Please enter your details below:";
-    document.getElementById("error").style.color="white";
+    document.getElementById("invalid").innerHTML = "Please enter your details below:";
+    document.getElementById("invalid").style.color="white";
     return true;
   }
 }
@@ -253,29 +253,29 @@ function validateCreate()
   if(validateName() == false)
   {
     text = "Please enter a valid name";
-    document.getElementById("error").innerHTML = text;
-    document.getElementById("error").style.color="red";
+    document.getElementById("invalid").innerHTML = text;
+    document.getElementById("invalid").style.color="red";
     return false;
   }
   else if (validateEmail() == false)
   {
     text = "Please enter an Exeter University email";
-    document.getElementById("error").innerHTML = text;
-    document.getElementById("error").style.color="red";
+    document.getElementById("invalid").innerHTML = text;
+    document.getElementById("invalid").style.color="red";
     return false;
   }
   else if(validatePassword() == false)
   {
     text = "Please enter a stronger password";
-    document.getElementById("error").innerHTML = text;
-    document.getElementById("error").style.color="red";
+    document.getElementById("invalid").innerHTML = text;
+    document.getElementById("invalid").style.color="red";
     return false;
   }
   else if (validateConfirmation() == false)
   {
     text = "Passwords do not match, please try again";
-    document.getElementById("error").innerHTML = text;
-    document.getElementById("error").style.color="red";
+    document.getElementById("invalid").innerHTML = text;
+    document.getElementById("invalid").style.color="red";
     return false;
   }
   else

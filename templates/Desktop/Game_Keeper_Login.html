@@ -54,7 +54,13 @@ with details on the database. Error message returned if the details are incorrec
 			<div class="login_container">
 
 				<!-- Error message for incorrect username or password -->
-				<p id="error">{{error_message}}</p>
+				{% with messages = get_flashed_messages() %}
+					{% if messages %}
+						{% for message in messages %}
+							<p id="error">{{message}}</p>
+						{% endfor %}
+					{% endif %}
+				{% endwith %}
 
 				<p> <input class="text_input" type="text" placeholder="Email" name="email" required> </p>
 				<p> <input class="text_input" type="password" placeholder="Password" name="password" required> </p>

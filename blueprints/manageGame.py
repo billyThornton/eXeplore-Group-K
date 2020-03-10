@@ -20,7 +20,7 @@ This file contains all the URL routing for the backend/front end, it takes urls
 and displays the required html files.
 It also processes data passed using post/get request.
 """
-from flask import render_template, redirect, url_for, request, send_file, session, jsonify,Blueprint
+from flask import render_template, redirect, url_for, request, send_file, session, jsonify, Blueprint, flash
 from utils.auth import *
 from utils.login import *
 from databaseAdapter import *
@@ -91,12 +91,11 @@ def routeSelect():
     return redirect(url_for('game_page.showLocationClue'))
 
 
-# Displays the location clue page at an appropriate progression point
-
 @game_page.route('/loadFirstTeam', methods=['POST'])
 def loadFirstTeam():
     routeID = request.form['route']
     teamName = request.form['teamName']
+    session['teamScore'] = 100
     # add or update database now here maybe
     return redirect(url_for('game_page.showLocationClue'))
 
@@ -149,15 +148,10 @@ def showLocationClue():
 @game_page.route('/getQuestion', methods=['POST'])
 def getQuestion():
     progress = session['progress']
-    print("progress: ", progress)
     # Get the location ID for the question
     locationData = getLocation(session['routeID'], session['progress'])
 
     locationID = locationData[0]['LOCATION_ID']
-
-    print(" ")
-    print("big check ", locationID)
-    print(" ")
 
     questionData = getQuestionLocationID(locationID)
     print("questionData: ", questionData)
@@ -179,14 +173,6 @@ def getQuestion():
 
 @game_page.route('/getQuestionRedirect')
 def retryQuestion():
-    if ('QuestionMessage' in session):
-        # dosplay the message
-        error_message = session['QuestionMessage']
-    else:
-        # If no message set set the message to be empty (No message)
-        session['QuestionMessage'] = ""
-        error_message = ""
-
     progress = session['progress']
     locationData = getLocation(session['routeID'], session['progress'])
     locationID = locationData[0]['LOCATION_ID']
@@ -198,7 +184,7 @@ def retryQuestion():
     b = questionData[0]['MULTIPLE_CHOICE_B']
     c = questionData[0]['MULTIPLE_CHOICE_C']
     d = questionData[0]['MULTIPLE_CHOICE_D']
-    return render_template('mobile/Answer_Page.html', error_message=error_message, progress_value=progress,
+    return render_template('mobile/Answer_Page.html', progress_value=progress,
                            clue_message="Question: " + questionText, clue_location=imageLocation,
                            answer_a=a, answer_b=b, answer_c=c, answer_d=d)
 
@@ -210,7 +196,7 @@ def checkQuestion():
     # Get their answer to the question
     answer = request.form.get('answer')
     if answer is None:
-        session['QuestionMessage'] = 'Please submit an answer try again'
+        flash('Please submit an answer try again')
         return redirect(url_for('game_page.retryQuestion'))
     # Retreive the correct answer
     locationID = getLocation(session['routeID'], session['progress'])[0]['LOCATION_ID']
@@ -228,7 +214,7 @@ def checkQuestion():
             return redirect(url_for('game_page.showLocationClue'))
     else:
         session['teamScore'] = session['teamScore'] - 3
-        session['QuestionMessage'] = 'Wrong answer try again'
+        flash('Wrong answer try again')
         # redirect to the question page but with error message
         return redirect(url_for('game_page.retryQuestion'))
 
@@ -241,15 +227,8 @@ def endScreen():
     routeName = getRouteName(routeID)[0]['ROUTE_NAME']
     if 'resetTeamFlag' not in session:
         insertScore(routeID, routeName, teamID, teamscore)
-    print(' ')
-    print('error here ', teamID)
-    print(' ')
     teamName = getTeamFromID(teamID)[0]['TEAM_NAME']
     teamreturn = getTeamsScores()
-    # teams = []
-    """for team in teamreturn:
-        teams.append({'group_name': team['TEAM_NAME'], 'final_score': score['VALUE']})
-    """
     session['resetTeamFlag'] = True
 
     return render_template('mobile/End_Game_Page.html', group_name=teamName, final_score=teamscore,
