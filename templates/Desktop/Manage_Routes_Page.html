@@ -44,65 +44,176 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to delete or create r
 		  <!-- Headers -->
 			<tr>
 				<th><h2>Create Route</h2></th>
-				<th><h2>Locations</h2></th>
 				<th><h2>Routes</h2></th>
 			</tr>
 		  
 			<tr>
 			
-			<!-- Create Route Column -->
-				<td>
-					<div id="create_group_container">
-						<p> <label>Name:</label>
-						<input type="text" id="group_name" name="create_group_input"> </p>
+				<form action="" method="POST">
+				<!-- Locations and Question Column -->
+					<td>
+						<p> <label>Route Name:</label><br />
+						<input type="text" id="route_name" name="create_route_input"> </p>
 						
-						<p> <label>Locations Selected:</label>
-						<div id="search_results">Locations will go here!</div> </p>
-
-						<div id="transparent_button_container">
-							<button type="button" id="transparent_button" name="save_group_button">Save Route</button>
-						</div>
-					</div>
-
-					<div id="delete_group_container">
-						<h2>Delete Route</h2>
-
-						<p> <label>Name:</label>
-							<select id="Groups">
-  								<option value="route1">Route 1</option>
- 								<option value="route2">Route 2</option>
-  								<option value="route3">Route 3</option>
-  								<option value="route4">Route 4</option>
-							</select>
-
-						<div id="transparent_button_container">
-							<button type="button" id="delete_transparent_button" name="delete_group_button">Delete Route</button>
-						</div>
-					</div>
-				</td>
-			
-			<!-- Locations Column -->
-				<td>
-					<div id="student_list_container">
-						<input type="checkbox" id="students1"/><label id="student_label" for="students1"> Example Location</label> <br />
+						<h4>Select locations and their questions</h4>
 						
-						{% for student in students %}
-						<input type="checkbox" id="{{student}}"/><label id="student_label" for="{{student}}">{{student}}</label><br />
-						{% endfor %}
-					</div>
-				</td>
-			
-			<!-- Routes Column -->
+						<label for="location_1">Location 1:</label>
+						<select id="location_1" name="location_1">
+							{% for location in locations %}
+							<option id="{{location}}" value="{{location}}">{{location}}</option>
+							{% endfor %}
+						</select>	
+						<label for="Question_1">Question 1:</label>
+						<select id="Question_1" name="Question_1">
+							{% for Question in Question %}
+							<option id="{{Question}}" value="{{Question}}">{{Question}}</option>
+							{% endfor %}
+						</select><br /><br />
+						
+						<label for="location_2">Location 2:</label>
+						<select id="location_2" name="location_2">
+							{% for location in locations %}
+							<option id="{{location}}" value="{{location}}">{{location}}</option>
+							{% endfor %}
+							<option id="n/a" value="n/a">n/a</option>
+						</select>
+						<label for="Question_2">Question 2:</label>
+						<select id="Question_2" name="Question_2">
+							{% for Question in Question %}
+							<option id="{{Question}}" value="{{Question}}">{{Question}}</option>
+							{% endfor %}
+						</select><br /><br />					
+						
+						<label for="location_3">Location 3:</label>
+						<select id="location_3" name="location_3">
+							{% for location in locations %}
+							<option id="{{location}}" value="{{location}}">{{location}}</option>
+							{% endfor %}
+							<option id="n/a" value="n/a">n/a</option>
+						</select>
+						<label for="Question_3">Question 3:</label>
+						<select id="Question_3" name="Question_3">
+							{% for Question in Question %}
+							<option id="{{Question}}" value="{{Question}}">{{Question}}</option>
+							{% endfor %}
+						</select><br /><br />
+						
+						<label for="location_4">Location 4:</label>
+						<select id="location 4" name="location_1">
+							{% for location in locations %}
+							<option id="{{location}}" value="{{location}}">{{location}}</option>
+							{% endfor %}
+							<option id="n/a" value="n/a">n/a</option>
+						</select>
+						<label for="Question_4">Question 4:</label>
+						<select id="Question_4" name="Question_4">
+							{% for Question in Question %}
+							<option id="{{Question}}" value="{{Question}}">{{Question}}</option>
+							{% endfor %}
+						</select><br /><br />
+						
+						<label for="location_5">Location 5:</label>
+						<select id="location_5" name="location_5">
+							{% for location in locations %}
+							<option id="{{location}}" value="{{location}}">{{location}}</option>
+							{% endfor %}
+							<option id="n/a" value="n/a">n/a</option>
+						</select>
+						<label for="Question_5">Question 5:</label>
+						<select id="Question_5" name="Question_5">
+							{% for Question in Question %}
+							<option id="{{Question}}" value="{{Question}}">{{Question}}</option>
+							{% endfor %}
+						</select><br /><br />
+						
+						<label for="location_6">Location 6:</label>
+						<select id="location_6" name="location_6">
+							{% for location in locations %}
+							<option id="{{location}}" value="{{location}}">{{location}}</option>
+							{% endfor %}
+							<option id="n/a" value="n/a">n/a</option>
+						</select>
+						<label for="Question_6">Question 6:</label>
+						<select id="Question_6" name="Question_6">
+							{% for Question in Question %}
+							<option id="{{Question}}" value="{{Question}}">{{Question}}</option>
+							{% endfor %}
+						</select><br /><br />
+						
+						<label for="location_7">Location 7:</label>
+						<select id="location_7" name="location_7">
+							{% for location in locations %}
+							<option id="{{location}}" value="{{location}}">{{location}}</option>
+							{% endfor %}
+							<option id="n/a" value="n/a">n/a</option>
+						</select>
+						<label for="Question_7">Question 7:</label>
+						<select id="Question_7" name="Question_7">
+							{% for Question in Question %}
+							<option id="{{Question}}" value="{{Question}}">{{Question}}</option>
+							{% endfor %}
+						</select><br /><br />
+						
+						<label for="location_8">Location 8:</label>
+						<select id="location_8" name="location_8">
+							{% for location in locations %}
+							<option id="{{location}}" value="{{location}}">{{location}}</option>
+							{% endfor %}
+							<option id="n/a" value="n/a">n/a</option>
+						</select>
+						<label for="Question_8">Question 8:</label>
+						<select id="Question_8" name="Question_8">
+							{% for Question in Question %}
+							<option id="{{Question}}" value="{{Question}}">{{Question}}</option>
+							{% endfor %}
+						</select><br /><br />
+
+						
+						<label for="location_9">Location 9:</label>
+						<select id="location_9" name="location_9">
+							{% for location in locations %}
+							<option id="{{location}}" value="{{location}}">{{location}}</option>
+							{% endfor %}
+							<option id="n/a" value="n/a">n/a</option>
+						</select>
+						<label for="Question_9">Question 9:</label>
+						<select id="Question_9" name="Question_9">
+							{% for Question in Question %}
+							<option id="{{Question}}" value="{{Question}}">{{Question}}</option>
+							{% endfor %}
+						</select><br /><br />
+						
+						<label for="location_10">Location 10:</label>
+						<select id="location_10" name="location_10">
+							{% for location in locations %}
+							<option id="{{location}}" value="{{location}}">{{location}}</option>
+							{% endfor %}
+							<option id="n/a" value="n/a">n/a</option>
+						</select>
+						<label for="Question_10">Question 10:</label>
+						<select id="Question_10" name="Question_10">
+							{% for Question in Question %}
+							<option id="{{Question}}" value="{{Question}}">{{Question}}</option>
+							{% endfor %}
+						</select><br /><br />
+						
+						<div id="transparent_button_container">
+							<button type="submit" id="transparent_button" name="save_group_button">Save Route</button>
+						</div>
+					
+					</td>
+				</form>
+				
+				<!-- Routes Column -->
 				<td>
 					<div id="group_list_container">
 						<input type="radio" id="example_group1" name="groups"/><label for="example_group1" id="group_label"> Example Route</label> <br />
 						
-						{% for team in teams %}
-						<input type="radio" id="{{team}}" name="groups"/><label for="{{team}}" id="group_label">{{team}}</label><br />
-						{% endfor %}
-					</div>
-					<div id="transparent_button_container">
-						<button type="button" id="transparent_button" name="check_results_button">Edit Route</button>
+						<ul>
+							{% for team in teams %}
+							<li id="{{team}}" name="groups"/><label for="{{team}}" id="group_label">{{team}}</label><br />
+							{% endfor %}
+						</ul>
 					</div>
 				</td>
 			</tr>
