@@ -31,6 +31,8 @@
  * the application.
  */
 
+ var currentScreen = "default";
+
 /**
  * @brief Dynamically loads HTML into the div that has an id called 'content'. This
  * function is used with HTML5's onclick method.
@@ -39,10 +41,19 @@
  */
 function loadDoc(file)
 {
+  localStorage.currentScreen = file;
+  currentScreen = file;
+  
   $(document).ready(function()
   {
     $('#content').load(file);
   });
+}
+
+function clearRedirect()
+{
+  localStorage.currentScreen = "default";
+  location.href="/dashboard";
 }
 
 /**

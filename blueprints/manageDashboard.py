@@ -93,11 +93,11 @@ def addLocationSubmit():
 
     if photo.filename == "":
         print("Image must have a filename")
-        return redirect(url_for('dashboard_page.addLocation'))
+        return redirect(url_for('dashboard_page.dashboard'))
 
     if not allowedImage(photo.filename):
         print("Image extension is not allowed")
-        return redirect(url_for('dashboard_page.addLocation'))
+        return redirect(url_for('dashboard_page.dashboard'))
     else:
         filename = secure_filename(photo.filename)
 
@@ -106,7 +106,7 @@ def addLocationSubmit():
     # No checks
     insertLocation(location, clue, photo.filename)
 
-    return redirect(url_for('dashboard_page.addLocation'))
+    return redirect(url_for('dashboard_page.dashboard'))
 
 
 @dashboard_page.route('/Add_Question')
@@ -129,7 +129,7 @@ def addQuestionSubmit():
     # No checks for now
     insertQuestion(location, question, answer_a, answer_b, answer_c, answer_d, correct_answer)
 
-    return redirect(url_for('dashboard_page.addQuestion'))
+    return redirect(url_for('dashboard_page.dashboard'))
 
 
 @dashboard_page.route('/Delete_Location', methods=['POST'])
@@ -143,7 +143,7 @@ def deleteLocation():
     for location in locations:
         locationNames.append(location['LOCATION_NAME'])
 
-    return redirect(url_for('dashboard_page.manageLocations'))
+    return redirect(url_for('dashboard_page.dashboard'))
 
 
 # Loads the gamekeepers dashboard tool
