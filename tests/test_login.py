@@ -64,11 +64,11 @@ class BasicTests(flask_testing.TestCase):
             ibm_db.close(db2conn)
         return self.registerIndividual(testClient,name,email,password,confirm,tutorname)
     
-    def existingStudent(self,name,email,password):
+    def existingStudent(self,name,email,teamID,password):
         db2conn = createConnection()
         name = name.lower()
         email = email.lower()
-        TeamID = 2
+        TeamID = teamID
         TutorID = 1
         if db2conn:
             # if we have a Db2 connection, query the database
@@ -104,7 +104,7 @@ class BasicTests(flask_testing.TestCase):
     def test_registration_existing_email(self):
         with app.test_client() as testClient:
             #Student exists
-            self.existingStudent('Test entry','test1@exeter.ac.uk','password')
+            self.existingStudent('Test entry','test1@exeter.ac.uk','NULL','password')
             response = self.registerIndividual(testClient,'Test entry','test1@exeter.ac.uk','password','password','matt')
             self.assertEqual(response.status_code,200)
             self.assert_template_used('Desktop/register.html')
@@ -148,12 +148,6 @@ class BasicTests(flask_testing.TestCase):
             self.assertEqual(len(check),0)
             check = getTutorPassword('test@exeter.ac.uk')
             self.assertGreater(len(check),0)
-            
-    def test_login_student(self):
-        with app.test_client() as testClient:
-            response = self.loginuser(testClient,'test1@exeter.ac.uk','password')
-            self.assertEqual(response.status_code,200)
-            self.assert_template_used('mobile/Clue_Page.html')
     
     def test_login_tutor(self):
         with app.test_client() as testClient:
@@ -167,7 +161,24 @@ class BasicTests(flask_testing.TestCase):
             self.assertEqual(response.status_code,200)
             self.assert_template_used('Desktop/Game_Keeper_Login.html')
             self.assert_context('error_message',"User does not exist")
-            
+
+    def test_login_new_user_no_team(self):
+        with app.test_client() as testClient:
+            response = self.loginuser(testClient, 'test1@exeter.ac.uk', 'password')
+            self.assertEqual(response.status_code,200)
+            self.assert_template_used('mobile/Join_Team.html')
+
+    def test_login_team_selection(self):
+        with app.test_client() as testClient:
+            self.loginuser(testClient, 'test1@exeter.ac.uk', 'password')
+            #response = self.
+            self.assert_template_used('mobile/Join_Team.html')
+
+    def test_login_student_with_team(self):
+        with app.test_client() as testClient:
+            response = self.loginuser(testClient,'test1@exeter.ac.uk','password')
+            self.assertEqual(response.status_code,200)
+            self.assert_template_used('mobile/Clue_Page.html')
             
     
     
