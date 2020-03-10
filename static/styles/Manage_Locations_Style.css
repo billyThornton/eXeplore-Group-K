@@ -1,20 +1,20 @@
 /*
-Created on 19/02/2020 
+Created on 19/02/2020
 @author: Teo Reed
 @Last Edited: 26/02/2020
 @edited by: Jamie Butler
 
 Copyright (c) “2020, by Group K
 Contributors: Jamie Butler, Rahul Pankhania, Teo Reed, Billy Thornton, Ben Trotter, Kristian Woolhouse
-URL: https://github.com/billyThornton/eXeplore-Group-K ” 
+URL: https://github.com/billyThornton/eXeplore-Group-K ”
 All rights reserved.
 Redistribution and use in source and binary forms, with or without modification, are permitted provided
 that the following conditions are met:
- 
+
 Redistributions of source code must retain the above copyright notice, this list of conditions and the
 following disclaimer. Redistributions in binary form must reproduce the above copyright notice, this
 list of conditions and the following disclaimer in the documentation and/or other materials provided
-with the distribution. 
+with the distribution.
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR IMPLIED
 WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
 PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
@@ -36,6 +36,7 @@ Provides style for buttons.
 body {
 	background-image: linear-gradient(#6C6C6C, #C1C1C1);
 	height: 100%;
+	font-family: 'Roboto', sans-serif;
 	background-repeat: no-repeat;
 	background-size: cover;
 }
@@ -43,8 +44,9 @@ body {
 h3 {
 	color: white;
 	font-family: 'Roboto', sans-serif;
-	font-size: 30px;
-	font-weight: lighter;
+	font-size: 1.5em;
+	font-weight: Bold;
+	padding-left: 50px;
 }
 
 /* Hide old radio button style */
@@ -61,6 +63,53 @@ input[type=radio]{
     border-color: green;
 }
 
+
+/* Search bar style */
+#location_search {
+	   width: 59%;
+	   height: 30px;
+	   margin-left: 50px;
+	   padding-left: 10px;
+	   border-radius: 10px;
+}
+
+/* location list style */
+#location_list {
+	margin-left: 50px;
+	border-radius: 10px;
+	font-style: inherit;
+	list-style: none;
+	width: 60.5%;
+	color: black;
+	background-color: white;
+	height: 500px;
+	overflow-y: scroll;
+	padding-left: 0px;
+
+}
+
+#location_list:nth-child(even) {
+	background-color: #e0e0e0;
+}
+
+#location_element:hover {
+	background-color: #b4d9bd;
+}
+
+#location_element {
+	margin-top: 0px;
+	height: 30px;
+	padding-left: 10px;
+	padding-top: 15px;
+
+}
+
+#transparent_button_container {
+	margin-left: 50px;
+	width: 60%;
+	text-align: center;
+
+}
 
 /**
  * How it should look when checked

@@ -1,22 +1,22 @@
 <!--
-Created on 19/02/2020 
+Created on 19/02/2020
 @author: Jamie Butler
 @Last Edited: 26/02/2020
 @edited by: Teo Reed
 
 Copyright (c) “2020, by Group K
 Contributors: Jamie Butler, Rahul Pankhania, Teo Reed, Billy Thornton, Ben Trotter, Kristian Woolhouse
-URL: https://github.com/billyThornton/eXeplore-Group-K ” 
+URL: https://github.com/billyThornton/eXeplore-Group-K ”
 All rights reserved.
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following
 conditions are met:
- 
+
 Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
 Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer
 in the documentation and/or other materials
-provided with the distribution. 
+provided with the distribution.
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
-BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAT PURPOSE ARE DISCLAIMED. IN NO EVENT 
+BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAT PURPOSE ARE DISCLAIMED. IN NO EVENT
 SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
 DAMGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
 INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INLUDING NEGLIGENCE
@@ -38,38 +38,38 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to delete or create r
 
 <body>
 	<div id="manage_route_page">
-		
+
 		<table style="width:100%">
-		
+
 		  <!-- Headers -->
 			<tr>
 				<th><h2>Create Route</h2></th>
 				<th><h2>Routes</h2></th>
 			</tr>
-		  
+
 			<tr>
-			
+
 				<form action="" method="POST">
 				<!-- Locations and Question Column -->
-					<td>
+					<td class="manage_route_td">
 						<p> <label>Route Name:</label><br />
 						<input type="text" id="route_name" name="create_route_input"> </p>
-						
+
 						<h4>Select locations and their questions</h4>
-						
+
 						<label for="location_1">Location 1:</label>
 						<select id="location_1" name="location_1">
 							{% for location in locations %}
 							<option id="{{location}}" value="{{location}}">{{location}}</option>
 							{% endfor %}
-						</select>	
+						</select>
 						<label for="Question_1">Question 1:</label>
 						<select id="Question_1" name="Question_1">
 							{% for question in questions %}
 							<option id="{{Question}}" value="{{Question}}">{{Question}}</option>
 							{% endfor %}
 						</select><br /><br />
-						
+
 						<label for="location_2">Location 2:</label>
 						<select id="location_2" name="location_2">
 							{% for location in locations %}
@@ -82,8 +82,8 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to delete or create r
 							{% for question in questions %}
 							<option id="{{Question}}" value="{{Question}}">{{Question}}</option>
 							{% endfor %}
-						</select><br /><br />					
-						
+						</select><br /><br />
+
 						<label for="location_3">Location 3:</label>
 						<select id="location_3" name="location_3">
 							{% for location in locations %}
@@ -97,7 +97,7 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to delete or create r
 							<option id="{{Question}}" value="{{Question}}">{{Question}}</option>
 							{% endfor %}
 						</select><br /><br />
-						
+
 						<label for="location_4">Location 4:</label>
 						<select id="location 4" name="location_1">
 							{% for location in locations %}
@@ -111,7 +111,7 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to delete or create r
 							<option id="{{Question}}" value="{{Question}}">{{Question}}</option>
 							{% endfor %}
 						</select><br /><br />
-						
+
 						<label for="location_5">Location 5:</label>
 						<select id="location_5" name="location_5">
 							{% for location in locations %}
@@ -125,7 +125,7 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to delete or create r
 							<option id="{{Question}}" value="{{Question}}">{{Question}}</option>
 							{% endfor %}
 						</select><br /><br />
-						
+
 						<label for="location_6">Location 6:</label>
 						<select id="location_6" name="location_6">
 							{% for location in locations %}
@@ -139,7 +139,7 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to delete or create r
 							<option id="{{Question}}" value="{{Question}}">{{Question}}</option>
 							{% endfor %}
 						</select><br /><br />
-						
+
 						<label for="location_7">Location 7:</label>
 						<select id="location_7" name="location_7">
 							{% for location in locations %}
@@ -153,7 +153,7 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to delete or create r
 							<option id="{{Question}}" value="{{Question}}">{{Question}}</option>
 							{% endfor %}
 						</select><br /><br />
-						
+
 						<label for="location_8">Location 8:</label>
 						<select id="location_8" name="location_8">
 							{% for location in locations %}
@@ -168,7 +168,7 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to delete or create r
 							{% endfor %}
 						</select><br /><br />
 
-						
+
 						<label for="location_9">Location 9:</label>
 						<select id="location_9" name="location_9">
 							{% for location in locations %}
@@ -182,7 +182,7 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to delete or create r
 							<option id="{{Question}}" value="{{Question}}">{{Question}}</option>
 							{% endfor %}
 						</select><br /><br />
-						
+
 						<label for="location_10">Location 10:</label>
 						<select id="location_10" name="location_10">
 							{% for location in locations %}
@@ -196,16 +196,16 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to delete or create r
 							<option id="{{Question}}" value="{{Question}}">{{Question}}</option>
 							{% endfor %}
 						</select><br /><br />
-						
+
 						<div id="transparent_button_container">
 							<button type="submit" id="transparent_button" name="save_group_button">Save Route</button>
 						</div>
-					
+
 					</td>
 				</form>
-				
+
 				<!-- Routes Column -->
-				<td>
+				<td class="manage_route_td">
 					<div id="group_list_container">
 						<ul>
 							<li id="example_group1" name="groups"/><label for="example_group1" id="group_label"> Example Route</label> <br />
@@ -220,7 +220,7 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to delete or create r
 			</tr>
 		</table>
 
-		
+
 	</div>
 </body>
 </html>
