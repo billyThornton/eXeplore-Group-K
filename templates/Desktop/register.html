@@ -68,10 +68,9 @@ Users must have an @exeter email. Uses Game_Keeper_Login_Style.css for styling a
 
 				<p> <select class="text_input" name="tutorName">
 						<option value="0">Select a tutor:</option>
-					  	<option value="ronaldo">Ronaldo</option>
-					  	<option value="matt">Matt</option>
-					  	<option value="david">David</option>
-					  	<option value="jacq">Jacq</option>
+						{% for tutor in tutors %}
+					  	<option value="{{tutor['TUTOR_NAME']}}">{{tutor["TUTOR_NAME"]}}</option>
+					  	{% endfor %}
 					  	<option value="na">Not applicable</option>
 					</select>
 				</p>

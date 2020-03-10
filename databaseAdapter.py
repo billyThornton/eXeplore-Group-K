@@ -209,10 +209,10 @@ def getTeamFromID(teamID):
     if db2conn:
         # if we have a Db2 connection, query the database
         sql = (
-        "SELECT t.team_name, t.progress, r.route_name"
+        "SELECT t.team_name, t.progress, t.current_route_id"
         " FROM team t"
         " INNER JOIN route r"
-        " ON t.route_id = r.route_id"
+        " ON t.current_route_id = r.route_id"
         " WHERE t.team_id = " + str(teamID) +
         ";"
         )
@@ -393,9 +393,12 @@ def getLocation(routeID,progress):
         " FROM location l"
         " INNER JOIN route_location_bridge r"
         " ON l.location_id = r.location_id"
-        " WHERE route_id = " + str(routeID) +
-        " and sequence_order = "+str(progress)+";"
+        " WHERE route_id = " + str(routeID) + " AND sequence_order = "+str(progress)+";"
         )
+
+
+        #sql1 = ("SELECT l.location_id FROM location AS l, route_location_bridge AS r WHERE "
+
 
         # Prepare the statement
         stmt = ibm_db.prepare(db2conn,sql)
@@ -410,7 +413,7 @@ def getLocation(routeID,progress):
         # close database connection
         ibm_db.close(db2conn)
         # Print to screen the result
-        print(rows)
+        print('CHECK!!! __ ',rows)
     return rows
 
 def getNumLocationOnRoute(routeID):

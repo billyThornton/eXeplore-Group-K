@@ -134,6 +134,8 @@ def login():
 # Load registration window
 @app.route('/register')
 def register():
+
+    gameTutors = getTutors()
     # Checks if there is an error message is sent via a redirect
     if ('Error Message' in session):
         # dosplay the message
@@ -143,7 +145,7 @@ def register():
         session['Error Message'] = ""
         errorMessage = ""
         # Redner the register page with the errormessage variable passes in
-    return render_template('Desktop/register.html', error_message=errorMessage)
+    return render_template('Desktop/register.html', error_message=errorMessage, tutors = gameTutors)
 
 
 # Handles registration
@@ -406,7 +408,7 @@ def assignTeam():
     print(teamID)
     updateStudentTeam(studentID,teamID)
     teamLeader = getTeamLeader(teamID)
-    print("Team LEader")
+    print("Team Leader")
     print(teamLeader)
     if teamLeader[0]['TEAM_LEADER'] is None:
         updateTeamLeader(studentID,teamID)
@@ -466,14 +468,21 @@ def showLocationClue():
     if 'routeID' in session:
         routeID = session['routeID']
 
-    print(progress)
+    print('Progress: ',progress)
+
+    print(' ')
+    print(session['routeID'])
+    print(session['progress'])
+    print(' ')
 
     # Get the location ID for the clue
     locationData = getLocation(session['routeID'], session['progress'])
-    #print("LOCATION DATA: "+str(session['routeID'])+str(session['progress']))
+    print("LOCATION DATA: "+str(session['routeID'])+" "+str(session['progress']))
+    print('LOCAION DATA IS: ',locationData)
+
     locationID = locationData[0]['LOCATION_ID']
     # Shows the next locations image
-    imageURL = getLocation(session['routeID'], session['progress'] + 1)[0]['LOCATION_IMAGE_URL']
+    imageURL = getLocation(session['routeID'], session['progress'])[0]['LOCATION_IMAGE_URL']
     imageLocation = url_for('static', filename='images/' + imageURL)
     print("LocationID", locationID)
     # check if there are no maore lcations
@@ -494,15 +503,24 @@ def showLocationClue():
 def getQuestion():
     progress = session['progress']
     print("progress: ", progress)
-    # Get the location ID for the clue
-    locationData = getLocation(session['routeID'], session['progress'] + 1)
+    # Get the location ID for the question
+    locationData = getLocation(session['routeID'], session['progress'])
+
     locationID = locationData[0]['LOCATION_ID']
+
+    print(" ")
+    print("big check ",locationID)
+    print(" ")
+
     questionData = getQuestionLocationID(locationID)
     print("questionData: ", questionData)
+
     imageURL = locationData[0]['LOCATION_IMAGE_URL']
     imageLocation = url_for('static', filename='images/' + imageURL)
+
     print(questionData[0]['QUESTION_CONTENT'])
     questionText = questionData[0]['QUESTION_CONTENT']
+
     a = questionData[0]['MULTIPLE_CHOICE_A']
     b = questionData[0]['MULTIPLE_CHOICE_B']
     c = questionData[0]['MULTIPLE_CHOICE_C']
@@ -523,7 +541,7 @@ def retryQuestion():
         error_message = ""
 
     progress = session['progress']
-    locationData = getLocation(session['routeID'], session['progress'] + 1)
+    locationData = getLocation(session['routeID'], session['progress'])
     locationID = locationData[0]['LOCATION_ID']
     questionData = getQuestionLocationID(locationID)
     imageURL = locationData[0]['LOCATION_IMAGE_URL']
@@ -545,7 +563,7 @@ def checkQuestion():
     # Get their answer to the question
     answer = request.form.get('answer')
     # Retreive the correct answer
-    locationID = getLocation(session['routeID'], session['progress'] + 1)[0]['LOCATION_ID']
+    locationID = getLocation(session['routeID'], session['progress'] )[0]['LOCATION_ID']
     questionData = getQuestionLocationID(locationID)
     answer = answer.upper()
     correctAnswer = questionData[0]['ANSWER'];
@@ -570,20 +588,23 @@ def endScreen():
     teamID = session['teamID']
     teamscore = session['teamScore']
     routeID = session['routeID']
-    routeName = getRouteName(routeID)
+    routeName = getRouteName(routeID)[0]['ROUTE_NAME']
 
     insertScore(routeID,routeName,teamID,teamscore)
-
+    print(' ')
+    print('error here ', teamID)
+    print(' ')
     teamName = getTeamFromID(teamID)[0]['TEAM_NAME']
-    teamreturn = getTeams()
-    teams = []
-    for team in teamreturn:
-        teams.append({'group_name': team['TEAM_NAME'], 'final_score': team['TEAM_SCORE']})
+    teamreturn = getTeamsScores()
+    #teams = []
+    """for team in teamreturn:
+        teams.append({'group_name': team['TEAM_NAME'], 'final_score': score['VALUE']})
+    """
     updateTeamLeader("null",teamID)
     updateTeamRoute("null",0,teamID)
 
     return render_template('mobile/End_Game_Page.html', group_name=teamName, final_score=teamscore,
-                           final_position="1st", teams=teams)
+                           final_position="1st", teams=teamreturn)
 
 
 @app.route('/HelpPage')
@@ -609,6 +630,7 @@ if __name__ == '__main__':
     #insertTeam("TestTeam",1,1,1,0)
     #insertRoute(2,"Reverse")
     #insertScore(1,"Standard",1,100)
+    #insertQuestion(9,"What does the sign behind the cafe say?","Physics is the universes operating system","Im with stupid","We have a latte fun","Flavour by nature","D")
     app.secret_key = 'eXeplore_241199_brjbtk'
     app.SECURITY_PASSWORD_SALT = 'BFR241199'
     app.run(host='0.0.0.0', port=port, debug=True, use_reloader=False)

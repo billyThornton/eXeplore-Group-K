@@ -55,24 +55,20 @@ provides various features such as Help, FAQ & Logout.
 				<!-- Headers -->
      			<thead>
         			<tr>
+        				<th>Position</th>
           				<th>Team Name</th>
           				<th>Score</th>
         			</tr>
       			</thead>
 				
-      			<!-- Examples -->
-      			<tr>
-              		<td>Example Team</td>
-              		<td>200</td>
-            	</tr>
-				
-				
 				{% for team in teams %}
-            	<tr>
-              		<td>{{team.group_name}}</td>
-              		<td>{{team.final_score}}</td>
-            	</tr>
+				<tr>
+					<td>{{loop.index}}</td>
+					<td>{{team['TEAM_NAME']}}</td>
+					<td>{{team['VALUE']}}</td>
+				</tr>
 				{% endfor %}
+
 			</table>
 			
 			<div id="transparent_button_container">
