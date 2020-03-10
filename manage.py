@@ -243,6 +243,11 @@ def loadFAQPage():
 	return render_template('mobile/FAQ_Page.html')
 
 
+@app.route('/Profile')
+def loadProfilePage():
+	return render_template('mobile/Profile_Page.html')
+
+
 # Runs the app locally if not deployed to the server
 if __name__ == '__main__':
     # insertTutorUser("testTutor@exeter.ac.uk",1,"TestTutor")
