@@ -24,6 +24,8 @@ from flask import render_template, redirect, url_for, request,send_file,session
 from utils.auth import *
 from databaseAdapter import *
 from functools import wraps
+import os
+from werkzeug.utils import secure_filename
 
 from utils.utils import *
 
@@ -216,18 +218,44 @@ def dashboard():
 def addLocation():
     return render_template('Desktop/add_location_page.html')
 
+
+app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["PNG","JPG","JPEG"]
+
+def allowedImage(filename):
+
+    if not "." in filename:
+        return False
+
+    extension = filename.rsplit(".", 1)[1]
+    if extension.upper() in app.config["ALLOWED_IMAGE_EXTENSIONS"]:
+        return True
+    else:
+        return False
+
 @app.route('/Add_Location_Submit',methods = ['POST'])
 @requires_access_level('staff')
 def addLocationSubmit():
-    location = request.form.get('location')
+    location = request.form.get('location') 
     clue = request.form.get('clue')
-    #maybe add security checks for photo
-    photo = request.form.get('location_photo')
 
-    #No checks for now
-    insertLocation(location,clue)
+    photo = request.files['location_photo']
 
-    return render_template('Desktop/Manage_Locations_Page.html', locations = locations)
+    if photo.filename == "":
+        print("Image must have a filename")
+        return redirect(url_for('addLocation'))
+
+    if not allowedImage(photo.filename):
+        print("Image extension is not allowed")
+        return redirect(url_for('addLocation'))
+    else:
+        filename = secure_filename(photo.filename)
+
+        photo.save(os.path.join("static/images" , photo.filename))
+
+    #No checks
+    insertLocation(location,clue,photo.filename)
+
+    return render_template('Desktop/Manage_Locations_Page.html')
 
 
 @app.route('/Add_Question')
@@ -290,7 +318,7 @@ def manageGroups():
 #Loads the gamekeepers dashboard tool
 @app.route('/Leaderboard_Page')
 def leaderboard():
-    gameTeams = getTeams()
+    gameTeams = getTeamsScores()
     return render_template('Desktop/Leaderboard_Page.html', teams = gameTeams)
 
 #Loads the gamekeepers dashboard tool
@@ -493,9 +521,10 @@ def loadLeaderboardPage():
 #Runs the app locally if not deployed to the server
 if __name__ == '__main__':
     #insertTutorUser("testTutor@exeter.ac.uk",1,"TestTutor")
-    #insertStudentUser("test201@exeter.ac.uk","TestBen",1,1)
+    # insertStudentUser("test201@exeter.ac.uk","TestBen",1,1)
     #insertTeam("TestTeam",1,1,1,0)
     #insertRoute(2,"Reverse")
+    #insertScore(1,"Standard",1,100)
     app.secret_key = 'eXeplore_241199_brjbtk'
     app.SECURITY_PASSWORD_SALT = 'BFR241199'
     app.run(host='0.0.0.0', port=port, debug=True,use_reloader=False)

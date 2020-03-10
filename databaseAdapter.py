@@ -22,7 +22,7 @@ from flask import Flask
 import os
 import json
 import ibm_db
-
+from base64 import b64encode
 
 app = Flask(__name__)
 #Set to tru if running on local enviroment
@@ -624,7 +624,7 @@ def getLocations():
     # Query all locations
     if db2conn:
         # if we have a Db2 connection, query the database
-        sql = "SELECT location_name FROM location;"
+        sql = "SELECT location_name, location_id FROM location;"
         # Prepare the statement
         stmt = ibm_db.prepare(db2conn,sql)
         # Execute the sql
@@ -702,6 +702,45 @@ def getTeams():
         # close database connection
         ibm_db.close(db2conn)
     return rows
+
+def getTeamsScores():
+    db2conn = createConnection()
+    # Query all locations
+    if db2conn:
+        # if we have a Db2 connection, query the database
+        # This is for leaderboard. May want to add route onto the leaderboard.
+        sql = "SELECT t.team_name, s.value FROM Team AS t, Score AS s WHERE t.team_id = s.team_id ORDER BY s.value DESC;"
+        # Prepare the statement
+        stmt = ibm_db.prepare(db2conn,sql)
+        # Execute the sql
+        ibm_db.execute(stmt)
+        rows=[]
+        # fetch the result
+        result = ibm_db.fetch_assoc(stmt)
+        while result != False:
+            rows.append(result.copy())
+            result = ibm_db.fetch_assoc(stmt)
+        # close database connection
+        ibm_db.close(db2conn)
+    return rows
+
+#this is for manual insertion. Will not be used for functionality
+def insertScore(routeID,routeName,teamID,value):
+    db2conn = createConnection()
+
+    if db2conn:
+        # if we have a Db2 connection, query the database
+        sql = (
+        "INSERT INTO SCORE (ROUTE_ID,ROUTE_NAME,TEAM_ID,VALUE)"
+        " VALUES ("+str(routeID)+",'"+str(routeName)+"',"+str(teamID)+","+str(value)+");"
+        )
+        print(sql)
+        # Prepare the statement
+        stmt = ibm_db.prepare(db2conn,sql)
+        # Execute the sql
+        ibm_db.execute(stmt)
+        # close database connection
+        ibm_db.close(db2conn)  
 
 def getTutors():
     db2conn = createConnection()
@@ -816,14 +855,15 @@ def insertPasswordTutor(password,tutorID):
         # close database connection
         ibm_db.close(db2conn)
 
-def insertLocation(locationName,clue):
+def insertLocation(locationName,clue,photoName):
     db2conn = createConnection()
     locationName = locationName.lower()
     if db2conn:
         sql = (
-            "INSERT INTO location(location_name,clue) VALUES('" + str(locationName) + "','"+str(clue)+"');"
+            "INSERT INTO location(location_name,clue,location_image_url)"
+            " VALUES('"+str(locationName)+"','"+str(clue)+"', '"+str(photoName)+"');"
             )
-
+        print("SQL INSERT STATEMENT: ", sql)
         # Prepare the statement
         stmt = ibm_db.prepare(db2conn,sql)
     	# Execute the sql
@@ -837,7 +877,7 @@ def insertQuestion(locationID, task, answerA, answerB, answerC, answerD, correct
     if db2conn:
         sql = (
             "INSERT INTO question(location_id, question_content, multiple_choice_a, multiple_choice_b, multiple_choice_c, multiple_choice_d, answer)"
-            " VALUES(" + str(locationID) + ", '" + str(task) + "', '" + str(answerA) + "', '" + str(answerB) + "', '" + str(answerC) + "', '" + str(answerD) + "', '" + str(correctAnswer) + "');"
+            " VALUES ( "+str(locationID)+" , '"+str(task)+"', '"+str(answerA)+"', '"+str(answerB)+"', '"+str(answerC)+"', '"+str(answerD)+"', '"+str(correctAnswer)+"');"
             )
 
         print("SQL INSERT STATEMENT: ", sql)
