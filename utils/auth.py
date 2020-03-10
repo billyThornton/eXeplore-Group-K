@@ -22,68 +22,72 @@ This file contains all the necessary function to authorise a user for the app
 from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import URLSafeTimedSerializer
 
-from databaseAdapter import getStudentID,getTutorPassword,getStudentPassword
+from databaseAdapter import getStudentID, getTutorPassword, getStudentPassword
 
-#Appended to all passwords before hashing
-PEPPER = "B24B11T99" 
+# Appended to all passwords before hashing
+PEPPER = "B24B11T99"
 
-#Check if the given email belongs to either staff or student and retrives the password
-#of the user who owns the email
+
+# Check if the given email belongs to either staff or student and retrives the password
+# of the user who owns the email
 def verifyEmail(email):
-
     global PEPPER
-    #Gets a result set for all students with the gievn email
+    # Gets a result set for all students with the gievn email
     studentID = getStudentID(email)
-    #Gets a result set for all the tutors of a given email
+    # Gets a result set for all the tutors of a given email
     tutorID = getTutorPassword(email)
-    
-    #Check if the email belongs to a student of staff
-    if(studentID is not None and len(studentID)>0):
-        hashedPassword = getStudentPassword(email)
-        #If student return the hased password and set role to staff
-        return {'VerificationToken':False,'Role':'student','hashedpass':hashedPassword[0]['PASSWORD'],
-                'ID':studentID}
-    
-    elif(tutorID is not None and len(tutorID)>0):
-        hashedPassword = getTutorPassword(email)
-        #if tutor return hashed password and set role to tutor
-        return {'VerificationToken':False,'Role':'tutor','hashedpass':hashedPassword[0]['PASSWORD'],
-                'ID':tutorID}
-    
-    #Neither staff nor student
-    else:
-        return{'VerificationToken':False,'Role':'','hashedpass':""}
 
-#Checks that the password submitted on the login for is the same as that stored in the database
+    # Check if the email belongs to a student of staff
+    if (studentID is not None and len(studentID) > 0):
+        hashedPassword = getStudentPassword(email)
+        # If student return the hased password and set role to staff
+        return {'VerificationToken': False, 'Role': 'student', 'hashedpass': hashedPassword[0]['PASSWORD'],
+                'ID': studentID}
+
+    elif (tutorID is not None and len(tutorID) > 0):
+        hashedPassword = getTutorPassword(email)
+        # if tutor return hashed password and set role to tutor
+        return {'VerificationToken': False, 'Role': 'tutor', 'hashedpass': hashedPassword[0]['PASSWORD'],
+                'ID': tutorID}
+
+    # Neither staff nor student
+    else:
+        return {'VerificationToken': False, 'Role': '', 'hashedpass': ""}
+
+
+# Checks that the password submitted on the login for is the same as that stored in the database
 def verifyPassword(passwordEntered, hashedPassword):
-    if(passwordEntered!=""):
+    if (passwordEntered != ""):
         global PEPPER
-        #Adds the pepper to the plaintext password
-        checkingPassword = passwordEntered+(PEPPER)
-        #checks the stored hased password agains the new hashed password
-        if(check_password_hash(hashedPassword,checkingPassword)):
+        # Adds the pepper to the plaintext password
+        checkingPassword = passwordEntered + (PEPPER)
+        # checks the stored hased password agains the new hashed password
+        if (check_password_hash(hashedPassword, checkingPassword)):
             return True
         else:
             return False
 
-def verifyUser(passwordEntered,emailEntered):
+
+def verifyUser(passwordEntered, emailEntered):
     token = verifyEmail(emailEntered)
     print(token)
-    if(len(token['hashedpass'])>0):
-        if(verifyPassword(passwordEntered,token['hashedpass'])):
-            #sets the tokens verification to true e.g. passwords are the same
+    if (len(token['hashedpass']) > 0):
+        if (verifyPassword(passwordEntered, token['hashedpass'])):
+            # sets the tokens verification to true e.g. passwords are the same
             token['VerificationToken'] = True
 
     return token
 
-#Given a password hashes it for storage
+
+# Given a password hashes it for storage
 def hashPassword(password):
     global PEPPER
-    password_text = password+PEPPER
-    hashedPass = generate_password_hash(password_text,"sha256")
+    password_text = password + PEPPER
+    hashedPass = generate_password_hash(password_text, "sha256")
     return hashedPass
 
-#TODO implement email verification
-def generate_confirmation_token(email,app):
+
+# TODO implement email verification
+def generate_confirmation_token(email, app):
     serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
     return serializer.dumps(email, salt=app.config['SECURITY_PASSWORD_SALT'])

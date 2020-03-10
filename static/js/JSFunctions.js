@@ -315,3 +315,4 @@ function searchList(inputID, ulID) {
         }
     }
 }
+

@@ -41,20 +41,20 @@ to the backend where it is stored in the database.
 
 	{% include "mobile/Game_Nav.html" %}
 
-	<h3>You have been assigned as the team Leader</h2>
+	<h3>You have been assigned as the team Leader</h3>
 
 
-	<form action="loadFirstChoosePage" method="POST">
+	<form action="routeSelect" method="POST">
 
-		<h3>Please choose a route for your team</h2>
+		<h3>Please choose a route for your team</h3>
 		<select name="route" id="teams">
-			<option value="0">Routes</option>
+
 			{% for route in routes %}
 			<option value="{{route['ROUTE_ID']}}">{{route["ROUTE_NAME"]}}</option>
 			{% endfor %}
 		</select>
 
-		<h3>Please choose a name for your team</h2>
+		<h3>Please choose a name for your team</h3>
 			<input name="teamName" type="text" id="teams" placeholder="Enter team name here"
 			style="border-radius: 5px; margin-bottom: 40px;">
 

@@ -68,19 +68,6 @@ body {
 	margin-right: 60px;
 }
 
-#progress_bar {
-	width: 301px;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 20px;
-	border-style: solid;
-	border-color: black;
-	border-radius: 10px;
-	border-width: 1px;
-	background: white;
-	color: black;
-}
-
 /* Clue location image box */
 #clue_location {
 	overflow: visible;
@@ -348,3 +335,24 @@ input {
 	display: inline-block;
 	border:solid black 1px;
 }
+
+/* Progress bar */
+progress {
+	width: 80%;
+	margin-left: 10%;
+	margin-right: 10%;
+	margin-top: 20px;
+	-webkit-appearance: none;
+	border-style: solid;
+	border-color: black;
+	border-radius: 10px;
+	border-width: 1px;
+}
+progress::-webkit-progress-bar {
+	background: black;
+	border-radius: 50px;
+	padding: 2px;
+	box-shadow: 0 1px 0px 0 rgba(255, 255, 255, 0.2);
+}
+
+

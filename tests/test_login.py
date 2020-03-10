@@ -11,13 +11,14 @@ import flask
 import unittest
 import flask_testing
 import unittest
+unittest.TestLoader.sortTestMethodsUsing = None
 from flask import Flask
 from flask_testing import TestCase
 #import databaseAdapter
 
 from manage import app,session
 import ibm_db
-from databaseAdapter import createConnection, getStudentID,getTutorPassword,insertTutorUser
+from databaseAdapter import createConnection, getStudentID,getTutorPassword,insertTutorUser, getTeamID, getTutorID, getRouteID, getTeamFromStudentID
 class BasicTests(flask_testing.TestCase):
  
 ############################
@@ -64,11 +65,11 @@ class BasicTests(flask_testing.TestCase):
             ibm_db.close(db2conn)
         return self.registerIndividual(testClient,name,email,password,confirm,tutorname)
     
-    def existingStudent(self,name,email,password):
+    def existingStudent(self,name,email,teamID,password):
         db2conn = createConnection()
         name = name.lower()
         email = email.lower()
-        TeamID = 2
+        TeamID = teamID
         TutorID = 1
         if db2conn:
             # if we have a Db2 connection, query the database
@@ -90,6 +91,19 @@ class BasicTests(flask_testing.TestCase):
         data=dict(email=email,password=password),
         follow_redirects=True)
 
+
+
+    def selectTeam(self, testClient, tutorName, teamName):
+        return testClient.post('/assignTeam',
+                               data=dict(tutor = getTutorID(tutorName)[0]['TUTOR_ID'],
+                                         team = getTeamID(teamName)[0]['TEAM_ID']),
+                               follow_redirects=True)
+
+    def selectRoute(selfself,testClient, routeID, teamName):
+        return testClient.post('/routeSelect',
+                               data = dict(route = routeID,teamName = teamName),
+                               follow_redirects=True)
+
  
 ###############
 #### tests ####
@@ -104,7 +118,7 @@ class BasicTests(flask_testing.TestCase):
     def test_registration_existing_email(self):
         with app.test_client() as testClient:
             #Student exists
-            self.existingStudent('Test entry','test1@exeter.ac.uk','password')
+            self.existingStudent('Test entry','test1@exeter.ac.uk','NULL','password')
             response = self.registerIndividual(testClient,'Test entry','test1@exeter.ac.uk','password','password','matt')
             self.assertEqual(response.status_code,200)
             self.assert_template_used('Desktop/register.html')
@@ -139,7 +153,7 @@ class BasicTests(flask_testing.TestCase):
     
     def test_registration_valid_tutor(self):
          with app.test_client() as testClient:
-            response = self.register(testClient,'Test entry','test@exeter.ac.uk','password','password','matt')
+            response = self.register(testClient,'Test Entry','test@exeter.ac.uk','password','password','matt')
             self.assertEqual(response.status_code,200)
             self.assert_template_used('Desktop/Game_Keeper_Login.html')
             self.assert_context('error_message','registration successful')
@@ -148,12 +162,6 @@ class BasicTests(flask_testing.TestCase):
             self.assertEqual(len(check),0)
             check = getTutorPassword('test@exeter.ac.uk')
             self.assertGreater(len(check),0)
-            
-    def test_login_student(self):
-        with app.test_client() as testClient:
-            response = self.loginuser(testClient,'test1@exeter.ac.uk','password')
-            self.assertEqual(response.status_code,200)
-            self.assert_template_used('mobile/Clue_Page.html')
     
     def test_login_tutor(self):
         with app.test_client() as testClient:
@@ -167,14 +175,53 @@ class BasicTests(flask_testing.TestCase):
             self.assertEqual(response.status_code,200)
             self.assert_template_used('Desktop/Game_Keeper_Login.html')
             self.assert_context('error_message',"User does not exist")
-            
-            
-    
-    
-    
-    
-            
-        
-     
+
+    def test_login_new_user_no_team(self):
+        with app.test_client() as testClient:
+            response = self.loginuser(testClient, 'test1@exeter.ac.uk', 'password')
+            self.assertEqual(response.status_code,200)
+            self.assert_template_used('mobile/Join_Team.html')
+
+    def test_login_team_selection_no_leader(self):
+        with app.test_client() as testClient:
+            response = self.register(testClient, 'Test Entry', 'test@exeter.ac.uk', 'password', 'password', 'matt')
+            self.loginuser(testClient, 'test1@exeter.ac.uk', 'password')
+
+
+            response = self.selectTeam(testClient,"test entry","test entry Team 1")
+            checkUserTeam = getTeamFromStudentID(getStudentID('test1@exeter.ac.uk')[0]['STUDENT_ID'])
+
+            self.assertEqual(response.status_code,200)
+            self.assert_template_used('mobile/First_Choose.html')
+            self.assertEqual(checkUserTeam[0]['TEAM_ID'],getTeamID('test entry Team 1')[0]['TEAM_ID'])
+
+
+            response = self.selectRoute(testClient,1,"TEST NEW NAME")
+            self.assertEqual(response.status_code, 200)
+            self.assert_template_used('mobile/Clue_Page.html')
+            checkTeam = getTeamID("TEST NEW NAME")
+            self.assertGreater(len(checkTeam),0)
+            checkRoute = getRouteID(session['teamID'])
+            self.assertEqual(checkRoute[0]['CURRENT_ROUTE_ID'],1)
+
+    def test_login_team_set(self):
+        with app.test_client() as testClient:
+            self.loginuser(testClient, 'test1@exeter.ac.uk', 'password')
+            checkUserTeam = getTeamFromStudentID(getStudentID('test1@exeter.ac.uk')[0]['STUDENT_ID'])
+
+            if checkUserTeam[0]['TEAM_NAME'] != "TEST NEW NAME":
+                self.selectTeam(testClient, "test entry", "test entry Team 1")
+                self.selectRoute(testClient, 1, "TEST NEW NAME")
+        app.test_client().delete()
+        with app.test_client() as testClient:
+            self.register(testClient,"test user2","test2@exeter.ac.uk","password","password","test entry")
+            self.loginuser(testClient, 'test2@exeter.ac.uk', 'password')
+            response = self.selectTeam(testClient, "test entry", "TEST NEW NAME")
+            self.assertEqual(response.status_code, 200)
+            self.assert_template_used('mobile/Clue_Page.html')
+            checkUserTeam = getTeamFromStudentID(getStudentID('test2@exeter.ac.uk')[0]['STUDENT_ID'])
+            self.assertEqual(checkUserTeam[0]['TEAM_ID'], getTeamID('TEST NEW NAME')[0]['TEAM_ID'])
+
+
 if __name__ == "__main__":
     unittest.main()

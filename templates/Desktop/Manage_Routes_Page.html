@@ -65,7 +65,7 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to delete or create r
 						</select>	
 						<label for="Question_1">Question 1:</label>
 						<select id="Question_1" name="Question_1">
-							{% for Question in Question %}
+							{% for question in questions %}
 							<option id="{{Question}}" value="{{Question}}">{{Question}}</option>
 							{% endfor %}
 						</select><br /><br />
@@ -79,7 +79,7 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to delete or create r
 						</select>
 						<label for="Question_2">Question 2:</label>
 						<select id="Question_2" name="Question_2">
-							{% for Question in Question %}
+							{% for question in questions %}
 							<option id="{{Question}}" value="{{Question}}">{{Question}}</option>
 							{% endfor %}
 						</select><br /><br />					
@@ -93,7 +93,7 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to delete or create r
 						</select>
 						<label for="Question_3">Question 3:</label>
 						<select id="Question_3" name="Question_3">
-							{% for Question in Question %}
+							{% for question in questions %}
 							<option id="{{Question}}" value="{{Question}}">{{Question}}</option>
 							{% endfor %}
 						</select><br /><br />
@@ -107,7 +107,7 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to delete or create r
 						</select>
 						<label for="Question_4">Question 4:</label>
 						<select id="Question_4" name="Question_4">
-							{% for Question in Question %}
+							{% for question in questions %}
 							<option id="{{Question}}" value="{{Question}}">{{Question}}</option>
 							{% endfor %}
 						</select><br /><br />
@@ -121,7 +121,7 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to delete or create r
 						</select>
 						<label for="Question_5">Question 5:</label>
 						<select id="Question_5" name="Question_5">
-							{% for Question in Question %}
+							{% for question in questions %}
 							<option id="{{Question}}" value="{{Question}}">{{Question}}</option>
 							{% endfor %}
 						</select><br /><br />
@@ -135,7 +135,7 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to delete or create r
 						</select>
 						<label for="Question_6">Question 6:</label>
 						<select id="Question_6" name="Question_6">
-							{% for Question in Question %}
+							{% for question in questions %}
 							<option id="{{Question}}" value="{{Question}}">{{Question}}</option>
 							{% endfor %}
 						</select><br /><br />
@@ -149,7 +149,7 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to delete or create r
 						</select>
 						<label for="Question_7">Question 7:</label>
 						<select id="Question_7" name="Question_7">
-							{% for Question in Question %}
+							{% for question in questions %}
 							<option id="{{Question}}" value="{{Question}}">{{Question}}</option>
 							{% endfor %}
 						</select><br /><br />
@@ -163,7 +163,7 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to delete or create r
 						</select>
 						<label for="Question_8">Question 8:</label>
 						<select id="Question_8" name="Question_8">
-							{% for Question in Question %}
+							{% for question in questions %}
 							<option id="{{Question}}" value="{{Question}}">{{Question}}</option>
 							{% endfor %}
 						</select><br /><br />
@@ -178,7 +178,7 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to delete or create r
 						</select>
 						<label for="Question_9">Question 9:</label>
 						<select id="Question_9" name="Question_9">
-							{% for Question in Question %}
+							{% for question in questions %}
 							<option id="{{Question}}" value="{{Question}}">{{Question}}</option>
 							{% endfor %}
 						</select><br /><br />
@@ -192,7 +192,7 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to delete or create r
 						</select>
 						<label for="Question_10">Question 10:</label>
 						<select id="Question_10" name="Question_10">
-							{% for Question in Question %}
+							{% for question in questions %}
 							<option id="{{Question}}" value="{{Question}}">{{Question}}</option>
 							{% endfor %}
 						</select><br /><br />
@@ -207,11 +207,12 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to delete or create r
 				<!-- Routes Column -->
 				<td>
 					<div id="group_list_container">
-						<input type="radio" id="example_group1" name="groups"/><label for="example_group1" id="group_label"> Example Route</label> <br />
-						
 						<ul>
-							{% for team in teams %}
-							<li id="{{team}}" name="groups"/><label for="{{team}}" id="group_label">{{team}}</label><br />
+							<li id="example_group1" name="groups"/><label for="example_group1" id="group_label"> Example Route</label> <br />
+						</ul>
+						<ul>
+							{% for route in routes %}
+							<li id="{{route}}" name="groups"/><label for="{{route}}" id="group_label">{{route}}</label><br />
 							{% endfor %}
 						</ul>
 					</div>

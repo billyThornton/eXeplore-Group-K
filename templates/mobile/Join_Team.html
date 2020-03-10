@@ -55,7 +55,7 @@ This file contains the html that allows a user to join a team.
 		<p> Teams:
 			<select name="team" id="teams">
 				{% for team in teams %}
-				<option value="{{team['TEAM_NAME']}}">{{team["TEAM_NAME"]}}</option>
+				<option value="{{team['TEAM_ID']}}">{{team["TEAM_NAME"]}}</option>
 				{% endfor %}
 			</select>
 		</p>
