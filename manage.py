@@ -241,9 +241,14 @@ def loadLeaderboardPage():
 @app.route('/FAQPage')
 def loadFAQPage():
 	return render_template('mobile/FAQ_Page.html')
+	
+	
+@app.route('/Resources')
+def loadResourcesPage():
+	return render_template('mobile/Resources.html')
 
 
-@app.route('/Profile')
+@app.route('/ProfilePage')
 def loadProfilePage():
 	return render_template('mobile/Profile_Page.html')
 
