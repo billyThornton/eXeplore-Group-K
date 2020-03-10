@@ -38,20 +38,20 @@ the pop up sidebar in the game. It also provides a access to a side bar which pr
 
 	<div id="answer_page_container">
 	
+		<!-- Attach the side bar -->
 		{% include "mobile/Game_Nav.html" %}
 
-		<div id="help_title">
-			<h1>Your Profile</h1>
+
+		<h1>Your Profile</h1>
 		
-		<div id="help_message">
-			<h3><b>Name:</b> {{student_name}}</h3>
-			<p><b>.</b></p>
-			<h3><b>Tutor Name:</b> {{student_tutor}}</h3>
-			<p><b>.</b></p>
-			<h3><b>Group Name:</b> {{group_name}}</h3>
-			<p><b>.</b></p>
-			<h3><b>Current Progress:</b> {{curr_progress}}</h3>		
-		</div>
+		<!-- List of profile details -->
+		<h3><b>Name:</b> {{student_name}}</h3>
+		<p><b>.</b></p>
+		<h3><b>Tutor Name:</b> {{student_tutor}}</h3>
+		<p><b>.</b></p>
+		<h3><b>Group Name:</b> {{group_name}}</h3>
+		<p><b>.</b></p>
+		<h3><b>Current Progress:</b> {{curr_progress}}</h3>		
 		
 		<div id="transparent_button_container">
 			<button type="button" onclick="location.href='Game'" id="submit" class="transparent_button" name="contine_button">Continue</button>
