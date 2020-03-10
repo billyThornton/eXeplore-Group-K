@@ -1,22 +1,22 @@
 <!--
-Created on 19/02/2020 
+Created on 19/02/2020
 @author: Jamie Butler
 @Last Edited: 26/02/2020
 @edited by: Teo Reed
 
 Copyright (c) “2020, by Group K
 Contributors: Jamie Butler, Rahul Pankhania, Teo Reed, Billy Thornton, Ben Trotter, Kristian Woolhouse
-URL: https://github.com/billyThornton/eXeplore-Group-K ” 
+URL: https://github.com/billyThornton/eXeplore-Group-K ”
 All rights reserved.
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following
 conditions are met:
- 
+
 Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
 Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer
 in the documentation and/or other materials
-provided with the distribution. 
+provided with the distribution.
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
-BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAT PURPOSE ARE DISCLAIMED. IN NO EVENT 
+BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAT PURPOSE ARE DISCLAIMED. IN NO EVENT
 SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
 DAMGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
 INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INLUDING NEGLIGENCE
@@ -38,69 +38,88 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to configure routes a
 <body>
 	<div id="create_group_page">
 
-		<table style="width:100%">
-		
+		<table>
+
 		  <!-- Headers -->
 			<tr>
-				<th><h2>Create Group</h2></th>
-				<th><h2>Students</h2></th>
+				<th><h2>Tutor</h2></th>
 				<th><h2>Groups</h2></th>
+				<th><h2>Students</h2></th>
 			</tr>
-		  
+
 			<tr>
-			
+
 			<!-- Create Group Column -->
 				<td>
-					<div id="create_group_container">
-						<p> <label>Name:</label>
-						<input type="text" id="group_name" name="create_group_input"> </p>
-						
-						<p> <label>Students Selected:</label>
-						<div id="search_results">Students will go here!</div> </p>
+					<div class="manage_container" id="tutor_container">
 
-						<div id="transparent_button_container">
-							<button type="button" id="transparent_button" name="save_group_button">Save Group</button>
-						</div>
-					</div>
+            <input type="radio" id="example_tutor1" name="tutors"/><label for="example_tutor1" id="tutor_label">tutor</label>
+						<input type="radio" id="example_tutor2" name="tutors"/><label for="example_tutor2" id="tutor_label">tutor</label>
+						<input type="radio" id="example_tutor3" name="tutors"/><label for="example_tutor3" id="tutor_label">tutor</label>
+						<input type="radio" id="example_tutor4" name="tutors"/><label for="example_tutor4" id="tutor_label">tutor</label>
+						<input type="radio" id="example_tutor5" name="tutors"/><label for="example_tutor5" id="tutor_label">tutor</label>
+          </div>
+        </td>
 
-					<div id="delete_group_container">
-						<h2>Delete Group</h2>
+        <td>
+          <div class="manage_container" id="groups_container">
+            <input type="radio" id="example_group1" name="groups"/><label for="example_group1" id="group_label">group</label>
+            <input type="radio" id="example_group2" name="groups"/><label for="example_group2" id="group_label">group</label>
+            <input type="radio" id="example_group3" name="groups"/><label for="example_group3" id="group_label">group</label>
+            <input type="radio" id="example_group4" name="groups"/><label for="example_group4" id="group_label">group</label>
+            <input type="radio" id="example_group5" name="groups"/><label for="example_group5" id="group_label">group</label>
+        </div>
+        </td>
+        <td>
+          <div class="manage_container" id="students_container">
+            <ul class="container_content" id="students_list" tabindex="0" role="listbox">
+              <li id="student_el">
+                Neptunium
+              </li>
+              <li id="student_el">
+                Plutonium
+              </li>
+              <li id="student_el">
+                Neptunium
+              </li>
+              <li id="student_el">
+                Plutonium
+              </li>
+              <li id="student_el">
+                Neptunium
+              </li>
+              <li id="student_el">
+                Plutonium
+              </li>
+              <li id="student_el">
+                Neptunium
+              </li>
+              <li id="student_el">
+                Plutonium
+              </li>
+              <li id="student_el">
+                Neptunium
+              </li>
+              <li id="student_el">
+                Plutonium
+              </li>
+              <li id="student_el">
+                Neptunium
+              </li>
+              <li id="student_el">
+                Plutonium
+              </li>
+              <li id="student_el">
+                Neptunium
+              </li>
+              <li id="student_el">
+                Plutonium
+              </li>
+            </ul>
+          </td>
+          </div>
+        <td>
 
-						<p> <label>Name:</label>
-						<input type="text" id="group_name" name="delete_group_input"> </p>
 
-						<div id="transparent_button_container">
-							<button type="button" id="delete_transparent_button" name="delete_group_button">Delete Group</button>
-						</div>
-					</div>
-				</td>
-			
-			<!-- Students Column -->
-				<td>
-					<div id="student_list_container">
-						{% for student in students %}
-						<input type="checkbox" id="{{student}}"/><label id="student_label" for="{{student}}">{{student}}</label><br />
-						{% endfor %}
-					</div>
-				</td>
-			
-			<!-- Groups Column -->
-				<td>
-					<div id="group_list_container">
-						<input type="radio" id="example_group1" name="groups"/><label for="example_group1" id="group_label"> Example Group</label> <br />
-						
-						{% for team in teams %}
-						<input type="radio" id="{{team}}" name="groups"/><label for="{{team}}" id="group_label">{{team}}</label><br />
-						{% endfor %}
-					</div>
-					
-					<div id="transparent_button_container">
-						<button type="button" id="transparent_button" name="check_results_button">Check Results</button>
-					</div>
-				</td>
-			</tr>
-		</table>
-
-	</div>
-</body>
+        </td>
 </html>
