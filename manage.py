@@ -20,42 +20,24 @@ This file contains all the URL routing for the backend/front end, it takes urls
 and displays the required html files.
 It also processes data passed using post/get request.
 """
-from flask import render_template, redirect, url_for, request, send_file, session, jsonify
+from flask import render_template, redirect, url_for, request, send_file, session, jsonify,Blueprint
 from utils.auth import *
 from utils.login import *
 from databaseAdapter import *
 from functools import wraps
 import os
 from werkzeug.utils import secure_filename
-
+from blueprints.manageDashboard import dashboard_page
+from blueprints.manageGame import game_page
 from utils.utils import *
 
-
-import threading
-
 app = Flask(__name__)
+app.register_blueprint(dashboard_page)
+app.register_blueprint(game_page)
+app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["PNG", "JPG", "JPEG"]
+
+
 port = int(os.getenv('PORT', 8000))
-
-
-# Used to restrict access to ceratin site areas
-def requires_access_level(access_level):
-    # Uses a decorator function
-    def decorator(f):
-        @wraps(f)
-        def decorated_function(*args, **kwargs):
-            # if the session users role is not set send to login page
-            if not session.get('Role'):
-                return redirect(url_for('login'))
-            # If the users session role is not high enough send them to the game page
-            # They must be a student
-            elif not session.get('Role') == access_level:
-                return redirect(url_for('showLocationClue'))
-            return f(*args, **kwargs)
-
-        return decorated_function
-
-    return decorator
-
 
 # Handles the [post] method for login
 # Will be passed a username and a password
@@ -79,16 +61,15 @@ def login_post():
 
             if len(teamID) == 0:
                 print("REDIRECT")
-                return redirect(url_for('loadJoinTeamPage'))
+                return redirect(url_for('game_page.loadJoinTeamPage'))
             else:
                 teamID = teamID[0]['TEAM_ID']
                 session['teamID'] = teamID
             teamLeader = getTeamLeader(teamID)
 
             if teamLeader[0]['TEAM_LEADER'] is None:
-                updateTeamLeader(session['studentID'],teamID)
-                return redirect(url_for('loadFirstChoosePage'))
-
+                updateTeamLeader(session['studentID'], teamID)
+                return redirect(url_for('game_page.loadFirstChoosePage'))
 
             # get the ID of the route the students are on
             routeID = getRouteID(session['teamID'])
@@ -109,11 +90,11 @@ def login_post():
     print(session['Role'])
     if (session['Role'] == "staff"):
         # If staff redirect to the dashboard
-        return redirect(url_for('dashboard'))
+        return redirect(url_for('dashboard_page.dashboard'))
 
     elif (session['Role'] == "student"):
         # If student redirect to the game
-        return redirect(url_for('showLocationClue'))
+        return redirect(url_for('game_page.showLocationClue'))
     else:
         # If neither redirect to login page
         return redirect(url_for('login'))
@@ -134,7 +115,6 @@ def login():
 # Load registration window
 @app.route('/register')
 def register():
-
     gameTutors = getTutors()
     # Checks if there is an error message is sent via a redirect
     if ('Error Message' in session):
@@ -145,7 +125,7 @@ def register():
         session['Error Message'] = ""
         errorMessage = ""
         # Redner the register page with the errormessage variable passes in
-    return render_template('Desktop/register.html', error_message=errorMessage, tutors = gameTutors)
+    return render_template('Desktop/register.html', error_message=errorMessage, tutors=gameTutors)
 
 
 # Handles registration
@@ -193,7 +173,7 @@ def registerSubmit():
         else:
             # Check if the email is already registered
             if (len(getTutorID(name)) == 0):
-                #Also adds first team
+                # Also adds first team
                 insertTutorUser(email, 1, name)
                 hashedPassword = hashPassword(password)
                 tutorID = getTutorID(name)[0]['TUTOR_ID']
@@ -234,388 +214,7 @@ def imageUniStatic():
     return send_file('static/images/Exeter_University.jpg', mimetype='image/jpg')
 
 
-######################
-#GAMEKEEPER DASHBOARD#
-######################
-# Loads the dashboard for game masters
-@app.route('/dashboard')
-@requires_access_level('staff')
-def dashboard():
-    return render_template('Desktop/Game_Keeper_Page.html')
 
-
-# Loads the add location form page
-@app.route('/Add_Location')
-@requires_access_level('staff')
-def addLocation():
-    return render_template('Desktop/add_location_page.html')
-
-
-app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["PNG", "JPG", "JPEG"]
-
-
-def allowedImage(filename):
-    if not "." in filename:
-        return False
-
-    extension = filename.rsplit(".", 1)[1]
-    if extension.upper() in app.config["ALLOWED_IMAGE_EXTENSIONS"]:
-        return True
-    else:
-        return False
-
-
-@app.route('/Add_Location_Submit', methods=['POST'])
-@requires_access_level('staff')
-def addLocationSubmit():
-    location = request.form.get('location')
-    clue = request.form.get('clue')
-
-    photo = request.files['location_photo']
-
-    if photo.filename == "":
-        print("Image must have a filename")
-        return redirect(url_for('addLocation'))
-
-    if not allowedImage(photo.filename):
-        print("Image extension is not allowed")
-        return redirect(url_for('addLocation'))
-    else:
-        filename = secure_filename(photo.filename)
-
-        photo.save(os.path.join("static/images", photo.filename))
-
-    # No checks
-    insertLocation(location, clue, photo.filename)
-
-    return render_template('Desktop/Manage_Locations_Page.html')
-
-
-@app.route('/Add_Question')
-@requires_access_level('staff')
-def addQuestion():
-    gameLocations = getLocations()
-    return render_template('Desktop/Add_Question_Page.html', locations=gameLocations)
-
-
-@app.route('/Add_Question_Submit', methods=['POST'])
-@requires_access_level('staff')
-def addQuestionSubmit():
-    location = request.form.get('location')
-    question = request.form.get('question')
-    answer_a = request.form.get('answer_a')
-    answer_b = request.form.get('answer_b')
-    answer_c = request.form.get('answer_c')
-    answer_d = request.form.get('answer_d')
-    correct_answer = request.form.get('correct_answer')
-    # No checks for now
-    insertQuestion(location, question, answer_a, answer_b, answer_c, answer_d, correct_answer)
-
-    return render_template('Desktop/Manage_Locations_Page.html')
-
-
-@app.route('/Delete_Location', methods=['POST'])
-@requires_access_level('staff')
-def deleteLocation():
-    name = request.form.get('locations')
-    removeLocation(name)
-    locationNames = []
-    locations = getLocations()
-    locationNames = []
-    for location in locations:
-        locationNames.append(location['LOCATION_NAME'])
-
-    return redirect(url_for('manageLocations'))
-
-
-# Loads the gamekeepers dashboard tool
-@app.route('/Manage_Locations_Page')
-@requires_access_level('staff')
-def manageLocations():
-    # Creates a list of locations from the db
-    locations = getLocations()
-    locationNames = []
-    for location in locations:
-        locationNames.append(location['LOCATION_NAME'])
-
-    return render_template('Desktop/Manage_Locations_Page.html', locations = locationNames)
-
-
-# Loads the gamekeepers dashboard tool
-@app.route('/Manage_Groups_Page')
-@requires_access_level('staff')
-def manageGroups():
-    # Creates a list of locations from the db
-    studentNames = getStudents()
-
-    return render_template('Desktop/Manage_Groups_Page.html', students = studentNames)
-
-    return render_template('Desktop/Manage_Groups_Page.html', students=studentNames)
-
-
-# Loads the gamekeepers dashboard tool
-@app.route('/Leaderboard_Page')
-def leaderboard():
-    print("IN THE LEADERBOARD ROUTE")
-    routes = getRoutes()
-    return render_template('Desktop/Leaderboard_Page.html', routes = routes)
-
-@app.route('/Leaderboard_process', methods=['POST'])
-def process():
-    print("IN THE LEADERBOARD_PROCESS ROUTE")
-    route_selected = request.form['route']
-    teams = getTeamScoresFromRouteID(route_selected)
-
-    return jsonify(teams)
-
-
-# Loads the gamekeepers dashboard tool
-@app.route('/Manage_Routes_Page')
-@requires_access_level('staff')
-def manageRoutes():
-    return render_template('Desktop/Manage_Routes_Page.html')
-
-
-# Loads the gamekeepers dashboard tool
-@app.route('/Assign_Routes_Page')
-@requires_access_level('staff')
-def assignRoutes():
-    gameTeams = getTeams()
-    gameRoutes = getRoutes()
-
-    return render_template('Desktop/Assign_Routes_Page.html', teams=gameTeams, routes=gameRoutes)
-
-
-@app.route('/assignRoute', methods=['POST'])
-@requires_access_level('staff')
-def assignUpdateRoute():
-    teamNameID = request.form['team']
-    routeNameID = request.form.get('route')
-    updateTeamRoute(routeNameID,0, teamNameID)
-
-    return redirect(url_for('assignRoutes'))
-
-
-######################
-# Student Game Pages  #
-######################
-
-@app.route('/Join')
-def loadJoinTeamPage():
-    gameTeams = getTeams()
-    gameTutors = getTutors()
-    return render_template('mobile/Join_Team.html', teams=gameTeams, tutors=gameTutors)
-
-
-@app.route('/assignTeam', methods=['POST'])
-def assignTeam():
-    print("TEAM ASSIGN START")
-    # TODO update the student to store updated  tutorID?
-    studentID = session['studentID']
-    tutorID = request.form['tutor']
-    print(tutorID)
-    teamID = request.form.get('team')
-    session['teamID'] = teamID
-    print(teamID)
-    updateStudentTeam(studentID,teamID)
-    teamLeader = getTeamLeader(teamID)
-    print("Team Leader")
-    print(teamLeader)
-    if teamLeader[0]['TEAM_LEADER'] is None:
-        updateTeamLeader(studentID,teamID)
-        return redirect(url_for('loadFirstChoosePage'))
-    else:
-        #TODO wait here until route selected by team leader
-        routeID = getRouteID(session['teamID'])
-        while routeID[0]['CURRENT_ROUTE_ID'] is None:
-            routeID = getRouteID(session['teamID'])
-
-        session['routeID'] = routeID[0]['CURRENT_ROUTE_ID']
-        return redirect(url_for('showLocationClue'))
-
-
-
-@app.route('/firstChoose')
-def loadFirstChoosePage():
-    gameRoutes = getRoutes();
-    return render_template('mobile/First_Choose.html', routes=gameRoutes)
-
-@app.route('/routeSelect', methods = ['POST'])
-def routeSelect():
-    routeID = request.form['route']
-    teamName = request.form['teamName']
-    teamID = session['teamID']
-    session['routeID'] = routeID
-    updateTeamRoute(routeID,0,teamID)
-    updateTeamName(teamName,teamID)
-    numOfQuestions = getNumLocationOnRoute(session['routeID'])
-    session['numOfQuestions'] = numOfQuestions[0]['1']
-    return redirect(url_for('showLocationClue'))
-
-
-
-
-# Displays the location clue page at an appropriate progression point
-
-@app.route('/loadFirstTeam', methods = ['POST'])
-def loadFirstTeam():
-    routeID = request.form['route']
-    teamName = request.form['teamName']
-    #add or update database now here maybe
-    return redirect(url_for('showLocationClue'))
-
-
-#Displays the location clue page at an appropriate progression point
-@app.route('/Game')
-def showLocationClue():
-    # get progress from db
-    if 'progress' in session:
-        progress = session['progress']
-    else:
-        session['progress'] = 0
-        progress = 0
-
-    # Check if route id is in session
-    if 'routeID' in session:
-        routeID = session['routeID']
-
-    print('Progress: ',progress)
-
-    print(' ')
-    print(session['routeID'])
-    print(session['progress'])
-    print(' ')
-
-    # Get the location ID for the clue
-    locationData = getLocation(session['routeID'], session['progress'])
-    print("LOCATION DATA: "+str(session['routeID'])+" "+str(session['progress']))
-    print('LOCAION DATA IS: ',locationData)
-
-    locationID = locationData[0]['LOCATION_ID']
-    # Shows the next locations image
-    imageURL = getLocation(session['routeID'], session['progress'])[0]['LOCATION_IMAGE_URL']
-    imageLocation = url_for('static', filename='images/' + imageURL)
-    print("LocationID", locationID)
-    # check if there are no more locations
-    if (len(getLocationClues(locationID)) == 0):
-        return redirect(url_for('endScreen'))
-
-    cluemessage = getLocationClues(locationID)[0]['CLUE']
-    print(cluemessage)
-    # progress value = get User.progress from db
-    # clue message = get clue for position = progress from db
-
-    print(imageLocation)
-    return render_template('mobile/Clue_Page.html', progress_value=progress, clue_message=cluemessage,
-                           clue_location=imageLocation)
-
-
-@app.route('/getQuestion', methods=['POST'])
-def getQuestion():
-    progress = session['progress']
-    print("progress: ", progress)
-    # Get the location ID for the question
-    locationData = getLocation(session['routeID'], session['progress'])
-
-    locationID = locationData[0]['LOCATION_ID']
-
-    print(" ")
-    print("big check ",locationID)
-    print(" ")
-
-    questionData = getQuestionLocationID(locationID)
-    print("questionData: ", questionData)
-
-    imageURL = locationData[0]['LOCATION_IMAGE_URL']
-    imageLocation = url_for('static', filename='images/' + imageURL)
-
-    print(questionData[0]['QUESTION_CONTENT'])
-    questionText = questionData[0]['QUESTION_CONTENT']
-
-    a = questionData[0]['MULTIPLE_CHOICE_A']
-    b = questionData[0]['MULTIPLE_CHOICE_B']
-    c = questionData[0]['MULTIPLE_CHOICE_C']
-    d = questionData[0]['MULTIPLE_CHOICE_D']
-    return render_template('mobile/Answer_Page.html', progress_value=progress, clue_message="Question: " + questionText,
-                           clue_location=imageLocation,
-                           answer_a=a, answer_b=b, answer_c=c, answer_d=d)
-
-
-@app.route('/getQuestionRedirect')
-def retryQuestion():
-    if ('QuestionMessage' in session):
-        # dosplay the message
-        error_message = session['QuestionMessage']
-    else:
-        # If no message set set the message to be empty (No message)
-        session['QuestionMessage'] = ""
-        error_message = ""
-
-    progress = session['progress']
-    locationData = getLocation(session['routeID'], session['progress'])
-    locationID = locationData[0]['LOCATION_ID']
-    questionData = getQuestionLocationID(locationID)
-    imageURL = locationData[0]['LOCATION_IMAGE_URL']
-    imageLocation = url_for('static', filename='images/' + imageURL)
-    questionText = questionData[0]['QUESTION_CONTENT']
-    a = questionData[0]['MULTIPLE_CHOICE_A']
-    b = questionData[0]['MULTIPLE_CHOICE_B']
-    c = questionData[0]['MULTIPLE_CHOICE_C']
-    d = questionData[0]['MULTIPLE_CHOICE_D']
-    return render_template('mobile/Answer_Page.html', error_message=error_message, progress_value=progress,
-                           clue_message="Question: " + questionText, clue_location=imageLocation,
-                           answer_a=a, answer_b=b, answer_c=c, answer_d=d)
-
-
-@app.route('/confirmAnswer', methods=['POST'])
-def checkQuestion():
-    # chscks he progress of the student to ensure the correct question is loaded
-    progress = session['progress']
-    # Get their answer to the question
-    answer = request.form.get('answer')
-    # Retreive the correct answer
-    locationID = getLocation(session['routeID'], session['progress'] )[0]['LOCATION_ID']
-    questionData = getQuestionLocationID(locationID)
-    answer = answer.upper()
-    correctAnswer = questionData[0]['ANSWER'];
-
-    if (str(answer[0]) == str(correctAnswer[0])):
-        # If it was the las question load the end screen
-        if (int(progress) == int(session['numOfQuestions'])):
-            return redirect(url_for('endScreen'))
-        else:
-            # If not load the lext location clue
-            session['progress'] = session.get('progress') + 1
-            return redirect(url_for('showLocationClue'))
-    else:
-        session['teamScore'] = session['teamScore'] - 3
-        session['QuestionMessage'] = 'Wrong answer try again'
-        # redirect to the question page but with error message
-        return redirect(url_for('retryQuestion'))
-
-
-@app.route('/finished')
-def endScreen():
-    teamID = session['teamID']
-    teamscore = session['teamScore']
-    routeID = session['routeID']
-    routeName = getRouteName(routeID)[0]['ROUTE_NAME']
-
-    insertScore(routeID,routeName,teamID,teamscore)
-    print(' ')
-    print('error here ', teamID)
-    print(' ')
-    teamName = getTeamFromID(teamID)[0]['TEAM_NAME']
-    teamreturn = getTeamsScores()
-    #teams = []
-    """for team in teamreturn:
-        teams.append({'group_name': team['TEAM_NAME'], 'final_score': score['VALUE']})
-    """
-    updateTeamLeader("null",teamID)
-    updateTeamRoute("null",0,teamID)
-
-    return render_template('mobile/End_Game_Page.html', group_name=teamName, final_score=teamscore,
-                           final_position="1st", teams=teamreturn)
 
 
 @app.route('/HelpPage')
@@ -636,12 +235,12 @@ def loadLeaderboardPage():
 
 # Runs the app locally if not deployed to the server
 if __name__ == '__main__':
-    #insertTutorUser("testTutor@exeter.ac.uk",1,"TestTutor")
+    # insertTutorUser("testTutor@exeter.ac.uk",1,"TestTutor")
     # insertStudentUser("test201@exeter.ac.uk","TestBen",1,1)
-    #insertTeam("TestTeam",1,1,1,0)
-    #insertRoute(2,"Reverse")
-    #insertScore(1,"Standard",1,100)
-    #insertQuestion(9,"What does the sign behind the cafe say?","Physics is the universes operating system","Im with stupid","We have a latte fun","Flavour by nature","D")
+    # insertTeam("TestTeam",1,1,1,0)
+    # insertRoute(2,"Reverse")
+    # insertScore(1,"Standard",1,100)
+    # insertQuestion(9,"What does the sign behind the cafe say?","Physics is the universes operating system","Im with stupid","We have a latte fun","Flavour by nature","D")
     app.secret_key = 'eXeplore_241199_brjbtk'
     app.SECURITY_PASSWORD_SALT = 'BFR241199'
     app.run(host='0.0.0.0', port=port, debug=True, use_reloader=False)

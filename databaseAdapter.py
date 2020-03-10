@@ -21,7 +21,7 @@ import json
 import ibm_db
 from base64 import b64encode
 
-app = Flask(__name__)
+game_page = Flask(__name__)
 #Set to tru if running on local enviroment
 localFlag = True
 
