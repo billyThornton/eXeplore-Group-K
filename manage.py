@@ -20,7 +20,7 @@ This file contains all the URL routing for the backend/front end, it takes urls
 and displays the required html files.
 It also processes data passed using post/get request.
 """
-from flask import render_template, redirect, url_for, request,send_file,session
+from flask import render_template, redirect, url_for, request, send_file, session, jsonify
 from utils.auth import *
 from databaseAdapter import *
 from functools import wraps
@@ -51,7 +51,7 @@ def requires_access_level(access_level):
 #Will be passed a username and a password
 @app.route('/',methods = ['POST'])
 def login_post():
-    
+
     email = request.form.get('email')
     password = request.form.get('password')
     #Checks the username and password are correct
@@ -61,12 +61,12 @@ def login_post():
         #Sets the role of the user in the session
         if(token['Role']=='student'):
             session['Role'] = 'student'
-            
+
             session['studentID'] = token['ID'][0]['STUDENT_ID']
             #get group ID
-            
+
             groupID = getTeamFromStudentID(session['studentID'])[0]['TEAM_ID']
-            
+
             session['groupID'] = groupID
             #get the ID of the route the students are on
             routeID = getRouteID(session['groupID'])
@@ -202,7 +202,7 @@ def imageUniStatic():
     u = 2
     return send_file('static/images/Exeter_University.jpg',mimetype='image/jpg')
 ######################
-#GAMEMASTER DASHBOARD#
+#GAMEKEEPER DASHBOARD#
 ######################
 #Loads the dashboard for game masters
 @app.route('/dashboard')
@@ -262,7 +262,7 @@ def deleteLocation():
     locationNames=[]
     for location in locations:
         locationNames.append(location['LOCATION_NAME'])
-    
+
     return redirect(url_for('manageLocations'))
 
 
@@ -275,7 +275,7 @@ def manageLocations():
     locationNames=[]
     for location in locations:
         locationNames.append(location['LOCATION_NAME'])
-        
+
     return render_template('Desktop/Manage_Locations_Page.html', locations = locationNames)
 
 #Loads the gamekeepers dashboard tool
@@ -284,14 +284,24 @@ def manageLocations():
 def manageGroups():
     #Creates a list of locations from the db
     studentNames = getStudents()
-        
+
     return render_template('Desktop/Manage_Groups_Page.html', students = studentNames)
 
 #Loads the gamekeepers dashboard tool
 @app.route('/Leaderboard_Page')
 def leaderboard():
-    gameTeams = getTeams()
-    return render_template('Desktop/Leaderboard_Page.html', teams = gameTeams)
+    print("IN THE LEADERBOARD ROUTE")
+    routes = getRoutes()
+    return render_template('Desktop/Leaderboard_Page.html', routes = routes)
+
+@app.route('/Leaderboard_process', methods=['POST'])
+def process():
+    print("IN THE LEADERBOARD_PROCESS ROUTE")
+    route_selected = request.form['route']
+    teams = getTeamScoresFromRouteID(route_selected)
+
+    return jsonify(teams)
+
 
 #Loads the gamekeepers dashboard tool
 @app.route('/Manage_Routes_Page')
@@ -314,7 +324,7 @@ def assignUpdateRoute():
     teamNameID = request.form['team']
     routeNameID = request.form.get('route')
     updateTeamRoute(routeNameID,teamNameID)
-    
+
     return redirect(url_for('assignRoutes'))
 
 ######################
@@ -384,7 +394,7 @@ def showLocationClue():
     print(cluemessage)
     #progress value = get User.progress from db
     #clue message = get clue for position = progress from db
-    
+
     print(imageLocation)
     return render_template('mobile/Clue_Page.html',progress_value = progress,clue_message = cluemessage,clue_location=imageLocation)
 
@@ -417,7 +427,7 @@ def retryQuestion():
         #If no message set set the message to be empty (No message)
         session['QuestionMessage'] = ""
         error_message = ""
-    
+
     progress = session['progress']
     locationData= getLocation(session['routeID'],session['progress']+1)
     locationID = locationData[0]['LOCATION_ID']
@@ -465,13 +475,13 @@ def endScreen():
     progress = session['progress']
     routeID = session['routeID']
     tutorID = getTutorIDFromStudentID(session['studentID'])[0]['TUTOR_ID']
-    
+
     insertTeam(username,teamscore,progress,routeID,tutorID)
     teamreturn = getTeams()
     teams = []
     for team in teamreturn:
         teams.append({'group_name':team['TEAM_NAME'],'final_score':team['TEAM_SCORE']})
-    
+
     return render_template('mobile/End_Game_Page.html',group_name = username,final_score = teamscore,final_position = "1st",teams=teams)
 
 

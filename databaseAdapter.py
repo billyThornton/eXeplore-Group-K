@@ -336,7 +336,7 @@ def getOfficeLocation(officeID):
 
     if db2conn:
         # if we have a Db2 connection, query the database
-        
+
         sql = (
         "SELECT office_name, location_id"
         " FROM office"
@@ -401,7 +401,7 @@ def getLocation(routeID,progress):
         " WHERE route_id = " + str(routeID) +
         " and sequence_order = "+str(progress)+";"
         )
-        
+
         # Prepare the statement
         stmt = ibm_db.prepare(db2conn,sql)
 		# Execute the sql
@@ -638,7 +638,7 @@ def getLocations():
         # close database connection
         ibm_db.close(db2conn)
     return rows
-	
+
 	# Returns all students in the database
 def getStudents():
     db2conn = createConnection()
@@ -741,6 +741,38 @@ def getRoutes():
         # close database connection
         ibm_db.close(db2conn)
     return rows
+
+# Used to return the team name and team score for the leaderboard
+def getTeamScoresFromRouteID(routeID):
+    db2conn = createConnection()
+
+    if db2conn:
+        # if we have a Db2 connection, query the database
+        sql = (
+        "SELECT t.team_name, s.value"
+        " FROM score s"
+        " INNER JOIN team t"
+        " ON s.team_id = t.team_id"
+        " WHERE route_id = '" + routeID +
+        "' ORDER BY s.value DESC;"
+        )
+        # Prepare the statement
+        stmt = ibm_db.prepare(db2conn,sql)
+		# Execute the sql
+        ibm_db.execute(stmt)
+        rows=[]
+        # fetch the result
+        result = ibm_db.fetch_assoc(stmt)
+        while result != False:
+            rows.append(result.copy())
+            result = ibm_db.fetch_assoc(stmt)
+        # close database connection
+        ibm_db.close(db2conn)
+        # Print to screen the result
+        print("These are the team scores", rows)
+    return rows
+
+
 
 def insertStudentUser(email,name,TeamID,TutorID):
     db2conn = createConnection()
@@ -864,7 +896,7 @@ def insertQuestion(locationID, task, answerA, answerB, answerC, answerD, correct
         ibm_db.execute(stmt)
         # close database connection
         ibm_db.close(db2conn)
-"""        
+"""
 
 def insertTeam(teamName,routeID,tutorID,teamLeader,progress):
     db2conn = createConnection()
@@ -925,7 +957,7 @@ def updateTeamRoute(routeID, teamID):
         print(routeID)
         sql = (
             "UPDATE team"
-            " SET team.current_route_id = "+str(routeID)+"" 
+            " SET team.current_route_id = "+str(routeID)+""
             " WHERE team_id = "+str(teamID)+";"
             )
 
