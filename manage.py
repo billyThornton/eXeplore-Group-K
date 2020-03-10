@@ -473,10 +473,10 @@ def showLocationClue():
     #print("LOCATION DATA: "+str(session['routeID'])+str(session['progress']))
     locationID = locationData[0]['LOCATION_ID']
     # Shows the next locations image
-    imageURL = getLocation(session['routeID'], session['progress'] + 1)[0]['LOCATION_IMAGE_URL']
+    imageURL = getLocation(session['routeID'], session['progress'])[0]['LOCATION_IMAGE_URL']
     imageLocation = url_for('static', filename='images/' + imageURL)
     print("LocationID", locationID)
-    # check if there are no maore lcations
+    # check if there are no more locations
     if (len(getLocationClues(locationID)) == 0):
         return redirect(url_for('endScreen'))
 
