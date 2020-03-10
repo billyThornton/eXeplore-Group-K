@@ -22,7 +22,8 @@ DAMGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVIC
 INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INLUDING NEGLIGENCE
 OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-This file contains the html that allows a user to join a team.
+This file contains the html that allows assign the team name and choose which route the team takes. The information is passed
+to the backend where it is stored in the database.
 -->
 <!DOCTYPE html>
 <html>
@@ -43,11 +44,11 @@ This file contains the html that allows a user to join a team.
 	<h3>You have been assigned as the team Leader</h3>
 
 
-	<form action="firstChoose" method="POST">
+	<form action="routeSelect" method="POST">
 
 		<h3>Please choose a route for your team</h3>
-		<select name="tutor" id="teams">
-			<option value="0">Routes</option>
+		<select name="route" id="teams">
+
 			{% for route in routes %}
 			<option value="{{route['ROUTE_ID']}}">{{route["ROUTE_NAME"]}}</option>
 			{% endfor %}

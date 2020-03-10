@@ -33,7 +33,16 @@ This is done by using a form that the game keeper is to fill in.
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="{{url_for('static',filename='styles/Location_Style.css')}}" rel='stylesheet' type='text/css'/>
-<script src="../JSFunctions.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('input[type="file"]').change(function(e){
+            var fileName = e.target.files[0].name;
+            $('p[id="filename"]').text('The file ' + fileName +  ' has been selected.');
+        });
+    });
+</script>
+
 
 <title>Add Location Page</title>
 </head>
@@ -43,11 +52,22 @@ This is done by using a form that the game keeper is to fill in.
 	<div id="add_location_page">
 
 		<!-- Add location details form -->
-		<form id="form" action="Add_Location_Submit" method="POST">
+		<form id="form" action="Add_Location_Submit" method="POST" enctype="multipart/form-data">
 			<div class="location_inputs" id="add_location_container">
 				<div class="location_inputs">
 					<label id="input_label">Location Name:</label>
 					<input type="text" placeholder="Location" name="location" required>
+				</div>
+
+				<div class="location_inputs">
+					<label id="input_label">Clue for location:</label>
+					<input type="text" placeholder="Clue" name="clue" required>
+				</div>
+				
+				<div class="location_inputs"> <label id="input_label">Upload Image:</label>
+					<input type="file" name="location_photo" id ="not_text_input" class="inputfile" />
+					<label for="not_text_input">Upload</label>
+					<p id="filename"></p>
 				</div>
 
 			</div>

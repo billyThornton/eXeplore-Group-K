@@ -81,9 +81,8 @@ using select boxes which are obtained from the database..
 				</thead>
 				
 				{% for team in teams %}
-				<P>Check1 -> {{team['TEAM_ID']}} -> {{team['ROUTE_ID']}}
 				{% for route in routes %}
-				{% if team['ROUTE_ID'] == route['ROUTE_ID'] %}
+				{% if team['CURRENT_ROUTE_ID'] == route['ROUTE_ID'] %}
 				<tr>
 					<td>{{team["TEAM_NAME"]}}</td>
 					<td>{{route["ROUTE_NAME"]}}</td>

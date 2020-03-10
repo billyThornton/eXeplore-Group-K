@@ -25,8 +25,13 @@ from utils.auth import *
 from utils.login import *
 from databaseAdapter import *
 from functools import wraps
+import os
+from werkzeug.utils import secure_filename
 
 from utils.utils import *
+
+
+import threading
 
 app = Flask(__name__)
 port = int(os.getenv('PORT', 8000))
@@ -69,15 +74,25 @@ def login_post():
             session['studentID'] = token['ID'][0]['STUDENT_ID']
             # get group ID
 
-            teamID = getTeamFromStudentID(session['studentID'])[0]['TEAM_ID']
-            #TODO ensure the check works
-            if teamID == 'null':
-                return redirect(url_for('loadJoinTeamPage'))
+            teamID = getTeamFromStudentID(session['studentID'])
+            print(teamID)
 
-            session['teamID'] = teamID
+            if len(teamID) == 0:
+                print("REDIRECT")
+                return redirect(url_for('loadJoinTeamPage'))
+            else:
+                teamID = teamID[0]['TEAM_ID']
+                session['teamID'] = teamID
+            teamLeader = getTeamLeader(teamID)
+
+            if teamLeader[0]['TEAM_LEADER'] is None:
+                updateTeamLeader(session['studentID'],teamID)
+                return redirect(url_for('loadFirstChoosePage'))
+
+
             # get the ID of the route the students are on
             routeID = getRouteID(session['teamID'])
-            session['routeID'] = routeID[0]['ROUTE_ID']
+            session['routeID'] = routeID[0]['CURRENT_ROUTE_ID']
             # Get the total number of questions so end screen can be displayed at the end
             numOfQuestions = getNumLocationOnRoute(session['routeID'])
             session['numOfQuestions'] = numOfQuestions[0]['1']
@@ -176,6 +191,7 @@ def registerSubmit():
         else:
             # Check if the email is already registered
             if (len(getTutorID(name)) == 0):
+                #Also adds first team
                 insertTutorUser(email, 1, name)
                 hashedPassword = hashPassword(password)
                 tutorID = getTutorID(name)[0]['TUTOR_ID']
@@ -233,35 +249,67 @@ def addLocation():
     return render_template('Desktop/add_location_page.html')
 
 
+app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["PNG", "JPG", "JPEG"]
+
+
+def allowedImage(filename):
+    if not "." in filename:
+        return False
+
+    extension = filename.rsplit(".", 1)[1]
+    if extension.upper() in app.config["ALLOWED_IMAGE_EXTENSIONS"]:
+        return True
+    else:
+        return False
+
+
 @app.route('/Add_Location_Submit', methods=['POST'])
 @requires_access_level('staff')
 def addLocationSubmit():
     location = request.form.get('location')
-    task = request.form.get('task')
-    hint = request.form.get('hint')
-    answerA = request.form.get('answer_a')
-    answerB = request.form.get('answer_b')
-    answerC = request.form.get('answer_c')
-    answerD = request.form.get('answer_d')
-    correctAnswer = request.form.get('correct_answer')
-    photo = request.form.get('location_photo')
+    clue = request.form.get('clue')
 
-    # No checks for now
-    insertLocation(location)
-    locationID = getLocationID(location)
-    print("Location ID: ", locationID)
-    insertQuestion(locationID, task, answerA, answerB, answerC, answerD, correctAnswer)
+    photo = request.files['location_photo']
 
-    if (hint != None):
-        insertClue(locationID, hint)
-    locations = []
-    return render_template('Desktop/Manage_Locations_Page.html', locations=locations)
+    if photo.filename == "":
+        print("Image must have a filename")
+        return redirect(url_for('addLocation'))
+
+    if not allowedImage(photo.filename):
+        print("Image extension is not allowed")
+        return redirect(url_for('addLocation'))
+    else:
+        filename = secure_filename(photo.filename)
+
+        photo.save(os.path.join("static/images", photo.filename))
+
+    # No checks
+    insertLocation(location, clue, photo.filename)
+
+    return render_template('Desktop/Manage_Locations_Page.html')
 
 
-@app.route('/Edit_Location')
+@app.route('/Add_Question')
 @requires_access_level('staff')
-def editLocation():
-    return render_template('Desktop/Edit_Location_Page.html')
+def addQuestion():
+    gameLocations = getLocations()
+    return render_template('Desktop/Add_Question_Page.html', locations=gameLocations)
+
+
+@app.route('/Add_Question_Submit', methods=['POST'])
+@requires_access_level('staff')
+def addQuestionSubmit():
+    location = request.form.get('location')
+    question = request.form.get('question')
+    answer_a = request.form.get('answer_a')
+    answer_b = request.form.get('answer_b')
+    answer_c = request.form.get('answer_c')
+    answer_d = request.form.get('answer_d')
+    correct_answer = request.form.get('correct_answer')
+    # No checks for now
+    insertQuestion(location, question, answer_a, answer_b, answer_c, answer_d, correct_answer)
+
+    return render_template('Desktop/Manage_Locations_Page.html')
 
 
 @app.route('/Delete_Location', methods=['POST'])
@@ -304,7 +352,7 @@ def manageGroups():
 # Loads the gamekeepers dashboard tool
 @app.route('/Leaderboard_Page')
 def leaderboard():
-    gameTeams = getTeams()
+    gameTeams = getTeamsScores()
     return render_template('Desktop/Leaderboard_Page.html', teams=gameTeams)
 
 
@@ -329,10 +377,8 @@ def assignRoutes():
 @requires_access_level('staff')
 def assignUpdateRoute():
     teamNameID = request.form['team']
-    print(teamNameID)
     routeNameID = request.form.get('route')
-    print(routeNameID)
-    updateTeamRoute(routeNameID, teamNameID)
+    updateTeamRoute(routeNameID,0, teamNameID)
 
     return redirect(url_for('assignRoutes'))
 
@@ -350,30 +396,63 @@ def loadJoinTeamPage():
 
 @app.route('/assignTeam', methods=['POST'])
 def assignTeam():
-    leader = 1
+    print("TEAM ASSIGN START")
+    # TODO update the student to store updated  tutorID?
+    studentID = session['studentID']
     tutorID = request.form['tutor']
     print(tutorID)
     teamID = request.form.get('team')
+    session['teamID'] = teamID
     print(teamID)
-    #TODO update the student to store the teamID and update the tutorID
-    #TODO check if the team table has a leader assigned
-    if leader == 'null':
-        render_template('firstChoose')
+    updateStudentTeam(studentID,teamID)
+    teamLeader = getTeamLeader(teamID)
+    print("Team LEader")
+    print(teamLeader)
+    if teamLeader[0]['TEAM_LEADER'] is None:
+        updateTeamLeader(studentID,teamID)
+        return redirect(url_for('loadFirstChoosePage'))
+    else:
+        #TODO wait here until route selected by team leader
+        routeID = getRouteID(session['teamID'])
+        while routeID[0]['CURRENT_ROUTE_ID'] is None:
+            routeID = getRouteID(session['teamID'])
+
+        session['routeID'] = routeID[0]['CURRENT_ROUTE_ID']
+        return redirect(url_for('showLocationClue'))
+
+
+
+@app.route('/firstChoose')
+def loadFirstChoosePage():
+    gameRoutes = getRoutes();
+    return render_template('mobile/First_Choose.html', routes=gameRoutes)
+
+@app.route('/routeSelect', methods = ['POST'])
+def routeSelect():
+    routeID = request.form['route']
+    teamName = request.form['teamName']
+    teamID = session['teamID']
+    session['routeID'] = routeID
+    updateTeamRoute(routeID,0,teamID)
+    updateTeamName(teamName,teamID)
+    numOfQuestions = getNumLocationOnRoute(session['routeID'])
+    session['numOfQuestions'] = numOfQuestions[0]['1']
     return redirect(url_for('showLocationClue'))
 
-
-@app.route('/firstChoose', methods=['POST'])
-def loadFirstChoosePage():
-    if app.request.method == 'POST':
-        #TODO handle the route selected
-        return redirect(url_for('showLocationClue'))
-    #TODO get routes based on tutor ID
-    gameRoutes = getRoutes()
-    return render_template('mobile/First_Choose.html', routes=gameRoutes)
 
 
 
 # Displays the location clue page at an appropriate progression point
+
+@app.route('/loadFirstTeam', methods = ['POST'])
+def loadFirstTeam():
+    routeID = request.form['route']
+    teamName = request.form['teamName']
+    #add or update database now here maybe
+    return redirect(url_for('showLocationClue'))
+
+
+#Displays the location clue page at an appropriate progression point
 @app.route('/Game')
 def showLocationClue():
     # get progress from db
@@ -391,6 +470,7 @@ def showLocationClue():
 
     # Get the location ID for the clue
     locationData = getLocation(session['routeID'], session['progress'])
+    #print("LOCATION DATA: "+str(session['routeID'])+str(session['progress']))
     locationID = locationData[0]['LOCATION_ID']
     # Shows the next locations image
     imageURL = getLocation(session['routeID'], session['progress'] + 1)[0]['LOCATION_IMAGE_URL']
@@ -400,7 +480,7 @@ def showLocationClue():
     if (len(getLocationClues(locationID)) == 0):
         return redirect(url_for('endScreen'))
 
-    cluemessage = getLocationClues(locationID)[0]['CONTENTS']
+    cluemessage = getLocationClues(locationID)[0]['CLUE']
     print(cluemessage)
     # progress value = get User.progress from db
     # clue message = get clue for position = progress from db
@@ -487,19 +567,22 @@ def checkQuestion():
 
 @app.route('/finished')
 def endScreen():
-    username = getStudentName(session['studentID'])[0]['NAME']
+    teamID = session['teamID']
     teamscore = session['teamScore']
-    progress = session['progress']
     routeID = session['routeID']
-    tutorID = getTutorIDFromStudentID(session['studentID'])[0]['TUTOR_ID']
+    routeName = getRouteName(routeID)
 
-    insertTeam(username, teamscore, progress, routeID, tutorID)
+    insertScore(routeID,routeName,teamID,teamscore)
+
+    teamName = getTeamFromID(teamID)[0]['TEAM_NAME']
     teamreturn = getTeams()
     teams = []
     for team in teamreturn:
         teams.append({'group_name': team['TEAM_NAME'], 'final_score': team['TEAM_SCORE']})
+    updateTeamLeader("null",teamID)
+    updateTeamRoute("null",0,teamID)
 
-    return render_template('mobile/End_Game_Page.html', group_name=username, final_score=teamscore,
+    return render_template('mobile/End_Game_Page.html', group_name=teamName, final_score=teamscore,
                            final_position="1st", teams=teams)
 
 
@@ -521,6 +604,11 @@ def loadLeaderboardPage():
 
 # Runs the app locally if not deployed to the server
 if __name__ == '__main__':
+    #insertTutorUser("testTutor@exeter.ac.uk",1,"TestTutor")
+    # insertStudentUser("test201@exeter.ac.uk","TestBen",1,1)
+    #insertTeam("TestTeam",1,1,1,0)
+    #insertRoute(2,"Reverse")
+    #insertScore(1,"Standard",1,100)
     app.secret_key = 'eXeplore_241199_brjbtk'
     app.SECURITY_PASSWORD_SALT = 'BFR241199'
-    app.run(host='0.0.0.0', port=port, debug=True, use_reloader=False, ssl_context='adhoc')
+    app.run(host='0.0.0.0', port=port, debug=True, use_reloader=False)
