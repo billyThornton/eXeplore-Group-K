@@ -1,8 +1,8 @@
-<!--
+	<!--
 Created on 21/02/2020 
 @author: Ben Trotter
-@Last Edited: 26/02/2020
-@edited by: Jamie Butler
+@Last Edited: 10/03/2020
+@Edited By: Jamie Butler
 
 Copyright (c) “2020, by Group K
 Contributors: Jamie Butler, Rahul Pankhania, Teo Reed, Billy Thornton, Ben Trotter, Kristian Woolhouse
@@ -34,23 +34,30 @@ the pop up sidebar in the game. It also provides a access to a side bar which pr
 <link href="{{url_for('static',filename='styles/Game_Style.css')}}" rel='stylesheet' type='text/css'/>
 <script src="{{url_for('static',filename='js/JSFunctions.js')}}"></script>
 <title>Help Page</title>
+</head>
 
 <body>
 
 	<div id="answer_page_container">
 	
+		<!-- Attach the side bar -->
 		{% include "mobile/Game_Nav.html" %}
 
-		<div id="help_title">
-			<h1>Help Page</h1>
+		<h1>Help Page</h1>
+
+		<p>How to play:</p>
 		
-		<div id="help_message">
-			<p>How to play:</p>
-			<p>Once you've logged in, you will be presented with a clue to where you need to go next.</p>
-			<p>Once you think you've reached the next location, tap 'Next' and you will be displayed with your task!</p>
-			<p>Enter your answer and move on to the next location! Once the progress bar at the top is full you've finished!!!</p>
-			<p>You will be given a score and your leaderboard position.</p>
-		</div>
+		<p>Once you've logged in and chosen a team, you will be presented with a clue to where you need to go next.</p>
+		
+		<p>Once you think you've reached the next location, tap 'Here' and your Team Leader will be shown a question!</p>
+		
+		<p>Your Team Leader will need to select an answer so you can move on to the next location!</p>
+		
+		<p>Once the progress bar at the top is full you've finished!!!</p>
+		
+		<p>You will then be shown your teams score and leaderboard ranking!</p>
+		
+		<p>Still unsure? Try the <a href="FAQPage">FAQ</a> page!</p>
 		
 		<div id="transparent_button_container">
 			<button type="button" onclick="location.href='Game'" id="submit" class="transparent_button" name="contine_button">Continue</button>
