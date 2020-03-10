@@ -237,6 +237,11 @@ def loadLeaderboardPage():
     gameTeams = getTeams()
     return render_template('mobile/Leaderboard.html', teams=gameTeams)
 
+	
+@app.route('/FAQPage')
+def loadFAQPage():
+	return render_template('mobile/FAQ_Page.html')
+
 
 # Runs the app locally if not deployed to the server
 if __name__ == '__main__':
