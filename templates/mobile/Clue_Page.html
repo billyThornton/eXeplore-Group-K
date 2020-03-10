@@ -43,7 +43,7 @@ eXeplore game. Additionally it also gives access to a side bar which provides va
 		{% include "mobile/Game_Nav.html" %}
 
 		<div id="progress_bar">
-			<span>Progress bar value: {{progress_value}}</span>
+			<progress value="{{progress_value}}"" max="8">{{progress_value}}</progress>
 		</div>
 
 		<img id="clue_location" src="{{clue_location}}">
