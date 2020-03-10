@@ -168,48 +168,6 @@ input[type=text] {
 	margin-left: auto;
 }
 
-/* Hide old radio button style */
-input[type="checkbox"]{
-	display: none;
-}
-
-.active-label {
-	color: #414141;
-}
-
-.active-label:before {
-	background-color: #414141;
-	border-color: green;
-}
-
-/**
- * How it should look when checked
- */
-input[type="checkbox"]:checked + #student_label:before {
-	border-color: white;
-	border: none;
-	background: #31750E;
-	padding: 3px;
-}
-
-/**
- * How it should look when disabled
- */
-input[type="checkbox"]:disabled + #student_label {
-	background: #efefef;
-	color: rgba(0, 0, 0, 0.5);
-	cursor: not-allowed;
-}
-
-input[type="checkbox"]:disabled + #student_label:hover {
-	border-color: rgba(0, 0, 0, 0.1);
-}
-
-input[type="checkbox"]:disabled + #student_label:before {
-	border-color: white;
-	background: white;
-}
-
 #student_label, #group_label {
 	font-size: 1rem;
 	font-weight: bold;
@@ -218,7 +176,6 @@ input[type="checkbox"]:disabled + #student_label:before {
 	display: block;
 	color: #414141;
 	font-family: sans-serif;
-	padding: 1rem 1rem 1rem 3rem;
 	position: relative;
 	border-top: 1px solid rgba(black, 0.1);
 	background: none;
@@ -228,58 +185,3 @@ input[type="checkbox"]:disabled + #student_label:before {
 	transition: all 0.15s ease;
 }
 
-#student_label:first-of-type, #group_label:first-of-type {
-	border: 0;
-}
-
-#student_label:before, #group_label:before {
-	content: "";
-	position: absolute;
-	left: 1rem;
-	top: 1rem;
-	width: 12px;
-	height: 12px;
-	border-radius: 50%;
-	border: 0.2rem solid #ccc;
-}
-
-.active-label, #student_label:focus, #student_label:hover, #student_label:active, #student_label:checked + #student_label, #group_label :focus, #group_label:hover, #group_label:active, #group_label:checked + #group_label {
-	color: #31750E;
-}
-
-.active-label:before, #student_label:focus:before, #student_label:hover:before, #student_label:active:before, #student_label:checked + #student_label:before, #group_label:focus:before, #group_label:hover:before, #group_label:active:before, #group_label:checked + #group_label:before {
-    background: none;
-    border-color: #31750E;
-}
-
-input[type="radio"]{
-    display: none;
-}
-
-/**
-* How it should look when checked
-*/
-input[type="radio"]:checked + #group_label:before {
-	border-color: white;
-	border: none;
-	background: #31750E;
-	padding: 3px;
-}
-
-/**
-* How it should look when disabled
-*/
-input[type="radio"]:disabled + #group_label {
-	background: #efefef;
-	color: rgba(0, 0, 0, 0.5);
-	cursor: not-allowed;
-}
-
-input[type="radio"]:disabled + #group_label:hover {
-	border-color: rgba(0, 0, 0, 0.1);
-}
-
-input[type="radio"]:disabled + #group_label:before {
-	border-color: white;
-	background: white;
-}

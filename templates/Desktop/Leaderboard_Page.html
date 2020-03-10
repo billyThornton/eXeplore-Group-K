@@ -1,22 +1,22 @@
 <!--
-Created on 19/02/2020 
+Created on 19/02/2020
 @author: Ben Trotter
 @Last Edited: 26/02/2020
 @edited by: Jamie Butler
 
 Copyright (c) “2020, by Group K
 Contributors: Jamie Butler, Rahul Pankhania, Teo Reed, Billy Thornton, Ben Trotter, Kristian Woolhouse
-URL: https://github.com/billyThornton/eXeplore-Group-K ” 
+URL: https://github.com/billyThornton/eXeplore-Group-K ”
 All rights reserved.
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following
 conditions are met:
- 
+
 Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
 Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer
 in the documentation and/or other materials
-provided with the distribution. 
+provided with the distribution.
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
-BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAT PURPOSE ARE DISCLAIMED. IN NO EVENT 
+BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAT PURPOSE ARE DISCLAIMED. IN NO EVENT
 SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
 DAMGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
 INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INLUDING NEGLIGENCE
@@ -37,34 +37,91 @@ clicked from  the side bar. It allows a gamekeeper to view the current leaderboa
 </head>
 
 <body>
+    <script type=text/javascript src="{{url_for('static', filename='js/jquery.js') }}"></script>
+    <!-- <script type="text/javascript" src="{{url_for('static', filename='js/displayLeaderBoard.js')}}"></script> -->
 	<div id="leaderboard_page">
-	
-		<h3>Leaderboard:</h3>
-		
-		<div id="groups_list_container">
-			<table class="table">
-			
-				<!-- Headers -->
-				<thead>
-					<tr>
-						<th>Position</th>
-						<th>Team Name</th>
-						<th>Score</th>
-					</tr>
-				</thead>
-				
-				{% for team in teams %}
-				<tr>
-					<td>{{loop.index}}</td>
-					<td>{{team['TEAM_NAME']}}</td>
-					<td>{{team['VALUE']}}</td>
-					
-				</tr>
-				{% endfor %}
 
-			</table>
+		<h3>Leaderboard:</h3>
+
+		<div id="groups_list_container">
 		</div>
-		
+
+        <form>
+            {% for route in routes %}
+                {% if loop.index == 1 %}
+                    <input type="radio" id="{{route['ROUTE_ID']}}" name="route" value="{{route['ROUTE_ID']}}">
+                    <label for="{{route['ROUTE_ID']}}">{{route['ROUTE_NAME']}}</label><br/>
+                {% else %}
+                    <input type="radio" id="{{route['ROUTE_ID']}}" name="route" value="{{route['ROUTE_ID']}}">
+                    <label for="{{route['ROUTE_ID']}}">{{route['ROUTE_NAME']}}</label><br/>
+                {% endif %}
+
+                <script type="text/javascript">
+                    $(document).ready(function() {
+                        $("input[type = 'radio']").on('click', function() {
+                            $.ajax({
+                                url : '/Leaderboard_process',
+                                data : {
+                                    route : $("#{{route['ROUTE_ID']}}").val()
+                                },
+                                type : 'POST',
+                            })
+                            .done(function(data) {
+                                console.log("{{route['ROUTE_ID']}}");
+                                // Create HTML table
+                                var table = document.createElement("TABLE");
+                                table.border = "1";
+                                // Get the count of columns
+                                var columnCount  = 3;
+                                // Add the header row
+                                var row = table.insertRow(-1);
+                                var headerCell = document.createElement("TH");
+                                var headerCell1 = document.createElement("TH");
+                                var headerCell2 = document.createElement("TH");
+
+                                headerCell.innerHTML = "Position";
+                                row.appendChild(headerCell);
+
+                                headerCell1.innerHTML = "Team Name";
+                                row.appendChild(headerCell1);
+
+                                headerCell2.innerHTML = "Score";
+                                row.appendChild(headerCell2);
+
+                                function getTeamName(item) {
+                                    var name = item.TEAM_NAME;
+                                    return name;
+                                }
+                                function getValue(item) {
+                                    var value = item.VALUE;
+                                    return value;
+                                }
+                                // Add the data rows
+                                // Number of rows
+                                for (var i = 1; i < data.length; i++) {
+                                    row = table.insertRow(-1);
+                                    // Number of columns
+                                    for (var j = 0; j < columnCount; j++) {
+                                        if(j == 0) {
+                                            var cell = row.insertCell(-1);
+                                            cell.innerHTML = i;
+                                        } else if (j > 0) {
+                                            var cell = row.insertCell(-1);
+                                            cell.innerHTML = Object.values(data[i])[j-1];
+                                        }
+                                    }
+                                }
+                                var dvTable = document.getElementById("groups_list_container");
+                                dvTable.innerHTML = "";
+                                dvTable.appendChild(table);
+                            });
+                        });
+                    });
+                </script>
+
+            {% endfor %}
+        </form>
+
 	</div>
 </body>
 </html>
