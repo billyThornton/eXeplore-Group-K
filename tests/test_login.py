@@ -97,7 +97,7 @@ class BasicTests(flask_testing.TestCase):
                                          team = getTeamID(teamName)[0]['TEAM_ID']),
                                follow_redirects=True)
 
-    def selectRoute(selfself,testClient, routeID, teamName):
+    def selectRoute(self,testClient, routeID, teamName):
         return testClient.post('/routeSelect',
                                data = dict(route = routeID,teamName = teamName),
                                follow_redirects=True)
