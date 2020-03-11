@@ -1039,6 +1039,50 @@ def insertTeam(teamName,routeID,tutorID,teamLeader,progress):
         # close database connection
         ibm_db.close(db2conn)
 
+def getVerificationStatus(userType,email):
+    """
+
+    :type userType: String ("student") or String ("tutor")
+    """
+    db2conn = createConnection()
+    if db2conn:
+        # if we have a Db2 connection, query the database
+        sql = "SELECT verified FROM " + userType + " where email = '" + str(email) + "';"
+        # Prepare the statement
+        stmt = ibm_db.prepare(db2conn, sql)
+        # Execute the sql
+        ibm_db.execute(stmt)
+        rows = []
+        # fetch the result
+        result = ibm_db.fetch_assoc(stmt)
+        while result != False:
+            rows.append(result.copy())
+            result = ibm_db.fetch_assoc(stmt)
+        # close database connection
+        ibm_db.close(db2conn)
+    return rows
+
+def updateVerififcationStatus(userType,email, stringBool):
+    """
+
+    :type stringBool: String ("TRUE") or String("FALSE")
+    """
+    db2conn = createConnection()
+
+    if db2conn:
+        sql = (
+            "UPDATE " + str(userType) +
+            " SET verified = " + 
+             + " WHERE email = "+str(email)+";"
+            )
+
+        print(sql)
+        stmt = ibm_db.prepare(db2conn,sql)
+        # Execute the sql
+        ibm_db.execute(stmt)
+        # close database connection
+        ibm_db.close(db2conn)
+
 
 def removeLocation(locationName):
     db2conn = createConnection()

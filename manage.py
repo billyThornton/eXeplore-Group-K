@@ -30,6 +30,7 @@ from werkzeug.utils import secure_filename
 from blueprints.manageDashboard import dashboard_page
 from blueprints.manageGame import game_page
 from utils.utils import *
+from utils.token import generate_confirmation_token, confirm_token
 
 app = Flask(__name__)
 app.register_blueprint(dashboard_page)
@@ -49,6 +50,9 @@ def login_post():
     token = verifyUser(password, email)
 
     if (token['VerificationToken']):
+        #if !getVerificationStatus(token['Role'],email)[0]['VERIFICATION']:
+
+
         # Sets the role of the user in the session
         if (token['Role'] == 'student'):
             session['Role'] = 'student'
@@ -84,13 +88,13 @@ def login_post():
             session['Role'] = 'staff'
 
 
-    if (session['Role'] == "staff"):
-        # If staff redirect to the dashboard
-        return redirect(url_for('dashboard_page.dashboard'))
+        if (session['Role'] == "staff"):
+            # If staff redirect to the dashboard
+            return redirect(url_for('dashboard_page.dashboard'))
 
-    elif (session['Role'] == "student"):
-        # If student redirect to the game
-        return redirect(url_for('game_page.showLocationClue'))
+        elif (session['Role'] == "student"):
+            # If student redirect to the game
+            return redirect(url_for('game_page.showLocationClue'))
     else:
         # If neither redirect to login page and send error message
         flash("User does not exist")
@@ -109,6 +113,23 @@ def register():
     gameTutors = getTutors()
     return render_template('Desktop/register.html', tutors=gameTutors)
 
+@app.route('/confirm/<token>')
+def confirm_email(token):
+    try:
+        email = confirm_token(token)
+    except:
+        flash('The confirmation link is invalid or has expired.', 'danger')
+
+    if hasNumbers(email):
+        userType = "student"
+    else:
+        userType = "tutor"
+    if getVerificationStatus(userType,email)[0]['VERIFIED']:
+        flash('Account already confirmed. Please login.', 'success')
+    else:
+        updateVerififcationStatus(userType,email,"TRUE")
+        flash('You have confirmed your account. Thanks!', 'success')
+    return redirect(url_for('login'))
 
 # Handles registration
 @app.route('/registerSubmit', methods=['POST'])
