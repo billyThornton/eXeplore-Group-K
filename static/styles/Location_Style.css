@@ -42,6 +42,10 @@ h3 {
 	font-weight: lighter;
 }
 
+P {
+	color: red;
+}
+
 /* Hiding original radio button style */
 input[type=radio]{
 	display: none;
@@ -56,8 +60,15 @@ input[type=radio]{
 	border-color: green;
  }
 
+form {
+	width: 100%;
+	margin-top: 50px;
+}
 
-
+#transparent_button_container {
+	width: 100%;
+	text-align: center;
+}
 
 /* How it should look when checked */
 input[type="radio"]:checked + #location_label:before {
@@ -136,10 +147,7 @@ input[type="radio"]:disabled + #location_label:before {
     height: 500px;
 }
 
-#form {
-	margin-left: 50px;
-	margin-top: 50px;
-}
+
 
 /* Styling of user input on add/edit page*/
 input[type=text] {
@@ -198,6 +206,9 @@ input[type=text] {
 	margin-bottom: 15px;
 	width: 360px;
 	display: inline-block;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
 }
 
 #input_label {
@@ -216,10 +227,10 @@ input[type=text] {
 }
 
 #transparent_button {
-	font-size: 20px;
+	font-size: 16px;
 	color: white;
 	height: 30px;
-	width: 250px;
+	width: 150px;
 	background: none;
 	border-style: solid;
 	border-width: 2px;
@@ -229,23 +240,22 @@ input[type=text] {
 }
 
 #save_transparent_button {
-	font-size: 20px;
+	font-size: 16px;
 	color: #31750E;
 	height: 30px;
-	width: 250px;
+	width: 150px;
 	background: none;
 	border-style: solid;
 	border-width: 2px;
 	border-color: #31750E;
 	border-radius: 50px;
-	margin-left: 15px;
 }
 
 #delete_transparent_button {
-	font-size: 20px;
+	font-size: 16px;
 	color: #FF3B3B;
 	height: 30px;
-	width: 250px;
+	width: 150px;
 	background: none;
 	border-style: solid;
 	border-width: 2px;
@@ -273,4 +283,23 @@ input[type=text] {
 
 .correct_answer-hide {
 	display: none;
+}
+
+@media screen and (max-width: 600px) {
+	input[type=text] {
+		width: 90px;
+	}
+	select {
+		display: block;
+		margin-top: 5px;
+
+
+	}
+	.location_inputs {
+		width: 250px;
+	}
+	#transparent_button, #save_transparent_button, #delete_transparent_button {
+		font-size: 12px;
+		width: 100px;
+	}
 }
