@@ -17,14 +17,13 @@ from flask_testing import TestCase
 
 from manage import app,session
 import ibm_db
-from databaseAdapter import createConnection, getStudentID,getTutorPassword,insertTutorUser, getTeamID, getTutorID, getRouteID, getTeamFromStudentID
-
+from databaseAdapter import createConnection, getStudentID,getTutorPassword,insertTutorUser
 class BasicTests(flask_testing.TestCase):
-
+ 
 ############################
 #### setup and teardown ####
 ############################
-
+ 
     # executed prior to each test
     def create_app(self):
         app.config['TESTING'] = True
@@ -33,23 +32,23 @@ class BasicTests(flask_testing.TestCase):
         app.secret_key = 'eXeplore_241199_brjbtk'
         app.SECURITY_PASSWORD_SALT = 'BFR241199'
         self.app = app.test_client()
-
+ 
         self.assertEqual(app.debug, False)
-
+        
         return app
-
+ 
     # executed after each test
     def tearDown(self):
         pass
-
+ 
 ########################
 #### helper methods ####
-########################
+########################    
     def registerIndividual(self,testClient,name,email,password,confirm,tutorname):
         return testClient.post('/registerSubmit',
             data=dict(name=name, email=email, password=password, passwordConfirmation=confirm,tutorName=tutorname),
             follow_redirects=True)
-
+ 
     def register(self,testClient, name, email, password, confirm, tutorname):
         db2conn = createConnection()
 
@@ -63,39 +62,27 @@ class BasicTests(flask_testing.TestCase):
             ibm_db.execute(stmt)
             ibm_db.close(db2conn)
         return self.registerIndividual(testClient,name,email,password,confirm,tutorname)
-
-
-
+    
+        
+        
     def loginuser(self,testClient,email,password):
         return testClient.post('/',
         data=dict(email=email,password=password),
         follow_redirects=True)
-
-    def selectTeam(self, testClient, tutorName, teamName):
-        return testClient.post('/assignTeam',
-                               data=dict(tutor = getTutorID(tutorName,"string")[0]['TUTOR_ID'],
-                                         team = getTeamID(teamName)[0]['TEAM_ID']),
-                               follow_redirects=True)
-
-    def selectRoute(selfself,testClient, routeID, teamName):
-        return testClient.post('/routeSelect',
-                               data = dict(route = routeID,teamName = teamName),
-                               follow_redirects=True)
-
-
+        
     def getQuestionTest(self,testClient):
         return testClient.post('/getQuestion',follow_redirects=True)
-
+    
     def confirmAnswer(self,testClient,answer):
         return testClient.post('/confirmAnswer',data=dict(answer = answer),follow_redirects = True)
+    
 
-
-
+ 
 ###############
 #### tests ####
-###############
-
-
+###############   
+        
+    
     def test_game_correct_answer(self):
         with app.test_client() as testClient:
             self.register(testClient,'Test entry','test1@exeter.ac.uk','password','password','matt')
@@ -105,7 +92,7 @@ class BasicTests(flask_testing.TestCase):
             self.assertEqual(response2.status_code,200)
             self.assert_template_used('mobile/Clue_Page.html')
             self.assertEqual(session['teamScore'], 100)
-
+            
     def test_game_incorrect_answer(self):
         with app.test_client() as testClient:
             self.register(testClient,'Test entry','test1@exeter.ac.uk','password','password','matt')
@@ -116,19 +103,6 @@ class BasicTests(flask_testing.TestCase):
             self.assert_template_used('mobile/Answer_Page.html')
             self.assertEqual(session['teamScore'], 97)
             self.assert_context('error_message','Wrong answer try again')
-
-    def test_game_finishes(self):
-        with app.test_client() as testClient:
-            self.register(testClient,'Test entry','test1@exeter.ac.uk','password','password','matt')
-            self.loginuser(testClient,'test1@exeter.ac.uk','password')
-            self.selectTeam(testClient, "test entry", "test entry Team 1")
-            self.selectRoute(testClient, 1, "TEST NEW NAME")
-            response = self.getQuestionTest(testClient)
-            response2 = self.confirmAnswer(testClient, 'b')
-            self.assertEqual(response2.status_code,200)
-            self.assert_template_used('mobile/Clue_Page.html')
-            self.assertEqual(session['teamScore'], 100)
-
-
+     
 if __name__ == "__main__":
     unittest.main()
