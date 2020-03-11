@@ -36,6 +36,7 @@ their own api key from google.
 <script src="{{url_for('static',filename='js/JSFunctions.js')}}"></script>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR API KEY GOES HERE"></script>
 
+<!-- Function to add google map of Exeter Uni campus -->
 <script type="text/javascript">
 
     function initMap() {
@@ -50,6 +51,7 @@ their own api key from google.
 </head>
 
 <body onload="initMap()">
+
 	<div id="answer_page_container">
 	
 	{% include "mobile/Game_Nav.html" %}
@@ -63,5 +65,6 @@ their own api key from google.
 			<button type="button" onclick="location.href='Game'" id="submit" class="transparent_button" name="contine_button">Continue</button>
 		</div>	
 	</div>
+
 </body>
 </html>
