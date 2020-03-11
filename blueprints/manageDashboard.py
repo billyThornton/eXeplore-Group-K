@@ -192,8 +192,142 @@ def process():
 @dashboard_page.route('/Manage_Routes_Page')
 @requires_access_level('staff')
 def manageRoutes():
-    return render_template('Desktop/Manage_Routes_Page.html')
+    locationData = getLocations()
+    locations = []
+    for location in locationData :
+        locations.append(location['LOCATION_NAME'])
 
+    questionData = getQuestions()
+    questions = []
+    for question in questionData :
+        questions.append(question['QUESTION_CONTENT'])
+
+    print("THESE ARE THE QUESTIONS\n", questions)
+
+    routeData = getRoutes()
+    routes = []
+    for route in routeData :
+        routes.append(route['ROUTE_NAME'])
+
+    return render_template('Desktop/Manage_Routes_Page.html', locations = locations, questions = questions, routes = routes)
+
+# Functionality for creating a route from locations in the database
+@dashboard_page.route('/Add_Route_Submit', methods=['POST'])
+@requires_access_level('staff')
+def addRouteSubmit():
+    routeName = request.form.get('route_name')
+    location1 = request.form.get('location_1')
+    question1 = request.form.get('Question_1')
+    location2 = request.form.get('location_2')
+    question2 = request.form.get('Question_2')
+    location3 = request.form.get('location_3')
+    question3 = request.form.get('Question_3')
+    location4 = request.form.get('location_4')
+    question4 = request.form.get('Question_4')
+    location5 = request.form.get('location_5')
+    question5 = request.form.get('Question_5')
+    location6 = request.form.get('location_6')
+    question6 = request.form.get('Question_6')
+    location7 = request.form.get('location_7')
+    question7 = request.form.get('Question_7')
+    location8 = request.form.get('location_8')
+    question8 = request.form.get('Question_8')
+    location9 = request.form.get('location_9')
+    question9 = request.form.get('Question_9')
+    location10 = request.form.get('location_10')
+    question10 = request.form.get('Question_10')
+
+
+    if location1 == "n/a":
+        print("Error Check")
+    elif location2 == "n/a":
+        insertRoute(routeName)
+        routeID = getRouteIDFromRouteName(routeName)['ROUTE_ID']
+        insertRouteSequence(routeID, getLocationID(location1)['LOCATION_ID'], 0)
+    elif location3 == "n/a":
+        insertRoute(routeName)
+        routeID = getRouteIDFromRouteName(routeName)['ROUTE_ID']
+        insertRouteSequence(routeID, getLocationID(location1)['LOCATION_ID'], 0)
+        insertRouteSequence(routeID, getLocationID(location2)['LOCATION_ID'], 1)
+    elif location4 == "n/a":
+        insertRoute(routeName)
+        routeID = getRouteIDFromRouteName(routeName)['ROUTE_ID']
+        insertRouteSequence(routeID, getLocationID(location1)['LOCATION_ID'], 0)
+        insertRouteSequence(routeID, getLocationID(location2)['LOCATION_ID'], 1)
+        insertRouteSequence(routeID, getLocationID(location3)['LOCATION_ID'], 2)
+    elif location5 == "n/a":
+        insertRoute(routeName)
+        routeID = getRouteIDFromRouteName(routeName)['ROUTE_ID']
+        insertRouteSequence(routeID, getLocationID(location1)['LOCATION_ID'], 0)
+        insertRouteSequence(routeID, getLocationID(location2)['LOCATION_ID'], 1)
+        insertRouteSequence(routeID, getLocationID(location3)['LOCATION_ID'], 2)
+        insertRouteSequence(routeID, getLocationID(location4)['LOCATION_ID'], 3)
+    elif location6 == "n/a":
+        insertRoute(routeName)
+        routeID = getRouteIDFromRouteName(routeName)['ROUTE_ID']
+        insertRouteSequence(routeID, getLocationID(location1)['LOCATION_ID'], 0)
+        insertRouteSequence(routeID, getLocationID(location2)['LOCATION_ID'], 1)
+        insertRouteSequence(routeID, getLocationID(location3)['LOCATION_ID'], 2)
+        insertRouteSequence(routeID, getLocationID(location4)['LOCATION_ID'], 3)
+        insertRouteSequence(routeID, getLocationID(location5)['LOCATION_ID'], 4)
+    elif location7 == "n/a":
+        insertRoute(routeName)
+        routeID = getRouteIDFromRouteName(routeName)['ROUTE_ID']
+        insertRouteSequence(routeID, getLocationID(location1)['LOCATION_ID'], 0)
+        insertRouteSequence(routeID, getLocationID(location2)['LOCATION_ID'], 1)
+        insertRouteSequence(routeID, getLocationID(location3)['LOCATION_ID'], 2)
+        insertRouteSequence(routeID, getLocationID(location4)['LOCATION_ID'], 3)
+        insertRouteSequence(routeID, getLocationID(location5)['LOCATION_ID'], 4)
+        insertRouteSequence(routeID, getLocationID(location6)['LOCATION_ID'], 5)
+    elif location8 == "n/a":
+        insertRoute(routeName)
+        routeID = getRouteIDFromRouteName(routeName)['ROUTE_ID']
+        insertRouteSequence(routeID, getLocationID(location1)['LOCATION_ID'], 0)
+        insertRouteSequence(routeID, getLocationID(location2)['LOCATION_ID'], 1)
+        insertRouteSequence(routeID, getLocationID(location3)['LOCATION_ID'], 2)
+        insertRouteSequence(routeID, getLocationID(location4)['LOCATION_ID'], 3)
+        insertRouteSequence(routeID, getLocationID(location5)['LOCATION_ID'], 4)
+        insertRouteSequence(routeID, getLocationID(location6)['LOCATION_ID'], 5)
+        insertRouteSequence(routeID, getLocationID(location7)['LOCATION_ID'], 6)
+    elif location9 == "n/a":
+        insertRoute(routeName)
+        routeID = getRouteIDFromRouteName(routeName)['ROUTE_ID']
+        insertRouteSequence(routeID, getLocationID(location1)['LOCATION_ID'], 0)
+        insertRouteSequence(routeID, getLocationID(location2)['LOCATION_ID'], 1)
+        insertRouteSequence(routeID, getLocationID(location3)['LOCATION_ID'], 2)
+        insertRouteSequence(routeID, getLocationID(location4)['LOCATION_ID'], 3)
+        insertRouteSequence(routeID, getLocationID(location5)['LOCATION_ID'], 4)
+        insertRouteSequence(routeID, getLocationID(location6)['LOCATION_ID'], 5)
+        insertRouteSequence(routeID, getLocationID(location7)['LOCATION_ID'], 6)
+        insertRouteSequence(routeID, getLocationID(location8)['LOCATION_ID'], 7)
+    elif location10 == "n/a":
+        insertRoute(routeName)
+        routeID = getRouteIDFromRouteName(routeName)['ROUTE_ID']
+        insertRouteSequence(routeID, getLocationID(location1)['LOCATION_ID'], 0)
+        insertRouteSequence(routeID, getLocationID(location2)['LOCATION_ID'], 1)
+        insertRouteSequence(routeID, getLocationID(location3)['LOCATION_ID'], 2)
+        insertRouteSequence(routeID, getLocationID(location4)['LOCATION_ID'], 3)
+        insertRouteSequence(routeID, getLocationID(location5)['LOCATION_ID'], 4)
+        insertRouteSequence(routeID, getLocationID(location6)['LOCATION_ID'], 5)
+        insertRouteSequence(routeID, getLocationID(location7)['LOCATION_ID'], 6)
+        insertRouteSequence(routeID, getLocationID(location8)['LOCATION_ID'], 7)
+        insertRouteSequence(routeID, getLocationID(location9)['LOCATION_ID'], 8)
+    else:
+        insertRoute(routeName)
+        routeID = getRouteIDFromRouteName(routeName)['ROUTE_ID']
+        insertRouteSequence(routeID, getLocationID(location1)['LOCATION_ID'], 0)
+        insertRouteSequence(routeID, getLocationID(location2)['LOCATION_ID'], 1)
+        insertRouteSequence(routeID, getLocationID(location3)['LOCATION_ID'], 2)
+        insertRouteSequence(routeID, getLocationID(location4)['LOCATION_ID'], 3)
+        insertRouteSequence(routeID, getLocationID(location5)['LOCATION_ID'], 4)
+        insertRouteSequence(routeID, getLocationID(location6)['LOCATION_ID'], 5)
+        insertRouteSequence(routeID, getLocationID(location7)['LOCATION_ID'], 6)
+        insertRouteSequence(routeID, getLocationID(location8)['LOCATION_ID'], 7)
+        insertRouteSequence(routeID, getLocationID(location9)['LOCATION_ID'], 8)
+        insertRouteSequence(routeID, getLocationID(location10)['LOCATION_ID'], 9)
+
+
+    return render_template('Desktop/Manage_Routes_Page.html')
 
 # Loads the gamekeepers dashboard tool
 @dashboard_page.route('/Assign_Routes_Page')
