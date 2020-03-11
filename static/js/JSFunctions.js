@@ -317,3 +317,36 @@ function searchList(inputID, ulID) {
         }
     }
 }
+
+function getDropDown(locationName, dropDownID) {
+    console.log("ENTERED THE GET DROP DOWN");
+    if (locationName == "n/a") {
+        return false;
+    }
+    $(document).ready(function() {
+        $.ajax({
+            url : '/Display_Questions',
+            data : {
+                locationName : locationName
+            },
+            type : 'POST'
+        })
+        .done(function(data) {
+            console.log(data);
+            var questions = data;
+            for (var i = 0; i < questions.length; i++) {
+                // The question content
+                var question = questions[i];
+                // Creating an option tag
+                var opt = document.createElement('option');
+
+                // Add text and value attribute
+                opt.textContent = question;
+                opt.value = question;
+                questionDropDown = document.getElementById(dropDownID);
+                console.log(questionDropDown);
+                questionDropDown.appendChild(opt);
+            }
+        });
+    });
+}
