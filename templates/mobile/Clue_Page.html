@@ -49,6 +49,13 @@ eXeplore game. Additionally it also gives access to a side bar which provides va
 
 		<img id="clue_location" src="{{clue_location}}">
 
+		{% with messages = get_flashed_messages() %}
+			{% if messages %}
+				{% for message in messages %}
+					<p id="error">{{message}}</p>
+				{% endfor %}
+			{% endif %}
+		{% endwith %}
 		<!-- Further example of flask variable to load in the correct clue message from database -->
 		<div id="clue_text">
 			<span>{{clue_message}}</span>
