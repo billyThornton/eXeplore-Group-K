@@ -32,17 +32,33 @@ from werkzeug.utils import secure_filename
 from blueprints.manageDashboard import dashboard_page
 from blueprints.manageGame import game_page
 from utils.utils import *
-
+from flask_socketio import SocketIO, join_room, leave_room, send, emit
 emailVer = False
 
 app = Flask(__name__)
 app.register_blueprint(dashboard_page)
 app.register_blueprint(game_page)
 app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["PNG", "JPG", "JPEG"]
+socketio = SocketIO(app)
 
-
-
+TEAMS = {}
 port = int(os.getenv('PORT', 8000))
+
+@socketio.on('create')
+def on_create(data):
+    room = data['teamID']
+    TEAMS[room] = data
+    join_room(room)
+    emit('join_room',{'room':room})
+
+@socketio.on('join')
+def on_join(data):
+    print(data)
+    team = data['teamID']
+    join_room(team)
+    print("PRINTING")
+    emit('message', {'msg': "tststsatsat"}, room=team)
+
 
 
 # Handles the [post] method for login
@@ -56,7 +72,7 @@ def login_post():
 
     if (token['VerificationToken']):
         if not (getVerificationStatus(token['Role'],email))[0]['VERIFIED']:
-            #TODO send verification email
+
             flash("You have not verified your email")
             return redirect(url_for('login'))
 
@@ -338,4 +354,6 @@ if __name__ == '__main__':
     # mail accounts
     app.config.update(MAIL_DEFAULT_SENDER='exeploregeneral@example.com')
     mail = Mail(app)
-    app.run(host='0.0.0.0', port=port, debug=True, use_reloader=False)
+
+    #app.run(host='0.0.0.0', port=port, debug=True, use_reloader=False)
+    socketio.run(app,host='0.0.0.0', port=port, debug=True)
