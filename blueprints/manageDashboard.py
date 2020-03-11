@@ -228,3 +228,10 @@ def assignUpdateRoute():
     updateTeamRoute(routeNameID, 0, teamNameID)
 
     return redirect(url_for('dashboard_page.dashboard'))
+
+
+# Redirect for Dashboard FAQs Page
+@dashboard_page.route('/FAQGameKeeper')
+@requires_access_level('staff')
+def loadFAQGameKeeperPage():
+	return render_template('Desktop/FAQ_Staff_page.html')
