@@ -49,7 +49,7 @@ port = int(os.getenv('PORT', 8000))
 # Will be passed a username and a password
 @app.route('/', methods=['POST'])
 def login_post():
-    email = request.form.get('email')
+    email = request.form.get('email').lower()
     password = request.form.get('password')
     # Checks the username and password are correct
     token = verifyUser(password, email)
@@ -65,10 +65,11 @@ def login_post():
             session['Role'] = 'student'
 
             session['studentID'] = token['ID'][0]['STUDENT_ID']
-            # get group ID
 
             teamID = getTeamFromStudentID(session['studentID'])
             print(teamID)
+            #studentID = getStudentID(email)
+            #teamID = getTeamFromStudentID(studentID[0]['STUDENT_ID'])
 
             if len(teamID) == 0:
                 print("REDIRECT")
@@ -76,6 +77,12 @@ def login_post():
             else:
                 teamID = teamID[0]['TEAM_ID']
                 session['teamID'] = teamID
+
+                if getTeamLeader(session["teamID"]) == session['studentID']:
+                    session['teamLeader'] = True
+                else:
+                    session['teamLeader'] = False
+
             teamLeader = getTeamLeader(teamID)
 
             if teamLeader[0]['TEAM_LEADER'] is None:
@@ -89,6 +96,8 @@ def login_post():
             numOfQuestions = getNumLocationOnRoute(session['routeID'])
             session['numOfQuestions'] = numOfQuestions[0]['1']
             session['teamScore'] = 100
+
+            session['progress'] = getStudentProgress(session['studentID'])#[0]['PROGRESS'] MAYBE UNCOMMENT THIS
             print("num of questions ", session['numOfQuestions'])
 
         elif (token['Role'] == 'tutor'):

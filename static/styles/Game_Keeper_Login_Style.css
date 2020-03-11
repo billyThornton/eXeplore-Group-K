@@ -1,20 +1,20 @@
 /*
-Created on 19/02/2020 
+Created on 19/02/2020
 @author: Teo Reed
 @Last Edited: 26/02/2020
 @edited by: Ben Trotter
 
 Copyright (c) “2020, by Group K
 Contributors: Jamie Butler, Rahul Pankhania, Teo Reed, Billy Thornton, Ben Trotter, Kristian Woolhouse
-URL: https://github.com/billyThornton/eXeplore-Group-K ” 
+URL: https://github.com/billyThornton/eXeplore-Group-K ”
 All rights reserved.
 Redistribution and use in source and binary forms, with or without modification, are permitted provided
 that the followingvconditions are met:
- 
+
 Redistributions of source code must retain the above copyright notice, this list of conditions and the
 following disclaimer. Redistributions in binary form must reproduce the above copyright notice, this
 list of conditions and the following disclaimer in the documentation and/or other materials provided
-with the distribution. 
+with the distribution.
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR IMPLIED
 WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
 PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
@@ -31,7 +31,7 @@ This is necessary as the login page will be accessed using both desktop and mobi
 
 body {
 	height: 100%;
-	background: url('../Exeter_University.jpg') no-repeat center center fixed; 
+	background: url('../Exeter_University.jpg') no-repeat center center fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -169,9 +169,12 @@ a:hover {
 }
 
 
+
+
+
 /*Responsive resizing for mobile devices*/
 @media screen and (max-width: 750px) {
-  
+
 	#green_box {
 		width: 80%;
 		height: 610px;
@@ -218,6 +221,18 @@ a:hover {
 	select {
 		width: 200px;
 		height: 33px;
+	}
+
+
+	@media screen and (max-width: 340px) {
+		input[id=text_input] {
+			width: 160px;
+		}
+		#green_box {
+			width: 90%;
+				left: 5%;
+		}
+
 	}
 
 }
