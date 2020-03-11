@@ -64,9 +64,14 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to configure routes a
             </select>
             </p>
 
+            {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                {% for message in messages %}
+                  <p>{{message}}</p>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
         </div>
-
-
             <table class="table">
 
             <!-- Headers -->
