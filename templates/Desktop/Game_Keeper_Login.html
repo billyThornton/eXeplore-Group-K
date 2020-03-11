@@ -34,35 +34,7 @@ with details on the database. Error message returned if the details are incorrec
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="{{url_for('static',filename='styles/Game_Keeper_Login_Style.css')}}" rel='stylesheet' type='text/css'/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
-<script type="text/javascript" charset="utf-8">
-    var socket = io();
 
-
-    socket.on('connect', function() {
-        console.log('Websocket connected!');
-    });
-
-    socket.on('join_room', function(msg) {
-        console.log(msg);
-    });
-
-    socket.on('message', namespace = '/test',data => {
-        console.log("test");
-        console.log(data.msg);
-    });
-
-    function createGame() {
-      console.log('Creating game...');
-      socket.emit('create', {teamID: 'normal', teams: 2, dictionary: 'Simple'});
-    }
-
-    function joinTeam(){
-      console.log('joining team');
-      socket.emit('join', {teamID: 'normal', teams: 2, dictionary: 'Simple'});
-    }
-
-
-</script>
 
 <title>Game's Keeper Login</title>
 
@@ -78,8 +50,6 @@ with details on the database. Error message returned if the details are incorrec
 
 		<div id="game_name">
 			<h1>eXeplore Game</h1>
-            <button onclick="createGame()">Create Game</button>
-            <button onclick="joinTeam()">Join Team</button>
 		</div>
 
 		<!-- Login form -->

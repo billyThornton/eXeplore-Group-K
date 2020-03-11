@@ -21,7 +21,7 @@ and displays the required html files.
 It also processes data passed using post/get request.
 """
 from itsdangerous import URLSafeTimedSerializer
-from flask import Flask, render_template, redirect, url_for, request, send_file, session, jsonify,Blue#print, flash
+from flask import Flask, render_template, redirect, url_for, request, send_file, session, jsonify,Blueprint, flash
 from utils.auth import *
 from flask_mail import Mail, Message
 from utils.login import *
@@ -29,8 +29,8 @@ from databaseAdapter import *
 from functools import wraps
 import os
 from werkzeug.utils import secure_filename
-from blue#prints.manageDashboard import dashboard_page
-from blue#prints.manageGame import game_page
+from blueprints.manageDashboard import dashboard_page
+from blueprints.manageGame import game_page
 from utils.utils import *
 from flask_socketio import SocketIO, join_room, leave_room, send, emit
 emailVer = False
@@ -43,22 +43,6 @@ socketio = SocketIO(app)
 
 TEAMS = {}
 port = int(os.getenv('PORT', 8000))
-
-@socketio.on('create')
-def on_create(data):
-    room = data['teamID']
-    TEAMS[room] = data
-    join_room(room)
-    emit('join_room',{'room':room})
-
-@socketio.on('join')
-def on_join(data):
-    #print(data)
-    team = data['teamID']
-    join_room(team)
-    #print("#printING")
-    emit('message', {'msg': "tststsatsat"}, room=team)
-
 
 
 # Handles the [post] method for login
