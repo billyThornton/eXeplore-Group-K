@@ -99,7 +99,7 @@ function validateName()
   initialMessage = document.getElementById("initial_message");
   initialMessage.innerHTML = "";
 
-  if(!/^[a-zA-Z]+$/.test(name))
+  if(!/^[a-zA-Z ]+$/.test(name))
   {
     text = "Name should only contain letters";
     nameField.classList.add("input-error");
