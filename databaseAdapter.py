@@ -588,6 +588,34 @@ def getTutorIDFromStudentID(studentID):
         print(rows)
     return rows
 
+def getTutorNameFromStudentID(studentID):
+    db2conn = createConnection()
+
+    if db2conn:
+        # if we have a Db2 connection, query the database
+        sql = (
+        "SELECT t.TUTOR_NAME"
+        " FROM TUTOR AS t, STUDENT AS s"
+        " WHERE s.STUDENT_ID = " + str(studentID) +
+        " AND t.TUTOR_ID = s.TUTOR_ID;"
+        )
+        print(sql)
+        # Prepare the statement
+        stmt = ibm_db.prepare(db2conn,sql)
+        # Execute the sql
+        ibm_db.execute(stmt)
+        rows=[]
+        # fetch the result
+        result = ibm_db.fetch_assoc(stmt)
+        while result != False:
+            rows.append(result.copy())
+            result = ibm_db.fetch_assoc(stmt)
+        # close database connection
+        ibm_db.close(db2conn)
+        # Print to screen the result
+        print(rows)
+    return rows
+
 def getStudentID(email):
     db2conn = createConnection()
 

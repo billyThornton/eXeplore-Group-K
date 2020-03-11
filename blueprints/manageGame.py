@@ -59,6 +59,7 @@ def assignTeam():
     teamLeader = getTeamLeader(teamID)
     print("Team Leader")
     print(teamLeader)
+    session['teamScore'] = 100
     if teamLeader[0]['TEAM_LEADER'] is None:
         updateTeamLeader(studentID, teamID)
         return redirect(url_for('game_page.loadFirstChoosePage'))

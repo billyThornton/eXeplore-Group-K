@@ -201,9 +201,6 @@ def imageUniStatic():
     return send_file('static/images/Exeter_University.jpg', mimetype='image/jpg')
 
 
-
-
-
 @app.route('/HelpPage')
 def loadHelpPage():
     return render_template('mobile/Help_Page.html')
@@ -216,7 +213,7 @@ def loadMap():
 
 @app.route('/Leaderboard')
 def loadLeaderboardPage():
-    gameTeams = getTeams()
+    gameTeams = getTeamsScores()
     return render_template('mobile/Leaderboard.html', teams=gameTeams)
 
 	
@@ -232,8 +229,11 @@ def loadResourcesPage():
 
 @app.route('/ProfilePage')
 def loadProfilePage():
-	return render_template('mobile/Profile_Page.html')
-
+    name = getStudentName(session['studentID'])[0]['NAME']
+    tutor = getTutorNameFromStudentID(session['studentID'])[0]['TUTOR_NAME']
+    team = getTeamFromStudentID(session['studentID'])[0]['TEAM_NAME']
+    progress = session['progress']
+    return render_template('mobile/Profile_Page.html', student_name=name, student_tutor=tutor, team_name=team, curr_progress=progress )
 
 # Runs the app locally if not deployed to the server
 if __name__ == '__main__':
