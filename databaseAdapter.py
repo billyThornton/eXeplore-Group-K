@@ -233,7 +233,7 @@ def getTeamFromID(teamID):
     return rows
 
 
-def getStudentProgress(student):
+def getStudentProgress(id):
 
     db2conn = createConnection()
 
@@ -244,7 +244,7 @@ def getStudentProgress(student):
         " FROM team t"
         " INNER JOIN student s"
         " ON t.team_id = s.team_id"
-        " WHERE name = '" + student +
+        " WHERE s.student_id = '" + id +
         "';"
         )
         # Prepare the statement
@@ -560,7 +560,7 @@ def getTutorPassword(tutorEmail):
         print(rows)
     return rows
 
-def getTutorID(tutorName):
+def getTutorID(tutorName, tutorEmail):
 
     db2conn = createConnection()
 
@@ -569,8 +569,7 @@ def getTutorID(tutorName):
         sql = (
         "SELECT TUTOR_ID"
         " FROM TUTOR"
-        " WHERE tutor_name = '" + tutorName +
-        "';"
+        " WHERE tutor_name = '" + tutorName +"'OR email = '"+tutorEmail+"';"
         )
         print(sql)
         # Prepare the statement
@@ -604,6 +603,34 @@ def getTutorIDFromStudentID(studentID):
         # Prepare the statement
         stmt = ibm_db.prepare(db2conn,sql)
 		# Execute the sql
+        ibm_db.execute(stmt)
+        rows=[]
+        # fetch the result
+        result = ibm_db.fetch_assoc(stmt)
+        while result != False:
+            rows.append(result.copy())
+            result = ibm_db.fetch_assoc(stmt)
+        # close database connection
+        ibm_db.close(db2conn)
+        # Print to screen the result
+        print(rows)
+    return rows
+
+def getTutorNameFromStudentID(studentID):
+    db2conn = createConnection()
+
+    if db2conn:
+        # if we have a Db2 connection, query the database
+        sql = (
+        "SELECT t.TUTOR_NAME"
+        " FROM TUTOR AS t, STUDENT AS s"
+        " WHERE s.STUDENT_ID = " + str(studentID) +
+        " AND t.TUTOR_ID = s.TUTOR_ID;"
+        )
+        print(sql)
+        # Prepare the statement
+        stmt = ibm_db.prepare(db2conn,sql)
+        # Execute the sql
         ibm_db.execute(stmt)
         rows=[]
         # fetch the result
@@ -788,6 +815,26 @@ def getTutors():
         ibm_db.close(db2conn)
     return rows
 
+def getTutorEmail():
+    db2conn = createConnection()
+    # Query all locations
+    if db2conn:
+        # if we have a Db2 connection, query the database
+        sql = "SELECT tutor_id,tutor_name FROM Tutor;"
+        # Prepare the statement
+        stmt = ibm_db.prepare(db2conn,sql)
+        # Execute the sql
+        ibm_db.execute(stmt)
+        rows=[]
+        # fetch the result
+        result = ibm_db.fetch_assoc(stmt)
+        while result != False:
+            rows.append(result.copy())
+            result = ibm_db.fetch_assoc(stmt)
+        # close database connection
+        ibm_db.close(db2conn)
+    return rows
+
 def getRoutes():
     db2conn = createConnection()
     if db2conn:
@@ -901,8 +948,8 @@ def insertStudentUser(email,name,TeamID,TutorID):
     if db2conn:
         # if we have a Db2 connection, query the database
         sql = (
-        "INSERT INTO STUDENT (NAME,EMAIL,TEAM_ID,TUTOR_ID)"
-        " VALUES ('"+name+"','"+email+"',"+str(TeamID)+","+str(TutorID)+");"
+        "INSERT INTO STUDENT (NAME,EMAIL,TEAM_ID,TUTOR_ID,VERIFIED)"
+        " VALUES ('"+name+"','"+email+"',"+str(TeamID)+","+str(TutorID)+",False);"
         )
         print(sql)
         # Prepare the statement
@@ -938,8 +985,8 @@ def insertTutorUser(email,office,name):
     if db2conn:
         # if we have a Db2 connection, query the database
         sql = (
-        "INSERT INTO TUTOR (OFFICE_ID,TUTOR_NAME,EMAIL)"
-        " VALUES ("+str(office)+",'"+name+"','"+email+"');"
+        "INSERT INTO TUTOR (OFFICE_ID,TUTOR_NAME,EMAIL,VERIFIED)"
+        " VALUES ("+str(office)+",'"+name+"','"+email+"',False);"
         )
         # Prepare the statement
         stmt = ibm_db.prepare(db2conn,sql)
@@ -948,7 +995,7 @@ def insertTutorUser(email,office,name):
         # close database connection
         ibm_db.close(db2conn)
         #TODO change to get tutorID from email and not name
-    tutorID = getTutorID(name)[0]['TUTOR_ID']
+    tutorID = getTutorID(name,email)[0]['TUTOR_ID']
     #Insert the first team for the tutor
     insertTeam(name+" Team 1","NULL",tutorID,"NULL",0)
 
@@ -1034,6 +1081,50 @@ def insertTeam(teamName,routeID,tutorID,teamLeader,progress):
         # Prepare the statement
         stmt = ibm_db.prepare(db2conn,sql)
     	# Execute the sql
+        ibm_db.execute(stmt)
+        # close database connection
+        ibm_db.close(db2conn)
+
+def getVerificationStatus(userType,email):
+    """
+
+    :type userType: String ("student") or String ("tutor")
+    """
+    db2conn = createConnection()
+    if db2conn:
+        # if we have a Db2 connection, query the database
+        sql = "SELECT verified FROM " + userType + " where email = '" + str(email) + "';"
+        # Prepare the statement
+        stmt = ibm_db.prepare(db2conn, sql)
+        # Execute the sql
+        ibm_db.execute(stmt)
+        rows = []
+        # fetch the result
+        result = ibm_db.fetch_assoc(stmt)
+        while result != False:
+            rows.append(result.copy())
+            result = ibm_db.fetch_assoc(stmt)
+        # close database connection
+        ibm_db.close(db2conn)
+    return rows
+
+def updateVerififcationStatus(userType,email, stringBool):
+    """
+
+    :type stringBool: String ("TRUE") or String("FALSE")
+    """
+    db2conn = createConnection()
+
+    if db2conn:
+        sql = (
+            "UPDATE " + str(userType) +
+            " SET verified = " +
+             + " WHERE email = "+str(email)+";"
+            )
+
+        print(sql)
+        stmt = ibm_db.prepare(db2conn,sql)
+        # Execute the sql
         ibm_db.execute(stmt)
         # close database connection
         ibm_db.close(db2conn)

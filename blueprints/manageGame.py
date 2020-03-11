@@ -20,7 +20,7 @@ This file contains all the URL routing for the backend/front end, it takes urls
 and displays the required html files.
 It also processes data passed using post/get request.
 """
-from flask import render_template, redirect, url_for, request, send_file, session, jsonify,Blueprint
+from flask import render_template, redirect, url_for, request, send_file, session, jsonify, Blueprint, flash
 from utils.auth import *
 from utils.login import *
 from databaseAdapter import *
@@ -59,8 +59,10 @@ def assignTeam():
     teamLeader = getTeamLeader(teamID)
     print("Team Leader")
     print(teamLeader)
+    session['teamScore'] = 100
     if teamLeader[0]['TEAM_LEADER'] is None:
         updateTeamLeader(studentID, teamID)
+        session['teamLeader'] = True
         return redirect(url_for('game_page.loadFirstChoosePage'))
     else:
         # TODO wait here until route selected by team leader
@@ -69,6 +71,7 @@ def assignTeam():
             routeID = getRouteID(session['teamID'])
 
         session['routeID'] = routeID[0]['CURRENT_ROUTE_ID']
+        session['teamLeader'] = False
         return redirect(url_for('game_page.showLocationClue'))
 
 
@@ -91,12 +94,11 @@ def routeSelect():
     return redirect(url_for('game_page.showLocationClue'))
 
 
-# Displays the location clue page at an appropriate progression point
-
 @game_page.route('/loadFirstTeam', methods=['POST'])
 def loadFirstTeam():
     routeID = request.form['route']
     teamName = request.form['teamName']
+    session['teamScore'] = 100
     # add or update database now here maybe
     return redirect(url_for('game_page.showLocationClue'))
 
@@ -114,13 +116,6 @@ def showLocationClue():
     # Check if route id is in session
     if 'routeID' in session:
         routeID = session['routeID']
-
-    print('Progress: ', progress)
-
-    print(' ')
-    print(session['routeID'])
-    print(session['progress'])
-    print(' ')
 
     # Get the location ID for the clue
     locationData = getLocation(session['routeID'], session['progress'])
@@ -148,45 +143,38 @@ def showLocationClue():
 
 @game_page.route('/getQuestion', methods=['POST'])
 def getQuestion():
-    progress = session['progress']
-    print("progress: ", progress)
-    # Get the location ID for the question
-    locationData = getLocation(session['routeID'], session['progress'])
 
-    locationID = locationData[0]['LOCATION_ID']
+    if session['teamLeader']:
 
-    print(" ")
-    print("big check ", locationID)
-    print(" ")
+        progress = session['progress']
+        # Get the location ID for the question
+        locationData = getLocation(session['routeID'], session['progress'])
 
-    questionData = getQuestionLocationID(locationID)
-    print("questionData: ", questionData)
+        locationID = locationData[0]['LOCATION_ID']
 
-    imageURL = locationData[0]['LOCATION_IMAGE_URL']
-    imageLocation = url_for('static', filename='images/' + imageURL)
+        questionData = getQuestionLocationID(locationID)
+        print("questionData: ", questionData)
 
-    print(questionData[0]['QUESTION_CONTENT'])
-    questionText = questionData[0]['QUESTION_CONTENT']
+        imageURL = locationData[0]['LOCATION_IMAGE_URL']
+        imageLocation = url_for('static', filename='images/' + imageURL)
 
-    a = questionData[0]['MULTIPLE_CHOICE_A']
-    b = questionData[0]['MULTIPLE_CHOICE_B']
-    c = questionData[0]['MULTIPLE_CHOICE_C']
-    d = questionData[0]['MULTIPLE_CHOICE_D']
-    return render_template('mobile/Answer_Page.html', progress_value=progress, clue_message="Question: " + questionText,
-                           clue_location=imageLocation,
-                           answer_a=a, answer_b=b, answer_c=c, answer_d=d)
+        print(questionData[0]['QUESTION_CONTENT'])
+        questionText = questionData[0]['QUESTION_CONTENT']
+
+        a = questionData[0]['MULTIPLE_CHOICE_A']
+        b = questionData[0]['MULTIPLE_CHOICE_B']
+        c = questionData[0]['MULTIPLE_CHOICE_C']
+        d = questionData[0]['MULTIPLE_CHOICE_D']
+        return render_template('mobile/Answer_Page.html', progress_value=progress, clue_message="Question: " + questionText,
+                               clue_location=imageLocation,
+                               answer_a=a, answer_b=b, answer_c=c, answer_d=d)
+    else:
+        progress = getStudentProgress(session['studentID'])
+        return redirect(url_for('game_page.showLocationClue'))
 
 
 @game_page.route('/getQuestionRedirect')
 def retryQuestion():
-    if ('QuestionMessage' in session):
-        # dosplay the message
-        error_message = session['QuestionMessage']
-    else:
-        # If no message set set the message to be empty (No message)
-        session['QuestionMessage'] = ""
-        error_message = ""
-
     progress = session['progress']
     locationData = getLocation(session['routeID'], session['progress'])
     locationID = locationData[0]['LOCATION_ID']
@@ -198,19 +186,19 @@ def retryQuestion():
     b = questionData[0]['MULTIPLE_CHOICE_B']
     c = questionData[0]['MULTIPLE_CHOICE_C']
     d = questionData[0]['MULTIPLE_CHOICE_D']
-    return render_template('mobile/Answer_Page.html', error_message=error_message, progress_value=progress,
+    return render_template('mobile/Answer_Page.html', progress_value=progress,
                            clue_message="Question: " + questionText, clue_location=imageLocation,
                            answer_a=a, answer_b=b, answer_c=c, answer_d=d)
 
 
 @game_page.route('/confirmAnswer', methods=['POST'])
 def checkQuestion():
-    # chscks he progress of the student to ensure the correct question is loaded
+    # checks he progress of the student to ensure the correct question is loaded
     progress = session['progress']
     # Get their answer to the question
     answer = request.form.get('answer')
     if answer is None:
-        session['QuestionMessage'] = 'Please submit an answer try again'
+        flash('Please submit an answer try again')
         return redirect(url_for('game_page.retryQuestion'))
     # Retreive the correct answer
     locationID = getLocation(session['routeID'], session['progress'])[0]['LOCATION_ID']
@@ -225,10 +213,11 @@ def checkQuestion():
         else:
             # If not load the lext location clue
             session['progress'] = session.get('progress') + 1
+            updateTeamRoute(session['routeID'],session['progress'],session['teamID'])
             return redirect(url_for('game_page.showLocationClue'))
     else:
         session['teamScore'] = session['teamScore'] - 3
-        session['QuestionMessage'] = 'Wrong answer try again'
+        flash('Wrong answer try again')
         # redirect to the question page but with error message
         return redirect(url_for('game_page.retryQuestion'))
 
@@ -241,15 +230,8 @@ def endScreen():
     routeName = getRouteName(routeID)[0]['ROUTE_NAME']
     if 'resetTeamFlag' not in session:
         insertScore(routeID, routeName, teamID, teamscore)
-    print(' ')
-    print('error here ', teamID)
-    print(' ')
     teamName = getTeamFromID(teamID)[0]['TEAM_NAME']
     teamreturn = getTeamsScores()
-    # teams = []
-    """for team in teamreturn:
-        teams.append({'group_name': team['TEAM_NAME'], 'final_score': score['VALUE']})
-    """
     session['resetTeamFlag'] = True
 
     return render_template('mobile/End_Game_Page.html', group_name=teamName, final_score=teamscore,

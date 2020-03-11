@@ -20,7 +20,7 @@ This file contains all the URL routing for the backend/front end, it takes urls
 and displays the required html files.
 It also processes data passed using post/get request.
 """
-from flask import render_template, redirect, url_for, request, send_file, session, jsonify,Blueprint
+from flask import Flask, render_template, redirect, url_for, request, send_file, session, jsonify,Blueprint, flash
 from utils.auth import *
 from utils.login import *
 from databaseAdapter import *
@@ -43,7 +43,7 @@ port = int(os.getenv('PORT', 8000))
 # Will be passed a username and a password
 @app.route('/', methods=['POST'])
 def login_post():
-    email = request.form.get('email')
+    email = request.form.get('email').lower()
     password = request.form.get('password')
     # Checks the username and password are correct
     token = verifyUser(password, email)
@@ -83,49 +83,31 @@ def login_post():
         elif (token['Role'] == 'tutor'):
             session['Role'] = 'staff'
 
-    else:
-        session['loginerror'] = "User does not exist"
-        session['Role'] = 'NO_ROLE'
 
-    print(session['Role'])
-    if (session['Role'] == "staff"):
-        # If staff redirect to the dashboard
-        return redirect(url_for('dashboard_page.dashboard'))
+        if (session['Role'] == "staff"):
+            # If staff redirect to the dashboard
+            return redirect(url_for('dashboard_page.dashboard'))
 
-    elif (session['Role'] == "student"):
-        # If student redirect to the game
-        return redirect(url_for('game_page.showLocationClue'))
+        elif (session['Role'] == "student"):
+            # If student redirect to the game
+            return redirect(url_for('game_page.showLocationClue'))
     else:
-        # If neither redirect to login page
+        # If neither redirect to login page and send error message
+        flash("User does not exist")
         return redirect(url_for('login'))
 
 
 # This is the first page of the app currently the login page but we could add a splash screen if wanted
 @app.route('/')
 def login():
-    if 'loginerror' in session:
-        errormessage = session['loginerror']
-    else:
-        errormessage = ""
-        session['loginerror'] = ""
-    session.clear()
-    return render_template('Desktop/Game_Keeper_Login.html', error_message=errormessage)
+    return render_template('Desktop/Game_Keeper_Login.html')
 
 
 # Load registration window
 @app.route('/register')
 def register():
     gameTutors = getTutors()
-    # Checks if there is an error message is sent via a redirect
-    if ('Error Message' in session):
-        # dosplay the message
-        errorMessage = session['Error Message']
-    else:
-        # If no message set set the message to be empty (No message)
-        session['Error Message'] = ""
-        errorMessage = ""
-        # Redner the register page with the errormessage variable passes in
-    return render_template('Desktop/register.html', error_message=errorMessage, tutors=gameTutors)
+    return render_template('Desktop/register.html', tutors=gameTutors)
 
 
 # Handles registration
@@ -141,7 +123,7 @@ def registerSubmit():
     tutorName = request.form.get('tutorName')
     # Check if passwords match if not reload page with error message
     if (password != passwordConfirm):
-        session['Error Message'] = "Passwords are not the same"
+        flash("Passwords are not the same")
         return redirect(url_for('register'))
     # Check if the email is an exeter email
     if checkEmail(email):
@@ -150,10 +132,10 @@ def registerSubmit():
             # Check if the email is already registered
             if (len(getStudentID(email)) == 0):
                 # Get the tutor ID for the current student
-                tutorID = getTutorID(tutorName)
+                tutorID = getTutorID(tutorName,email)
 
                 if (len(tutorID) == 0):
-                    session['Error Message'] = ("That tutor does not exist")
+                    flash("That tutor does not exist")
                     return redirect(url_for("register"))
                 tutorID = tutorID[0]['TUTOR_ID']
                 # Hash the password
@@ -165,29 +147,29 @@ def registerSubmit():
                 # Insert the password to the database
                 studentID = getStudentID(email)[0]['STUDENT_ID']
                 insertPasswordStudent(hashedPassword, studentID)
+                flash("Student registration successful")
             else:
                 # Catches if email is registered
-                session['Error Message'] = ("Email is already used")
+                flash("Email is already in use")
                 return redirect(url_for('register'))
 
         else:
             # Check if the email is already registered
-            if (len(getTutorID(name)) == 0):
+            if (len(getTutorID(name,email)) == 0):
                 # Also adds first team
                 insertTutorUser(email, 1, name)
                 hashedPassword = hashPassword(password)
-                tutorID = getTutorID(name)[0]['TUTOR_ID']
+                tutorID = getTutorID(name,email)[0]['TUTOR_ID']
                 insertPasswordTutor(hashedPassword, tutorID)
+                flash("Tutor registration successful", 'success')
             else:
-                session['Error Message'] = ("Email is already used")
+                flash("Email or tutor name is already in use")
                 return redirect(url_for('register'))
         # Registration successful TODO add Success message
-        session['loginerror'] = "registration successful"
-        print(session)
         return redirect(url_for('login'))
     # Catch email of wrong extension
     else:
-        session['Error Message'] = ("Please use an email of extension " + EMAILEXTENSION)
+        flash("Please use an email of extension "+EMAILEXTENSION)
         return redirect(url_for('register'))
 
 
@@ -219,9 +201,6 @@ def imageUniStatic():
     return send_file('static/images/Exeter_University.jpg', mimetype='image/jpg')
 
 
-
-
-
 @app.route('/HelpPage')
 def loadHelpPage():
     return render_template('mobile/Help_Page.html')
@@ -234,7 +213,7 @@ def loadMap():
 
 @app.route('/Leaderboard')
 def loadLeaderboardPage():
-    gameTeams = getTeams()
+    gameTeams = getTeamsScores()
     return render_template('mobile/Leaderboard.html', teams=gameTeams)
 
 	
@@ -250,8 +229,11 @@ def loadResourcesPage():
 
 @app.route('/ProfilePage')
 def loadProfilePage():
-	return render_template('mobile/Profile_Page.html')
-
+    name = getStudentName(session['studentID'])[0]['NAME']
+    tutor = getTutorNameFromStudentID(session['studentID'])[0]['TUTOR_NAME']
+    team = getTeamFromStudentID(session['studentID'])[0]['TEAM_NAME']
+    progress = session['progress']
+    return render_template('mobile/Profile_Page.html', student_name=name, student_tutor=tutor, team_name=team, curr_progress=progress )
 
 # Runs the app locally if not deployed to the server
 if __name__ == '__main__':

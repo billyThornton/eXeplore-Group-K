@@ -55,7 +55,13 @@ This page also gives access to a side bar which provides various features such a
 			<span>{{clue_message}}</span>
 		</div>
 
-		<p id="error">{{error_message}}</p>
+		{% with messages = get_flashed_messages() %}
+			{% if messages %}
+				{% for message in messages %}
+					<p id="error">{{message}}</p>
+				{% endfor %}
+			{% endif %}
+		{% endwith %}
 
 		<!-- Answer form -->
 		<form action="confirmAnswer" method="POST">

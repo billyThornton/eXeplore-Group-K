@@ -33,7 +33,9 @@ from utils.utils import *
 # GAMEKEEPER DASHBOARD#
 ######################
 dashboard_page = Blueprint('dashboard_page',__name__,template_folder='templates')
+app = Flask(__name__)
 
+app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["PNG", "JPG", "JPEG"]
 
 
 # Used to restrict access to ceratin site areas

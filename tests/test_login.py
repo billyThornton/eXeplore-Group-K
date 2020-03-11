@@ -95,7 +95,7 @@ class BasicTests(flask_testing.TestCase):
 
     def selectTeam(self, testClient, tutorName, teamName):
         return testClient.post('/assignTeam',
-                               data=dict(tutor = getTutorID(tutorName)[0]['TUTOR_ID'],
+                               data=dict(tutor = getTutorID(tutorName,"string")[0]['TUTOR_ID'],
                                          team = getTeamID(teamName)[0]['TEAM_ID']),
                                follow_redirects=True)
 
@@ -113,7 +113,9 @@ class BasicTests(flask_testing.TestCase):
         with app.test_client() as testClient:
             response = self.register(testClient,'Test entry','test1@NotCorrectExtension.com','password','password','matt')
             self.assertEqual(response.status_code,200)
-            self.assertIn('email of extension',session['Error Message'])
+            #self.assertIn('email of extension',session['Error Message'])
+            self.assertIn(b"email of extension", response.data)
+
             
     def test_registration_existing_email(self):
         with app.test_client() as testClient:
@@ -122,13 +124,14 @@ class BasicTests(flask_testing.TestCase):
             response = self.registerIndividual(testClient,'Test entry','test1@exeter.ac.uk','password','password','matt')
             self.assertEqual(response.status_code,200)
             self.assert_template_used('Desktop/register.html')
-            self.assert_context('error_message',"Email is already used")
+            self.assertIn(b"Email is already in use", response.data)
+
             #tutor exists
             insertTutorUser('test@exeter.ac.uk',1,'test tester')
             response = self.registerIndividual(testClient,'Test entry','test@exeter.ac.uk','password','password','matt')
             self.assertEqual(response.status_code,200)
             self.assert_template_used('Desktop/register.html')
-            self.assert_context('error_message',"Email is already used")
+            self.assertIn(b"Email or tutor name is already in use", response.data)
             
     
     def test_registration_valid_student(self):
@@ -136,7 +139,7 @@ class BasicTests(flask_testing.TestCase):
             response = self.register(testClient,'Test entry','test1@exeter.ac.uk','password','password','matt')
             self.assertEqual(response.status_code,200)
             self.assert_template_used('Desktop/Game_Keeper_Login.html')
-            self.assert_context('error_message','registration successful')
+            self.assertIn(b"registration successful", response.data)
             #Checks that user added to student but not tutor
             check = getStudentID('test1@exeter.ac.uk')
             self.assertGreater(len(check),0)
@@ -148,7 +151,7 @@ class BasicTests(flask_testing.TestCase):
             response = self.register(testClient,'Test entry','test1@exeter.ac.uk','password','password','Test Tester')
             self.assertEqual(response.status_code,200)
             self.assert_template_used('Desktop/register.html')
-            self.assert_context('error_message','That tutor does not exist')
+            self.assertIn(b'That tutor does not exist', response.data)
     
     
     def test_registration_valid_tutor(self):
@@ -156,7 +159,8 @@ class BasicTests(flask_testing.TestCase):
             response = self.register(testClient,'Test Entry','test@exeter.ac.uk','password','password','matt')
             self.assertEqual(response.status_code,200)
             self.assert_template_used('Desktop/Game_Keeper_Login.html')
-            self.assert_context('error_message','registration successful')
+            #assert b"Tutor registration successful" in response.data
+            self.assertIn(b"Tutor registration successful", response.data)
             #Checks that user added to student but not tutor
             check = getStudentID('test@exeter.ac.uk')
             self.assertEqual(len(check),0)
@@ -174,7 +178,7 @@ class BasicTests(flask_testing.TestCase):
             response = self.loginuser(testClient,'test@exeter.ac.uk','notcorrectpassword')
             self.assertEqual(response.status_code,200)
             self.assert_template_used('Desktop/Game_Keeper_Login.html')
-            self.assert_context('error_message',"User does not exist")
+            self.assertIn(b"User does not exist", response.data)
 
     def test_login_new_user_no_team(self):
         with app.test_client() as testClient:

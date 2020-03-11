@@ -54,9 +54,20 @@ Users must have an @exeter email. Uses Game_Keeper_Login_Style.css for styling a
 			<div class="login_container">
 
 				<!-- Initial message which gets hidden when values are entered by the user -->
-				<p id="initial_message">Please enter your details below:</p>
+				{% with messages = get_flashed_messages() %}
+					{% if not messages %}
+						<p id="initial_message">Please enter your details below:</p>
+					{% endif %}
+				{% endwith %}					
 				<!-- Replaces intial message. Error Message for invalid entry of email or password -->
-				<p id="error">{{error_message}}</p>
+				<p id="invalid"></p>
+				{% with messages = get_flashed_messages() %}
+					{% if messages %}
+						{% for message in messages %}
+							<p id="error">{{message}}</p>
+						{% endfor %}
+					{% endif %}
+				{% endwith %}
 
 				<p> <input class="text_input" id="name_input" type="text" placeholder="Name" name="name" onchange="validateName()" required> </p>
 
