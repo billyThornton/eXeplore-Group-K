@@ -244,7 +244,7 @@ def getStudentProgress(id):
         " FROM team t"
         " INNER JOIN student s"
         " ON t.team_id = s.team_id"
-        " WHERE s.student_id = '" + id +
+        " WHERE s.student_id = '" + str(id) +
         "';"
         )
         # Prepare the statement
@@ -1022,6 +1022,7 @@ def getTeamLeader(teamID):
         # close database connection
         ibm_db.close(db2conn)
     return rows
+    
 def insertTeam(teamName,routeID,tutorID,teamLeader,progress):
     db2conn = createConnection()
 

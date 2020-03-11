@@ -106,12 +106,6 @@ def loadFirstTeam():
 # Displays the location clue page at an appropriate progression point
 @game_page.route('/Game')
 def showLocationClue():
-    # get progress from db
-    if 'progress' in session:
-        progress = session['progress']
-    else:
-        session['progress'] = 0
-        progress = 0
 
     # Check if route id is in session
     if 'routeID' in session:
@@ -133,6 +127,7 @@ def showLocationClue():
 
     cluemessage = getLocationClues(locationID)[0]['CLUE']
     print(cluemessage)
+    progress = getTeamFromStudentID(session['studentID'])[0]['PROGRESS']
     # progress value = get User.progress from db
     # clue message = get clue for position = progress from db
 
