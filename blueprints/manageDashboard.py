@@ -57,6 +57,7 @@ def requires_access_level(access_level):
 
     return decorator
 
+
 # Loads the dashboard for game masters
 @dashboard_page.route('/dashboard')
 @requires_access_level('staff')
@@ -69,9 +70,6 @@ def dashboard():
 @requires_access_level('staff')
 def addLocation():
     return render_template('Desktop/add_location_page.html')
-
-
-
 
 
 def allowedImage(filename):
