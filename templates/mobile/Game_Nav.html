@@ -6,7 +6,8 @@ the  relevant pages using python flask variables. This file prevents repeated ht
 <!-- First example of where flask variables are used to recieve back-end information -->
 <div class="navbar">
 	<input type="image" src="{{url_for('static',filename='images/menu_icon.png')}}" onclick="openNav()" class="openbtn" alt="Menu Icon" id="menu_icon">
-	<img id="white_logo_vector" src="{{url_for('static',filename='images/white_logo_vector.png')}}" width="150" height="60">
+	<img id="logo" src="{{url_for('static',filename='images/logo.png')}}"  width="60">
+	<img id="white_logo_vector" src="{{url_for('static',filename='images/white_logo_vector.png')}}" width="100">
 </div>
 
 <!-- POP UP SIDE BAR -->
@@ -20,4 +21,3 @@ the  relevant pages using python flask variables. This file prevents repeated ht
 	<a href="Leaderboard">Leaderboard</a>
 	<a href="/Logout">Logout</a>
 </div>
-

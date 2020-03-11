@@ -33,7 +33,7 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to configure routes a
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="{{url_for('static',filename='js/JSFunctions.js')}}"></script>
 <link href="{{url_for('static',filename='styles/Assign_Routes_Style.css')}}" rel='stylesheet' type='text/css'/>
-<title>Manage Team Page</title>
+<title>Manage Team Leaders Page</title>
 
 </head>
 
@@ -44,9 +44,9 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to configure routes a
 
         <div id="assign_route_container">
 
-          <h2>Manage Teams</h2>
+          <h2>Manage Team Leaders</h2>
 
-            <p> <label>Tutor:</label>
+            <p> <label><b>Tutor:</b></label>
 
             <select name="tutor" id="Groups">
                 {% for tutor in tutors %}
@@ -55,7 +55,7 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to configure routes a
             </select>
             </p>
 
-            <p> <label>Team:</label>
+            <p> <label><b>Team:</b></label>
 
             <select name="team" id="Groups">
                 {% for team in teams %}
@@ -64,31 +64,32 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to configure routes a
             </select>
             </p>
 
+            {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                {% for message in messages %}
+                  <p>{{message}}</p>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
         </div>
 
+          <h2>Select a student:</h2>
 
-            <table class="table">
+          <ul>
+            {% for student in students %}
 
-            <!-- Headers -->
-                <thead>
-                  <tr>
-                    <th>Students</th>
-                  </tr>
-                </thead>
+            <li>
+              <label for="{{student['STUDENT_ID']}}" id="student_label">
+              <input type="radio" id="{{student['STUDENT_ID']}}" name="student" value="{{student['STUDENT_ID']}}">
+              {{student["NAME"]}}</label>
+              <span class="checkmark"></span>
+            </li>
 
-                {% for student in students %}
-                <tr>
-                  <td>
-                      <input type="radio" id="{{student['STUDENT_ID']}}" name="student" value="{{student['STUDENT_ID']}}">
-                      <label for="{{student['STUDENT_ID']}}">{{student["NAME"]}}</label><br>
-                  </td>
-                </tr>
-                {% endfor %}
-
-          </table>
+              {% endfor %}
+          </ul>
 
           <div id="transparent_button_container">
-            <button type="submit" id="transparent_button" name="assign_button">Assign</button>
+            <button type="submit" id="transparent_button" name="assign_button">Assign Team Leader</button>
           </div>
     </form>
 

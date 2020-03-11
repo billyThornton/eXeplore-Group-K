@@ -20,7 +20,7 @@ This file contains all the URL routing for the backend/front end, it takes urls
 and displays the required html files.
 It also processes data passed using post/get request.
 """
-from flask import render_template, redirect, url_for, request, send_file, session, jsonify, Blueprint
+from flask import render_template, redirect, url_for, request, send_file, session, jsonify, Blueprint, flash
 from utils.auth import *
 from utils.login import *
 from databaseAdapter import *
@@ -57,6 +57,7 @@ def requires_access_level(access_level):
 
     return decorator
 
+
 # Loads the dashboard for game masters
 @dashboard_page.route('/dashboard')
 @requires_access_level('staff')
@@ -69,9 +70,6 @@ def dashboard():
 @requires_access_level('staff')
 def addLocation():
     return render_template('Desktop/add_location_page.html')
-
-
-
 
 
 def allowedImage(filename):
@@ -107,6 +105,7 @@ def addLocationSubmit():
 
     # No checks
     insertLocation(location, clue, photo.filename)
+    flash("Location "+location+" has successfully been added")
 
     return redirect(url_for('dashboard_page.dashboard'))
 
@@ -130,6 +129,7 @@ def addQuestionSubmit():
     correct_answer = request.form.get('correct_answer')
     # No checks for now
     insertQuestion(location, question, answer_a, answer_b, answer_c, answer_d, correct_answer)
+    flash("Question has successfully been added")
 
     return redirect(url_for('dashboard_page.dashboard'))
 
@@ -179,8 +179,10 @@ def manageGroups():
 def assignUpdateTeamLeader():
     teamNameID = request.form['team']
     studentNameID = request.form.get('student')
+    name = getStudentName(studentNameID)[0]['NAME']
+    team = getTeamFromStudentID(studentNameID)[0]['TEAM_NAME']
     updateTeamLeader(studentNameID, teamNameID)
-
+    flash(name+' has been assigned as the team leader for team: '+team)
     return redirect(url_for('dashboard_page.dashboard'))
 
 
@@ -228,3 +230,10 @@ def assignUpdateRoute():
     updateTeamRoute(routeNameID, 0, teamNameID)
 
     return redirect(url_for('dashboard_page.dashboard'))
+
+
+# Redirect for Dashboard FAQs Page
+@dashboard_page.route('/FAQGameKeeper')
+@requires_access_level('staff')
+def loadFAQGameKeeperPage():
+	return render_template('Desktop/FAQ_Staff_page.html')

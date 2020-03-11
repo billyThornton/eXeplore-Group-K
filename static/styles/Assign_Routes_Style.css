@@ -47,10 +47,18 @@ h2 {
 	width: 80%;
 	border-collapse:separate;
 	border:solid black 1px;
-	border-radius:20px;
+	border-radius:5px;
 	table-layout: fixed;
 	margin-left: 50px;
-	padding: 6px;
+}
+
+tr {
+	width: 100%;
+	border-radius: 5px;
+}
+
+#student_row:hover {
+	background-color: #afe3a3;
 }
 
 .table tbody{
@@ -65,19 +73,31 @@ h2 {
 }
 
 .table thead {
-	background: #104600;
-	color:#fff;
+	color:black;
 }
 
 .table th, .table td {
-	padding: 5px;
 	text-align: left;
-	width: 400px;
+	width: 100%;
 }
 
 label {
 	margin-left: 50px;
 }
+#student_label {
+	margin-left: 5px;
+}
+
+/* input[type="radio"] {
+	display: none;
+} */
+
+
+
+
+
+
+
 
 select {
 	font-size: 14px;
@@ -105,6 +125,46 @@ select {
 	border-radius: 50px;
 }
 
+ul {
+	margin-left: auto;
+	margin-right: auto;
+	border-radius: 10px;
+	font-style: inherit;
+	list-style: none;
+	width: 80%;
+	color: black;
+	background-color: white;
+	height: 350px;
+	overflow-y: scroll;
+	padding-left: 0px;
+	border: solid black 1px;
+
+
+}
+
+li {
+	height: 30px;
+	padding-left: 10px;
+	padding-top: 5px;
+}
+
+li:hover {
+	background-color: #b4d9bd;
+
+}
+
+
+
+label:hover {
+		cursor: pointer;
+}
+
+/* input[type="radio"] {
+	position: absolute;
+opacity: 0;
+cursor: pointer;
+} */
+
 #transparent_button:hover {
 	cursor: pointer;
 }
@@ -114,7 +174,7 @@ select {
 		width: 50%;
 	}
 	#transparent_button{
-		width: 150px;
+		width: 200px;
 		margin-left: 5%;
 	}
 	label {
@@ -125,11 +185,7 @@ select {
 		margin-right: auto;
 		width: 90%;
 	}
-	td {
-		overflow-x: scroll;
-	}
-	tr {
-		overflow-x: scroll;
+
 	}
 	h2 {
 		text-align: center;

@@ -1,6 +1,6 @@
 <!--
 Created on 19/02/2020
-@author: Ben Trotter
+@author: Jamie Butler
 @Last Edited: 26/02/2020
 @edited by: Teo Reed
 
@@ -22,9 +22,8 @@ DAMGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVIC
 INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INLUDING NEGLIGENCE
 OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-This file contains the html that is dynamically loaded into the content div from Game_Keeper_Page.html when the manage locations
-sidebar tab is clicked. The html allows a game keeper to add, edit or delete a certain location on the treasure hunt. The page
-displays a table containing all of the locations that the game keeper can select.
+This file contains html is dynamically loaded into the content div from Game_Keeper_Page.html when manage groups button is
+clicked from Game_Keeper_Page.html. It allows a gamekeeper to configure routes and store them in the database.
 -->
 <!DOCTYPE html>
 <html>
@@ -32,32 +31,36 @@ displays a table containing all of the locations that the game keeper can select
 <meta charset="utf-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="{{url_for('static',filename='js/JSFunctions.js')}}"></script>
-<link href="{{url_for('static',filename='styles/Manage_Locations_Style.css')}}" rel='stylesheet' type='text/css'/>
-<title>Add Questions and Locations</title>
+<link href="{{url_for('static',filename='styles/FAQ_Style.css')}}" rel='stylesheet' type='text/css'/>
+<title>Game Keeper FAQ</title>
 
 </head>
 
 <body>
-    <form action="Delete_Location">
 
-		<h3>Locations:</h3>
-		<input type="text" id="location_search" onkeyup="searchList('location_search', 'location_list')" placeholder="Search locations..." title="Type in a location">
+    <div style="color: white;">
+        <h1>Game Keeper FAQs</h1>
+        <div id="question_list">
 
-		<div id="manage_location_page">
 
-			<ul id="location_list">
-				{% for location in locations %}
-				<li type="radio" id="location_element" name="locations">{{location}}</li>
-				{% endfor %}
-			</ul>
-		</div>
 
-	<div id="transparent_button_container">
-		<button type="button" href="#" id="transparent_button" onclick="loadDoc('/Add_Location')" name="new_location_button">Add Location</button>
-		<button type="button" href="#" id="transparent_button" onclick="loadDoc('/Add_Question')" name="edit_location_button">Add Question</button>
-	</div>
-    </form>
 
+
+
+            <p><b>Q:</b> What do I do if I get lost/get separated from my team?n</p>
+            <p><b>A:</b>  Use the map and game progress to find where you next location should be. Also, don’t be afraid to ask others around you for guidance.</p>
+<p><b>.</b></p>
+
+            <p><b>Q:</b> How long should the game take for a team to complete?</p>
+            <p><b>A:</b> The game should take roughly half an hour to complete, at a good pace.</p>
+            <p><b>.</b></p>
+
+            <p><b>Q:</b> What is the purpose of this game?</p>
+            <p><b>A:</b> The purpose of the game is to get freshers familiar with the university campus and locations that they will most likely frequent over their course.</p>
+            <p><b>.</b></p>
+
+
+          </div>
+    </div>
 </body>
 </html>
