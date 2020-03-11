@@ -66,7 +66,8 @@ def login_post():
             else:
                 teamID = teamID[0]['TEAM_ID']
                 session['teamID'] = teamID
-                if getTeamLeader(teamID[0]["TEAM_ID"]) == session['studentID']:
+
+                if getTeamLeader(session["teamID"]) == session['studentID']:
                     session['teamLeader'] = True
                 else:
                     session['teamLeader'] = False

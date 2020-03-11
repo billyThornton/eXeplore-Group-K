@@ -65,17 +65,17 @@ class BasicTests(flask_testing.TestCase):
             ibm_db.close(db2conn)
         return self.registerIndividual(testClient,name,email,password,confirm,tutorname)
     
-    def existingStudent(self,name,email,teamID,password):
+    def existingStudent(self,name,email,teamID,TutorName):
         db2conn = createConnection()
         name = name.lower()
         email = email.lower()
         TeamID = teamID
-        TutorID = 1
+        TutorID = getTutorID(TutorName,"string")[0]['TUTOR_ID']
         if db2conn:
             # if we have a Db2 connection, query the database
             sql = (
-            "INSERT INTO STUDENT (NAME,EMAIL,TEAM_ID,TUTOR_ID)"
-            " VALUES ('"+name+"','"+email+"',"+str(TeamID)+","+str(TutorID)+");"
+            "INSERT INTO STUDENT (NAME,EMAIL,TEAM_ID,TUTOR_ID,VERIFIED)"
+            " VALUES ('"+name+"','"+email+"',"+str(TeamID)+","+str(TutorID)+",TRUE);"
             )
             print(sql)
             # Prepare the statement
@@ -119,8 +119,9 @@ class BasicTests(flask_testing.TestCase):
             
     def test_registration_existing_email(self):
         with app.test_client() as testClient:
+            self.register(testClient,'Test entry','test@exeter.ac.uk','password','password','matt')
             #Student exists
-            self.existingStudent('Test entry','test1@exeter.ac.uk','NULL','password')
+            self.existingStudent('Test entry','test1@exeter.ac.uk','NULL','test entry')
             response = self.registerIndividual(testClient,'Test entry','test1@exeter.ac.uk','password','password','matt')
             self.assertEqual(response.status_code,200)
             self.assert_template_used('Desktop/register.html')
@@ -192,12 +193,12 @@ class BasicTests(flask_testing.TestCase):
             self.loginuser(testClient, 'test1@exeter.ac.uk', 'password')
 
 
-            response = self.selectTeam(testClient,"test entry","test entry Team 1")
+            response = self.selectTeam(testClient,"test entry","test entry team 1")
             checkUserTeam = getTeamFromStudentID(getStudentID('test1@exeter.ac.uk')[0]['STUDENT_ID'])
 
             self.assertEqual(response.status_code,200)
             self.assert_template_used('mobile/First_Choose.html')
-            self.assertEqual(checkUserTeam[0]['TEAM_ID'],getTeamID('test entry Team 1')[0]['TEAM_ID'])
+            self.assertEqual(checkUserTeam[0]['TEAM_ID'],getTeamID('test entry team 1')[0]['TEAM_ID'])
 
 
             response = self.selectRoute(testClient,1,"TEST NEW NAME")
@@ -214,7 +215,7 @@ class BasicTests(flask_testing.TestCase):
             checkUserTeam = getTeamFromStudentID(getStudentID('test1@exeter.ac.uk')[0]['STUDENT_ID'])
 
             if checkUserTeam[0]['TEAM_NAME'] != "TEST NEW NAME":
-                self.selectTeam(testClient, "test entry", "test entry Team 1")
+                self.selectTeam(testClient, "test entry", "test entry team 1")
                 self.selectRoute(testClient, 1, "TEST NEW NAME")
         app.test_client().delete()
         with app.test_client() as testClient:
