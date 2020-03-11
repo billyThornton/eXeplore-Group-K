@@ -84,7 +84,7 @@ def login_post():
             numOfQuestions = getNumLocationOnRoute(session['routeID'])
             session['numOfQuestions'] = numOfQuestions[0]['1']
             session['teamScore'] = 100
-            print('------CURRENT TEST HERE-------',session['progress'])
+
             session['progress'] = getStudentProgress(session['studentID'])#[0]['PROGRESS'] MAYBE UNCOMMENT THIS
             print("num of questions ", session['numOfQuestions'])
 

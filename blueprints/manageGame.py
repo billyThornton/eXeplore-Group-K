@@ -60,6 +60,9 @@ def assignTeam():
     print("Team Leader")
     print(teamLeader)
     session['teamScore'] = 100
+
+
+
     if teamLeader[0]['TEAM_LEADER'] is None:
         updateTeamLeader(studentID, teamID)
         session['teamLeader'] = True
@@ -72,6 +75,10 @@ def assignTeam():
 
         session['routeID'] = routeID[0]['CURRENT_ROUTE_ID']
         session['teamLeader'] = False
+
+        numOfQuestions = getNumLocationOnRoute(session['routeID'])
+        session['numOfQuestions'] = numOfQuestions[0]['1']
+
         return redirect(url_for('game_page.showLocationClue'))
 
 
@@ -111,14 +118,19 @@ def showLocationClue():
     if 'routeID' in session:
         routeID = session['routeID']
 
+    progress = getTeamFromStudentID(session['studentID'])[0]['PROGRESS']
+    session['progress'] = progress
+
+    if session['progress'] > session['numOfQuestions']:
+        return redirect(url_for('game_page.endScreen'))
     # Get the location ID for the clue
-    locationData = getLocation(session['routeID'], session['progress'])
-    print("LOCATION DATA: " + str(session['routeID']) + " " + str(session['progress']))
+    locationData = getLocation(session['routeID'], progress)
+    print("LOCATION DATA: " + str(session['routeID']) + " " + str(progress))
     print('LOCAION DATA IS: ', locationData)
 
     locationID = locationData[0]['LOCATION_ID']
     # Shows the next locations image
-    imageURL = getLocation(session['routeID'], session['progress'])[0]['LOCATION_IMAGE_URL']
+    imageURL = getLocation(session['routeID'], progress)[0]['LOCATION_IMAGE_URL']
     imageLocation = url_for('static', filename='images/' + imageURL)
     print("LocationID", locationID)
     # check if there are no more locations
@@ -127,9 +139,6 @@ def showLocationClue():
 
     cluemessage = getLocationClues(locationID)[0]['CLUE']
     print(cluemessage)
-    progress = getTeamFromStudentID(session['studentID'])[0]['PROGRESS']
-    # progress value = get User.progress from db
-    # clue message = get clue for position = progress from db
 
     print(imageLocation)
     return render_template('mobile/Clue_Page.html', progress_value=progress, clue_message=cluemessage,
@@ -141,9 +150,9 @@ def getQuestion():
 
     if session['teamLeader']:
 
-        progress = session['progress']
+        progress = getTeamFromStudentID(session['studentID'])[0]['PROGRESS']
         # Get the location ID for the question
-        locationData = getLocation(session['routeID'], session['progress'])
+        locationData = getLocation(session['routeID'], progress)
 
         locationID = locationData[0]['LOCATION_ID']
 
@@ -164,7 +173,11 @@ def getQuestion():
                                clue_location=imageLocation,
                                answer_a=a, answer_b=b, answer_c=c, answer_d=d)
     else:
-        progress = getStudentProgress(session['studentID'])
+        progress = getStudentProgress(session['studentID'])[0]['PROGRESS']
+        if progress == int(session['numOfQuestions'])+1:
+            return redirect(url_for('game_page.endScreen'))
+        if progress == session['progress']:
+            flash("Team leader must answer the question before you can progress")           
         return redirect(url_for('game_page.showLocationClue'))
 
 
@@ -203,12 +216,14 @@ def checkQuestion():
 
     if (str(answer[0]) == str(correctAnswer[0])):
         # If it was the las question load the end screen
-        if (int(progress) == int(session['numOfQuestions'])):
+
+
+            # If not load the lext location clue
+        session['progress'] = session.get('progress') + 1
+        updateTeamRoute(session['routeID'],session['progress'],session['teamID'])
+        if (int(progress) == int(session['numOfQuestions'])+1):
             return redirect(url_for('game_page.endScreen'))
         else:
-            # If not load the lext location clue
-            session['progress'] = session.get('progress') + 1
-            updateTeamRoute(session['routeID'],session['progress'],session['teamID'])
             return redirect(url_for('game_page.showLocationClue'))
     else:
         session['teamScore'] = session['teamScore'] - 3
