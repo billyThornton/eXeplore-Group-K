@@ -76,16 +76,23 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to configure routes a
 
             <!-- Headers -->
                 <thead>
-                  <tr>
+
                     <th>Students</th>
-                  </tr>
+
                 </thead>
 
                 {% for student in students %}
-                <tr>
+                <tr id="student_row">
                   <td>
+
+
+                    <!-- <label class="container" for="{{student['STUDENT_ID']}}">{{student["NAME"]}}
+                      <input type="radio" id="{{student['STUDENT_ID']}}" checked="checked" name="student" value="{{student['STUDENT_ID']}}">
+                      <span class="checkmark"></span>
+                    </label> -->
+                      <label for="{{student['STUDENT_ID']}}" id="student_label">
                       <input type="radio" id="{{student['STUDENT_ID']}}" name="student" value="{{student['STUDENT_ID']}}">
-                      <label for="{{student['STUDENT_ID']}}">{{student["NAME"]}}</label><br>
+                      {{student["NAME"]}}</label><br>
                   </td>
                 </tr>
                 {% endfor %}
