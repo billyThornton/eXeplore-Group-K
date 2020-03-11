@@ -32,14 +32,14 @@ from werkzeug.utils import secure_filename
 from blueprints.manageDashboard import dashboard_page
 from blueprints.manageGame import game_page
 from utils.utils import *
-from flask_socketio import SocketIO, join_room, leave_room, send, emit
+
 emailVer = False
 
 app = Flask(__name__)
 app.register_blueprint(dashboard_page)
 app.register_blueprint(game_page)
 app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["PNG", "JPG", "JPEG"]
-socketio = SocketIO(app)
+
 
 TEAMS = {}
 port = int(os.getenv('PORT', 8000))
@@ -339,5 +339,4 @@ if __name__ == '__main__':
     app.config.update(MAIL_DEFAULT_SENDER='exeploregeneral@example.com')
     mail = Mail(app)
 
-    #app.run(host='0.0.0.0', port=port, debug=True, use_reloader=False)
-    socketio.run(app,host='0.0.0.0', port=port, debug=True)
+    app.run(host='0.0.0.0', port=port, debug=True, use_reloader=False)

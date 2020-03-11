@@ -13,6 +13,5 @@ pipfile = "*"
 requests = "*"
 flask_testing = "*"
 flask_mail = "*"
-flask-socketio = "*"
-gevent = "*"
+
 
