@@ -77,7 +77,7 @@ class BasicTests(flask_testing.TestCase):
                                          team = getTeamID(teamName)[0]['TEAM_ID']),
                                follow_redirects=True)
 
-    def selectRoute(selfself,testClient, routeID, teamName):
+    def selectRoute(self,testClient, routeID, teamName):
         return testClient.post('/routeSelect',
                                data = dict(route = routeID,teamName = teamName),
                                follow_redirects=True)
@@ -123,12 +123,13 @@ class BasicTests(flask_testing.TestCase):
             self.loginuser(testClient,'test1@exeter.ac.uk','password')
             self.selectTeam(testClient, "test entry", "test entry Team 1")
             self.selectRoute(testClient, 1, "TEST NEW NAME")
-            response = self.getQuestionTest(testClient)
-            response2 = self.confirmAnswer(testClient, 'b')
-            self.assertEqual(response2.status_code,200)
-            self.assert_template_used('mobile/Clue_Page.html')
-            self.assertEqual(session['teamScore'], 100)
+            answers = [c, b, d, b, a, d, b, a]
+            finalAnswer = a
+            for letter in answers:
+                self.getQuestionTest(testClient)
+                self.confirmAnswer(testClient, letter)
 
+            self.assert_template_used('mobile/End_Game_Page.html')
 
 if __name__ == "__main__":
     unittest.main()
