@@ -110,19 +110,14 @@ def getStudent(tutor):
     return rows
 
 
-def getTeamMembers(teamName):
+def getTeamMembers(teamID):
 
     db2conn = createConnection()
 
     if db2conn:
         # if we have a Db2 connection, query the database
         sql = (
-        "SELECT s.name, s.email"
-        " FROM student s"
-        " INNER JOIN team t"
-        " ON s.team_id = t.team_id"
-        " WHERE team_name = '" + teamName +
-        "';"
+        "select student_ID from student where team_id = "+str(teamID)+";"
         )
         # Prepare the statement
         stmt = ibm_db.prepare(db2conn,sql)
