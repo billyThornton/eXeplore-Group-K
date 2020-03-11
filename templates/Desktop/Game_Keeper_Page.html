@@ -34,6 +34,8 @@ Subsequent tabs from the side bar have html dynamically loaded into the content 
     <link href="{{url_for('static',filename='styles/Game_Keeper_Style.css')}}" rel='stylesheet' type='text/css'/>
     <script src="{{url_for('static',filename='js/JSFunctions.js')}}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- JavaScript function to load current screen -->
     <script>
       $(function(){
         var currentScreen = localStorage.currentScreen;
@@ -41,9 +43,9 @@ Subsequent tabs from the side bar have html dynamically loaded into the content 
         {
           loadDoc(currentScreen);
         }
-
       });
     </script>
+
     <title>Gamekeeper Dashboard</title>
   </head>
 
@@ -53,30 +55,32 @@ Subsequent tabs from the side bar have html dynamically loaded into the content 
     <div id="mySidebar" class="sidebar">
       <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
       <a href="javascript:clearRedirect()">Homepage</a>
-      <a href="/FAQGameKeeper">FAQs</a>
+      <a href="#" onclick="loadDoc('/FAQGameKeeper'), closeNav()">FAQs</a>
       <a href="/Logout">Logout</a>
     </div>
 
 	<!-- Topbar -->
     <div id="topbar">
 
+        <!-- Exeter University Logo -->
       <div class="topbar_segment" id="segment_exeter">
-        <img src="{{url_for('static',filename='images/white_logo_vector.png')}}" alt="Exeter Uni Logo" id="exeter_logo"/>
+        <a href="javascript:clearRedirect()">
+            <img src="{{url_for('static',filename='images/white_logo_vector.png')}}" alt="Exeter Uni Logo" id="exeter_logo"/>
+        </a>
       </div>
 
+        <!-- eXeplore Logo -->
       <div class="topbar_segment" id="segment_logo">
-
-       <input type="image" src="{{url_for('static',filename='images/logo.png')}}"  alt="Logo" id="logo"/>
-
+        <a href="javascript:clearRedirect()">
+            <input type="image" src="{{url_for('static',filename='images/logo.png')}}"  alt="Logo" id="logo"/>
+        </a>
       </div>
 
+        <!-- Menu Icon -->
       <div class="topbar_segment" id="segment_menu_btn">
         <a>
           <input type="image" src="{{url_for('static',filename='images/menu_icon.png')}}" onclick="openNav()" class="openbtn" alt="Menu Icon" id="menu_icon"/>
         </a>
-      </div>
-
-
       </div>
 
     </div>
