@@ -64,9 +64,14 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to configure routes a
             </select>
             </p>
 
+            {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                {% for message in messages %}
+                  <p>{{message}}</p>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
         </div>
-
-
             <table class="table">
 
             <!-- Headers -->
@@ -88,7 +93,7 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to configure routes a
           </table>
 
           <div id="transparent_button_container">
-            <button type="submit" id="transparent_button" name="assign_button">Assign</button>
+            <button type="submit" id="transparent_button" name="assign_button">Assign Team Leader</button>
           </div>
     </form>
 
