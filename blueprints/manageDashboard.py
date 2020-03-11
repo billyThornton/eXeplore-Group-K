@@ -166,11 +166,11 @@ def manageLocations():
 @requires_access_level('staff')
 def manageGroups():
     # Creates a list of locations from the db
-    studentNames = getStudents()
+    tutors = getTutors()
+    teams = getTeams()
+    students = getStudents()
 
-    return render_template('Desktop/Manage_Groups_Page.html', students=studentNames)
-
-    return render_template('Desktop/Manage_Groups_Page.html', students=studentNames)
+    return render_template('Desktop/Manage_Groups_Page.html', tutors=tutors, teams=teams, students=students)
 
 
 # Loads the gamekeepers dashboard tool
