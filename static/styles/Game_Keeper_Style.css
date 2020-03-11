@@ -48,10 +48,27 @@ body {
 	border-width: 1px;
 	border-style: solid;
 }
+.topbar_segment {
+	width: 33%;
+	display: inline-block;
+	height: 130px;
+}
+#segment_logo {
+
+}
+#segment_exeter {
+	text-align: center;
+	float: left;
+}
+#segment_menu_btn {
+	float: right;
+}
 
 #logo {
 	height: 130px;
-	margin-left: 50px;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
 }
 
 /* Left menu options */
@@ -103,10 +120,11 @@ body {
 }
 
 #exeter_logo {
-	padding-top: 20px;
-	padding-left: 50px;
-	width:260px;
-	height:100px
+	margin-top: 45px;
+	display: block;
+	margin-left: 20px;
+	float: left;
+	height: 50px;
 }
 
 #menu_icon {
@@ -176,6 +194,35 @@ h1 {
 	.sidebar a {font-size: 18px;}
 
 
+
+}
+
+
+@media screen and (max-width:500px) {
+		#logo {
+			height: 65px;
+
+		}
+		#menu_icon {
+			display: block;
+			width:25px;
+			height:25px;
+			padding: 0PX;
+			margin-right: 10PX;
+			float: right;
+			margin-top: 20PX;
+		}
+		#exeter_logo {
+			margin-top: 20px;
+			display: block;
+			margin-left: 10px;
+			float: left;
+			height: 25px;
+		}
+
+		#topbar {
+			height: 65px;
+		}
 
 }
 
