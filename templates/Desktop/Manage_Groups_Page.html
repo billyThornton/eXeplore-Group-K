@@ -40,7 +40,7 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to configure routes a
 <body>
   <div id="assign_routes_page">
 
-      <form action="assignTeamLeader" method="GET">
+      <form action="assignTeamLeader" method="POST">
 
         <div id="assign_route_container">
 
@@ -79,8 +79,8 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to configure routes a
                 {% for student in students %}
                 <tr>
                   <td>
-                      <input type="radio" id="{{student['NAME']}}" name="student" value="{{student['ID']}}">
-                      <label for="{{student['NAME']}}">{{student["NAME"]}}</label><br>
+                      <input type="radio" id="{{student['STUDENT_ID']}}" name="student" value="{{student['STUDENT_ID']}}">
+                      <label for="{{student['STUDENT_ID']}}">{{student["NAME"]}}</label><br>
                   </td>
                 </tr>
                 {% endfor %}
