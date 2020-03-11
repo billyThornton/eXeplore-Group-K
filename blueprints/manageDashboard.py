@@ -161,11 +161,11 @@ def manageLocations():
     return render_template('Desktop/Manage_Locations_Page.html', locations=locationNames)
 
 
-# Loads the gamekeepers dashboard tool
+# Loads the manage groups dashboard tool
 @dashboard_page.route('/Manage_Groups_Page')
 @requires_access_level('staff')
 def manageGroups():
-    # Creates a list of locations from the db
+
     tutors = getTutors()
     teams = getTeams()
     students = getStudents()
