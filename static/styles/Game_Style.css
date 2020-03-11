@@ -99,7 +99,6 @@ body {
 	color: white;
 	height: 110px;
 	width: 301px;
-	overflow-y: scroll;
 	padding-top: 5px;
 }
 
@@ -114,7 +113,6 @@ body {
 	height: 70px;
 	width: 301px;
 	margin: auto;
-	overflow-y: scroll;
 }
 
 /* General styling for all transparent butttons */
