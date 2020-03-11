@@ -78,7 +78,7 @@ tr {
 
 .table th, .table td {
 	text-align: left;
-	width: 400px;
+	width: 100%;
 }
 
 label {
@@ -125,6 +125,49 @@ select {
 	border-radius: 50px;
 }
 
+ul {
+	margin-left: auto;
+	margin-right: auto;
+	border-radius: 10px;
+	font-style: inherit;
+	list-style: none;
+	width: 80%;
+	color: black;
+	background-color: white;
+	height: 350px;
+	overflow-y: scroll;
+	padding-left: 0px;
+	border: solid black 1px;
+
+
+}
+
+li {
+	height: 30px;
+	padding-left: 10px;
+	padding-top: 5px;
+}
+
+li:hover {
+	background-color: #b4d9bd;
+
+}
+
+input[type=radio]:checked {
+  height: 15px;
+}
+
+
+label:hover {
+		cursor: pointer;
+}
+
+/* input[type="radio"] {
+	position: absolute;
+opacity: 0;
+cursor: pointer;
+} */
+
 #transparent_button:hover {
 	cursor: pointer;
 }
@@ -134,7 +177,7 @@ select {
 		width: 50%;
 	}
 	#transparent_button{
-		width: 150px;
+		width: 200px;
 		margin-left: 5%;
 	}
 	label {
@@ -144,9 +187,6 @@ select {
 		margin-left: auto;
 		margin-right: auto;
 		width: 90%;
-	}
-	td {
-		overflow-x: scroll;
 	}
 
 	}

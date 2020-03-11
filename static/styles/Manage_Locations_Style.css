@@ -85,23 +85,19 @@ input[type=radio]{
 	height: 350px;
 	overflow-y: scroll;
 	padding-left: 0px;
-
 }
 
 #location_list:nth-child(even) {
 	background-color: #e0e0e0;
 }
 
-#location_element:hover {
-	background-color: #b4d9bd;
-}
 
 #location_element {
 	margin-top: 0px;
 	height: 30px;
 	padding-left: 10px;
 	padding-top: 15px;
-
+	border: 1px solid #c9c9c9;
 }
 
 #transparent_button_container {

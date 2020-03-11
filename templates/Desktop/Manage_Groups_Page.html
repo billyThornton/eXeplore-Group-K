@@ -72,32 +72,21 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to configure routes a
               {% endif %}
             {% endwith %}
         </div>
-            <table class="table">
 
-            <!-- Headers -->
-                <thead>
+          <h2>Select a student:</h2>
 
-                    <th>Students</th>
+          <ul>
+            {% for student in students %}
 
-                </thead>
+            <li>
+              <label for="{{student['STUDENT_ID']}}" id="student_label">
+              <input type="radio" id="{{student['STUDENT_ID']}}" name="student" value="{{student['STUDENT_ID']}}">
+              {{student["NAME"]}}</label>
+              <span class="checkmark"></span>
+            </li>
 
-                {% for student in students %}
-                <tr id="student_row">
-                  <td>
-
-
-                    <!-- <label class="container" for="{{student['STUDENT_ID']}}">{{student["NAME"]}}
-                      <input type="radio" id="{{student['STUDENT_ID']}}" checked="checked" name="student" value="{{student['STUDENT_ID']}}">
-                      <span class="checkmark"></span>
-                    </label> -->
-                      <label for="{{student['STUDENT_ID']}}" id="student_label">
-                      <input type="radio" id="{{student['STUDENT_ID']}}" name="student" value="{{student['STUDENT_ID']}}">
-                      {{student["NAME"]}}</label><br>
-                  </td>
-                </tr>
-                {% endfor %}
-
-          </table>
+              {% endfor %}
+          </ul>
 
           <div id="transparent_button_container">
             <button type="submit" id="transparent_button" name="assign_button">Assign Team Leader</button>
