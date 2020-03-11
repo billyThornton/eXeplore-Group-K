@@ -233,7 +233,7 @@ def getTeamFromID(teamID):
     return rows
 
 
-def getStudentProgress(student):
+def getStudentProgress(id):
 
     db2conn = createConnection()
 
@@ -244,7 +244,7 @@ def getStudentProgress(student):
         " FROM team t"
         " INNER JOIN student s"
         " ON t.team_id = s.team_id"
-        " WHERE name = '" + student +
+        " WHERE s.student_id = '" + id +
         "';"
         )
         # Prepare the statement
@@ -912,7 +912,7 @@ def insertTutorUser(email,office,name):
         # close database connection
         ibm_db.close(db2conn)
         #TODO change to get tutorID from email and not name
-    tutorID = getTutorID(name)[0]['TUTOR_ID']
+    tutorID = getTutorID(name,email)[0]['TUTOR_ID']
     #Insert the first team for the tutor
     insertTeam(name+" Team 1","NULL",tutorID,"NULL",0)
 

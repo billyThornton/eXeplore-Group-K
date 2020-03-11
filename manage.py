@@ -182,7 +182,7 @@ def registerSubmit():
                 hashedPassword = hashPassword(password)
                 tutorID = getTutorID(name,email)[0]['TUTOR_ID']
                 insertPasswordTutor(hashedPassword, tutorID)
-                flash("Tutor registration successful")
+                flash("Tutor registration successful", 'success')
             else:
                 flash("Email or tutor name is already in use")
                 return redirect(url_for('register'))

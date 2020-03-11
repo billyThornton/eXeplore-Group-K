@@ -63,6 +63,7 @@ def assignTeam():
     session['teamScore'] = 100
     if teamLeader[0]['TEAM_LEADER'] is None:
         updateTeamLeader(studentID, teamID)
+        session['teamLeader'] = True
         return redirect(url_for('game_page.loadFirstChoosePage'))
     else:
         # TODO wait here until route selected by team leader
@@ -71,6 +72,7 @@ def assignTeam():
             routeID = getRouteID(session['teamID'])
 
         session['routeID'] = routeID[0]['CURRENT_ROUTE_ID']
+        session['teamLeader'] = False
         return redirect(url_for('game_page.showLocationClue'))
 
 
@@ -116,13 +118,6 @@ def showLocationClue():
     if 'routeID' in session:
         routeID = session['routeID']
 
-    print('Progress: ', progress)
-
-    print(' ')
-    print(session['routeID'])
-    print(session['progress'])
-    print(' ')
-
     # Get the location ID for the clue
     locationData = getLocation(session['routeID'], session['progress'])
     print("LOCATION DATA: " + str(session['routeID']) + " " + str(session['progress']))
@@ -149,28 +144,34 @@ def showLocationClue():
 
 @game_page.route('/getQuestion', methods=['POST'])
 def getQuestion():
-    progress = session['progress']
-    # Get the location ID for the question
-    locationData = getLocation(session['routeID'], session['progress'])
 
-    locationID = locationData[0]['LOCATION_ID']
+    if session['teamLeader']:
 
-    questionData = getQuestionLocationID(locationID)
-    print("questionData: ", questionData)
+        progress = session['progress']
+        # Get the location ID for the question
+        locationData = getLocation(session['routeID'], session['progress'])
 
-    imageURL = locationData[0]['LOCATION_IMAGE_URL']
-    imageLocation = url_for('static', filename='images/' + imageURL)
+        locationID = locationData[0]['LOCATION_ID']
 
-    print(questionData[0]['QUESTION_CONTENT'])
-    questionText = questionData[0]['QUESTION_CONTENT']
+        questionData = getQuestionLocationID(locationID)
+        print("questionData: ", questionData)
 
-    a = questionData[0]['MULTIPLE_CHOICE_A']
-    b = questionData[0]['MULTIPLE_CHOICE_B']
-    c = questionData[0]['MULTIPLE_CHOICE_C']
-    d = questionData[0]['MULTIPLE_CHOICE_D']
-    return render_template('mobile/Answer_Page.html', progress_value=progress, clue_message="Question: " + questionText,
-                           clue_location=imageLocation,
-                           answer_a=a, answer_b=b, answer_c=c, answer_d=d)
+        imageURL = locationData[0]['LOCATION_IMAGE_URL']
+        imageLocation = url_for('static', filename='images/' + imageURL)
+
+        print(questionData[0]['QUESTION_CONTENT'])
+        questionText = questionData[0]['QUESTION_CONTENT']
+
+        a = questionData[0]['MULTIPLE_CHOICE_A']
+        b = questionData[0]['MULTIPLE_CHOICE_B']
+        c = questionData[0]['MULTIPLE_CHOICE_C']
+        d = questionData[0]['MULTIPLE_CHOICE_D']
+        return render_template('mobile/Answer_Page.html', progress_value=progress, clue_message="Question: " + questionText,
+                               clue_location=imageLocation,
+                               answer_a=a, answer_b=b, answer_c=c, answer_d=d)
+    else:
+        progress = gettStudentProgress(session['studentID'])
+        return redirect(url_for('game_page.showLocationClue'))
 
 
 @game_page.route('/getQuestionRedirect')
@@ -193,7 +194,7 @@ def retryQuestion():
 
 @game_page.route('/confirmAnswer', methods=['POST'])
 def checkQuestion():
-    # chscks he progress of the student to ensure the correct question is loaded
+    # checks he progress of the student to ensure the correct question is loaded
     progress = session['progress']
     # Get their answer to the question
     answer = request.form.get('answer')
@@ -213,6 +214,7 @@ def checkQuestion():
         else:
             # If not load the lext location clue
             session['progress'] = session.get('progress') + 1
+            updateTeamRoute(session['routeID'],session['progress'],session['teamID'])
             return redirect(url_for('game_page.showLocationClue'))
     else:
         session['teamScore'] = session['teamScore'] - 3
