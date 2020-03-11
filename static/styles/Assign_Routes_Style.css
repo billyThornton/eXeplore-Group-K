@@ -153,9 +153,6 @@ li:hover {
 
 }
 
-input[type=radio]:checked {
-  height: 15px;
-}
 
 
 label:hover {

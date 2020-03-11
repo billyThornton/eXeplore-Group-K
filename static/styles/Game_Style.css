@@ -1,20 +1,20 @@
 /*
-Created on 22/02/2020 
+Created on 22/02/2020
 @author: Ben Trotter
 @Last Edited: 08/03/2020
 @edited by: Ben Trotter
 
 Copyright (c) “2020, by Group K
 Contributors: Jamie Butler, Rahul Pankhania, Teo Reed, Billy Thornton, Ben Trotter, Kristian Woolhouse
-URL: https://github.com/billyThornton/eXeplore-Group-K ” 
+URL: https://github.com/billyThornton/eXeplore-Group-K ”
 All rights reserved.
 Redistribution and use in source and binary forms, with or without modification, are permitted provided
 that the following conditions are met:
- 
+
 Redistributions of source code must retain the above copyright notice, this list of conditions and the
 following disclaimer. Redistributions in binary form must reproduce the above copyright notice, this
 list of conditions and the following disclaimer in the documentation and/or other materials provided
-with the distribution. 
+with the distribution.
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR IMPLIED
 WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
@@ -26,10 +26,10 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 This file contains the CSS to style the Answer_Page.html, Clue_Page.html, End_Game_Page.html and
 Help_Page.html. It styles the buttons, input sections, top navigation bar, the content for the game
-and the pop-up sidebar. 
+and the pop-up sidebar.
 */
 body {
-	background: url('../Exeter_University.jpg') no-repeat center center fixed; 
+	background: url('../Exeter_University.jpg') no-repeat center center fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -62,10 +62,16 @@ body {
 	margin-left: 10px;
 }
 
+/* eXeplore logo */
+#logo {
+	margin-left: 20px;
+}
+
 /* Exeter university logo container */
 #white_logo_vector {
-	margin-top: 10px;
-	margin-right: 60px;
+	float: right;
+	margin-top: 25px;
+	margin-right: 10px;
 }
 
 /* Clue location image box */
@@ -89,7 +95,7 @@ body {
 	border-color: #707070;
 	border-width: 1px;
 	border-radius: 15px;
-	background: #D6D6D6;
+	background: #54614f;
 	color: white;
 	height: 110px;
 	width: 301px;
@@ -103,7 +109,7 @@ body {
 	border-color: #707070;
 	border-width: 1px;
 	border-radius: 15px;
-	background: #D6D6D6;
+	background: #54614f;
 	color: white;
 	height: 70px;
 	width: 301px;
@@ -196,12 +202,12 @@ body {
 
 /* Answer radio buttons */
 [type="radio"] {
-	border: 0; 
-	clip: rect(0 0 0 0); 
-	height: 1px; margin: -1px; 
-	overflow: hidden; 
-	padding: 0; 
-	position: absolute; 
+	border: 0;
+	clip: rect(0 0 0 0);
+	height: 1px; margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
 	width: 1px;
 	left: 100px;
 }
@@ -354,5 +360,3 @@ progress::-webkit-progress-bar {
 	padding: 2px;
 	box-shadow: 0 1px 0px 0 rgba(255, 255, 255, 0.2);
 }
-
-
