@@ -21,7 +21,7 @@ and displays the required html files.
 It also processes data passed using post/get request.
 """
 from itsdangerous import URLSafeTimedSerializer
-from flask import Flask, render_template, redirect, url_for, request, send_file, session, jsonify,Blueprint, flash
+from flask import Flask, render_template, redirect, url_for, request, send_file, session, jsonify,Blue#print, flash
 from utils.auth import *
 from flask_mail import Mail, Message
 from utils.login import *
@@ -29,8 +29,8 @@ from databaseAdapter import *
 from functools import wraps
 import os
 from werkzeug.utils import secure_filename
-from blueprints.manageDashboard import dashboard_page
-from blueprints.manageGame import game_page
+from blue#prints.manageDashboard import dashboard_page
+from blue#prints.manageGame import game_page
 from utils.utils import *
 from flask_socketio import SocketIO, join_room, leave_room, send, emit
 emailVer = False
@@ -53,10 +53,10 @@ def on_create(data):
 
 @socketio.on('join')
 def on_join(data):
-    print(data)
+    #print(data)
     team = data['teamID']
     join_room(team)
-    print("PRINTING")
+    #print("#printING")
     emit('message', {'msg': "tststsatsat"}, room=team)
 
 
@@ -83,18 +83,18 @@ def login_post():
             session['studentID'] = token['ID'][0]['STUDENT_ID']
 
             teamID = getTeamFromStudentID(session['studentID'])
-            print(teamID)
+            #print(teamID)
             #studentID = getStudentID(email)
             #teamID = getTeamFromStudentID(studentID[0]['STUDENT_ID'])
 
             if len(teamID) == 0:
-                print("REDIRECT")
+                #print("REDIRECT")
                 return redirect(url_for('game_page.loadJoinTeamPage'))
             else:
                 teamID = teamID[0]['TEAM_ID']
                 session['teamID'] = teamID
-
-                if getTeamLeader(session["teamID"]) == session['studentID']:
+                #print("TEAM ID",teamID)
+                if getTeamLeader(session["teamID"])[0]['TEAM_LEADER'] == session['studentID']:
                     session['teamLeader'] = True
                 else:
                     session['teamLeader'] = False
@@ -114,7 +114,7 @@ def login_post():
             session['teamScore'] = 100
 
             session['progress'] = getStudentProgress(session['studentID'])#[0]['PROGRESS'] MAYBE UNCOMMENT THIS
-            print("num of questions ", session['numOfQuestions'])
+            #print("num of questions ", session['numOfQuestions'])
 
         elif (token['Role'] == 'tutor'):
             session['Role'] = 'staff'
