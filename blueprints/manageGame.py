@@ -169,7 +169,7 @@ def getQuestion():
                                clue_location=imageLocation,
                                answer_a=a, answer_b=b, answer_c=c, answer_d=d)
     else:
-        progress = gettStudentProgress(session['studentID'])
+        progress = getStudentProgress(session['studentID'])
         return redirect(url_for('game_page.showLocationClue'))
 
 

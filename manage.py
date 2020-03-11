@@ -43,7 +43,7 @@ port = int(os.getenv('PORT', 8000))
 # Will be passed a username and a password
 @app.route('/', methods=['POST'])
 def login_post():
-    email = request.form.get('email')
+    email = request.form.get('email').lower()
     password = request.form.get('password')
     # Checks the username and password are correct
     token = verifyUser(password, email)

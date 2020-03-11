@@ -914,7 +914,8 @@ def insertTutorUser(email,office,name):
         #TODO change to get tutorID from email and not name
     tutorID = getTutorID(name,email)[0]['TUTOR_ID']
     #Insert the first team for the tutor
-    insertTeam(name+" Team 1","NULL",tutorID,"NULL",0)
+    for i in range(1,4):
+        insertTeam(name+" team "+str(i),"NULL",tutorID,"NULL",0)
 
 
 # Saves the hashed password
