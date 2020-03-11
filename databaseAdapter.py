@@ -865,8 +865,8 @@ def insertStudentUser(email,name,TeamID,TutorID):
     if db2conn:
         # if we have a Db2 connection, query the database
         sql = (
-        "INSERT INTO STUDENT (NAME,EMAIL,TEAM_ID,TUTOR_ID)"
-        " VALUES ('"+name+"','"+email+"',"+str(TeamID)+","+str(TutorID)+");"
+        "INSERT INTO STUDENT (NAME,EMAIL,TEAM_ID,TUTOR_ID,VERIFIED)"
+        " VALUES ('"+name+"','"+email+"',"+str(TeamID)+","+str(TutorID)+",False);"
         )
         print(sql)
         # Prepare the statement
@@ -902,8 +902,8 @@ def insertTutorUser(email,office,name):
     if db2conn:
         # if we have a Db2 connection, query the database
         sql = (
-        "INSERT INTO TUTOR (OFFICE_ID,TUTOR_NAME,EMAIL)"
-        " VALUES ("+str(office)+",'"+name+"','"+email+"');"
+        "INSERT INTO TUTOR (OFFICE_ID,TUTOR_NAME,EMAIL,VERIFIED)"
+        " VALUES ("+str(office)+",'"+name+"','"+email+"',False);"
         )
         # Prepare the statement
         stmt = ibm_db.prepare(db2conn,sql)
@@ -1072,8 +1072,8 @@ def updateVerififcationStatus(userType,email, stringBool):
     if db2conn:
         sql = (
             "UPDATE " + str(userType) +
-            " SET verified = " + 
-             + " WHERE email = "+str(email)+";"
+            " SET verified = True" +
+              " WHERE email = '"+str(email).lower()+"';"
             )
 
         print(sql)
