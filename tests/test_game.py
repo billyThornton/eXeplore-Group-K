@@ -3,6 +3,8 @@
 Created on Sat Mar  7 10:27:48 2020
 
 @author: billy
+Edited: Jamie Butler
+
 """
 
 import os
@@ -74,10 +76,10 @@ class BasicTests(flask_testing.TestCase):
     def selectTeam(self, testClient, tutorName, teamName):
         return testClient.post('/assignTeam',
                                data=dict(tutor = getTutorID(tutorName,"string")[0]['TUTOR_ID'],
-                                         team = getTeamID(teamName)[0]['TEAM_ID']),
+                               team = getTeamID(teamName)[0]['TEAM_ID']),
                                follow_redirects=True)
 
-    def selectRoute(selfself,testClient, routeID, teamName):
+    def selectRoute(self,testClient, routeID, teamName):
         return testClient.post('/routeSelect',
                                data = dict(route = routeID,teamName = teamName),
                                follow_redirects=True)
@@ -95,39 +97,47 @@ class BasicTests(flask_testing.TestCase):
 #### tests ####
 ###############
 
-
+    # TEST CORRECT ANSWER WORKS
     def test_game_correct_answer(self):
         with app.test_client() as testClient:
-            self.register(testClient,'Test entry','test1@exeter.ac.uk','password','password','matt')
-            self.loginuser(testClient,'test1@exeter.ac.uk','password')
+            self.register(testClient, 'Test Entry', 'test@exeter.ac.uk', 'password', 'password', 'Not applicable')
+            self.register(testClient,'Test entry','test1@exeter.ac.uk','Password1','Password1','test entry')
+            self.loginuser(testClient,'test1@exeter.ac.uk','Password1')
+            self.selectTeam(testClient, "test entry", "test entry team 1")
+            self.selectRoute(testClient, 1, "TEST NEW NAME")
             response = self.getQuestionTest(testClient)
-            response2 = self.confirmAnswer(testClient,'b')
+            response2 = self.confirmAnswer(testClient,'c')
             self.assertEqual(response2.status_code,200)
             self.assert_template_used('mobile/Clue_Page.html')
             self.assertEqual(session['teamScore'], 100)
 
+    # TEST WRONG ANSWER FAILS
     def test_game_incorrect_answer(self):
         with app.test_client() as testClient:
-            self.register(testClient,'Test entry','test1@exeter.ac.uk','password','password','matt')
-            self.loginuser(testClient,'test1@exeter.ac.uk','password')
+            self.register(testClient, 'Test Entry', 'test@exeter.ac.uk', 'password', 'password', 'Not applicable')
+            self.register(testClient,'Test entry','test1@exeter.ac.uk','Password1','Password1','test entry')
+            self.loginuser(testClient,'test1@exeter.ac.uk','Password1')
+            self.selectTeam(testClient, "test entry", "test entry team 1")
+            self.selectRoute(testClient, 1, "TEST NEW NAME")
             response = self.getQuestionTest(testClient)
-            response2 = self.confirmAnswer(testClient,'e')
+            response2 = self.confirmAnswer(testClient,'a')
             self.assertEqual(response2.status_code,200)
             self.assert_template_used('mobile/Answer_Page.html')
             self.assertEqual(session['teamScore'], 97)
-            self.assert_context('error_message','Wrong answer try again')
+
 
     def test_game_finishes(self):
         with app.test_client() as testClient:
-            self.register(testClient,'Test entry','test1@exeter.ac.uk','password','password','matt')
-            self.loginuser(testClient,'test1@exeter.ac.uk','password')
-            self.selectTeam(testClient, "test entry", "test entry Team 1")
+            self.register(testClient, 'Test Entry', 'test@exeter.ac.uk', 'password', 'password', 'Not applicable')
+            self.register(testClient,'Test entry','test1@exeter.ac.uk','Password1','Password1','test entry')
+            self.loginuser(testClient,'test1@exeter.ac.uk','Password1')
+            self.selectTeam(testClient, "test entry", "test entry team 1")
             self.selectRoute(testClient, 1, "TEST NEW NAME")
-            response = self.getQuestionTest(testClient)
-            response2 = self.confirmAnswer(testClient, 'b')
-            self.assertEqual(response2.status_code,200)
-            self.assert_template_used('mobile/Clue_Page.html')
-            self.assertEqual(session['teamScore'], 100)
+            answers = ["c", "b", "d", "b", "a", "d", "b", "a"]
+            for letter in answers:
+                self.getQuestionTest(testClient)
+                self.confirmAnswer(testClient, letter)
+            self.assert_template_used('mobile/End_Game_Page.html')
 
 
 if __name__ == "__main__":

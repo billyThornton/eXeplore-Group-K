@@ -31,63 +31,66 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to configure routes a
 <meta charset="utf-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="{{url_for('static',filename='js/JSFunctions.js')}}"></script>
 <link href="{{url_for('static',filename='styles/Assign_Routes_Style.css')}}" rel='stylesheet' type='text/css'/>
-<title>Manage Team Page</title>
+<title>Manage Team Leaders Page</title>
+
 </head>
 
 <body>
   <div id="assign_routes_page">
-    
-    <div id="assign_route_container">
-    
-      <h2>Manage Teams</h2>
 
-      <form action="assignRoute" method="POST">
-        <p> <label>Tutor:</label>
-        
-        <select name="team" id="Groups">
-            {% for tutor in tutors %}
-            <option value="{{tutor['TUTOR_ID']}}">{{tutor["TUTOR_NAME"]}}</option>
-            {% endfor %}
-        </select>
-        </p>
+      <form action="assignTeamLeader" method="POST">
 
-        <p> <label>Team:</label>
-        
-        <select name="route" id="Groups">
-            {% for group in groups %}
-            <option value="{{team['TEAM_ID']}}">{{team["TEAM_NAME"]}}</option>
-            {% endfor %}
-        </select>
-        </p>
+        <div id="assign_route_container">
 
-    </div>
-    
-    
-    <table class="table">
-      
-        <!-- Headers -->
-        <thead>
-          <tr>
-            <th>Students</th>
-          </tr>
-        </thead>
-        
-        {% for team in teams %}
-        {% for route in routes %}
-        {% if team['CURRENT_ROUTE_ID'] == route['ROUTE_ID'] %}
-        <tr>
-          <td>{{student["STUDENT_NAME"]}}</td>
-        </tr>
-        {% endif %}
-        {% endfor %}
-        {% endfor %}
+          <h2>Manage Team Leaders</h2>
 
-      </table>
+            <p> <label><b>Tutor:</b></label>
 
-      <div id="transparent_button_container">
-        <button type="submit" id="transparent_button" name="assign_button">Assign</button>
-      </div>
+            <select name="tutor" id="Groups">
+                {% for tutor in tutors %}
+                <option value="{{tutor['TUTOR_NAME']}}">{{tutor["TUTOR_NAME"]}}</option>
+                {% endfor %}
+            </select>
+            </p>
+
+            <p> <label><b>Team:</b></label>
+
+            <select name="team" id="Groups">
+                {% for team in teams %}
+                <option value="{{team['TEAM_ID']}}">{{team["TEAM_NAME"]}}</option>
+                {% endfor %}
+            </select>
+            </p>
+
+            {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                {% for message in messages %}
+                  <p>{{message}}</p>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+        </div>
+
+          <h2>Select a student:</h2>
+
+          <ul>
+            {% for student in students %}
+
+            <li>
+              <label for="{{student['STUDENT_ID']}}" id="student_label">
+              <input type="radio" id="{{student['STUDENT_ID']}}" name="student" value="{{student['STUDENT_ID']}}">
+              {{student["NAME"]}}</label>
+              <span class="checkmark"></span>
+            </li>
+
+              {% endfor %}
+          </ul>
+
+          <div id="transparent_button_container">
+            <button type="submit" id="transparent_button" name="assign_button">Assign Team Leader</button>
+          </div>
     </form>
 
   </div>

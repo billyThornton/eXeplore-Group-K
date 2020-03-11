@@ -1,8 +1,8 @@
 <!--
-Created on 09/03/2020
-@author: Ben Trotter
-@Last Edited: 09/03/2020
-@edited by: Ben Trotter
+Created on 19/02/2020
+@author: Jamie Butler
+@Last Edited: 26/02/2020
+@edited by: Teo Reed
 
 Copyright (c) “2020, by Group K
 Contributors: Jamie Butler, Rahul Pankhania, Teo Reed, Billy Thornton, Ben Trotter, Kristian Woolhouse
@@ -22,8 +22,8 @@ DAMGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVIC
 INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INLUDING NEGLIGENCE
 OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-This file contains the html that allows assign the team name and choose which route the team takes. The information is passed
-to the backend where it is stored in the database.
+This file contains html is dynamically loaded into the content div from Game_Keeper_Page.html when manage groups button is
+clicked from Game_Keeper_Page.html. It allows a gamekeeper to configure routes and store them in the database.
 -->
 <!DOCTYPE html>
 <html>
@@ -31,38 +31,36 @@ to the backend where it is stored in the database.
 <meta charset="utf-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="{{url_for('static',filename='styles/Game_Style.css')}}" rel='stylesheet' type='text/css'/>
-<script src="{{url_for('static',filename='js/JSFunctions.js')}}"></script>
-<title>Join Team</title>
+<link href="{{url_for('static',filename='styles/FAQ_Style.css')}}" rel='stylesheet' type='text/css'/>
+<title>Game Keeper FAQ</title>
+
 </head>
 
 <body>
-	<div id="answer_page_container">
 
-	{% include "mobile/Game_Nav.html" %}
+    <div style="color: white;">
+        <h1>Game Keeper FAQs</h1>
+        <div id="question_list">
 
-	<h3>You have been assigned as the team Leader</h3>
 
 
-	<form action="routeSelect" method="POST">
 
-		<h3>Please choose a route for your team</h3>
-		<select name="route" id="teams">
 
-			{% for route in routes %}
-			<option value="{{route['ROUTE_ID']}}">{{route["ROUTE_NAME"]}}</option>
-			{% endfor %}
-		</select>
 
-		<h3>Please choose a name for your team</h3>
-			<input name="teamName" type="text" id="teams" placeholder="Enter team name here"
-			style="border-radius: 5px; margin-bottom: 40px;" size="10">
+            <p><b>Q:</b> What do I do if I get lost/get separated from my team?n</p>
+            <p><b>A:</b>  Use the map and game progress to find where you next location should be. Also, don’t be afraid to ask others around you for guidance.</p>
+<p><b>.</b></p>
 
-		<div id="transparent_button_container">
-			<button type="submit" id="transparent_button" name="assign_button">Start Game</button>
-		</div>
+            <p><b>Q:</b> How long should the game take for a team to complete?</p>
+            <p><b>A:</b> The game should take roughly half an hour to complete, at a good pace.</p>
+            <p><b>.</b></p>
 
-	</form>
-	</div>
+            <p><b>Q:</b> What is the purpose of this game?</p>
+            <p><b>A:</b> The purpose of the game is to get freshers familiar with the university campus and locations that they will most likely frequent over their course.</p>
+            <p><b>.</b></p>
+
+
+          </div>
+    </div>
 </body>
 </html>

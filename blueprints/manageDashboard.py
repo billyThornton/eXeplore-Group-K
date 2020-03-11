@@ -20,7 +20,7 @@ This file contains all the URL routing for the backend/front end, it takes urls
 and displays the required html files.
 It also processes data passed using post/get request.
 """
-from flask import render_template, redirect, url_for, request, send_file, session, jsonify, Blueprint
+from flask import render_template, redirect, url_for, request, send_file, session, jsonify, Blueprint, flash
 from utils.auth import *
 from utils.login import *
 from databaseAdapter import *
@@ -57,6 +57,7 @@ def requires_access_level(access_level):
 
     return decorator
 
+
 # Loads the dashboard for game masters
 @dashboard_page.route('/dashboard')
 @requires_access_level('staff')
@@ -69,9 +70,6 @@ def dashboard():
 @requires_access_level('staff')
 def addLocation():
     return render_template('Desktop/add_location_page.html')
-
-
-
 
 
 def allowedImage(filename):
@@ -107,6 +105,7 @@ def addLocationSubmit():
 
     # No checks
     insertLocation(location, clue, photo.filename)
+    flash("Location "+location+" has successfully been added")
 
     return redirect(url_for('dashboard_page.dashboard'))
 
@@ -130,6 +129,7 @@ def addQuestionSubmit():
     correct_answer = request.form.get('correct_answer')
     # No checks for now
     insertQuestion(location, question, answer_a, answer_b, answer_c, answer_d, correct_answer)
+    flash("Question has successfully been added")
 
     return redirect(url_for('dashboard_page.dashboard'))
 
@@ -148,7 +148,7 @@ def deleteLocation():
     return redirect(url_for('dashboard_page.dashboard'))
 
 
-# Loads the gamekeepers dashboard tool
+# Loads the add clues and questions dashboard tool
 @dashboard_page.route('/Manage_Locations_Page')
 @requires_access_level('staff')
 def manageLocations():
@@ -161,16 +161,29 @@ def manageLocations():
     return render_template('Desktop/Manage_Locations_Page.html', locations=locationNames)
 
 
-# Loads the gamekeepers dashboard tool
+# Loads the manage groups dashboard tool
 @dashboard_page.route('/Manage_Groups_Page')
 @requires_access_level('staff')
 def manageGroups():
-    # Creates a list of locations from the db
-    studentNames = getStudents()
 
-    return render_template('Desktop/Manage_Groups_Page.html', students=studentNames)
+    tutors = getTutors()
+    teams = getTeams()
+    students = getStudents()
 
-    return render_template('Desktop/Manage_Groups_Page.html', students=studentNames)
+    return render_template('Desktop/Manage_Groups_Page.html', tutors=tutors, teams=teams, students=students)
+
+
+# Sets a new selected team leader
+@dashboard_page.route('/assignTeamLeader', methods=['POST'])
+@requires_access_level('staff')
+def assignUpdateTeamLeader():
+    teamNameID = request.form['team']
+    studentNameID = request.form.get('student')
+    name = getStudentName(studentNameID)[0]['NAME']
+    team = getTeamFromStudentID(studentNameID)[0]['TEAM_NAME']
+    updateTeamLeader(studentNameID, teamNameID)
+    flash(name+' has been assigned as the team leader for team: '+team)
+    return redirect(url_for('dashboard_page.dashboard'))
 
 
 # Loads the gamekeepers dashboard tool
@@ -179,6 +192,7 @@ def leaderboard():
     print("IN THE LEADERBOARD ROUTE")
     routes = getRoutes()
     return render_template('Desktop/Leaderboard_Page.html', routes=routes)
+
 
 
 @dashboard_page.route('/Leaderboard_process', methods=['POST'])
@@ -361,6 +375,7 @@ def assignRoutes():
     return render_template('Desktop/Assign_Routes_Page.html', teams=gameTeams, routes=gameRoutes)
 
 
+# Set a team to a selected route
 @dashboard_page.route('/assignRoute', methods=['POST'])
 @requires_access_level('staff')
 def assignUpdateRoute():
@@ -368,4 +383,11 @@ def assignUpdateRoute():
     routeNameID = request.form.get('route')
     updateTeamRoute(routeNameID, 0, teamNameID)
 
-    return redirect(url_for('dashboard_page.assignRoutes'))
+    return redirect(url_for('dashboard_page.dashboard'))
+
+
+# Redirect for Dashboard FAQs Page
+@dashboard_page.route('/FAQGameKeeper')
+@requires_access_level('staff')
+def loadFAQGameKeeperPage():
+	return render_template('Desktop/FAQ_Staff_page.html')

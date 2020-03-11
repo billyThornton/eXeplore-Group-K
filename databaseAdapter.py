@@ -244,7 +244,7 @@ def getStudentProgress(id):
         " FROM team t"
         " INNER JOIN student s"
         " ON t.team_id = s.team_id"
-        " WHERE s.student_id = '" + id +
+        " WHERE s.student_id = '" + str(id) +
         "';"
         )
         # Prepare the statement
@@ -698,7 +698,7 @@ def getStudents():
     # Query all locations
     if db2conn:
         # if we have a Db2 connection, query the database
-        sql = "SELECT name FROM student;"
+        sql = "SELECT name, student_id FROM student;"
         # Prepare the statement
         stmt = ibm_db.prepare(db2conn,sql)
         # Execute the sql
@@ -1023,7 +1023,8 @@ def insertTutorUser(email,office,name):
         #TODO change to get tutorID from email and not name
     tutorID = getTutorID(name,email)[0]['TUTOR_ID']
     #Insert the first team for the tutor
-    insertTeam(name+" Team 1","NULL",tutorID,"NULL",0)
+    for i in range(1,4):
+        insertTeam(name+" team "+str(i),"NULL",tutorID,"NULL",0)
 
 
 # Saves the hashed password
@@ -1144,8 +1145,9 @@ def updateVerififcationStatus(userType,email, stringBool):
     if db2conn:
         sql = (
             "UPDATE " + str(userType) +
-            " SET verified = " +
-             + " WHERE email = "+str(email)+";"
+
+            " SET verified = " + str(stringBool)+
+              " WHERE email = '"+str(email).lower()+"';"
             )
 
         print(sql)

@@ -8,8 +8,10 @@ verify_ssl = true
 [packages]
 ibmcloudenv = "*"
 Flask = ">=1.0.0"
-
 ibm-db = "*"
 pipfile = "*"
 requests = "*"
 flask_testing = "*"
+flask_mail = "*"
+flask-ext = "*"
+flask-sendmail = "*"

@@ -164,6 +164,11 @@ input[type=text] {
 	margin-left: auto;
 }
 
+#button_container {
+	height: 100px;
+	padding-top: 10px;
+}
+
 #delete_transparent_button {
 	font-size: 20px;
 	color: #FF3B3B;
@@ -192,4 +197,43 @@ input[type=text] {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	transition: all 0.15s ease;
+}
+#mobile_header {
+	display: none;
+}
+
+@media screen and (max-width:830px) {
+	td {
+		display: block;
+	}
+	#temp {
+		display: none;
+	}
+	#mobile_header {
+		display: block;
+	}
+	#route_name {
+		width: 80%;
+	}
+	.manage_route_td {
+		width: 80%;
+	}
+}
+
+@media screen and (max-width:450px) {
+
+	.manage_route_td {
+		width: 100%;
+
+	}
+	#route_name {
+		width: 90%;
+	}
+	label {
+		display: inline-block;
+		font-size: 13px;
+	}
+
+
+
 }

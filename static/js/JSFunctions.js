@@ -76,15 +76,6 @@ function closeNav() {
 }
 
 /**
- * @brief Alerts a message to the browser informing the user that a certain feature
- * hasn't been added yet. This function is used with HTML5's onclick method.
- *
- */
-function appConstruction() {
-	alert("Application currently under construction.\nFeature not added yet.")
-}
-
-/**
  * @brief Function takes the user back to the last page that they were on. Used
  * when go back buttons are clicked.
  *
@@ -108,7 +99,7 @@ function validateName()
   initialMessage = document.getElementById("initial_message");
   initialMessage.innerHTML = "";
 
-  if(!/^[a-zA-Z]+$/.test(name))
+  if(!/^[a-zA-Z ]+$/.test(name))
   {
     text = "Name should only contain letters";
     nameField.classList.add("input-error");

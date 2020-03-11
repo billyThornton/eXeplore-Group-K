@@ -20,8 +20,10 @@ This file contains all the URL routing for the backend/front end, it takes urls
 and displays the required html files.
 It also processes data passed using post/get request.
 """
+from itsdangerous import URLSafeTimedSerializer
 from flask import Flask, render_template, redirect, url_for, request, send_file, session, jsonify,Blueprint, flash
 from utils.auth import *
+from flask_mail import Mail, Message
 from utils.login import *
 from databaseAdapter import *
 from functools import wraps
@@ -31,13 +33,17 @@ from blueprints.manageDashboard import dashboard_page
 from blueprints.manageGame import game_page
 from utils.utils import *
 
+emailVer = False
+
 app = Flask(__name__)
 app.register_blueprint(dashboard_page)
 app.register_blueprint(game_page)
 app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["PNG", "JPG", "JPEG"]
 
 
+
 port = int(os.getenv('PORT', 8000))
+
 
 # Handles the [post] method for login
 # Will be passed a username and a password
@@ -49,15 +55,21 @@ def login_post():
     token = verifyUser(password, email)
 
     if (token['VerificationToken']):
+        if not (getVerificationStatus(token['Role'],email))[0]['VERIFIED']:
+            #TODO send verification email
+            flash("You have not verified your email")
+            return redirect(url_for('login'))
+
         # Sets the role of the user in the session
         if (token['Role'] == 'student'):
             session['Role'] = 'student'
 
             session['studentID'] = token['ID'][0]['STUDENT_ID']
-            # get group ID
 
             teamID = getTeamFromStudentID(session['studentID'])
             print(teamID)
+            #studentID = getStudentID(email)
+            #teamID = getTeamFromStudentID(studentID[0]['STUDENT_ID'])
 
             if len(teamID) == 0:
                 print("REDIRECT")
@@ -65,6 +77,12 @@ def login_post():
             else:
                 teamID = teamID[0]['TEAM_ID']
                 session['teamID'] = teamID
+
+                if getTeamLeader(session["teamID"]) == session['studentID']:
+                    session['teamLeader'] = True
+                else:
+                    session['teamLeader'] = False
+
             teamLeader = getTeamLeader(teamID)
 
             if teamLeader[0]['TEAM_LEADER'] is None:
@@ -78,6 +96,8 @@ def login_post():
             numOfQuestions = getNumLocationOnRoute(session['routeID'])
             session['numOfQuestions'] = numOfQuestions[0]['1']
             session['teamScore'] = 100
+
+            session['progress'] = getStudentProgress(session['studentID'])#[0]['PROGRESS'] MAYBE UNCOMMENT THIS
             print("num of questions ", session['numOfQuestions'])
 
         elif (token['Role'] == 'tutor'):
@@ -109,6 +129,23 @@ def register():
     gameTutors = getTutors()
     return render_template('Desktop/register.html', tutors=gameTutors)
 
+@app.route('/confirm/<token>')
+def confirm_email(token):
+    try:
+        email = confirm_token(token)
+    except:
+        flash('The confirmation link is invalid or has expired.', 'danger')
+
+    if hasNumbers(email):
+        userType = "student"
+    else:
+        userType = "tutor"
+    if getVerificationStatus(userType,email)[0]['VERIFIED']:
+        flash('Account already confirmed. Please login.', 'success')
+    else:
+        updateVerififcationStatus(userType,email,"TRUE")
+        flash('You have confirmed your account. Thanks!', 'success')
+    return redirect(url_for('login'))
 
 # Handles registration
 @app.route('/registerSubmit', methods=['POST'])
@@ -141,13 +178,21 @@ def registerSubmit():
                 # Hash the password
                 hashedPassword = hashPassword(password)
                 # Insert the student to the database
-                # TODO fix/figure out how to send null
                 insertStudentUser(email, name, 'NULL', tutorID)
 
                 # Insert the password to the database
                 studentID = getStudentID(email)[0]['STUDENT_ID']
                 insertPasswordStudent(hashedPassword, studentID)
                 flash("Student registration successful")
+
+                if emailVer:
+                    token = generate_confirmation_token(email)
+                    confirm_url = url_for('confirm_email', token=token, _external=True)
+                    emailHtml = render_template('emailTemplate.html',confirm_url = confirm_url)
+                    emailSubject = "Please Confirm Your eXeplore email"
+                    send_email(email,emailSubject,emailHtml)
+                else:
+                    updateVerififcationStatus("student", email, "TRUE")
             else:
                 # Catches if email is registered
                 flash("Email is already in use")
@@ -162,6 +207,16 @@ def registerSubmit():
                 tutorID = getTutorID(name,email)[0]['TUTOR_ID']
                 insertPasswordTutor(hashedPassword, tutorID)
                 flash("Tutor registration successful", 'success')
+
+                if emailVer:
+                    token = generate_confirmation_token(email)
+                    confirm_url = url_for('confirm_email', token=token, _external=True)
+                    emailHtml = render_template('emailTemplate.html',confirm_url = confirm_url)
+                    emailSubject = "Please Confirm Your eXeplore email"
+                    send_email(email,emailSubject,emailHtml)
+                else:
+                    updateVerififcationStatus("tutor", email, "TRUE")
+
             else:
                 flash("Email or tutor name is already in use")
                 return redirect(url_for('register'))
@@ -200,33 +255,33 @@ def imageUniStatic():
     u = 2
     return send_file('static/images/Exeter_University.jpg', mimetype='image/jpg')
 
-
+# Redirect for Game Help Page
 @app.route('/HelpPage')
 def loadHelpPage():
     return render_template('mobile/Help_Page.html')
 
-
+# Redirect for Google Map Page
 @app.route('/Map')
 def loadMap():
     return render_template('mobile/Map.html')
 
-
+# Redirect for Game Leaderboard Page
 @app.route('/Leaderboard')
 def loadLeaderboardPage():
     gameTeams = getTeamsScores()
     return render_template('mobile/Leaderboard.html', teams=gameTeams)
 
-	
+# Redirect for Game FAQs Page
 @app.route('/FAQPage')
 def loadFAQPage():
 	return render_template('mobile/FAQ_Page.html')
-	
-	
+
+# Redirect for Game Resources Page
 @app.route('/Resources')
 def loadResourcesPage():
 	return render_template('mobile/Resources.html')
 
-
+# Redirect for Game Profile Page
 @app.route('/ProfilePage')
 def loadProfilePage():
     name = getStudentName(session['studentID'])[0]['NAME']
@@ -234,6 +289,32 @@ def loadProfilePage():
     team = getTeamFromStudentID(session['studentID'])[0]['TEAM_NAME']
     progress = session['progress']
     return render_template('mobile/Profile_Page.html', student_name=name, student_tutor=tutor, team_name=team, curr_progress=progress )
+
+
+def send_email(to, subject, template):
+    msg = Message(
+        subject,
+        recipients=[to],
+        html=template,
+        sender=app.config['MAIL_DEFAULT_SENDER']
+    )
+    mail.send(msg)
+
+def generate_confirmation_token(email):
+    serializer = URLSafeTimedSerializer(app.secret_key)
+    return serializer.dumps(email, salt=app.config['SECURITY_PASSWORD_SALT'])
+
+def confirm_token(token, expiration=3600):
+    serializer = URLSafeTimedSerializer(app.secret_key)
+    try:
+        email = serializer.loads(
+            token,
+            salt=app.config['SECURITY_PASSWORD_SALT'],
+            max_age=expiration
+        )
+    except:
+        return False
+    return email
 
 # Runs the app locally if not deployed to the server
 if __name__ == '__main__':
@@ -244,5 +325,17 @@ if __name__ == '__main__':
     # insertScore(1,"Standard",1,100)
     # insertQuestion(9,"What does the sign behind the cafe say?","Physics is the universes operating system","Im with stupid","We have a latte fun","Flavour by nature","D")
     app.secret_key = 'eXeplore_241199_brjbtk'
-    app.SECURITY_PASSWORD_SALT = 'BFR241199'
+    app.config.update(SECURITY_PASSWORD_SALT = 'BFR241199')
+    app.config.update(MAIL_SERVER = 'smtp.googlemail.com')
+    app.config.update(MAIL_PORT = 465)
+    app.config.update(MAIL_USE_TLS = False)
+    app.config.update(MAIL_USE_SSL = True)
+
+    # gmail authentication
+    app.config.update(MAIL_USERNAME = "exeploregeneral")
+    app.config.update(MAIL_PASSWORD = "24BBT11TR99")
+
+    # mail accounts
+    app.config.update(MAIL_DEFAULT_SENDER='exeploregeneral@example.com')
+    mail = Mail(app)
     app.run(host='0.0.0.0', port=port, debug=True, use_reloader=False)

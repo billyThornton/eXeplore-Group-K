@@ -82,26 +82,22 @@ input[type=radio]{
 	width: 60.5%;
 	color: black;
 	background-color: white;
-	height: 500px;
+	height: 350px;
 	overflow-y: scroll;
 	padding-left: 0px;
-
 }
 
 #location_list:nth-child(even) {
 	background-color: #e0e0e0;
 }
 
-#location_element:hover {
-	background-color: #b4d9bd;
-}
 
 #location_element {
 	margin-top: 0px;
 	height: 30px;
 	padding-left: 10px;
 	padding-top: 15px;
-
+	border: 1px solid #c9c9c9;
 }
 
 #transparent_button_container {
@@ -196,6 +192,7 @@ input[type="radio"]:disabled + #location_label:before {
 	border-color: white;
 	border-radius: 50px;
 	margin-left: auto;
+	margin-top: 5px;
 }
 
 #save_transparent_button {
@@ -227,4 +224,17 @@ input[type="radio"]:disabled + #location_label:before {
 /* Give container scroller */
 #location_list_container {
 	margin-left: auto;
+}
+
+@media screen and (max-width:650px) {
+	#transparent_button {width:150px;}
+	#location_list {
+		height: 300px;
+		width: 90%;
+		margin-left: 5%;
+	}
+	#location_search {
+		width: 85%;
+		margin-left: 5%;
+	}
 }

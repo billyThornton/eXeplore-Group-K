@@ -44,14 +44,21 @@ eXeplore game. Additionally it also gives access to a side bar which provides va
 		{% include "mobile/Game_Nav.html" %}
 
 		<div id="progress_bar">
-			<progress value="{{progress_value}}"" max="8">{{progress_value}}</progress>
+			<progress value="{{progress_value}}"" max="{{total}}">{{progress_value}}</progress>
 		</div>
 
 		<img id="clue_location" src="{{clue_location}}">
 
+		{% with messages = get_flashed_messages() %}
+			{% if messages %}
+				{% for message in messages %}
+					<p id="error">{{message}}</p>
+				{% endfor %}
+			{% endif %}
+		{% endwith %}
 		<!-- Further example of flask variable to load in the correct clue message from database -->
 		<div id="clue_text">
-			<span>Clue: {{clue_message}}</span>
+			<span>{{clue_message}}</span>
 		</div>
 
 		<div id="transparent_button_container">
