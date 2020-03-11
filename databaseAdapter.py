@@ -670,7 +670,7 @@ def getStudents():
     # Query all locations
     if db2conn:
         # if we have a Db2 connection, query the database
-        sql = "SELECT name FROM student;"
+        sql = "SELECT name, student_id FROM student;"
         # Prepare the statement
         stmt = ibm_db.prepare(db2conn,sql)
         # Execute the sql
@@ -1023,7 +1023,7 @@ def getTeamLeader(teamID):
         # close database connection
         ibm_db.close(db2conn)
     return rows
-    
+
 def insertTeam(teamName,routeID,tutorID,teamLeader,progress):
     db2conn = createConnection()
 
@@ -1074,8 +1074,9 @@ def updateVerififcationStatus(userType,email, stringBool):
     if db2conn:
         sql = (
             "UPDATE " + str(userType) +
-            " SET verified = " +
-             + " WHERE email = "+str(email)+";"
+
+            " SET verified = " + str(stringBool)+
+              " WHERE email = '"+str(email).lower()+"';"
             )
 
         print(sql)

@@ -148,7 +148,7 @@ def deleteLocation():
     return redirect(url_for('dashboard_page.dashboard'))
 
 
-# Loads the gamekeepers dashboard tool
+# Loads the add clues and questions dashboard tool
 @dashboard_page.route('/Manage_Locations_Page')
 @requires_access_level('staff')
 def manageLocations():
@@ -161,16 +161,27 @@ def manageLocations():
     return render_template('Desktop/Manage_Locations_Page.html', locations=locationNames)
 
 
-# Loads the gamekeepers dashboard tool
+# Loads the manage groups dashboard tool
 @dashboard_page.route('/Manage_Groups_Page')
 @requires_access_level('staff')
 def manageGroups():
-    # Creates a list of locations from the db
-    studentNames = getStudents()
 
-    return render_template('Desktop/Manage_Groups_Page.html', students=studentNames)
+    tutors = getTutors()
+    teams = getTeams()
+    students = getStudents()
 
-    return render_template('Desktop/Manage_Groups_Page.html', students=studentNames)
+    return render_template('Desktop/Manage_Groups_Page.html', tutors=tutors, teams=teams, students=students)
+
+
+# Sets a new selected team leader
+@dashboard_page.route('/assignTeamLeader', methods=['POST'])
+@requires_access_level('staff')
+def assignUpdateTeamLeader():
+    teamNameID = request.form['team']
+    studentNameID = request.form.get('student')
+    updateTeamLeader(studentNameID, teamNameID)
+
+    return redirect(url_for('dashboard_page.dashboard'))
 
 
 # Loads the gamekeepers dashboard tool
@@ -179,6 +190,7 @@ def leaderboard():
     print("IN THE LEADERBOARD ROUTE")
     routes = getRoutes()
     return render_template('Desktop/Leaderboard_Page.html', routes=routes)
+
 
 
 @dashboard_page.route('/Leaderboard_process', methods=['POST'])
@@ -207,6 +219,7 @@ def assignRoutes():
     return render_template('Desktop/Assign_Routes_Page.html', teams=gameTeams, routes=gameRoutes)
 
 
+# Set a team to a selected route
 @dashboard_page.route('/assignRoute', methods=['POST'])
 @requires_access_level('staff')
 def assignUpdateRoute():

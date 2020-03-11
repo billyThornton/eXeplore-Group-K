@@ -24,6 +24,7 @@ from flask import render_template, redirect, url_for, request, send_file, sessio
 from utils.auth import *
 from utils.login import *
 from databaseAdapter import *
+
 from functools import wraps
 import os
 from werkzeug.utils import secure_filename
@@ -114,6 +115,8 @@ def loadFirstTeam():
 @game_page.route('/Game')
 def showLocationClue():
 
+    num = session['numOfQuestions']
+    print('!!!!!!!!!!!!!!!!!!!!!',num)
     # Check if route id is in session
     if 'routeID' in session:
         routeID = session['routeID']
@@ -142,7 +145,7 @@ def showLocationClue():
 
     print(imageLocation)
     return render_template('mobile/Clue_Page.html', progress_value=progress, clue_message=cluemessage,
-                           clue_location=imageLocation)
+                           clue_location=imageLocation, total=session['numOfQuestions'])
 
 
 @game_page.route('/getQuestion', methods=['POST'])
@@ -171,7 +174,7 @@ def getQuestion():
         d = questionData[0]['MULTIPLE_CHOICE_D']
         return render_template('mobile/Answer_Page.html', progress_value=progress, clue_message="Question: " + questionText,
                                clue_location=imageLocation,
-                               answer_a=a, answer_b=b, answer_c=c, answer_d=d)
+                               answer_a=a, answer_b=b, answer_c=c, answer_d=d, total=session['numOfQuestions'])
     else:
         progress = getStudentProgress(session['studentID'])[0]['PROGRESS']
         if progress == int(session['numOfQuestions'])+1:

@@ -43,7 +43,7 @@ function loadDoc(file)
 {
   localStorage.currentScreen = file;
   currentScreen = file;
-  
+
   $(document).ready(function()
   {
     $('#content').load(file);
@@ -326,4 +326,3 @@ function searchList(inputID, ulID) {
         }
     }
 }
-
