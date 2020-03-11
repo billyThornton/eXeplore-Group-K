@@ -196,6 +196,7 @@ input[type="radio"]:disabled + #location_label:before {
 	border-color: white;
 	border-radius: 50px;
 	margin-left: auto;
+	margin-top: 5px;
 }
 
 #save_transparent_button {
@@ -227,4 +228,17 @@ input[type="radio"]:disabled + #location_label:before {
 /* Give container scroller */
 #location_list_container {
 	margin-left: auto;
+}
+
+@media screen and (max-width:650px) {
+	#transparent_button {width:150px;}
+	#location_list {
+		height: 300px;
+		width: 90%;
+		margin-left: 5%;
+	}
+	#location_search {
+		width: 85%;
+		margin-left: 5%;
+	}
 }

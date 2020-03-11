@@ -44,7 +44,7 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to delete or create r
 		  <!-- Headers -->
 			<tr>
 				<th><h2>Create Route</h2></th>
-				<th><h2>Routes</h2></th>
+				<th><h2 id="temp">Routes</h2></th>
 			</tr>
 
 			<tr>
@@ -197,15 +197,15 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to delete or create r
 							{% endfor %}
 						</select><br /><br />
 
-						<div id="transparent_button_container">
-							<button type="submit" id="transparent_button" name="save_group_button">Save Route</button>
-						</div>
+
 
 					</td>
 				</form>
 
 				<!-- Routes Column -->
+
 				<td class="manage_route_td">
+					<h2 id="mobile_header">Routes</h2>
 					<div id="group_list_container">
 						<ul>
 							<li id="example_group1" name="groups"/><label for="example_group1" id="group_label"> Example Route</label> <br />
@@ -216,6 +216,13 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to delete or create r
 							{% endfor %}
 						</ul>
 					</div>
+				</td>
+			</tr>
+			<tr>
+				<td id="button_container">
+				<div id="transparent_button_container">
+					<button type="submit" id="transparent_button" name="save_group_button">Save Route</button>
+				</div>
 				</td>
 			</tr>
 		</table>
