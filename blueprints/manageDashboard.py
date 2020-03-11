@@ -105,6 +105,7 @@ def addLocationSubmit():
 
     # No checks
     insertLocation(location, clue, photo.filename)
+    flash("Location "+location+" has successfully been added")
 
     return redirect(url_for('dashboard_page.dashboard'))
 
@@ -128,6 +129,7 @@ def addQuestionSubmit():
     correct_answer = request.form.get('correct_answer')
     # No checks for now
     insertQuestion(location, question, answer_a, answer_b, answer_c, answer_d, correct_answer)
+    flash("Question has successfully been added")
 
     return redirect(url_for('dashboard_page.dashboard'))
 
