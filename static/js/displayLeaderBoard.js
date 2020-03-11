@@ -5,7 +5,7 @@ $(document).ready(function() {
             data : {
                 route : $("#{{route['ROUTE_ID']}}").val()
             },
-            type : 'POST',
+            type : 'POST'
         })
         .done(function(data) {
             // Create HTML table

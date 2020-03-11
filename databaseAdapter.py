@@ -719,7 +719,7 @@ def getLocationID(locationName):
     # Query all locations
     if db2conn:
         # if we have a Db2 connection, query the database
-        sql = "SELECT location_id FROM location WHERE location_name = '" + str(locationName) + "';"
+        sql = "SELECT location_id FROM location WHERE location_name = '" + locationName + "';"
         # Prepare the statement
         stmt = ibm_db.prepare(db2conn,sql)
         # Execute the sql
@@ -732,6 +732,7 @@ def getLocationID(locationName):
             result = ibm_db.fetch_assoc(stmt)
         # close database connection
         ibm_db.close(db2conn)
+        print("THIS IS THE LOCATION ID", rows)
     return rows
 
 
@@ -939,6 +940,31 @@ def getQuestions():
             result = ibm_db.fetch_assoc(stmt)
         # close database connection
         ibm_db.close(db2conn)
+    return rows
+
+def getQuestionID(questionContent):
+    db2conn = createConnection()
+    if db2conn:
+        # if we have a Db2 connection, query the database
+        sql = (
+        "SELECT question_id"
+        " FROM question"
+        " WHERE question_content = '" + questionContent + "';"
+        )
+
+        # Prepare the statement
+        stmt = ibm_db.prepare(db2conn, sql)
+        # Execute the sql
+        ibm_db.execute(stmt)
+        rows = []
+        # fetch the result
+        result = ibm_db.fetch_assoc(stmt)
+        while result != False:
+            rows.append(result.copy())
+            result = ibm_db.fetch_assoc(stmt)
+        # close database connection
+        ibm_db.close(db2conn)
+        print("THIS IS THE QUESTION ID", rows)
     return rows
 
 def insertStudentUser(email,name,TeamID,TutorID):
@@ -1164,13 +1190,13 @@ def insertRoute(routeName):
         ibm_db.close(db2conn)
 
 
-def insertRouteSequence(routeID, locationID, order):
+def insertRouteSequence(routeID, locationID, order, questionID):
     db2conn = createConnection()
 
     if db2conn:
         sql = (
-            "INSERT INTO route_location_bridge (ROUTE_ID, LOCATION_ID, SEQUENCE_ORDER)"
-            " VALUES(" + str(routeID) + ", " + str(locationID) + ", " + str(order) + ");"
+            "INSERT INTO route_location_bridge (ROUTE_ID, LOCATION_ID, SEQUENCE_ORDER, QUESTION_ID)"
+            " VALUES(" + str(routeID) + ", " + str(locationID) + ", " + str(order) + ", " + str(questionID) + ");"
             )
         print(sql)
         # Prepare the statement
