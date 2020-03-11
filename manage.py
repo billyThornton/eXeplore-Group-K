@@ -255,33 +255,33 @@ def imageUniStatic():
     u = 2
     return send_file('static/images/Exeter_University.jpg', mimetype='image/jpg')
 
-
+# Redirect for Game Help Page
 @app.route('/HelpPage')
 def loadHelpPage():
     return render_template('mobile/Help_Page.html')
 
-
+# Redirect for Google Map Page
 @app.route('/Map')
 def loadMap():
     return render_template('mobile/Map.html')
 
-
+# Redirect for Game Leaderboard Page
 @app.route('/Leaderboard')
 def loadLeaderboardPage():
     gameTeams = getTeamsScores()
     return render_template('mobile/Leaderboard.html', teams=gameTeams)
 
-	
+# Redirect for Game FAQs Page
 @app.route('/FAQPage')
 def loadFAQPage():
 	return render_template('mobile/FAQ_Page.html')
-	
-	
+
+# Redirect for Game Resources Page
 @app.route('/Resources')
 def loadResourcesPage():
 	return render_template('mobile/Resources.html')
 
-
+# Redirect for Game Profile Page
 @app.route('/ProfilePage')
 def loadProfilePage():
     name = getStudentName(session['studentID'])[0]['NAME']
@@ -289,6 +289,7 @@ def loadProfilePage():
     team = getTeamFromStudentID(session['studentID'])[0]['TEAM_NAME']
     progress = session['progress']
     return render_template('mobile/Profile_Page.html', student_name=name, student_tutor=tutor, team_name=team, curr_progress=progress )
+
 
 def send_email(to, subject, template):
     msg = Message(

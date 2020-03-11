@@ -53,6 +53,13 @@ This is done by using a form that the game keeper is to fill in.
 
 		<!-- Add location details form -->
 		<form id="form" action="Add_Location_Submit" method="POST" enctype="multipart/form-data">
+	        {% with messages = get_flashed_messages() %}
+	          {% if messages %}
+	            {% for message in messages %}
+	              <p>{{message}}</p>
+	            {% endfor %}
+	          {% endif %}
+	        {% endwith %}
 			<div class="location_inputs" id="add_location_container">
 				<div class="location_inputs">
 					<label id="input_label">Location Name:</label>
