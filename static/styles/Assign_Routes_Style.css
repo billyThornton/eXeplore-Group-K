@@ -108,3 +108,32 @@ select {
 #transparent_button:hover {
 	cursor: pointer;
 }
+
+@media screen and (max-width: 650px) {
+	#Groups {
+		width: 50%;
+	}
+	#transparent_button{
+		width: 150px;
+		margin-left: 5%;
+	}
+	label {
+		margin-left: 20px;
+	}
+	.table {
+		margin-left: auto;
+		margin-right: auto;
+		width: 90%;
+	}
+	td {
+		overflow-x: scroll;
+	}
+	tr {
+		overflow-x: scroll;
+	}
+	h2 {
+		text-align: center;
+		margin-left: 0;
+	}
+
+}

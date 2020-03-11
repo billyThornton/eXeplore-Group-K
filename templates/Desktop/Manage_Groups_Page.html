@@ -37,14 +37,14 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to configure routes a
 
 <body>
   <div id="assign_routes_page">
-    
+
     <div id="assign_route_container">
-    
+
       <h2>Manage Teams</h2>
 
       <form action="assignRoute" method="POST">
         <p> <label>Tutor:</label>
-        
+
         <select name="team" id="Groups">
             {% for tutor in tutors %}
             <option value="{{tutor['TUTOR_ID']}}">{{tutor["TUTOR_NAME"]}}</option>
@@ -53,7 +53,7 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to configure routes a
         </p>
 
         <p> <label>Team:</label>
-        
+
         <select name="route" id="Groups">
             {% for group in groups %}
             <option value="{{team['TEAM_ID']}}">{{team["TEAM_NAME"]}}</option>
@@ -62,17 +62,17 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to configure routes a
         </p>
 
     </div>
-    
-    
+
+
     <table class="table">
-      
+
         <!-- Headers -->
         <thead>
           <tr>
             <th>Students</th>
           </tr>
         </thead>
-        
+
         {% for team in teams %}
         {% for route in routes %}
         {% if team['CURRENT_ROUTE_ID'] == route['ROUTE_ID'] %}
@@ -86,7 +86,7 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to configure routes a
       </table>
 
       <div id="transparent_button_container">
-        <button type="submit" id="transparent_button" name="assign_button">Assign</button>
+        <button type="submit" id="transparent_button" name="assign_button">Assign Leader</button>
       </div>
     </form>
 

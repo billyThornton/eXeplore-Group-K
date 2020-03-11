@@ -229,3 +229,16 @@ input[type="radio"]:disabled + #location_label:before {
 #location_list_container {
 	margin-left: auto;
 }
+
+@media screen and (max-width:650px) {
+	#transparent_button {width:150px;}
+	#location_list {
+		height: 300px;
+		width: 90%;
+		margin-left: 5%;
+	}
+	#location_search {
+		width: 85%;
+		margin-left: 5%;
+	}
+}
