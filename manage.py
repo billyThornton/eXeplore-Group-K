@@ -84,13 +84,13 @@ def login_post():
             session['Role'] = 'staff'
 
 
-    if (session['Role'] == "staff"):
-        # If staff redirect to the dashboard
-        return redirect(url_for('dashboard_page.dashboard'))
+        if (session['Role'] == "staff"):
+            # If staff redirect to the dashboard
+            return redirect(url_for('dashboard_page.dashboard'))
 
-    elif (session['Role'] == "student"):
-        # If student redirect to the game
-        return redirect(url_for('game_page.showLocationClue'))
+        elif (session['Role'] == "student"):
+            # If student redirect to the game
+            return redirect(url_for('game_page.showLocationClue'))
     else:
         # If neither redirect to login page and send error message
         flash("User does not exist")
@@ -161,7 +161,7 @@ def registerSubmit():
                 hashedPassword = hashPassword(password)
                 tutorID = getTutorID(name,email)[0]['TUTOR_ID']
                 insertPasswordTutor(hashedPassword, tutorID)
-                flash("Tutor registration successful")
+                flash("Tutor registration successful", 'success')
             else:
                 flash("Email or tutor name is already in use")
                 return redirect(url_for('register'))
