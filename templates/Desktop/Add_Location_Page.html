@@ -42,17 +42,17 @@ This is done by using a form that the game keeper is to fill in.
         });
     });
 </script>
-
-
 <title>Add Location Page</title>
 </head>
 
-
 <body>
+
 	<div id="add_location_page">
 
 		<!-- Add location details form -->
 		<form id="form" action="Add_Location_Submit" method="POST" enctype="multipart/form-data">
+
+            <!-- Flask alert message to indicate when location has been made -->
 	        {% with messages = get_flashed_messages() %}
 	          {% if messages %}
 	            {% for message in messages %}
@@ -60,6 +60,7 @@ This is done by using a form that the game keeper is to fill in.
 	            {% endfor %}
 	          {% endif %}
 	        {% endwith %}
+
 			<div class="location_inputs" id="add_location_container">
 				<div class="location_inputs">
 					<label id="input_label">Location Name:</label>
@@ -79,14 +80,14 @@ This is done by using a form that the game keeper is to fill in.
 
 			</div>
 
-		<div id="transparent_button_container">
-			<button type="submit" id="save_transparent_button" name="add_location_button">Add Location</button>
-			<button type="button" href="#" id="transparent_button" onclick="loadDoc('/Manage_Locations_Page')" name="goback_button">Go Back</button>
-		</div>
+    		<div id="transparent_button_container">
+    			<button type="submit" id="save_transparent_button" name="add_location_button">Add Location</button>
+    			<button type="button" href="#" id="transparent_button" onclick="loadDoc('/Manage_Locations_Page')" name="goback_button">Go Back</button>
+    		</div>
 
         </form>
 
 	</div>
-</body>
 
+</body>
 </html>
