@@ -80,14 +80,14 @@ This project uses pipenv to handle its pip requirements, this also allows automa
 ### Database requirements
 This program relies on a DB2 database however this could be changed to work with the database of your choice. All database access code is handled in
 the [databaseAdapter.py](databaseAdapter.py). Here you can change the connection settings for the database to work with your chosen implementation.
-The design of the database is explained in [Databasefile](databaseFile).
+The design of the database is explained in [Dtabase Explaination PDF](/Demo/Db%20Documentation.pdf).
 It follows the following schema.<br>
-![schema image](imageurl)<br>
-You can create the database locally using the provided SQL files [SqLfiles](linktofiles)<br>
-the database offers the functionality to store... <br>
+![schema image](Demo/Images/Demo/Exeplore%20ERD.png)<br>
+You can create the database locally using the provided SQL files [SqLfiles](/Demo/exeplore_init.sql)<br>
+This 
 If using the IBM cloud you can access your DB2 database locally by updating the servicesConfig.json file with parameters found in your apps 
 environment variables or if running in the loud these credentials will be automatically obtained (Full instructions [below](#deployment-on-the-ibm-cloud)).
-We have also included the [raw sql]() so you can create the tables locally.
+We have also included the [raw sql](/Demo/exeplore_init.sql) so you can create the tables locally.
 
 ### Running the app locally
 To run the app locally you must run the manage.py script this will start a flask server on your local IP (local host) on port 8000.<br>
@@ -98,13 +98,18 @@ When using a terminal use the command `python manage` from within the projects r
 As the unit tests take advantage of many of the files require to run the application they must be executed from the highest directory level.
 For example if you have stored the files like below the tests must be run from within the project folder. <br>All tests can be run using
 `python -m unittest discover tests` or individual unit tests can be executed via `python -m tests.[UnitName]`<br>
-![Tree File Structure](Images/Demo/tree_structure.png)<br>
+![Tree File Structure](Demo/Images/Demo/tree_structure.png)<br>
+NOTE: In order to run the test suites you need to disable the email verification feature as explained in the 
+customisation section
 
 #### Test Suites:
 There are 3 test suites included in the development repository. One suite (`test_login`) tests all the functionality
 of the login system. `test_dashboard` tests all the  functionality of the game keeper dashboard and finally 
 `test_game` test the functionality of the actual game system. For more information on the unittests
 within these suites look at the docstring for the suite you are interested in.
+
+NOTE: In order to run the test suites you need to disable the email verification feature as explained in the 
+customisation section
 
 
 ## Deployment on the IBM cloud
@@ -117,20 +122,13 @@ By following those instructions you will be able to deploy the app on the IBM cl
 We provide a serviceConfig.Json here you can customise the mail server that is used for email verification 
 as well as the email extension that is required to register a student. If you choose to do this you will need to 
 update the test suites to reflect this new email extension requirement.
-
+#### Disable Email Verification
 In addition to this at the top of `manage.py` there is a flag that enables and disables email verification
 this allows for more fluent testing. This variable is called `emailVer`.
-
+#### Google Map API
 If you want to use the Map functionality you will have to insert you own google maps api key into the 
 `map.html`. In order for you to generate a Google Maps API key you can follow these instructions 
 [API key instructions](https://developers.google.com/maps/documentation/javascript/get-api-key).
-
-
-
-
-## Code Examples
-Show examples of usage:
-`put-your-code-here`
 
 ## Features
 List of features ready and TODOs for future development
@@ -143,9 +141,10 @@ List of features ready and TODOs for future development
 * Language translator for text on pages
 * A viewable map of the Exeter University campus
 * An FAQ section for both students and staff
+* A fully functional dashboard for tutors
 
 To-do list:
-* A fully functional dashboard for tutors
+* Implement sockets to allow the game leader to change after each question 
 
 ## Status
 Project is: _in progress_ <br>
