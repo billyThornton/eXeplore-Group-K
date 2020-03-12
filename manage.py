@@ -30,7 +30,13 @@ from blueprints.manageDashboard import dashboard_page
 from blueprints.manageGame import game_page
 from utils.utils import *
 
-emailVer = True
+
+with open('servicesConfig.json') as json_file:
+    data = json.load(json_file)
+    data['dashDB For Transactions'][0]['credentials']
+
+emailVer = True;
+
 
 app = Flask(__name__)
 app.register_blueprint(dashboard_page)
@@ -388,19 +394,20 @@ def confirm_token(token, expiration=3600):
 
 
 if __name__ == '__main__':
-    app.secret_key = 'eXeplore_241199_brjbtk'
-    app.config.update(SECURITY_PASSWORD_SALT='BFR241199')
-    app.config.update(MAIL_SERVER='smtp.googlemail.com')
-    app.config.update(MAIL_PORT=465)
-    app.config.update(MAIL_USE_TLS=False)
-    app.config.update(MAIL_USE_SSL=True)
+    app.secret_key = data['Security'][0]['credentials']['secret_key']
+    app.config.update(SECURITY_PASSWORD_SALT = data['Email settings'][0]['credentials']['security_password_salt'])
+    app.config.update(MAIL_SERVER = data['Email settings'][0]['credentials']['mail_server'])
+    app.config.update(MAIL_PORT = data['Email settings'][0]['credentials']['mail_port'])
+    app.config.update(MAIL_USE_TLS = data['Email settings'][0]['credentials']['mail_use_tls'])
+    app.config.update(MAIL_USE_SSL = data['Email settings'][0]['credentials']['mail_use_ssl'])
 
+    print(data['Email settings'][0]['credentials']['mail_server'])
     # gmail authentication
-    app.config.update(MAIL_USERNAME="exeploregeneral")
-    app.config.update(MAIL_PASSWORD="24BBT11TR99")
+    app.config.update(MAIL_USERNAME = data['Email settings'][0]['credentials']['mail_username'])
+    app.config.update(MAIL_PASSWORD = data['Email settings'][0]['credentials']['mail_password'])
 
     # mail accounts
-    app.config.update(MAIL_DEFAULT_SENDER='exeploregeneral@example.com')
+    app.config.update(MAIL_DEFAULT_SENDER = data['Email settings'][0]['credentials']['mail_default_sender'])
     mail = Mail(app)
 
     app.run(host='0.0.0.0', port=port, debug=True, use_reloader=False)
