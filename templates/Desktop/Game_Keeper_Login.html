@@ -33,23 +33,14 @@ with details on the database. Error message returned if the details are incorrec
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="{{url_for('static',filename='styles/Game_Keeper_Login_Style.css')}}" rel='stylesheet' type='text/css'/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
-
-
-<title>Game's Keeper Login</title>
-<script type="text/javascript">
-function googleTranslateElementInit() {
-  new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
-}
-</script>
-
+<script src="{{url_for('static',filename='js/JSFunctions.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
 <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
+<title>Game's Keeper Login</title>
+
 </head>
-
 <body>
-	<div id="google_translate_element"></div>
-
 	<div id="green_box">
 
 		<div id="exeter_logo_container">
@@ -87,6 +78,7 @@ function googleTranslateElementInit() {
 				</label>
 				
 				<a href="/register">Create an account</a>
+				<div class="google" id="google_translate_element"></div>
 
 		  </div>
 		</form>
