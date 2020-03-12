@@ -35,112 +35,29 @@ clicked from the side bar. It allows a gamekeeper to view the current leaderboar
 <script src="{{url_for('static',filename='js/JSFunctions.js')}}"></script>
 <link href="{{url_for('static',filename='styles/Leaderboard_Style.css')}}" rel='stylesheet' type='text/css'/>
 <script type=text/javascript src="{{url_for('static', filename='js/jquery.js') }}"></script>
-<script type="text/javascript" src="{{url_for('static', filename='js/displayLeaderBoard.js')}}"></script>
 <title>Leaderboard Page</title>
 </head>
 
 <body>
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
 	<div id="leaderboard_page">
 
 		<h3>Leaderboard:</h3>
 
 		<div id="groups_list_container">
-
-<<<<<<< Updated upstream
         <form>
             {% for route in routes %}
                 {% if loop.index == 1 %}
-                    <input type="radio" id="{{route['ROUTE_ID']}}" name="route" value="{{route['ROUTE_ID']}}">
+                    <input type="radio" class="route_radio_button" id="{{route['ROUTE_ID']}}" name="route" value="{{route['ROUTE_ID']}}" onclick="showLeaderBoard({{route['ROUTE_ID']}})" selected>
                     <label for="{{route['ROUTE_ID']}}">{{route['ROUTE_NAME']}}</label><br/>
                 {% else %}
-                    <input type="radio" id="{{route['ROUTE_ID']}}" name="route" value="{{route['ROUTE_ID']}}">
+                    <input type="radio" class="route_radio_button" id="{{route['ROUTE_ID']}}" name="route" value="{{route['ROUTE_ID']}}" onclick="showLeaderBoard({{route['ROUTE_ID']}}">
                     <label for="{{route['ROUTE_ID']}}">{{route['ROUTE_NAME']}}</label><br/>
                 {% endif %}
             {% endfor %}
         </form>
-=======
-            <form>
-                {% for route in routes %}
-                    {% if loop.index == 1 %}
-                        <input type="radio" id="{{route['ROUTE_ID']}}" name="route" value="{{route['ROUTE_ID']}}">
-                        <label for="{{route['ROUTE_ID']}}">{{route['ROUTE_NAME']}}</label><br/>
-                    {% else %}
-                        <input type="radio" id="{{route['ROUTE_ID']}}" name="route" value="{{route['ROUTE_ID']}}">
-                        <label for="{{route['ROUTE_ID']}}">{{route['ROUTE_NAME']}}</label><br/>
-                    {% endif %}
 
-                    <script type="text/javascript">
-                        $(document).ready(function() {
-                            $("input[type = 'radio']").on('click', function() {
-                                $.ajax({
-                                    url : '/Leaderboard_process',
-                                    data : {
-                                        route : $("#{{route['ROUTE_ID']}}").val()
-                                    },
-                                    type : 'POST',
-                                })
-                                .done(function(data) {
-                                    console.log("{{route['ROUTE_ID']}}");
-                                    // Create HTML table
-                                    var table = document.createElement("TABLE");
-                                    table.border = "1";
-                                    // Get the count of columns
-                                    var columnCount  = 3;
-                                    // Add the header row
-                                    var row = table.insertRow(-1);
-                                    var headerCell = document.createElement("TH");
-                                    var headerCell1 = document.createElement("TH");
-                                    var headerCell2 = document.createElement("TH");
-
-                                    headerCell.innerHTML = "Position";
-                                    row.appendChild(headerCell);
-
-                                    headerCell1.innerHTML = "Team Name";
-                                    row.appendChild(headerCell1);
-
-                                    headerCell2.innerHTML = "Score";
-                                    row.appendChild(headerCell2);
-
-                                    function getTeamName(item) {
-                                        var name = item.TEAM_NAME;
-                                        return name;
-                                    }
-                                    function getValue(item) {
-                                        var value = item.VALUE;
-                                        return value;
-                                    }
-                                    // Add the data rows
-                                    // Number of rows
-                                    for (var i = 1; i < data.length; i++) {
-                                        row = table.insertRow(-1);
-                                        // Number of columns
-                                        for (var j = 0; j < columnCount; j++) {
-                                            if(j == 0) {
-                                                var cell = row.insertCell(-1);
-                                                cell.innerHTML = i;
-                                            } else if (j > 0) {
-                                                var cell = row.insertCell(-1);
-                                                cell.innerHTML = Object.values(data[i])[j-1];
-                                            }
-                                        }
-                                    }
-                                    var dvTable = document.getElementById("groups_list_container");
-                                    dvTable.innerHTML = "";
-                                    dvTable.appendChild(table);
-                                });
-                            });
-                        });
-                    </script>
->>>>>>> Stashed changes
-
-                {% endfor %}
-            </form>
         </div>
 	</div>
-
 </body>
 </html>

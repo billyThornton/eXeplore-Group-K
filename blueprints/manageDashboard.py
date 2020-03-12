@@ -188,20 +188,20 @@ def assignUpdateTeamLeader():
 
 # Loads the gamekeepers dashboard tool
 @dashboard_page.route('/Leaderboard_Page')
+@requires_access_level('staff')
 def leaderboard():
-    print("IN THE LEADERBOARD ROUTE")
     routes = getRoutes()
     return render_template('Desktop/Leaderboard_Page.html', routes=routes)
 
-
-
-@dashboard_page.route('/Leaderboard_process', methods=['POST'])
+# Dynamically loads the leaderboard
+@dashboard_page.route('/Show_Leader_Board', methods=['POST'])
+@requires_access_level('staff')
 def process():
-    print("IN THE LEADERBOARD_PROCESS ROUTE")
-    route_selected = request.form['route']
-    teams = getTeamScoresFromRouteID(route_selected)
+    routeID = request.form['routeID']
+    teams = getTeamScoresFromRouteID(routeID)
 
     return jsonify(teams)
+
 
 
 # Loads the gamekeepers dashboard tool

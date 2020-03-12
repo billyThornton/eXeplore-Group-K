@@ -361,6 +361,59 @@ function getDropDown(locationName, dropDownID) {
 }
 
 
+function showLeaderBoard(routeID) {
+    $(document).ready(function() {
+        $.ajax({
+            url : '/Show_Leader_Board',
+            data : {
+                routeID : routeID
+            },
+            type : 'POST'
+        })
+        .done(function(data) {
+            // Create HTML table
+            var table = document.createElement("TABLE");
+            table.border = "1";
+            // Get the count of columns
+            var columnCount  = 3;
+            // Add the header row
+            var row = table.insertRow(-1);
+            var headerCell = document.createElement("TH");
+            var headerCell1 = document.createElement("TH");
+            var headerCell2 = document.createElement("TH");
+
+            headerCell.innerHTML = "Position";
+            row.appendChild(headerCell);
+
+            headerCell1.innerHTML = "Team Name";
+            row.appendChild(headerCell1);
+
+            headerCell2.innerHTML = "Score";
+            row.appendChild(headerCell2);
+
+            // Add the data rows
+            // Number of rows
+            for (var i = 1; i < data.length; i++) {
+                row = table.insertRow(-1);
+                // Number of columns
+                for (var j = 0; j < columnCount; j++) {
+                    if(j == 0) {
+                        var cell = row.insertCell(-1);
+                        cell.innerHTML = i;
+                    } else if (j > 0) {
+                        var cell = row.insertCell(-1);
+                        cell.innerHTML = Object.values(data[i])[j-1];
+                    }
+                }
+            }
+            var dvTable = document.getElementById("groups_list_container");
+            dvTable.innerHTML = "";
+            dvTable.appendChild(table);
+        });
+    });
+}
+
+
 function googleTranslateElementInit() {
   new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
 }
