@@ -391,3 +391,10 @@ def assignUpdateRoute():
 @requires_access_level('staff')
 def loadFAQGameKeeperPage():
 	return render_template('Desktop/FAQ_Staff_page.html')
+
+
+# Redirect for Change Language Page
+@dashboard_page.route('/Language')
+@requires_access_level('staff')
+def loadLanguagePage():
+    return render_template('Desktop/Change_Lang_Page.html')
