@@ -58,7 +58,7 @@ def login_post():
     """
     email = request.form.get('email').lower()
     password = request.form.get('password')
-    
+
     # Checks the username and password are correct
     token = verifyUser(password, email)
 
@@ -280,6 +280,13 @@ def imageUni():
     """
     return send_file('static/images/Exeter_University.jpg', mimetype='image/jpg')
 
+@app.route('/Demo/eXeplore_Privacy_Policy.pdf')
+def pdfURL():
+    """
+    Used to serve privacy policy
+    :return: Serves the privacy policy pdf
+    """
+    return send_file('Demo/eXeplore_Privacy_Policy.pdf', mimetype='application/pdf')
 
 @app.route('/static/Exeter_University.jpg')
 def imageUniStatic():
