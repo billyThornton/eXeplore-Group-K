@@ -55,11 +55,15 @@ Subsequent tabs from the side bar have html dynamically loaded into the content 
 
     <!-- Pop up sidebar -->
     <div id="mySidebar" class="sidebar">
-      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-      <a href="javascript:clearRedirect()">Homepage</a>
-      <a href="#" onclick="loadDoc('/FAQGameKeeper'), closeNav()">FAQs</a>
-      <a href="/Logout">Logout</a>
-      <a href="#" id=google_translate_element> Translate</a>
+      <div id="top_elements">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+        <a href="javascript:clearRedirect()">Homepage</a>
+        <a href="#" onclick="loadDoc('/FAQGameKeeper'), closeNav()">FAQs</a>
+        <a href="/Logout">Logout</a>
+      </div>
+      <div id="google_translate_element_container">
+        <a href="#" id="google_translate_element">Translate</a>
+      </div>
     </div>
 
 	<!-- Topbar -->

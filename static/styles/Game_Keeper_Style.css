@@ -179,6 +179,16 @@ h1 {
 	border: none;
 }
 
+
+#top_elements {
+	height: 70%;
+}
+
+#google_translate_element_container {
+	height: 30%;
+}
+.skip_tran
+
 #main {
 	transition: margin-left .5s;
 	padding: 16px;
