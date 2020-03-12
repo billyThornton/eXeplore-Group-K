@@ -33,6 +33,7 @@ questions to these locations. Along with a list to display all the current route
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="{{url_for('static',filename='js/JSFunctions.js')}}"></script>
+<link rel='icon' href="{{url_for('static',filename='images/favicon.png')}}" type='image/png'/ >
 <link href="{{url_for('static',filename='styles/Manage_Groups_Style.css')}}" rel='stylesheet' type='text/css'/>
 <title>Manage Route Page</title>
 </head>
@@ -60,176 +61,184 @@ questions to these locations. Along with a list to display all the current route
 
 					<h4>Select locations and their questions</h4>
 
-					<label for="location_1">Location 1:</label>
-					<select id="location_1" name="location_1" onchange="getDropDown(this[this.selectedIndex].value, 'question_1')">
-						<option hidden disabled selected value> -- Select a Location -- </option>
 
-						{% for location in locations %}
-						<option id="{{location}}" value="{{location}}">{{location}}</option>
-						{% endfor %}
+					<div id="QA_pair">
+						<label for="location_1">Location 1:</label>
+						<select id="location_1" name="location_1" onchange="getDropDown(this[this.selectedIndex].value, 'question_1')">
 
-						<option id="n/a" value="n/a">n/a</option>
-					</select>
+							{% for location in locations %}
+							<option id="{{location}}" value="{{location}}">{{location}}</option>
+							{% endfor %}
 
-					<label for="question_1">question 1:</label>
-					<select id="question_1" name="question_1">
-						<option hidden disabled selected value> -- Select a Question -- </option>
-					</select><br /><br />
+							<option id="n/a" value="n/a" selected>n/a</option>
+						</select>
 
-					<label for="location_2">Location 2:</label>
-					<select id="location_2" name="location_2" onchange="getDropDown(this[this.selectedIndex].value, 'question_2')">
-						<option hidden disabled selected value> -- Select a Location -- </option>
+						<label for="question_1">question 1:</label>
+						<select id="question_1" name="question_1">
+	                        <option id="n/a" value="n/a" selected>n/a</option>
+						</select>
+					</div>
+					<div id="QA_pair">
 
-						{% for location in locations %}
-						<option id="{{location}}" value="{{location}}">{{location}}</option>
-						{% endfor %}
+						<label for="location_2">Location 2:</label>
+						<select id="location_2" name="location_2" onchange="getDropDown(this[this.selectedIndex].value, 'question_2')">
 
-						<option id="n/a" value="n/a">n/a</option>
-					</select>
+							{% for location in locations %}
+							<option id="{{location}}" value="{{location}}">{{location}}</option>
+							{% endfor %}
 
-					<label for="question_2">question 2:</label>
-					<select id="question_2" name="question_2">
-						<option hidden disabled selected value> -- Select a Question -- </option>
-					</select><br /><br />
+							<option id="n/a" value="n/a" selected>n/a</option>
+						</select>
 
-					<label for="location_3">Location 3:</label>
-					<select id="location_3" name="location_3" onchange="getDropDown(this[this.selectedIndex].value, 'question_3')">
-						<option hidden disabled selected value> -- Select a Location -- </option>
+						<label for="question_2">question 2:</label>
+						<select id="question_2" name="question_2">
+	                        <option id="n/a" value="n/a" selected>n/a</option>
+						</select>
+						</div>
+						<div id="QA_pair">
+						<label for="location_3">Location 3:</label>
+						<select id="location_3" name="location_3" onchange="getDropDown(this[this.selectedIndex].value, 'question_3')">
 
-						{% for location in locations %}
-						<option id="{{location}}" value="{{location}}">{{location}}</option>
-						{% endfor %}
+							{% for location in locations %}
+							<option id="{{location}}" value="{{location}}">{{location}}</option>
+							{% endfor %}
 
-						<option id="n/a" value="n/a">n/a</option>
-					</select>
+							<option id="n/a" value="n/a" selected>n/a</option>
+						</select>
 
-					<label for="question_3">question 3:</label>
-					<select id="question_3" name="question_3">
-						<option hidden disabled selected value> -- Select a Question -- </option>
-					</select><br /><br />
+						<label for="question_3">question 3:</label>
+						<select id="question_3" name="question_3">
+	                        <option id="n/a" value="n/a" selected>n/a</option>
+						</select>
+					</div>
+					</div>
+					<div id="QA_pair">
+						<label for="location_4">Location 4:</label>
+						<select id="location 4" name="location_4" onchange="getDropDown(this[this.selectedIndex].value, 'question_4')">
 
-					<label for="location_4">Location 4:</label>
-					<select id="location 4" name="location_4" onchange="getDropDown(this[this.selectedIndex].value, 'question_4')">
-						<option hidden disabled selected value> -- Select a Location -- </option>
+							{% for location in locations %}
+							<option id="{{location}}" value="{{location}}">{{location}}</option>
+							{% endfor %}
 
-						{% for location in locations %}
-						<option id="{{location}}" value="{{location}}">{{location}}</option>
-						{% endfor %}
+							<option id="n/a" value="n/a" selected>n/a</option>
+						</select>
 
-						<option id="n/a" value="n/a">n/a</option>
-					</select>
+						<label for="question_4">question 4:</label>
+						<select id="question_4" name="question_4">
+	                        <option id="n/a" value="n/a" selected>n/a</option>
+						</select>
+					</div>
+					<div id="QA_pair">
 
-					<label for="question_4">question 4:</label>
-					<select id="question_4" name="question_4">
-						<option hidden disabled selected value> -- Select a Question -- </option>
-					</select><br /><br />
+						<label for="location_5">Location 5:</label>
+						<select id="location_5" name="location_5" onchange="getDropDown(this[this.selectedIndex].value, 'question_5')">
 
-					<label for="location_5">Location 5:</label>
-					<select id="location_5" name="location_5" onchange="getDropDown(this[this.selectedIndex].value, 'question_5')">
-						<option hidden disabled selected value> -- Select a Location -- </option>
+							{% for location in locations %}
+							<option id="{{location}}" value="{{location}}">{{location}}</option>
+							{% endfor %}
 
-						{% for location in locations %}
-						<option id="{{location}}" value="{{location}}">{{location}}</option>
-						{% endfor %}
+							<option id="n/a" value="n/a" selected>n/a</option>
+						</select>
 
-						<option id="n/a" value="n/a">n/a</option>
-					</select>
+						<label for="question_5">question 5:</label>
+						<select id="question_5" name="question_5">
+	                        <option id="n/a" value="n/a" selected>n/a</option selected>
+						</select>
+					</div>
+					<div id="QA_pair">
+						<label for="location_6">Location 6:</label>
+						<select id="location_6" name="location_6" onchange="getDropDown(this[this.selectedIndex].value, 'question_6')">
 
-					<label for="question_5">question 5:</label>
-					<select id="question_5" name="question_5">
-						<option hidden disabled selected value> -- Select a Question -- </option>
-					</select><br /><br />
+							{% for location in locations %}
+							<option id="{{location}}" value="{{location}}">{{location}}</option>
+							{% endfor %}
 
-					<label for="location_6">Location 6:</label>
-					<select id="location_6" name="location_6" onchange="getDropDown(this[this.selectedIndex].value, 'question_6')">
-						<option hidden disabled selected value> -- Select a Location -- </option>
+							<option id="n/a" value="n/a" selected>n/a</option>
+						</select>
 
-						{% for location in locations %}
-						<option id="{{location}}" value="{{location}}">{{location}}</option>
-						{% endfor %}
-
-						<option id="n/a" value="n/a">n/a</option>
-					</select>
-
-					<label for="question_6">question 6:</label>
-					<select id="question_6" name="question_6">
-						<option hidden disabled selected value> -- Select a Question -- </option>
-					</select><br /><br />
+						<label for="question_6">question 6:</label>
+						<select id="question_6" name="question_6">
+	                        <option id="n/a" value="n/a" selected>n/a</option>
+						</select>
+					</div>
+					<div id="QA_pair">
 
 					<label for="location_7">Location 7:</label>
 					<select id="location_7" name="location_7" onchange="getDropDown(this[this.selectedIndex].value, 'question_7')">
-						<option hidden disabled selected value> -- Select a Location -- </option>
 
 						{% for location in locations %}
 						<option id="{{location}}" value="{{location}}">{{location}}</option>
 						{% endfor %}
 
-						<option id="n/a" value="n/a">n/a</option>
+						<option id="n/a" value="n/a" selected>n/a</option>
 					</select>
 
 					<label for="question_7">question 7:</label>
 					<select id="question_7" name="question_7">
-						<option hidden disabled selected value> -- Select a Question -- </option>
-					</select><br /><br />
-
-					<label for="location_8">Location 8:</label>
-					<select id="location_8" name="location_8" onchange="getDropDown(this[this.selectedIndex].value, 'question_8')">
-						<option hidden disabled selected value> -- Select a Location -- </option>
-
-						{% for location in locations %}
-						<option id="{{location}}" value="{{location}}">{{location}}</option>
-						{% endfor %}
-
-						<option id="n/a" value="n/a">n/a</option>
+                        <option id="n/a" value="n/a" selected>n/a</option>
 					</select>
+					</div>
+					<div id="QA_pair">
 
-					<label for="question_8">question 8:</label>
-					<select id="question_8" name="question_8">
-						<option hidden disabled selected value> -- Select a Question -- </option>
-					</select><br /><br />
+						<label for="location_8">Location 8:</label>
+						<select id="location_8" name="location_8" onchange="getDropDown(this[this.selectedIndex].value, 'question_8')">
 
+							{% for location in locations %}
+							<option id="{{location}}" value="{{location}}">{{location}}</option>
+							{% endfor %}
 
-					<label for="location_9">Location 9:</label>
-					<select id="location_9" name="location_9" onchange="getDropDown(this[this.selectedIndex].value, 'question_9')">
-						<option hidden disabled selected value> -- Select a Location -- </option>
+							<option id="n/a" value="n/a" selected>n/a</option>
+						</select>
 
-						{% for location in locations %}
-						<option id="{{location}}" value="{{location}}">{{location}}</option>
-						{% endfor %}
-
-						<option id="n/a" value="n/a">n/a</option>
-					</select>
-
-					<label for="question_9">question 9:</label>
-					<select id="question_9" name="question_9">
-						<option hidden disabled selected value> -- Select a Question -- </option>
-					</select><br /><br />
-
-					<label for="location_10">Location 10:</label>
-					<select id="location_10" name="location_10" onchange="getDropDown(this[this.selectedIndex].value, 'question_10')">
-						<option hidden disabled selected value> -- Select a Location -- </option>
-
-						{% for location in locations %}
-						<option id="{{location}}" value="{{location}}">{{location}}</option>
-						{% endfor %}
-
-						<option id="n/a" value="n/a">n/a</option>
-					</select>
-
-					<label for="question_10">question 10:</label>
-					<select id="question_10" name="question_10">
-						<option hidden disabled selected value> -- Select a Question -- </option>
-					</select><br /><br />
+						<label for="question_8">question 8:</label>
+						<select id="question_8" name="question_8">
+	                        <option id="n/a" value="n/a" selected>n/a</option>
+						</select>
+					</div>
+					<div id="QA_pair">
 
 
-					<button type="submit" name="save">Save</button>
+						<label for="location_9">Location 9:</label>
+						<select id="location_9" name="location_9" onchange="getDropDown(this[this.selectedIndex].value, 'question_9')">
+
+							{% for location in locations %}
+							<option id="{{location}}" value="{{location}}">{{location}}</option>
+							{% endfor %}
+
+							<option id="n/a" value="n/a" selected>n/a</option>
+						</select>
+
+						<label for="question_9">question 9:</label>
+						<select id="question_9" name="question_9">
+	                        <option id="n/a" value="n/a" selected>n/a</option>
+						</select>
+					</div>
+					<div id="QA_pair">
+
+						<label for="location_10">Location 10:</label>
+						<select id="location_10" name="location_10" onchange="getDropDown(this[this.selectedIndex].value, 'question_10')">
+
+							{% for location in locations %}
+							<option id="{{location}}" value="{{location}}">{{location}}</option>
+							{% endfor %}
+
+							<option id="n/a" value="n/a" selected>n/a</option>
+						</select>
+
+						<label for="question_10">question 10:</label>
+						<select id="question_10" name="question_10">
+							<option id="n/a" value="n/a" selected>n/a</option>
+						</select>
+					</div>
+
+
+					<button type="submit" id="transparent_button" name="save">Save Route</button>
 					<div id="transparent_button_container">
 						<!-- <button type="submit" id="transparent_button" name="save_group_button">Save Route</button> -->
 					</div>
 
 				</form>
 				</td>
-
 
 				<!-- Routes Column -->
 
@@ -238,7 +247,7 @@ questions to these locations. Along with a list to display all the current route
 					<div id="group_list_container">
 						<ul>
 							{% for route in routes %}
-							<li id="{{route}}" name="groups"/><label for="{{route}}" id="group_label">{{route}}</label><br />
+							<li id="{{route}}" name="groups"><label for="{{route}}" id="group_label">{{route}}</label></li>
 							{% endfor %}
 						</ul>
 					</div>
@@ -247,9 +256,7 @@ questions to these locations. Along with a list to display all the current route
 
 			<tr>
 				<td id="button_container">
-				<div id="transparent_button_container">
-					<button type="submit" id="transparent_button" name="save_group_button">Save Route</button>
-				</div>
+
 				</td>
 			</tr>
 

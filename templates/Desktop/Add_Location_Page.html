@@ -32,10 +32,19 @@ This is done by using a form that the game keeper is to fill in.
 <meta charset="utf-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel='icon' href="{{url_for('static',filename='images/favicon.png')}}" type='image/png'/ >
 <link href="{{url_for('static',filename='styles/Location_Style.css')}}" rel='stylesheet' type='text/css'/>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script src="{{url_for('static',filename='js/JSFunctions.js')}}"></script>
 <title>Add Location Page</title>
+<script>
+	$(document).ready(function(){
+	    $('input[type="file"]').change(function(e){
+	        var fileName = e.target.files[0].name;
+	        $('p[id="filename"]').text('The file ' + fileName +  ' has been selected.');
+	    });
+	});
+</script>
 </head>
 
 <body>
@@ -70,6 +79,11 @@ This is done by using a form that the game keeper is to fill in.
 					<p id="filename"></p>
 				</div>
 
+			</div>
+
+			<div id="transparent_button_container">
+				<button type="submit" id="save_transparent_button" name="add_question_button">Add Question</button>
+				<button type="button" href="#" id="transparent_button" onclick="loadDoc('/Manage_Locations_Page')" name="goback_button">Go Back</button>
 			</div>
 
         </form>

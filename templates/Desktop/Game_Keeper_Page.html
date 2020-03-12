@@ -31,10 +31,12 @@ Subsequent tabs from the side bar have html dynamically loaded into the content 
 <head>
 <meta name="viewport" content="width=device-width, user-scalable=no"/>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<link rel="icon" type="image/png" src="{{url_for('static',filename='images/logo.png')}}">
+
+<link rel='icon' href="{{url_for('static',filename='images/favicon.png')}}" type='image/png'/ >
 <link href="{{url_for('static',filename='styles/Game_Keeper_Style.css')}}" rel='stylesheet' type='text/css'/>
 <script src="{{url_for('static',filename='js/JSFunctions.js')}}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 <!-- JavaScript function to load current screen -->
 <script>
@@ -54,11 +56,15 @@ Subsequent tabs from the side bar have html dynamically loaded into the content 
 
     <!-- Pop up sidebar -->
     <div id="mySidebar" class="sidebar">
-      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-      <a href="javascript:clearRedirect()">Homepage</a>
-      <a href="#" onclick="loadDoc('/FAQGameKeeper'), closeNav()">FAQs</a>
-      <a href="/Logout">Logout</a>
-      <a style="bottom: 10px;" href="#" id=google_translate_element> Translate</a>
+      <div id="top_elements">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+        <a href="javascript:clearRedirect()">Homepage</a>
+        <a href="#" onclick="loadDoc('/FAQGameKeeper'), closeNav()">FAQs</a>
+        <a href="/Logout">Logout</a>
+      </div>
+      <div id="google_translate_element_container">
+        <a href="#" id="google_translate_element">Translate</a>
+      </div>
     </div>
 
 	<!-- Topbar -->
@@ -109,18 +115,15 @@ Subsequent tabs from the side bar have html dynamically loaded into the content 
     <!-- Content -->
     <div id="content">
       <div id="text_content">
-	    <h1>Welcome Game Keeper!</h1>
+	    <h1 style="text-align: left;">Welcome Game Keeper!</h1>
           <p>
            Please see on the left of your screen the features you've been given.
             Use these pages to configure, update and change the game.
           </p>
-          <h2>Key features:</h2>
-          <ul>
-            <li>You have the ability to Create/Add, Edit, Delete and View all locations,
-            Groups and Routes.</li>
-            <li>View the leaderboard</li>
-            <li>Assign Groups to Routes</li>
-	      </ul>
+          <h2>Need Help?</h2>
+          <p>
+          Please see the staff user manual.
+          </p>
       </div>
     </div>
 

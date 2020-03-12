@@ -133,7 +133,8 @@ body {
 }
 
 h1 {
-	text-align: center;
+	text-align: left;
+	margin-left: 50px;
 }
 
 /* ----POP UP SIDEBAR---- */
@@ -178,6 +179,16 @@ h1 {
 	padding: 10px 15px;
 	border: none;
 }
+
+
+#top_elements {
+	height: 70%;
+}
+
+#google_translate_element_container {
+	height: 30%;
+}
+.skip_tran
 
 #main {
 	transition: margin-left .5s;

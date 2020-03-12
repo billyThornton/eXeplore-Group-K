@@ -1,22 +1,22 @@
 	<!--
-Created on 21/02/2020 
-@author: Ben Trotter
-@Last Edited: 10/03/2020
-@Edited By: Jamie Butler
+Created on 21/02/2020
+@author: Jamie Butler
+@Last Edited: 11/03/2020
+@Edited By: Ben Trotter
 
 Copyright (c) “2020, by Group K
 Contributors: Jamie Butler, Rahul Pankhania, Teo Reed, Billy Thornton, Ben Trotter, Kristian Woolhouse
-URL: https://github.com/billyThornton/eXeplore-Group-K ” 
+URL: https://github.com/billyThornton/eXeplore-Group-K ”
 All rights reserved.
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following
 conditions are met:
- 
+
 Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
 Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer
 in the documentation and/or other materials
-provided with the distribution. 
+provided with the distribution.
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
-BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAT PURPOSE ARE DISCLAIMED. IN NO EVENT 
+BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAT PURPOSE ARE DISCLAIMED. IN NO EVENT
 SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
 DAMGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
 INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INLUDING NEGLIGENCE
@@ -31,6 +31,7 @@ the pop up sidebar in the game. It also provides a access to a side bar which pr
 <meta charset="utf-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel='icon' href="{{url_for('static',filename='images/favicon.png')}}" type='image/png'/ >
 <link href="{{url_for('static',filename='styles/Game_Style.css')}}" rel='stylesheet' type='text/css'/>
 <script src="{{url_for('static',filename='js/JSFunctions.js')}}"></script>
 <title>Resources Page</title>
@@ -44,52 +45,52 @@ the pop up sidebar in the game. It also provides a access to a side bar which pr
 		{% include "mobile/Game_Nav.html" %}
 
 		<h1>Student Resources</h1>
-		
+
 		<!-- List of resource links and descriptions -->
 		<h3><a href="https://vle.exeter.ac.uk/" target="_blank"><b>Exeter Learning Environment:</b></a></h3>
 		<p>Use ELE to discover more about your course and lecturers!</p>
 		<p><b>.</b></p>
-		
-		<h3><a href="https://www.exeter.ac.uk/visit/directions/streathammap/" target="_blank"><b>Campus Map</b></a></h3>		
+
+		<h3><a href="https://www.exeter.ac.uk/visit/directions/streathammap/" target="_blank"><b>Campus Map</b></a></h3>
 		<p>Detailed map of campus with key of buildings.</p>
 		<p><b>.</b></p>
-		
+
 		<h3><a href="https://www.exeter.ac.uk/library/" target="_blank"><b>Library</b></a></h3>
 		<p>Search for resources and books online!</p>
 		<p><b>.</b></p>
-		
+
 		<h3><a href="https://sport.exeter.ac.uk/facilities/sportspark/" target="_blank"><b>Sports Park</b></a></h3>
 		<p>Explore all the sporting facilities that Exeter has to offer!</p>
-		
+
 		<h3><a href="http://emps.exeter.ac.uk/computer-science/" target="_blank"><b>Computer Science Course</b></a></h3>
 		<p>Click here to learn more about the course!</p>
 		<p><b>.</b></p>
-		
+
 		<h3><a href="http://emps.exeter.ac.uk/computer-science/staff/" target="_blank"><b>Computer Science Staff</b></a></h3>
 		<p>Get to know your peers!</p>
 		<p><b>.</b></p>
-		
+
 		<h3><a href="https://library.exeter.ac.uk/exampapers/" target="_blank"><b>Past Paper Archive</b></a></h3>
 		<p>Great resource to have during revision!</p>
 		<p><b>.</b></p>
-		
+
 		<h3><a href="https://www.exeterstudenthealthcentre.co.uk/" target="_blank"><b>Health Centre</b></a></h3>
 		<p>Don't forget to register with the Medical Centre!</p>
 		<p><b>.</b></p>
-		
+
 		<h3><a href="https://www.exeter.ac.uk/about/community/students/studentsupport/" target="_blank"><b>Student Support</b></a></h3>
 		<p>Emergency Support phone numbers and Welfare services.</p>
 		<p><b>.</b></p>
-		
+
 		<h3><a href="https://exeter.nightline.ac.uk/" target="_blank"><b>Nightline</b></a></h3>
 		<p>Nightline is a student ran service to help you get through tough situations.</p>
-		<p><b>.</b></p>	
-		
+		<p><b>.</b></p>
+
 
 		<div id="transparent_button_container">
 			<button type="button" onclick="location.href='Game'" id="submit" class="transparent_button" name="contine_button">Continue</button>
-		</div>		
-		
+		</div>
+
 	</div>
 </body>
 </html>
