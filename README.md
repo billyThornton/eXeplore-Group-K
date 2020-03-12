@@ -27,6 +27,7 @@ This document details how you can deploy and edit the app for your personal usag
 ## Dependencies 
 #### Python Libraries
 * Flask_testing - version 0.8.0, Library that allows flask to be unit tested
+* Flask_mail - version 0.9.1, Library that allows flask to write emails
 * ibm_db - version 3.0.1, Library that allows access to DB2 database
 * ibmcloudevn - version 0.2.1, Library that allows interaction with IBM cloud functions such as VCAP_SERVICES
 * pipfile - version 0.0.2, Library allows the IBM cloud to install all python dependencies from pipfile
@@ -49,7 +50,10 @@ of the application.
 
 ### Source Tree
 * #### General Files
-    * [Manage.py](manage.py) - The main file for running the flask server both locally and on the cloud
+    * [Manage.py](manage.py) - The main file for the login screen.
+    * [blueprints](blueprints) - Holds all the backend functions
+         * [manageDashboard.py](manageDashboard.py) - File for the blueprint for the dashboard
+         * [manageGame.py](manageGame.py) - File for the backend for the game
     * [databaseAdapter.py](databaseAdapter.py) - File responsible for handling all the database connections and requests
     * [servicesConfig.json](servicesConfig.json) - Where you can put access parameters for your personal IBM cloud services
     * [pipfile](Pipfile) - Used to install python dependencies
@@ -115,12 +119,19 @@ Show examples of usage:
 ## Features
 List of features ready and TODOs for future development
 * Registration and login capabilities customisable to your institution email
+* Email verification system in place
 * A full game with a predefined route for use within the Exeter University campus
 * Leaderboards with current team scores 
+* Access to multiple Student Resources
+* Customisable teams, routes, locations and location questions
+* Language translator for text on pages
+* A viewable map of the Exeter University campus
+* An FAQ section for both students and staff
 
 To-do list:
 * A fully functional dashboard for tutors
 
 ## Status
 Project is: _in progress_ <br>
+We are looking to implement sockets in order to rectify an issue where the team leader leaves, leaving the team unable to continue without a leader.
 We are still actively developing the eXeplore app and look forward to pushing new and exciting features in the near future. 
