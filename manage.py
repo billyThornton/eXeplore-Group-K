@@ -30,14 +30,13 @@ from blueprints.manageDashboard import dashboard_page
 from blueprints.manageGame import game_page
 from utils.utils import *
 
-emailVer = False
+emailVer = True
 
 app = Flask(__name__)
 app.register_blueprint(dashboard_page)
 app.register_blueprint(game_page)
 app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["PNG", "JPG", "JPEG"]
 
-TEAMS = {}
 port = int(os.getenv('PORT', 8000))
 
 

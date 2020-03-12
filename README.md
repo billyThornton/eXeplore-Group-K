@@ -85,8 +85,9 @@ It follows the following schema.<br>
 ![schema image](imageurl)<br>
 You can create the database locally using the provided SQL files [SqLfiles](linktofiles)<br>
 the database offers the functionality to store... <br>
-If using the IBM cloud you can access your DB2 database by updating the servicesConfig.json file with parameters found in your apps 
-environment variables (Full instructions [below](#deployment-on-the-ibm-cloud)).
+If using the IBM cloud you can access your DB2 database locally by updating the servicesConfig.json file with parameters found in your apps 
+environment variables or if running in the loud these credentials will be automatically obtained (Full instructions [below](#deployment-on-the-ibm-cloud)).
+We have also included the [raw sql]() so you can create the tables locally.
 
 ### Running the app locally
 To run the app locally you must run the manage.py script this will start a flask server on your local IP (local host) on port 8000.<br>
@@ -94,20 +95,35 @@ Manage.py must be run from the root directory. It can be run using a python IDE 
 When using a terminal use the command `python manage` from within the projects repository.
 
 ### Running the unit tests
-As the unit tests take advanatage of many of the files require to run the application they must be executed from the highest directory level.
+As the unit tests take advantage of many of the files require to run the application they must be executed from the highest directory level.
 For example if you have stored the files like below the tests must be run from within the project folder. <br>All tests can be run using
 `python -m unittest discover tests` or individual unit tests can be executed via `python -m tests.[UnitName]`<br>
 ![Tree File Structure](Images/Demo/tree_structure.png)<br>
 
+#### Test Suites:
+There are 3 test suites included in the development repository. One suite (`test_login`) tests all the functionality
+of the login system. `test_dashboard` tests all the  functionality of the game keeper dashboard and finally 
+`test_game` test the functionality of the actual game system. For more information on the unittests
+within these suites look at the docstring for the suite you are interested in.
+
 
 ## Deployment on the IBM cloud
-This app has been developed to be deployed on the IBM cloud as a foundry app. To do this you can follow the steps bellow:
-* step 1
-* step 1
-* step 1
-* step 1
-* step 1
-* step 1
+This app has been developed to be deployed on the IBM cloud as a foundry app. To do this you can follow the steps bellow:<br>
+You can deploy this app to the IBM cloud by following the installation instructions found at this [git repo](https://github.com/IBM-Cloud/get-started-python)<br>
+By following those instructions you will be able to deploy the app on the IBM cloud.<br>
+
+
+##Customisation
+We provide a serviceConfig.Json here you can customise the mail server that is used for email verification 
+as well as the email extension that is required to register a student. If you choose to do this you will need to 
+update the test suites to reflect this new email extension requirement.
+
+In addition to this at the top of `manage.py` there is a flag that enables and disables email verification
+this allows for more fluent testing. This variable is called `emailVer`.
+
+If you want to use the Map functionality you will have to insert you own google maps api key into the 
+`map.html`. In order for you to generate a Google Maps API key you can follow these instructions 
+[API key instructions](https://developers.google.com/maps/documentation/javascript/get-api-key).
 
 
 
