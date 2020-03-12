@@ -261,86 +261,86 @@ def addRouteSubmit():
         insertRouteSequence(routeID, getLocationID(location1)[0]['LOCATION_ID'], 0, getQuestionID(question1)[0]['QUESTION_ID'])
     elif location3 == "n/a":
         insertRoute(routeName)
-        routeID = getRouteIDFromRouteName(routeName)['ROUTE_ID']
-        insertRouteSequence(routeID, getLocationID(location1)['LOCATION_ID'], 0, getQuestionID(question1)['QUESTION_ID'])
-        insertRouteSequence(routeID, getLocationID(location2)['LOCATION_ID'], 1, getQuestionID(question2)['QUESTION_ID'])
+        routeID = getRouteIDFromRouteName(routeName)[0]['ROUTE_ID']
+        insertRouteSequence(routeID, getLocationID(location1)[0]['LOCATION_ID'], 0, getQuestionID(question1)[0]['QUESTION_ID'])
+        insertRouteSequence(routeID, getLocationID(location2)[0]['LOCATION_ID'], 1, getQuestionID(question2)[0]['QUESTION_ID'])
     elif location4 == "n/a":
         print("ADDING THREE LOCATIONS")
         insertRoute(routeName)
-        routeID = getRouteIDFromRouteName(routeName)['ROUTE_ID']
-        insertRouteSequence(routeID, getLocationID(location1)['LOCATION_ID'], 0, getQuestionID(question1)['QUESTION_ID'])
-        insertRouteSequence(routeID, getLocationID(location2)['LOCATION_ID'], 1, getQuestionID(question2)['QUESTION_ID'])
-        insertRouteSequence(routeID, getLocationID(location3)['LOCATION_ID'], 2, getQuestionID(question3)['QUESTION_ID'])
+        routeID = getRouteIDFromRouteName(routeName)[0]['ROUTE_ID']
+        insertRouteSequence(routeID, getLocationID(location1)[0]['LOCATION_ID'], 0, getQuestionID(question1)[0]['QUESTION_ID'])
+        insertRouteSequence(routeID, getLocationID(location2)[0]['LOCATION_ID'], 1, getQuestionID(question2)[0]['QUESTION_ID'])
+        insertRouteSequence(routeID, getLocationID(location3)[0]['LOCATION_ID'], 2, getQuestionID(question3)[0]['QUESTION_ID'])
     elif location5 == "n/a":
         insertRoute(routeName)
-        routeID = getRouteIDFromRouteName(routeName)['ROUTE_ID']
-        insertRouteSequence(routeID, getLocationID(location1)['LOCATION_ID'], 0, getQuestionID(question1)['QUESTION_ID'])
-        insertRouteSequence(routeID, getLocationID(location2)['LOCATION_ID'], 1, getQuestionID(question2)['QUESTION_ID'])
-        insertRouteSequence(routeID, getLocationID(location3)['LOCATION_ID'], 2, getQuestionID(question3)['QUESTION_ID'])
-        insertRouteSequence(routeID, getLocationID(location4)['LOCATION_ID'], 3, getQuestionID(question4)['QUESTION_ID'])
+        routeID = getRouteIDFromRouteName(routeName)[0]['ROUTE_ID']
+        insertRouteSequence(routeID, getLocationID(location1)[0]['LOCATION_ID'], 0, getQuestionID(question1)[0]['QUESTION_ID'])
+        insertRouteSequence(routeID, getLocationID(location2)[0]['LOCATION_ID'], 1, getQuestionID(question2)[0]['QUESTION_ID'])
+        insertRouteSequence(routeID, getLocationID(location3)[0]['LOCATION_ID'], 2, getQuestionID(question3)[0]['QUESTION_ID'])
+        insertRouteSequence(routeID, getLocationID(location4)[0]['LOCATION_ID'], 3, getQuestionID(question4)[0]['QUESTION_ID'])
     elif location6 == "n/a":
         insertRoute(routeName)
-        routeID = getRouteIDFromRouteName(routeName)['ROUTE_ID']
-        insertRouteSequence(routeID, getLocationID(location1)['LOCATION_ID'], 0, getQuestionID(question1)['QUESTION_ID'])
-        insertRouteSequence(routeID, getLocationID(location2)['LOCATION_ID'], 1, getQuestionID(question2)['QUESTION_ID'])
-        insertRouteSequence(routeID, getLocationID(location3)['LOCATION_ID'], 2, getQuestionID(question3)['QUESTION_ID'])
-        insertRouteSequence(routeID, getLocationID(location4)['LOCATION_ID'], 3, getQuestionID(question4)['QUESTION_ID'])
-        insertRouteSequence(routeID, getLocationID(location5)['LOCATION_ID'], 4, getQuestionID(question5)['QUESTION_ID'])
+        routeID = getRouteIDFromRouteName(routeName)[0]['ROUTE_ID']
+        insertRouteSequence(routeID, getLocationID(location1)[0]['LOCATION_ID'], 0, getQuestionID(question1)[0]['QUESTION_ID'])
+        insertRouteSequence(routeID, getLocationID(location2)[0]['LOCATION_ID'], 1, getQuestionID(question2)[0]['QUESTION_ID'])
+        insertRouteSequence(routeID, getLocationID(location3)[0]['LOCATION_ID'], 2, getQuestionID(question3)[0]['QUESTION_ID'])
+        insertRouteSequence(routeID, getLocationID(location4)[0]['LOCATION_ID'], 3, getQuestionID(question4)[0]['QUESTION_ID'])
+        insertRouteSequence(routeID, getLocationID(location5)[0]['LOCATION_ID'], 4, getQuestionID(question5)[0]['QUESTION_ID'])
     elif location7 == "n/a":
         insertRoute(routeName)
-        routeID = getRouteIDFromRouteName(routeName)['ROUTE_ID']
-        insertRouteSequence(routeID, getLocationID(location1)['LOCATION_ID'], 0, getQuestionID(question1)['QUESTION_ID'])
-        insertRouteSequence(routeID, getLocationID(location2)['LOCATION_ID'], 1, getQuestionID(question2)['QUESTION_ID'])
-        insertRouteSequence(routeID, getLocationID(location3)['LOCATION_ID'], 2, getQuestionID(question3)['QUESTION_ID'])
-        insertRouteSequence(routeID, getLocationID(location4)['LOCATION_ID'], 3, getQuestionID(question4)['QUESTION_ID'])
-        insertRouteSequence(routeID, getLocationID(location5)['LOCATION_ID'], 4, getQuestionID(question5)['QUESTION_ID'])
-        insertRouteSequence(routeID, getLocationID(location6)['LOCATION_ID'], 5, getQuestionID(question6)['QUESTION_ID'])
+        routeID = getRouteIDFromRouteName(routeName)[0]['ROUTE_ID']
+        insertRouteSequence(routeID, getLocationID(location1)[0]['LOCATION_ID'], 0, getQuestionID(question1)[0]['QUESTION_ID'])
+        insertRouteSequence(routeID, getLocationID(location2)[0]['LOCATION_ID'], 1, getQuestionID(question2)[0]['QUESTION_ID'])
+        insertRouteSequence(routeID, getLocationID(location3)[0]['LOCATION_ID'], 2, getQuestionID(question3)[0]['QUESTION_ID'])
+        insertRouteSequence(routeID, getLocationID(location4)[0]['LOCATION_ID'], 3, getQuestionID(question4)[0]['QUESTION_ID'])
+        insertRouteSequence(routeID, getLocationID(location5)[0]['LOCATION_ID'], 4, getQuestionID(question5)[0]['QUESTION_ID'])
+        insertRouteSequence(routeID, getLocationID(location6)[0]['LOCATION_ID'], 5, getQuestionID(question6)[0]['QUESTION_ID'])
     elif location8 == "n/a":
         insertRoute(routeName)
-        routeID = getRouteIDFromRouteName(routeName)['ROUTE_ID']
-        insertRouteSequence(routeID, getLocationID(location1)['LOCATION_ID'], 0, getQuestionID(question1)['QUESTION_ID'])
-        insertRouteSequence(routeID, getLocationID(location2)['LOCATION_ID'], 1, getQuestionID(question2)['QUESTION_ID'])
-        insertRouteSequence(routeID, getLocationID(location3)['LOCATION_ID'], 2, getQuestionID(question3)['QUESTION_ID'])
-        insertRouteSequence(routeID, getLocationID(location4)['LOCATION_ID'], 3, getQuestionID(question4)['QUESTION_ID'])
-        insertRouteSequence(routeID, getLocationID(location5)['LOCATION_ID'], 4, getQuestionID(question5)['QUESTION_ID'])
-        insertRouteSequence(routeID, getLocationID(location6)['LOCATION_ID'], 5, getQuestionID(question6)['QUESTION_ID'])
-        insertRouteSequence(routeID, getLocationID(location7)['LOCATION_ID'], 6, getQuestionID(question7)['QUESTION_ID'])
+        routeID = getRouteIDFromRouteName(routeName)[0]['ROUTE_ID']
+        insertRouteSequence(routeID, getLocationID(location1)[0]['LOCATION_ID'], 0, getQuestionID(question1)[0]['QUESTION_ID'])
+        insertRouteSequence(routeID, getLocationID(location2)[0]['LOCATION_ID'], 1, getQuestionID(question2)[0]['QUESTION_ID'])
+        insertRouteSequence(routeID, getLocationID(location3)[0]['LOCATION_ID'], 2, getQuestionID(question3)[0]['QUESTION_ID'])
+        insertRouteSequence(routeID, getLocationID(location4)[0]['LOCATION_ID'], 3, getQuestionID(question4)[0]['QUESTION_ID'])
+        insertRouteSequence(routeID, getLocationID(location5)[0]['LOCATION_ID'], 4, getQuestionID(question5)[0]['QUESTION_ID'])
+        insertRouteSequence(routeID, getLocationID(location6)[0]['LOCATION_ID'], 5, getQuestionID(question6)[0]['QUESTION_ID'])
+        insertRouteSequence(routeID, getLocationID(location7)[0]['LOCATION_ID'], 6, getQuestionID(question7)[0]['QUESTION_ID'])
     elif location9 == "n/a":
         insertRoute(routeName)
-        routeID = getRouteIDFromRouteName(routeName)['ROUTE_ID']
-        insertRouteSequence(routeID, getLocationID(location1)['LOCATION_ID'], 0, getQuestionID(question1)['QUESTION_ID'])
-        insertRouteSequence(routeID, getLocationID(location2)['LOCATION_ID'], 1, getQuestionID(question2)['QUESTION_ID'])
-        insertRouteSequence(routeID, getLocationID(location3)['LOCATION_ID'], 2, getQuestionID(question3)['QUESTION_ID'])
-        insertRouteSequence(routeID, getLocationID(location4)['LOCATION_ID'], 3, getQuestionID(question4)['QUESTION_ID'])
-        insertRouteSequence(routeID, getLocationID(location5)['LOCATION_ID'], 4, getQuestionID(question5)['QUESTION_ID'])
-        insertRouteSequence(routeID, getLocationID(location6)['LOCATION_ID'], 5, getQuestionID(question6)['QUESTION_ID'])
-        insertRouteSequence(routeID, getLocationID(location7)['LOCATION_ID'], 6, getQuestionID(question7)['QUESTION_ID'])
-        insertRouteSequence(routeID, getLocationID(location8)['LOCATION_ID'], 7, getQuestionID(question8)['QUESTION_ID'])
+        routeID = getRouteIDFromRouteName(routeName)[0]['ROUTE_ID']
+        insertRouteSequence(routeID, getLocationID(location1)[0]['LOCATION_ID'], 0, getQuestionID(question1)[0]['QUESTION_ID'])
+        insertRouteSequence(routeID, getLocationID(location2)[0]['LOCATION_ID'], 1, getQuestionID(question2)[0]['QUESTION_ID'])
+        insertRouteSequence(routeID, getLocationID(location3)[0]['LOCATION_ID'], 2, getQuestionID(question3)[0]['QUESTION_ID'])
+        insertRouteSequence(routeID, getLocationID(location4)[0]['LOCATION_ID'], 3, getQuestionID(question4)[0]['QUESTION_ID'])
+        insertRouteSequence(routeID, getLocationID(location5)[0]['LOCATION_ID'], 4, getQuestionID(question5)[0]['QUESTION_ID'])
+        insertRouteSequence(routeID, getLocationID(location6)[0]['LOCATION_ID'], 5, getQuestionID(question6)[0]['QUESTION_ID'])
+        insertRouteSequence(routeID, getLocationID(location7)[0]['LOCATION_ID'], 6, getQuestionID(question7)[0]['QUESTION_ID'])
+        insertRouteSequence(routeID, getLocationID(location8)[0]['LOCATION_ID'], 7, getQuestionID(question8)[0]['QUESTION_ID'])
     elif location10 == "n/a":
         insertRoute(routeName)
-        routeID = getRouteIDFromRouteName(routeName)['ROUTE_ID']
-        insertRouteSequence(routeID, getLocationID(location1)['LOCATION_ID'], 0, getQuestionID(question1)['QUESTION_ID'])
-        insertRouteSequence(routeID, getLocationID(location2)['LOCATION_ID'], 1, getQuestionID(question2)['QUESTION_ID'])
-        insertRouteSequence(routeID, getLocationID(location3)['LOCATION_ID'], 2, getQuestionID(question3)['QUESTION_ID'])
-        insertRouteSequence(routeID, getLocationID(location4)['LOCATION_ID'], 3, getQuestionID(question4)['QUESTION_ID'])
-        insertRouteSequence(routeID, getLocationID(location5)['LOCATION_ID'], 4, getQuestionID(question5)['QUESTION_ID'])
-        insertRouteSequence(routeID, getLocationID(location6)['LOCATION_ID'], 5, getQuestionID(question6)['QUESTION_ID'])
-        insertRouteSequence(routeID, getLocationID(location7)['LOCATION_ID'], 6, getQuestionID(question7)['QUESTION_ID'])
-        insertRouteSequence(routeID, getLocationID(location8)['LOCATION_ID'], 7, getQuestionID(question8)['QUESTION_ID'])
-        insertRouteSequence(routeID, getLocationID(location9)['LOCATION_ID'], 8, getQuestionID(question9)['QUESTION_ID'])
+        routeID = getRouteIDFromRouteName(routeName)[0]['ROUTE_ID']
+        insertRouteSequence(routeID, getLocationID(location1)[0]['LOCATION_ID'], 0, getQuestionID(question1)[0]['QUESTION_ID'])
+        insertRouteSequence(routeID, getLocationID(location2)[0]['LOCATION_ID'], 1, getQuestionID(question2)[0]['QUESTION_ID'])
+        insertRouteSequence(routeID, getLocationID(location3)[0]['LOCATION_ID'], 2, getQuestionID(question3)[0]['QUESTION_ID'])
+        insertRouteSequence(routeID, getLocationID(location4)[0]['LOCATION_ID'], 3, getQuestionID(question4)[0]['QUESTION_ID'])
+        insertRouteSequence(routeID, getLocationID(location5)[0]['LOCATION_ID'], 4, getQuestionID(question5)[0]['QUESTION_ID'])
+        insertRouteSequence(routeID, getLocationID(location6)[0]['LOCATION_ID'], 5, getQuestionID(question6)[0]['QUESTION_ID'])
+        insertRouteSequence(routeID, getLocationID(location7)[0]['LOCATION_ID'], 6, getQuestionID(question7)[0]['QUESTION_ID'])
+        insertRouteSequence(routeID, getLocationID(location8)[0]['LOCATION_ID'], 7, getQuestionID(question8)[0]['QUESTION_ID'])
+        insertRouteSequence(routeID, getLocationID(location9)[0]['LOCATION_ID'], 8, getQuestionID(question9)[0]['QUESTION_ID'])
     else:
         insertRoute(routeName)
-        routeID = getRouteIDFromRouteName(routeName)['ROUTE_ID']
-        insertRouteSequence(routeID, getLocationID(location1)['LOCATION_ID'], 0, getQuestionID(question1)['QUESTION_ID'])
-        insertRouteSequence(routeID, getLocationID(location2)['LOCATION_ID'], 1, getQuestionID(question2)['QUESTION_ID'])
-        insertRouteSequence(routeID, getLocationID(location3)['LOCATION_ID'], 2, getQuestionID(question3)['QUESTION_ID'])
-        insertRouteSequence(routeID, getLocationID(location4)['LOCATION_ID'], 3, getQuestionID(question4)['QUESTION_ID'])
-        insertRouteSequence(routeID, getLocationID(location5)['LOCATION_ID'], 4, getQuestionID(question5)['QUESTION_ID'])
-        insertRouteSequence(routeID, getLocationID(location6)['LOCATION_ID'], 5, getQuestionID(question6)['QUESTION_ID'])
-        insertRouteSequence(routeID, getLocationID(location7)['LOCATION_ID'], 6, getQuestionID(question7)['QUESTION_ID'])
-        insertRouteSequence(routeID, getLocationID(location8)['LOCATION_ID'], 7, getQuestionID(question8)['QUESTION_ID'])
-        insertRouteSequence(routeID, getLocationID(location9)['LOCATION_ID'], 8, getQuestionID(question9)['QUESTION_ID'])
-        insertRouteSequence(routeID, getLocationID(location10)['LOCATION_ID'], 9, getQuestionID(question10)['QUESTION_ID'])
+        routeID = getRouteIDFromRouteName(routeName)[0]['ROUTE_ID']
+        insertRouteSequence(routeID, getLocationID(location1)[0]['LOCATION_ID'], 0, getQuestionID(question1)[0]['QUESTION_ID'])
+        insertRouteSequence(routeID, getLocationID(location2)[0]['LOCATION_ID'], 1, getQuestionID(question2)[0]['QUESTION_ID'])
+        insertRouteSequence(routeID, getLocationID(location3)[0]['LOCATION_ID'], 2, getQuestionID(question3)[0]['QUESTION_ID'])
+        insertRouteSequence(routeID, getLocationID(location4)[0]['LOCATION_ID'], 3, getQuestionID(question4)[0]['QUESTION_ID'])
+        insertRouteSequence(routeID, getLocationID(location5)[0]['LOCATION_ID'], 4, getQuestionID(question5)[0]['QUESTION_ID'])
+        insertRouteSequence(routeID, getLocationID(location6)[0]['LOCATION_ID'], 5, getQuestionID(question6)[0]['QUESTION_ID'])
+        insertRouteSequence(routeID, getLocationID(location7)[0]['LOCATION_ID'], 6, getQuestionID(question7)[0]['QUESTION_ID'])
+        insertRouteSequence(routeID, getLocationID(location8)[0]['LOCATION_ID'], 7, getQuestionID(question8)[0]['QUESTION_ID'])
+        insertRouteSequence(routeID, getLocationID(location9)[0]['LOCATION_ID'], 8, getQuestionID(question9)[0]['QUESTION_ID'])
+        insertRouteSequence(routeID, getLocationID(location10)[0]['LOCATION_ID'], 9, getQuestionID(question10)[0]['QUESTION_ID'])
 
 
     return redirect(url_for('dashboard_page.dashboard'))
