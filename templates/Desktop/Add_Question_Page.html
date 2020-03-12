@@ -31,18 +31,17 @@ custom questions for the game.
 <meta charset="utf-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="../JSFunctions.js"></script>
+<script src="{{url_for('static',filename='js/JSFunctions.js')}}"></script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 <link href="{{url_for('static',filename='styles/Location_Style.css')}}" rel='stylesheet' type='text/css'/>
-<title>Add Question Page</title>
 </head>
-
 <body>
 	<div id="edit_location_page">
 
 		<!-- Add question details form -->
 		<form id="form" action="Add_Question_Submit" method="POST">
 
-			<!-- Flask alert message to indicate when location has been made -->
+			<!-- Flask alert message to indicate when question has been created -->
 	        {% with messages = get_flashed_messages() %}
 	          {% if messages %}
 	            {% for message in messages %}

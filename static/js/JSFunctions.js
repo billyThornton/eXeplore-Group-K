@@ -359,3 +359,15 @@ function getDropDown(locationName, dropDownID) {
         });
     });
 }
+
+
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+}
+
+$(document).ready(function(){
+    $('input[type="file"]').change(function(e){
+        var fileName = e.target.files[0].name;
+        $('p[id="filename"]').text('The file ' + fileName +  ' has been selected.');
+    });
+});
