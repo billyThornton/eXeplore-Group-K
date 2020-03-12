@@ -14,22 +14,23 @@ Created on 10/03/2020
 @Last Edited: 12/03/2020
 @edited by: Billy Thornton
 
-This is the test suite for the game functionality
+This is the test suite for the gamekeeper dashboard functions
 """
 
-
-import flask_testing
 import unittest
 
-from manage import app,session
+import flask_testing
 import ibm_db
-from databaseAdapter import createConnection,  getTeamID, getTutorID
+
+from databaseAdapter import getTeamLeader, getTeamID, createConnection, getStudentID, getTutorID
+from manage import app, session
+
 
 class BasicTests(flask_testing.TestCase):
 
-############################
-#### setup and teardown ####
-############################
+    ############################
+    #### setup and teardown ####
+    ############################
 
     # executed prior to each test
     def create_app(self):
@@ -48,9 +49,28 @@ class BasicTests(flask_testing.TestCase):
     def tearDown(self):
         pass
 
-########################################################################
-#### helper methods: Copied not imported so tests can run independently####
-########################################################################
+    ####################
+    #### Constants ####
+    ####################
+    STUDENTNAME = 'Test student'
+    STUDENTEMAIL = 'test1@exeter.ac.uk'
+    STUDENTEMAIL2 = 'test2@exeter.ac.uk'
+    PASSWORD = 'Password1'
+    TUTORNAME = 'Test tutor'
+    TUTOREMAIL = 'test@exeter.ac.uk'
+    NOTAPPLICABLE = 'Not applicable'
+    TEAMNAME = TUTORNAME.lower() + " team 1"
+
+    ########################################################################
+    #### helper methods: Copied not imported so tests can run independently####
+    ########################################################################
+    def getStudentIDFromEmail(self, email):
+        """
+        Gets the student id when given a student email
+        :return: Int studentID
+        """
+        return getStudentID(email)[0]['STUDENT_ID']
+
     def registerIndividual(self, testClient, name, email, password, confirm, tutorname):
         """
         Registers a new user
@@ -60,7 +80,6 @@ class BasicTests(flask_testing.TestCase):
                                data=dict(name=name, email=email, password=password, passwordConfirmation=confirm,
                                          tutorName=tutorname),
                                follow_redirects=True)
-
 
     def register(self, testClient, name, email, password, confirm, tutorname):
         """
@@ -79,7 +98,6 @@ class BasicTests(flask_testing.TestCase):
             ibm_db.execute(stmt)
             ibm_db.close(db2conn)
         return self.registerIndividual(testClient, name, email, password, confirm, tutorname)
-
 
     def existingStudent(self, name, email, teamID, TutorName):
         """
@@ -105,7 +123,6 @@ class BasicTests(flask_testing.TestCase):
             # close database connection
             ibm_db.close(db2conn)
 
-
     def loginuser(self, testClient, email, password):
         """
         Logs in the user to the system
@@ -113,7 +130,6 @@ class BasicTests(flask_testing.TestCase):
         """
         return testClient.post('/', data=dict(email=email, password=password),
                                follow_redirects=True)
-
 
     def selectTeam(self, testClient, tutorName, teamName):
         """
@@ -125,7 +141,6 @@ class BasicTests(flask_testing.TestCase):
                                          team=getTeamID(teamName)[0]['TEAM_ID']),
                                follow_redirects=True)
 
-
     def selectRoute(self, testClient, routeID, teamName):
         """
         Selects the route for a team
@@ -135,90 +150,62 @@ class BasicTests(flask_testing.TestCase):
                                data=dict(route=routeID, teamName=teamName),
                                follow_redirects=True)
 
-
     def getQuestionTest(self, testClient):
         return testClient.post('/getQuestion', follow_redirects=True)
-
 
     def confirmAnswer(self, testClient, answer):
         return testClient.post('/confirmAnswer', data=dict(answer=answer), follow_redirects=True)
 
-###############
-#### tests ####
-###############
+    def assignNewTeamLeader(self, testClient, teamname, email):
+        return testClient.post('/assignTeamLeader',
+                               data=dict(team=getTeamID(teamname)[0]['TEAM_ID'],
+                                         student=self.getStudentIDFromEmail(email)),
+                               follow_redirects=True)
 
+    ###############
+    #### tests ####
+    ###############
 
-    def test_game_correct_answer(self):
+    # TEST CORRECT ANSWER WORKS
+    def test_dashboard_Assign_Team_Leader(self):
         """
-        Test that a correct answer progresses the game to the next location clue
+        Register a new tutor and two new users, then assign one user as the team leader of the tutors first team
+        And Then assign the second to be the team leader. Assert that these changes are made
         """
+        # Set up the student with a team
         with app.test_client() as testClient:
-            ###Regitser a student and tutor user###
-            self.register(testClient, 'Test Entry', 'test@exeter.ac.uk', 'password', 'password', 'Not applicable')
-            self.register(testClient,'Test entry','test1@exeter.ac.uk','Password1','Password1','test entry')
+            ###Register Users###
+            self.register(testClient, self.TUTORNAME, self.TUTOREMAIL, self.PASSWORD, self.PASSWORD, self.NOTAPPLICABLE)
+            self.registerIndividual(testClient, self.STUDENTNAME, self.STUDENTEMAIL, self.PASSWORD, self.PASSWORD,
+                                    self.TUTORNAME.lower())
+            self.registerIndividual(testClient, self.STUDENTNAME + "2", self.STUDENTEMAIL2, self.PASSWORD,
+                                    self.PASSWORD, self.TUTORNAME.lower())
 
-            ###Login the user and select a team and route###
-            self.loginuser(testClient,'test1@exeter.ac.uk','Password1')
-            self.selectTeam(testClient, "test entry", "test entry team 1")
-            self.selectRoute(testClient, 1, "TEST NEW NAME")
+            ###Login user1 and assign team and route###
+            self.loginuser(testClient, self.STUDENTEMAIL, self.PASSWORD)
+            self.selectTeam(testClient, self.TUTORNAME.lower(), self.TEAMNAME)
+            self.selectRoute(testClient, 1, self.TEAMNAME)
+            session.clear
 
-            ###Get the question and submitt the correct answer check if the page loaded is the next question###
-            self.getQuestionTest(testClient)
-            response2 = self.confirmAnswer(testClient,'c')
-            self.assertEqual(response2.status_code,200)
-            self.assert_template_used('mobile/Clue_Page.html')
+            ###Login user2 and assign team###
+            self.loginuser(testClient, self.STUDENTEMAIL2, self.PASSWORD)
+            self.selectTeam(testClient, self.TUTORNAME.lower(), self.TEAMNAME)
 
-            ###Ensure the score is unchanged###
-            self.assertEqual(session['teamScore'], 100)
+            ###Check current teamleader is user 1###
+            currentLeader = getTeamLeader(getTeamID(self.TEAMNAME)[0]['TEAM_ID'])[0]['TEAM_LEADER']
+            studentID = self.getStudentIDFromEmail(self.STUDENTEMAIL)
+            self.assertEqual(currentLeader, studentID)
 
+            ###Login tutor and assign new team leader (user 2)###
+            self.loginuser(testClient, self.TUTOREMAIL, self.PASSWORD)
+            response = self.assignNewTeamLeader(testClient, self.TEAMNAME, self.STUDENTEMAIL2)
 
-    def test_game_incorrect_answer(self):
-        """
-        Test that an incorrect answer deducts 3 points and redirects back to the answer page for resubmission
-        """
-        with app.test_client() as testClient:
-            ###Register a student and tutor user###
-            self.register(testClient, 'Test Entry', 'test@exeter.ac.uk', 'password', 'password', 'Not applicable')
-            self.register(testClient,'Test entry','test1@exeter.ac.uk','Password1','Password1','test entry')
+            ###Check the team leader is now user 2###
+            newLeader = getTeamLeader(getTeamID(self.TEAMNAME)[0]['TEAM_ID'])[0]['TEAM_LEADER']
+            studentID2 = self.getStudentIDFromEmail(self.STUDENTEMAIL2)
+            self.assertEqual(currentLeader, studentID)
+            self.assert_template_used('Desktop/Game_Keeper_Page.html')
 
-            ###Login the user and select a team and route###
-            self.loginuser(testClient,'test1@exeter.ac.uk','Password1')
-            self.selectTeam(testClient, "test entry", "test entry team 1")
-            self.selectRoute(testClient, 1, "TEST NEW NAME")
-
-            ###Get the question and submitt the correct answer check if the page loaded is the next question###
-            self.getQuestionTest(testClient)
-            response2 = self.confirmAnswer(testClient,'a')
-            self.assertEqual(response2.status_code,200)
-            self.assert_template_used('mobile/Answer_Page.html')
-
-            ###Check score is reduced by 3###
-            self.assertEqual(session['teamScore'], 97)
-
-
-    def test_game_finishes(self):
-        """
-        Test a full run of the game answering all questions correctly
-        :return: object
-        """
-        with app.test_client() as testClient:
-            ###Register a student and tutor user###
-            self.register(testClient, 'Test Entry', 'test@exeter.ac.uk', 'password', 'password', 'Not applicable')
-            self.register(testClient,'Test entry','test1@exeter.ac.uk','Password1','Password1','test entry')
-
-            ###Login the user and select a team and route###
-            self.loginuser(testClient,'test1@exeter.ac.uk','Password1')
-            self.selectTeam(testClient, "test entry", "test entry team 1")
-            self.selectRoute(testClient, 1, "TEST NEW NAME")
-
-            ###Loop through route and check that score is unchanged and redirected to the ends screen###
-            answers = ["c", "b", "d", "b", "a", "d", "b", "a"]
-            for letter in answers:
-                self.getQuestionTest(testClient)
-                self.confirmAnswer(testClient, letter)
-
-            self.assert_template_used('mobile/End_Game_Page.html')
-            self.assertEqual(session['teamScore'], 100)
 
 if __name__ == "__main__":
     unittest.main()

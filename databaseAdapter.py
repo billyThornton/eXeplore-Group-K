@@ -12,22 +12,21 @@ Created on 19/02/2020
 @author: Kris Woolhouse + Billy Thornton (Pair Programming)
 @Last Edited: 26/02/2020
 @edited by: Billy Thornton Added insert functions for passwords
+
 This file contains the necessary information to make queries and enter data to/from
-the datbase
+the database
 """
 from flask import Flask
 import os
 import json
 import ibm_db
-from base64 import b64encode
+
 
 game_page = Flask(__name__)
 #Set to tru if running on local enviroment
 localFlag = True
 
-db_name = 'mydb'
-client = None
-db = None
+
 
 #Loads the service credentials form the cloud envorioment if applicable
 if 'VCAP_SERVICES' in os.environ:
@@ -330,7 +329,7 @@ def getRouteIDFromRouteName(routeName):
             " WHERE route_name = '" + routeName +
             "';"
             )
-            print(sql)
+            #print(sql)
             # Prepare the statement
             stmt = ibm_db.prepare(db2conn,sql)
     		# Execute the sql
@@ -344,7 +343,7 @@ def getRouteIDFromRouteName(routeName):
             # close database connection
             ibm_db.close(db2conn)
             # Print to screen the result
-            print(rows)
+           # print(rows)
         return rows
 
 
@@ -727,7 +726,7 @@ def getLocationID(locationName):
             result = ibm_db.fetch_assoc(stmt)
         # close database connection
         ibm_db.close(db2conn)
-        print("THIS IS THE LOCATION ID", rows)
+        #print("THIS IS THE LOCATION ID", rows)
     return rows
 
 
@@ -959,7 +958,7 @@ def getQuestionID(questionContent):
             result = ibm_db.fetch_assoc(stmt)
         # close database connection
         ibm_db.close(db2conn)
-        print("THIS IS THE QUESTION ID", rows)
+        #print("THIS IS THE QUESTION ID", rows)
     return rows
 
 def insertStudentUser(email,name,TeamID,TutorID):
@@ -1195,7 +1194,7 @@ def insertRouteSequence(routeID, locationID, order, questionID):
             "INSERT INTO route_location_bridge (ROUTE_ID, LOCATION_ID, SEQUENCE_ORDER, QUESTION_ID)"
             " VALUES(" + str(routeID) + ", " + str(locationID) + ", " + str(order) + ", " + str(questionID) + ");"
             )
-        print(sql)
+        #print(sql)
         # Prepare the statement
         stmt = ibm_db.prepare(db2conn,sql)
         # Execute the sql

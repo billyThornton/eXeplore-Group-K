@@ -20,7 +20,7 @@ Created on 26/02/2020
 This file contains all the necessary function to authorise a user for the app
 """
 from werkzeug.security import generate_password_hash, check_password_hash
-from itsdangerous import URLSafeTimedSerializer
+
 
 from databaseAdapter import getStudentID, getTutorPassword, getStudentPassword
 
@@ -28,9 +28,15 @@ from databaseAdapter import getStudentID, getTutorPassword, getStudentPassword
 PEPPER = "B24B11T99"
 
 
-# Check if the given email belongs to either staff or student and retrives the password
-# of the user who owns the email
 def verifyEmail(email):
+    """
+    Check if the given email belongs to either staff or student and retrives the password
+    of the user who owns the email
+    :param String email: the email entered
+    :return: Verification token{bool VerificationToken: (success of verification),String role: (role of the user),
+                                String hashedPassword: hashedpassword of the user, Int ID: studentID}
+
+    """
     global PEPPER
     # Gets a result set for all students with the gievn email
     studentID = getStudentID(email)
@@ -55,8 +61,13 @@ def verifyEmail(email):
         return {'VerificationToken': False, 'Role': '', 'hashedpass': ""}
 
 
-# Checks that the password submitted on the login for is the same as that stored in the database
 def verifyPassword(passwordEntered, hashedPassword):
+    """
+    Check the password entered is the same as the password stored
+    :param passwordEntered: String password that was enetered into the form
+    :param hashedPassword: String password stored in the database
+    :return: True if the same False otherwise
+    """
     if (passwordEntered != ""):
         global PEPPER
         # Adds the pepper to the plaintext password
@@ -69,8 +80,13 @@ def verifyPassword(passwordEntered, hashedPassword):
 
 
 def verifyUser(passwordEntered, emailEntered):
+    """
+    Verify the email and password are correct
+    :param String passwordEntered : the password entered into the login screen
+    :param String emailEntered : the email entered into the login screen
+    """
     token = verifyEmail(emailEntered)
-    print(token)
+
     if (len(token['hashedpass']) > 0):
         if (verifyPassword(passwordEntered, token['hashedpass'])):
             # sets the tokens verification to true e.g. passwords are the same
@@ -79,15 +95,13 @@ def verifyUser(passwordEntered, emailEntered):
     return token
 
 
-# Given a password hashes it for storage
 def hashPassword(password):
+    """
+    Hashes the given password after appending pepper and salt using sha256
+    :param String password : the password entered
+    :return: Hashed password
+    """
     global PEPPER
     password_text = password + PEPPER
     hashedPass = generate_password_hash(password_text, "sha256")
     return hashedPass
-
-
-# TODO implement email verification
-def generate_confirmation_token(email, app):
-    serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
-    return serializer.dumps(email, salt=app.config['SECURITY_PASSWORD_SALT'])
