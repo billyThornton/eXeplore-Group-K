@@ -51,6 +51,8 @@ port = int(os.getenv('PORT', 8000))
 def login_post():
     email = request.form.get('email').lower()
     password = request.form.get('password')
+    print("email",email)
+    print("password",password)
     # Checks the username and password are correct
     token = verifyUser(password, email)
 
@@ -65,6 +67,7 @@ def login_post():
             session['Role'] = 'student'
 
             session['studentID'] = token['ID'][0]['STUDENT_ID']
+            print("studentID",session['studentID'])
 
             teamID = getTeamFromStudentID(session['studentID'])
             #print(teamID)

@@ -50,7 +50,7 @@ def requires_access_level(access_level):
             # If the users session role is not high enough send them to the game page
             # They must be a student
             elif not session.get('Role') == access_level:
-                return redirect(url_for('showLocationClue'))
+                return redirect(url_for('game_page.showLocationClue'))
             return f(*args, **kwargs)
 
         return decorated_function
@@ -177,11 +177,12 @@ def manageGroups():
 @dashboard_page.route('/assignTeamLeader', methods=['POST'])
 @requires_access_level('staff')
 def assignUpdateTeamLeader():
-    teamNameID = request.form['team']
-    studentNameID = request.form.get('student')
-    name = getStudentName(studentNameID)[0]['NAME']
-    team = getTeamFromStudentID(studentNameID)[0]['TEAM_NAME']
-    updateTeamLeader(studentNameID, teamNameID)
+    teamID = request.form['team']
+    studentID = request.form.get('student')
+    name = getStudentName(studentID)[0]['NAME']
+    print("STUDENT ID",studentID)
+    team = getTeamFromStudentID(studentID)[0]['TEAM_NAME']
+    updateTeamLeader(studentID, teamID)
     flash(name+' has been assigned as the team leader for team: '+team)
     return redirect(url_for('dashboard_page.dashboard'))
 
@@ -226,6 +227,8 @@ def manageRoutes():
 @dashboard_page.route('/Add_Route_Submit', methods=['POST'])
 @requires_access_level('staff')
 def addRouteSubmit():
+    form = request.form
+    print(form.keys())
     routeName = request.form.get('create_route_input')
     location1 = request.form.get('location_1')
     question1 = request.form.get('question_1')
