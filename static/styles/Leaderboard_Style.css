@@ -40,37 +40,54 @@ h2 {
 	text-align: left;
 }
 
+h3 {
+	margin-left: 50px;
+	text-align: left;
+}
+
 /* Dashboard Leaderboard styling */
-.table{
+table {
 	color: black;
 	background-color: white;
 	width: 80%;
 	border-collapse:separate;
-	border:solid black 1px;
-	border-radius:20px;
+	border-radius:10px;
 	table-layout: fixed;
-	margin-left: 50px;
-	padding: 6px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
-.table tbody{
-	display:block;
-	overflow: auto;
-	height: 200px;
-}
-
-.table thead tr {
-	display: block;
-	border-radius: 20px;
-}
-
-.table thead {
-	background: #104600;
-	color:#fff;
-}
-
-.table th, .table td {
-	padding: 5px;
+table tr, table td, table th {
+	border: none;
 	text-align: left;
-	width: 400px;
+	padding-left: 10px;
+}
+
+
+/* Radio button list style */
+ul {
+	margin-left: auto;
+	margin-right: auto;
+	border-radius: 10px;
+	font-style: inherit;
+	list-style: none;
+	width: 80%;
+	color: black;
+	background-color: white;
+	height: 350px;
+	overflow-y: scroll;
+	padding-left: 0px;
+	border: solid black 1px;
+}
+li {
+	height: 30px;
+	padding-left: 10px;
+	padding-top: 5px;
+}
+li:hover {
+	background-color: #b4d9bd;
+
+}
+label:hover {
+		cursor: pointer;
 }
