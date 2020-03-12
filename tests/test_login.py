@@ -87,8 +87,7 @@ class BasicTests(flask_testing.TestCase):
 
 
     def loginuser(self,testClient,email,password):
-        return testClient.post('/',
-        data=dict(email=email,password=password),
+        return testClient.post('/',data=dict(email=email,password=password),
         follow_redirects=True)
 
     def selectTeam(self, testClient, tutorName, teamName):

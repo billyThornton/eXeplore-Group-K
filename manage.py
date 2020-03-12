@@ -41,7 +41,7 @@ app.register_blueprint(game_page)
 app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["PNG", "JPG", "JPEG"]
 
 
-
+TEAMS = {}
 port = int(os.getenv('PORT', 8000))
 
 
@@ -56,7 +56,7 @@ def login_post():
 
     if (token['VerificationToken']):
         if not (getVerificationStatus(token['Role'],email))[0]['VERIFIED']:
-            #TODO send verification email
+
             flash("You have not verified your email")
             return redirect(url_for('login'))
 
@@ -67,18 +67,18 @@ def login_post():
             session['studentID'] = token['ID'][0]['STUDENT_ID']
 
             teamID = getTeamFromStudentID(session['studentID'])
-            print(teamID)
+            #print(teamID)
             #studentID = getStudentID(email)
             #teamID = getTeamFromStudentID(studentID[0]['STUDENT_ID'])
 
             if len(teamID) == 0:
-                print("REDIRECT")
+                #print("REDIRECT")
                 return redirect(url_for('game_page.loadJoinTeamPage'))
             else:
                 teamID = teamID[0]['TEAM_ID']
                 session['teamID'] = teamID
-
-                if getTeamLeader(session["teamID"]) == session['studentID']:
+                #print("TEAM ID",teamID)
+                if getTeamLeader(session["teamID"])[0]['TEAM_LEADER'] == session['studentID']:
                     session['teamLeader'] = True
                 else:
                     session['teamLeader'] = False
@@ -98,7 +98,7 @@ def login_post():
             session['teamScore'] = 100
 
             session['progress'] = getStudentProgress(session['studentID'])#[0]['PROGRESS'] MAYBE UNCOMMENT THIS
-            print("num of questions ", session['numOfQuestions'])
+            #print("num of questions ", session['numOfQuestions'])
 
         elif (token['Role'] == 'tutor'):
             session['Role'] = 'staff'
@@ -338,4 +338,5 @@ if __name__ == '__main__':
     # mail accounts
     app.config.update(MAIL_DEFAULT_SENDER='exeploregeneral@example.com')
     mail = Mail(app)
+
     app.run(host='0.0.0.0', port=port, debug=True, use_reloader=False)

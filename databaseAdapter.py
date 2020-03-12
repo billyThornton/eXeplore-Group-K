@@ -75,8 +75,8 @@ def getStudentName(studentID):
             result = ibm_db.fetch_assoc(stmt)
         # close database connection
         ibm_db.close(db2conn)
-        # Print to screen the result
-        print(rows)
+        # #print to screen the result
+        #print(rows)
     return rows
 
 def getStudent(tutor):
@@ -105,24 +105,19 @@ def getStudent(tutor):
             result = ibm_db.fetch_assoc(stmt)
         # close database connection
         ibm_db.close(db2conn)
-        # Print to screen the result
-        print(rows)
+        # #print to screen the result
+        #print(rows)
     return rows
 
 
-def getTeamMembers(teamName):
+def getTeamMembers(teamID):
 
     db2conn = createConnection()
 
     if db2conn:
         # if we have a Db2 connection, query the database
         sql = (
-        "SELECT s.name, s.email"
-        " FROM student s"
-        " INNER JOIN team t"
-        " ON s.team_id = t.team_id"
-        " WHERE team_name = '" + teamName +
-        "';"
+        "select student_ID from student where team_id = "+str(teamID)+";"
         )
         # Prepare the statement
         stmt = ibm_db.prepare(db2conn,sql)
@@ -136,8 +131,8 @@ def getTeamMembers(teamName):
             result = ibm_db.fetch_assoc(stmt)
         # close database connection
         ibm_db.close(db2conn)
-        # Print to screen the result
-        print(rows)
+        # #print to screen the result
+        #print(rows)
     return rows
 
 
@@ -167,8 +162,8 @@ def getRouteLocations(routeName): #Need to check the SQL - might be confusing ro
             result = ibm_db.fetch_assoc(stmt)
         # close database connection
         ibm_db.close(db2conn)
-        # Print to screen the result
-        print(rows)
+        # #print to screen the result
+        #print(rows)
     return rows
 
 
@@ -199,8 +194,8 @@ def getTeamFromStudentID(student):
             result = ibm_db.fetch_assoc(stmt)
         # close database connection
         ibm_db.close(db2conn)
-        # Print to screen the result
-        print(rows)
+        # #print to screen the result
+        #print(rows)
     return rows
 
 def getTeamFromID(teamID):
@@ -228,8 +223,8 @@ def getTeamFromID(teamID):
             result = ibm_db.fetch_assoc(stmt)
         # close database connection
         ibm_db.close(db2conn)
-        # Print to screen the result
-        print(rows)
+        # #print to screen the result
+        #print(rows)
     return rows
 
 
@@ -259,8 +254,8 @@ def getStudentProgress(id):
             result = ibm_db.fetch_assoc(stmt)
         # close database connection
         ibm_db.close(db2conn)
-        # Print to screen the result
-        print(rows)
+        # #print to screen the result
+        #print(rows)
     return rows
 
 
@@ -290,8 +285,8 @@ def getTutorOffice(tutor):
             result = ibm_db.fetch_assoc(stmt)
         # close database connection
         ibm_db.close(db2conn)
-        # Print to screen the result
-        print(rows)
+        # #print to screen the result
+        #print(rows)
     return rows
 
 
@@ -307,7 +302,7 @@ def getRouteID(teamID):
         " WHERE team_id = " + str(teamID) +
         ";"
         )
-        print(sql)
+        #print(sql)
         # Prepare the statement
         stmt = ibm_db.prepare(db2conn,sql)
 		# Execute the sql
@@ -320,9 +315,37 @@ def getRouteID(teamID):
             result = ibm_db.fetch_assoc(stmt)
         # close database connection
         ibm_db.close(db2conn)
-        # Print to screen the result
-        print(rows)
+        # #print to screen the result
+        #print(rows)
     return rows
+
+def getRouteIDFromRouteName(routeName):
+        db2conn = createConnection()
+
+        if db2conn:
+            # if we have a Db2 connection, query the database
+            sql = (
+            "SELECT route_id"
+            " FROM route"
+            " WHERE route_name = '" + routeName +
+            "';"
+            )
+            print(sql)
+            # Prepare the statement
+            stmt = ibm_db.prepare(db2conn,sql)
+    		# Execute the sql
+            ibm_db.execute(stmt)
+            rows=[]
+            # fetch the result
+            result = ibm_db.fetch_assoc(stmt)
+            while result != False:
+                rows.append(result.copy())
+                result = ibm_db.fetch_assoc(stmt)
+            # close database connection
+            ibm_db.close(db2conn)
+            # Print to screen the result
+            print(rows)
+        return rows
 
 
 def getOfficeLocation(officeID):
@@ -350,8 +373,8 @@ def getOfficeLocation(officeID):
             result = ibm_db.fetch_assoc(stmt)
         # close database connection
         ibm_db.close(db2conn)
-        # Print to screen the result
-        print(rows)
+        # #print to screen the result
+        #print(rows)
     return rows
 
 
@@ -379,8 +402,8 @@ def getLocationClues(locationID):
             result = ibm_db.fetch_assoc(stmt)
         # close database connection
         ibm_db.close(db2conn)
-        # Print to screen the result
-        print(rows)
+        # #print to screen the result
+        #print(rows)
     return rows
 
 def getLocation(routeID,progress):
@@ -412,8 +435,8 @@ def getLocation(routeID,progress):
             result = ibm_db.fetch_assoc(stmt)
         # close database connection
         ibm_db.close(db2conn)
-        # Print to screen the result
-        print('CHECK!!! __ ',rows)
+        # #print to screen the result
+        #print('CHECK!!! __ ',rows)
     return rows
 
 def getNumLocationOnRoute(routeID):
@@ -426,7 +449,7 @@ def getNumLocationOnRoute(routeID):
         " FROM route_location_bridge"
         " WHERE route_id = " + str(routeID) +";"
         )
-        print(sql)
+        #print(sql)
         # Prepare the statement
         stmt = ibm_db.prepare(db2conn,sql)
 		# Execute the sql
@@ -439,8 +462,8 @@ def getNumLocationOnRoute(routeID):
             result = ibm_db.fetch_assoc(stmt)
         # close database connection
         ibm_db.close(db2conn)
-        # Print to screen the result
-        print(rows)
+        # #print to screen the result
+        #print(rows)
     return rows
 
 def getQuestionLocationID(locationID):
@@ -453,7 +476,7 @@ def getQuestionLocationID(locationID):
         " FROM question"
         " WHERE location_id = " + str(locationID)+";"
         )
-        print("getQuestion ",sql)
+        #print("getQuestion ",sql)
         # Prepare the statement
         stmt = ibm_db.prepare(db2conn,sql)
 		# Execute the sql
@@ -466,8 +489,8 @@ def getQuestionLocationID(locationID):
             result = ibm_db.fetch_assoc(stmt)
         # close database connection
         ibm_db.close(db2conn)
-        # Print to screen the result
-        print("Get Question Result",rows)
+        # #print to screen the result
+        #print("Get Question Result",rows)
     return rows
 
 def getStudentPassword(student):
@@ -496,8 +519,8 @@ def getStudentPassword(student):
             result = ibm_db.fetch_assoc(stmt)
         # close database connection
         ibm_db.close(db2conn)
-        # Print to screen the result
-        print(rows)
+        # #print to screen the result
+        #print(rows)
     return rows
 
 
@@ -515,7 +538,7 @@ def getTutorPassword(tutorEmail):
         " WHERE email = '" + tutorEmail +
         "';"
         )
-        print(sql)
+        #print(sql)
         # Prepare the statement
         stmt = ibm_db.prepare(db2conn,sql)
 		# Execute the sql
@@ -528,8 +551,8 @@ def getTutorPassword(tutorEmail):
             result = ibm_db.fetch_assoc(stmt)
         # close database connection
         ibm_db.close(db2conn)
-        # Print to screen the result
-        print(rows)
+        # #print to screen the result
+        #print(rows)
     return rows
 
 def getTutorID(tutorName, tutorEmail):
@@ -543,7 +566,7 @@ def getTutorID(tutorName, tutorEmail):
         " FROM TUTOR"
         " WHERE tutor_name = '" + tutorName +"'OR email = '"+tutorEmail+"';"
         )
-        print(sql)
+        #print(sql)
         # Prepare the statement
         stmt = ibm_db.prepare(db2conn,sql)
 		# Execute the sql
@@ -556,8 +579,8 @@ def getTutorID(tutorName, tutorEmail):
             result = ibm_db.fetch_assoc(stmt)
         # close database connection
         ibm_db.close(db2conn)
-        # Print to screen the result
-        print(rows)
+        # #print to screen the result
+        #print(rows)
     return rows
 
 def getTutorIDFromStudentID(studentID):
@@ -571,7 +594,7 @@ def getTutorIDFromStudentID(studentID):
         " WHERE Student_id = " + str(studentID) +
         ";"
         )
-        print(sql)
+        #print(sql)
         # Prepare the statement
         stmt = ibm_db.prepare(db2conn,sql)
 		# Execute the sql
@@ -584,8 +607,8 @@ def getTutorIDFromStudentID(studentID):
             result = ibm_db.fetch_assoc(stmt)
         # close database connection
         ibm_db.close(db2conn)
-        # Print to screen the result
-        print(rows)
+        # #print to screen the result
+        #print(rows)
     return rows
 
 def getTutorNameFromStudentID(studentID):
@@ -599,7 +622,7 @@ def getTutorNameFromStudentID(studentID):
         " WHERE s.STUDENT_ID = " + str(studentID) +
         " AND t.TUTOR_ID = s.TUTOR_ID;"
         )
-        print(sql)
+        #print(sql)
         # Prepare the statement
         stmt = ibm_db.prepare(db2conn,sql)
         # Execute the sql
@@ -612,8 +635,8 @@ def getTutorNameFromStudentID(studentID):
             result = ibm_db.fetch_assoc(stmt)
         # close database connection
         ibm_db.close(db2conn)
-        # Print to screen the result
-        print(rows)
+        # #print to screen the result
+        #print(rows)
     return rows
 
 def getStudentID(email):
@@ -639,8 +662,8 @@ def getStudentID(email):
             result = ibm_db.fetch_assoc(stmt)
         # close database connection
         ibm_db.close(db2conn)
-        # Print to screen the result
-        print(rows)
+        # #print to screen the result
+        #print(rows)
     return rows
 
 # Collects all locations for game keeper
@@ -691,7 +714,7 @@ def getLocationID(locationName):
     # Query all locations
     if db2conn:
         # if we have a Db2 connection, query the database
-        sql = "SELECT location_id FROM location WHERE location_name = '" + str(locationName) + "';"
+        sql = "SELECT location_id FROM location WHERE location_name = '" + locationName + "';"
         # Prepare the statement
         stmt = ibm_db.prepare(db2conn,sql)
         # Execute the sql
@@ -704,6 +727,7 @@ def getLocationID(locationName):
             result = ibm_db.fetch_assoc(stmt)
         # close database connection
         ibm_db.close(db2conn)
+        print("THIS IS THE LOCATION ID", rows)
     return rows
 
 
@@ -759,7 +783,7 @@ def insertScore(routeID,routeName,teamID,value):
         "INSERT INTO SCORE (ROUTE_ID,ROUTE_NAME,TEAM_ID,VALUE)"
         " VALUES ("+str(routeID)+",'"+str(routeName)+"',"+str(teamID)+","+str(value)+");"
         )
-        print(sql)
+        #print(sql)
         # Prepare the statement
         stmt = ibm_db.prepare(db2conn,sql)
         # Execute the sql
@@ -852,11 +876,91 @@ def getTeamScoresFromRouteID(routeID):
             result = ibm_db.fetch_assoc(stmt)
         # close database connection
         ibm_db.close(db2conn)
-        # Print to screen the result
-        print("These are the team scores", rows)
+        # #print to screen the result
+        #print("These are the team scores", rows)
     return rows
 
+def getTeamID(teamName):
+    db2conn = createConnection()
+    if db2conn:
+        # if we have a Db2 connection, query the database
+        sql = "SELECT team_id FROM team where team_Name = '" + str(teamName) + "';"
+        # Prepare the statement
+        stmt = ibm_db.prepare(db2conn, sql)
+        # Execute the sql
+        ibm_db.execute(stmt)
+        rows = []
+        # fetch the result
+        result = ibm_db.fetch_assoc(stmt)
+        while result != False:
+            rows.append(result.copy())
+            result = ibm_db.fetch_assoc(stmt)
+        # close database connection
+        ibm_db.close(db2conn)
+    return rows
 
+def getTeamLeader(teamID):
+    db2conn = createConnection()
+    if db2conn:
+        # if we have a Db2 connection, query the database
+        sql = "SELECT team_leader FROM team where team_id = "+str(teamID)+";"
+        # Prepare the statement
+        stmt = ibm_db.prepare(db2conn, sql)
+        # Execute the sql
+        ibm_db.execute(stmt)
+        rows = []
+        # fetch the result
+        result = ibm_db.fetch_assoc(stmt)
+        while result != False:
+            rows.append(result.copy())
+            result = ibm_db.fetch_assoc(stmt)
+        # close database connection
+        ibm_db.close(db2conn)
+    return rows
+
+def getQuestions():
+    db2conn = createConnection()
+    if db2conn:
+        # if we have a Db2 connection, query the database
+        sql = "SELECT question_content FROM question;"
+        # Prepare the statement
+        stmt = ibm_db.prepare(db2conn, sql)
+        # Execute the sql
+        ibm_db.execute(stmt)
+        rows = []
+        # fetch the result
+        result = ibm_db.fetch_assoc(stmt)
+        while result != False:
+            rows.append(result.copy())
+            result = ibm_db.fetch_assoc(stmt)
+        # close database connection
+        ibm_db.close(db2conn)
+    return rows
+
+def getQuestionID(questionContent):
+    db2conn = createConnection()
+    if db2conn:
+        # if we have a Db2 connection, query the database
+        sql = (
+        "SELECT question_id"
+        " FROM question"
+        " WHERE question_content = '" + questionContent + "';"
+        )
+
+        # Prepare the statement
+        stmt = ibm_db.prepare(db2conn, sql)
+        # Execute the sql
+        ibm_db.execute(stmt)
+        rows = []
+        # fetch the result
+        result = ibm_db.fetch_assoc(stmt)
+        while result != False:
+            rows.append(result.copy())
+            result = ibm_db.fetch_assoc(stmt)
+        # close database connection
+        ibm_db.close(db2conn)
+        print("THIS IS THE QUESTION ID", rows)
+    return rows
 
 def insertStudentUser(email,name,TeamID,TutorID):
     db2conn = createConnection()
@@ -868,7 +972,7 @@ def insertStudentUser(email,name,TeamID,TutorID):
         "INSERT INTO STUDENT (NAME,EMAIL,TEAM_ID,TUTOR_ID,VERIFIED)"
         " VALUES ('"+name+"','"+email+"',"+str(TeamID)+","+str(TutorID)+",False);"
         )
-        print(sql)
+        #print(sql)
         # Prepare the statement
         stmt = ibm_db.prepare(db2conn,sql)
 		# Execute the sql
@@ -945,7 +1049,7 @@ def insertLocation(locationName,clue,photoName):
             "INSERT INTO location(location_name,clue,location_image_url)"
             " VALUES('"+str(locationName)+"','"+str(clue)+"', '"+str(photoName)+"');"
             )
-        print("SQL INSERT STATEMENT: ", sql)
+        #print("SQL INSERT STATEMENT: ", sql)
         # Prepare the statement
         stmt = ibm_db.prepare(db2conn,sql)
     	# Execute the sql
@@ -962,7 +1066,7 @@ def insertQuestion(locationID, task, answerA, answerB, answerC, answerD, correct
             " VALUES ( "+str(locationID)+" , '"+str(task)+"', '"+str(answerA)+"', '"+str(answerB)+"', '"+str(answerC)+"', '"+str(answerD)+"', '"+str(correctAnswer)+"');"
             )
 
-        print("SQL INSERT STATEMENT: ", sql)
+        #print("SQL INSERT STATEMENT: ", sql)
 
         # Prepare the statement
         stmt = ibm_db.prepare(db2conn,sql)
@@ -986,44 +1090,6 @@ def insertQuestion(locationID, task, answerA, answerB, answerC, answerD, correct
         ibm_db.close(db2conn)
 """
 
-def getTeamID(teamName):
-    db2conn = createConnection()
-    if db2conn:
-        # if we have a Db2 connection, query the database
-        sql = "SELECT team_id FROM team where team_Name = '" + str(teamName) + "';"
-        # Prepare the statement
-        stmt = ibm_db.prepare(db2conn, sql)
-        # Execute the sql
-        ibm_db.execute(stmt)
-        rows = []
-        # fetch the result
-        result = ibm_db.fetch_assoc(stmt)
-        while result != False:
-            rows.append(result.copy())
-            result = ibm_db.fetch_assoc(stmt)
-        # close database connection
-        ibm_db.close(db2conn)
-    return rows
-
-def getTeamLeader(teamID):
-    db2conn = createConnection()
-    if db2conn:
-        # if we have a Db2 connection, query the database
-        sql = "SELECT team_leader FROM team where team_id = "+str(teamID)+";"
-        # Prepare the statement
-        stmt = ibm_db.prepare(db2conn, sql)
-        # Execute the sql
-        ibm_db.execute(stmt)
-        rows = []
-        # fetch the result
-        result = ibm_db.fetch_assoc(stmt)
-        while result != False:
-            rows.append(result.copy())
-            result = ibm_db.fetch_assoc(stmt)
-        # close database connection
-        ibm_db.close(db2conn)
-    return rows
-
 def insertTeam(teamName,routeID,tutorID,teamLeader,progress):
     db2conn = createConnection()
 
@@ -1033,7 +1099,7 @@ def insertTeam(teamName,routeID,tutorID,teamLeader,progress):
             " VALUES('" + teamName + "', " + str(routeID) + ", "+str(tutorID)
             +", "+str(teamLeader)+", "+str(progress)+");"
             )
-        print(sql)
+        #print(sql)
         # Prepare the statement
         stmt = ibm_db.prepare(db2conn,sql)
     	# Execute the sql
@@ -1079,7 +1145,7 @@ def updateVerififcationStatus(userType,email, stringBool):
               " WHERE email = '"+str(email).lower()+"';"
             )
 
-        print(sql)
+        #print(sql)
         stmt = ibm_db.prepare(db2conn,sql)
         # Execute the sql
         ibm_db.execute(stmt)
@@ -1104,14 +1170,31 @@ def removeLocation(locationName):
         ibm_db.close(db2conn)
 
 
-def insertRoute(routeID,routeName):
+def insertRoute(routeName):
     db2conn = createConnection()
 
     if db2conn:
         sql = (
-            "INSERT INTO route (ROUTE_ID, ROUTE_NAME) VALUES("+str(routeID)+",'"+str(routeName)+"');"
+            "INSERT INTO route (ROUTE_NAME) VALUES('"+(routeName)+"');"
             )
 
+        #print(sql)
+        # Prepare the statement
+        stmt = ibm_db.prepare(db2conn,sql)
+        # Execute the sql
+        ibm_db.execute(stmt)
+        # close database connection
+        ibm_db.close(db2conn)
+
+
+def insertRouteSequence(routeID, locationID, order, questionID):
+    db2conn = createConnection()
+
+    if db2conn:
+        sql = (
+            "INSERT INTO route_location_bridge (ROUTE_ID, LOCATION_ID, SEQUENCE_ORDER, QUESTION_ID)"
+            " VALUES(" + str(routeID) + ", " + str(locationID) + ", " + str(order) + ", " + str(questionID) + ");"
+            )
         print(sql)
         # Prepare the statement
         stmt = ibm_db.prepare(db2conn,sql)
@@ -1119,6 +1202,7 @@ def insertRoute(routeID,routeName):
         ibm_db.execute(stmt)
         # close database connection
         ibm_db.close(db2conn)
+
 
 def getRouteName(routeID):
     db2conn = createConnection()
@@ -1143,15 +1227,15 @@ def updateTeamRoute(routeID,progress, teamID):
     db2conn = createConnection()
 
     if db2conn:
-        print(teamID)
-        print(routeID)
+        #print(teamID)
+        #print(routeID)
         sql = (
             "UPDATE team"
             " SET team.current_route_id = "+str(routeID)+
             ", team.progress = "+ str(progress) + " WHERE team_id = "+str(teamID)+";"
             )
 
-        print(sql)
+        #print(sql)
         stmt = ibm_db.prepare(db2conn,sql)
         # Execute the sql
         ibm_db.execute(stmt)
@@ -1162,15 +1246,15 @@ def updateTeamName(newName, teamID):
     db2conn = createConnection()
 
     if db2conn:
-        print(teamID)
-        print(newName)
+        #print(teamID)
+        #print(newName)
         sql = (
             "UPDATE team"
             " SET team.team_name = '"+str(newName)+
             "' WHERE team_id = "+str(teamID)+";"
             )
 
-        print(sql)
+        #print(sql)
         stmt = ibm_db.prepare(db2conn,sql)
         # Execute the sql
         ibm_db.execute(stmt)
@@ -1187,7 +1271,7 @@ def updateStudentTeam(studentID,teamID):
                 " SET student.team_id = " + str(teamID) + " WHERE student_ID = " + str(studentID) + ";"
         )
 
-        print("UPDATE TEAM: " + sql)
+        #print("UPDATE TEAM: " + sql)
         stmt = ibm_db.prepare(db2conn, sql)
         # Execute the sql
         ibm_db.execute(stmt)
@@ -1203,7 +1287,7 @@ def updateTeamLeader(studentID,teamID):
                 " SET team.team_leader = " + str(studentID) + " WHERE team_ID = " + str(teamID) + ";"
         )
 
-        print(sql)
+        #print(sql)
         stmt = ibm_db.prepare(db2conn, sql)
         # Execute the sql
         ibm_db.execute(stmt)
