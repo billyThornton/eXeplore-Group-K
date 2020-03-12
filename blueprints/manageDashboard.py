@@ -75,7 +75,7 @@ def addLocation():
     Serves the addlocation screen
     :return: Add location html
     """
-    return render_template('Desktop/add_location_page.html')
+    return render_template('Desktop/Add_location_page.html')
 
 
 @dashboard_page.route('/Add_Location_Submit', methods=['POST'])

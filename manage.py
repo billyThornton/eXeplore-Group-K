@@ -286,7 +286,7 @@ def pdfURL():
     Used to serve privacy policy
     :return: Serves the privacy policy pdf
     """
-    return send_file('Demo/eXeplore_Privacy_Policy.pdf', mimetype='application/pdf')
+    return send_file('static/eXeplore_privacy_policy.pdf', mimetype='application/pdf')
 
 @app.route('/static/Exeter_University.jpg')
 def imageUniStatic():
