@@ -307,7 +307,7 @@ function noNumber(str)
 
 /**
  * Filters list of locations live for search bar
- * 
+ *
  * @param {int} inputID the search box tag id.
  * @param {int} ulID the id of the unsorted list.
  */
@@ -371,6 +371,7 @@ function showLeaderBoard(routeID) {
             type : 'POST'
         })
         .done(function(data) {
+            console.log(data);
             // Create HTML table
             var table = document.createElement("TABLE");
             table.border = "1";
@@ -393,13 +394,13 @@ function showLeaderBoard(routeID) {
 
             // Add the data rows
             // Number of rows
-            for (var i = 1; i < data.length; i++) {
+            for (var i = 0; i < data.length; i++) {
                 row = table.insertRow(-1);
                 // Number of columns
                 for (var j = 0; j < columnCount; j++) {
                     if(j == 0) {
                         var cell = row.insertCell(-1);
-                        cell.innerHTML = i;
+                        cell.innerHTML = (i+1);
                     } else if (j > 0) {
                         var cell = row.insertCell(-1);
                         cell.innerHTML = Object.values(data[i])[j-1];
@@ -425,4 +426,3 @@ $(document).ready(function(){
         $('p[id="filename"]').text('The file ' + fileName +  ' has been selected.');
     });
 });
-
