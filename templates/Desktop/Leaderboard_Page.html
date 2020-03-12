@@ -42,22 +42,32 @@ clicked from the side bar. It allows a gamekeeper to view the current leaderboar
 
 	<div id="leaderboard_page">
 
-		<h3>Leaderboard:</h3>
+		<h2>Leaderboard:</h2>
+
+		<h3>Select a route to display the leaderboard:</h3>
+
+		<ul>
+
+
+				{% for route in routes %}
+							<Li>
+						{% if loop.index == 1 %}
+								<input type="radio" class="route_radio_button" id="{{route['ROUTE_ID']}}" name="route" value="{{route['ROUTE_ID']}}" onclick="showLeaderBoard({{route['ROUTE_ID']}})" selected>
+								<label for="{{route['ROUTE_ID']}}">{{route['ROUTE_NAME']}}</label><br/>
+						{% else %}
+								<input type="radio" class="route_radio_button" id="{{route['ROUTE_ID']}}" name="route" value="{{route['ROUTE_ID']}}" onclick="showLeaderBoard({{route['ROUTE_ID']}})">
+								<label for="{{route['ROUTE_ID']}}">{{route['ROUTE_NAME']}}</label><br/>
+						{% endif %}
+						</li>
+				{% endfor %}
+
+		</ul>
+
 
 		<div id="groups_list_container">
         </div>
 
-        <form>
-            {% for route in routes %}
-                {% if loop.index == 1 %}
-                    <input type="radio" class="route_radio_button" id="{{route['ROUTE_ID']}}" name="route" value="{{route['ROUTE_ID']}}" onclick="showLeaderBoard({{route['ROUTE_ID']}})" selected>
-                    <label for="{{route['ROUTE_ID']}}">{{route['ROUTE_NAME']}}</label><br/>
-                {% else %}
-                    <input type="radio" class="route_radio_button" id="{{route['ROUTE_ID']}}" name="route" value="{{route['ROUTE_ID']}}" onclick="showLeaderBoard({{route['ROUTE_ID']}})">
-                    <label for="{{route['ROUTE_ID']}}">{{route['ROUTE_NAME']}}</label><br/>
-                {% endif %}
-            {% endfor %}
-        </form>
+
 
 	</div>
 </body>
