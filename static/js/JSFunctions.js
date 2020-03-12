@@ -343,6 +343,12 @@ function getDropDown(locationName, dropDownID) {
         .done(function(data) {
             console.log(data);
             var questions = data;
+
+            var select = document.getElementById(dropDownID);
+            var i, L = select.options.length - 1;
+            for(i = L; i >= 0; i--) {
+               select.remove(i);
+            }
             for (var i = 0; i < questions.length; i++) {
                 // The question content
                 var question = questions[i];
