@@ -327,6 +327,14 @@ function searchList(inputID, ulID) {
     }
 }
 
+/**
+ * On selection of the location drop down, an AJAX call is made which returns the
+ * questions to be displayed from the backend in the questions dropdown
+ *
+ * @param {int} locationName The name of the location selected in the locations drop down
+ * @param {int} dropDownID The ID of the select tag which stores the locations
+ * (i.e. the select tag containing this event handler)
+ */
 function getDropDown(locationName, dropDownID) {
     console.log("ENTERED THE GET DROP DOWN");
     if (locationName == "n/a") {
@@ -366,7 +374,11 @@ function getDropDown(locationName, dropDownID) {
     });
 }
 
-
+/**
+ * Makes an AJAX call with the ID of the route selected to display all of the scores for that route
+ *
+ * @param {int} routeID The ID for the route selected within the drop down
+ */
 function showLeaderBoard(routeID) {
     $(document).ready(function() {
         $.ajax({
@@ -420,7 +432,10 @@ function showLeaderBoard(routeID) {
     });
 }
 
-
+/**
+ * Displays the google translate drop down to appear in the relevant element. Sets the
+ * default language to english.
+ */
 function googleTranslateElementInit() {
   new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
 }
