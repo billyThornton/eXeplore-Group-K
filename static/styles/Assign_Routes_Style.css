@@ -120,12 +120,11 @@ select {
 /* List styling to display teams. */
 
 ul {
-	margin-left: auto;
-	margin-right: auto;
+	margin-left: 70px;
 	border-radius: 10px;
 	font-style: inherit;
 	list-style: none;
-	width: 80%;
+	width: 60%;
 	color: black;
 	background-color: white;
 	height: 350px;
@@ -169,7 +168,7 @@ label:hover {
 		width: 90%;
 	}
 
-	
+
 	h2 {
 		text-align: center;
 		margin-left: 0;
