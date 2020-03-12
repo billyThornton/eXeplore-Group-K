@@ -13,23 +13,15 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “AS IS” 
 
 Created on 19/02/2020
 @author: Billy Thornton
-@Last Edited: 26/02/2020
+@Last Edited: 12/03/2020
 @edited by: Billy Thornton
 
-This file contains all the URL routing for the backend/front end, it takes urls
-and displays the required html files.
-It also processes data passed using post/get request.
+This file controls all the logic for the actual game pregression
+
 """
 from flask import render_template, redirect, url_for, request, send_file, session, jsonify, Blueprint, flash
-from utils.auth import *
-from utils.login import *
-from databaseAdapter import *
 
-from functools import wraps
-import os
-from werkzeug.utils import secure_filename
-from blueprints.manageDashboard import dashboard_page
-from utils.utils import *
+from databaseAdapter import *
 
 game_page = Blueprint('game_page',__name__,template_folder='templates')
 
@@ -41,6 +33,10 @@ game_page = Blueprint('game_page',__name__,template_folder='templates')
 
 @game_page.route('/Join')
 def loadJoinTeamPage():
+    """
+    Load the jointeams screen displaying all tutors and all teams
+    :return: Renders the template for the join team html
+    """
     gameTeams = getTeams()
     gameTutors = getTutors()
     return render_template('mobile/Join_Team.html', teams=gameTeams, tutors=gameTutors)
@@ -48,29 +44,32 @@ def loadJoinTeamPage():
 
 @game_page.route('/assignTeam', methods=['POST'])
 def assignTeam():
-    print("TEAM ASSIGN START")
-    # TODO update the student to store updated  tutorID?
+    """
+    Assigns the user to a team and sets the teamid and teamleader session
+    :return: session that has team leader and teamid
+    """
+
     studentID = session['studentID']
-    tutorID = request.form['tutor']
-    print(tutorID)
+
     teamID = request.form.get('team')
     session['teamID'] = teamID
-    print(teamID)
+
     updateStudentTeam(studentID, teamID)
     teamLeader = getTeamLeader(teamID)
-    print("Team Leader")
-    print(teamLeader)
+
     session['teamScore'] = 100
 
 
-
+    #If there is no team leader set this user to be team leader
     if teamLeader[0]['TEAM_LEADER'] is None:
         updateTeamLeader(studentID, teamID)
+        #Set the session teamleader to be true to indicate this user is the team leader
         session['teamLeader'] = True
         return redirect(url_for('game_page.loadFirstChoosePage'))
     else:
         # TODO wait here until route selected by team leader
         routeID = getRouteID(session['teamID'])
+        #Wait until the team leader has chosen a route
         while routeID[0]['CURRENT_ROUTE_ID'] is None:
             routeID = getRouteID(session['teamID'])
 
@@ -85,38 +84,42 @@ def assignTeam():
 
 @game_page.route('/firstChoose')
 def loadFirstChoosePage():
+    """
+    If the user is the first member of the team redirect to make them choose route
+    :return: first choose template
+    """
     gameRoutes = getRoutes();
     return render_template('mobile/First_Choose.html', routes=gameRoutes)
 
 
 @game_page.route('/routeSelect', methods=['POST'])
 def routeSelect():
+    """
+    Sets the current route for the team to be the selected route
+    :return: The show location page with the session routeID set and numofquestions set
+    """
     routeID = request.form['route']
     teamName = request.form['teamName']
     teamID = session['teamID']
+
     session['routeID'] = routeID
+    #Sets the team route
     updateTeamRoute(routeID, 0, teamID)
+    #sets the team name
     updateTeamName(teamName, teamID)
+    #The max num of questions to catch when the game finishes
     numOfQuestions = getNumLocationOnRoute(session['routeID'])
     session['numOfQuestions'] = numOfQuestions[0]['1']
+
     return redirect(url_for('game_page.showLocationClue'))
-
-
-@game_page.route('/loadFirstTeam', methods=['POST'])
-def loadFirstTeam():
-    routeID = request.form['route']
-    teamName = request.form['teamName']
-    session['teamScore'] = 100
-    # add or update database now here maybe
-    return redirect(url_for('game_page.showLocationClue'))
-
 
 # Displays the location clue page at an appropriate progression point
 @game_page.route('/Game')
 def showLocationClue():
-
-    num = session['numOfQuestions']
-    print('!!!!!!!!!!!!!!!!!!!!!',num)
+    """
+    Shows the clue for the next location with the image
+    :return: returns the new clue page
+    """
     # Check if route id is in session
     if 'routeID' in session:
         routeID = session['routeID']
@@ -124,33 +127,31 @@ def showLocationClue():
     progress = getTeamFromStudentID(session['studentID'])[0]['PROGRESS']
     session['progress'] = progress
 
+    #Game has finished
     if session['progress'] > session['numOfQuestions']:
         return redirect(url_for('game_page.endScreen'))
+
     # Get the location ID for the clue
     locationData = getLocation(session['routeID'], progress)
-    print("LOCATION DATA: " + str(session['routeID']) + " " + str(progress))
-    print('LOCAION DATA IS: ', locationData)
-
     locationID = locationData[0]['LOCATION_ID']
+
     # Shows the next locations image
     imageURL = getLocation(session['routeID'], progress)[0]['LOCATION_IMAGE_URL']
     imageLocation = url_for('static', filename='images/' + imageURL)
-    print("LocationID", locationID)
-    # check if there are no more locations
-    if (len(getLocationClues(locationID)) == 0):
-        return redirect(url_for('game_page.endScreen'))
 
     cluemessage = getLocationClues(locationID)[0]['CLUE']
-    print(cluemessage)
 
-    print(imageLocation)
     return render_template('mobile/Clue_Page.html', progress_value=progress, clue_message=cluemessage,
                            clue_location=imageLocation, total=session['numOfQuestions'])
 
 
 @game_page.route('/getQuestion', methods=['POST'])
 def getQuestion():
-
+    """
+    Gets the next multiple choice question
+    :return: returns the question screen
+    """
+    #You must be the team leader to answer questions
     if session['teamLeader']:
 
         progress = getTeamFromStudentID(session['studentID'])[0]['PROGRESS']
@@ -160,43 +161,52 @@ def getQuestion():
         locationID = locationData[0]['LOCATION_ID']
 
         questionData = getQuestionLocationID(locationID)
-        print("questionData: ", questionData)
+
 
         imageURL = locationData[0]['LOCATION_IMAGE_URL']
         imageLocation = url_for('static', filename='images/' + imageURL)
 
-        print(questionData[0]['QUESTION_CONTENT'])
+
         questionText = questionData[0]['QUESTION_CONTENT']
 
         a = questionData[0]['MULTIPLE_CHOICE_A']
         b = questionData[0]['MULTIPLE_CHOICE_B']
         c = questionData[0]['MULTIPLE_CHOICE_C']
         d = questionData[0]['MULTIPLE_CHOICE_D']
+
         return render_template('mobile/Answer_Page.html', progress_value=progress, clue_message="Question: " + questionText,
                                clue_location=imageLocation,
                                answer_a=a, answer_b=b, answer_c=c, answer_d=d, total=session['numOfQuestions'])
     else:
+        #Not team leader waits until the team leader to answer the question
         progress = getStudentProgress(session['studentID'])[0]['PROGRESS']
         if progress == int(session['numOfQuestions'])+1:
             return redirect(url_for('game_page.endScreen'))
         if progress == session['progress']:
-            flash("Team leader must answer the question before you can progress")           
+            flash("Talk to the team leader to answer the question together")
         return redirect(url_for('game_page.showLocationClue'))
 
 
 @game_page.route('/getQuestionRedirect')
 def retryQuestion():
+    """
+    If you get the question wrong it reasks the question
+    :return: retueern the question page
+    """
     progress = session['progress']
     locationData = getLocation(session['routeID'], session['progress'])
     locationID = locationData[0]['LOCATION_ID']
+
     questionData = getQuestionLocationID(locationID)
     imageURL = locationData[0]['LOCATION_IMAGE_URL']
     imageLocation = url_for('static', filename='images/' + imageURL)
+
     questionText = questionData[0]['QUESTION_CONTENT']
     a = questionData[0]['MULTIPLE_CHOICE_A']
     b = questionData[0]['MULTIPLE_CHOICE_B']
     c = questionData[0]['MULTIPLE_CHOICE_C']
     d = questionData[0]['MULTIPLE_CHOICE_D']
+
     return render_template('mobile/Answer_Page.html', progress_value=progress,
                            clue_message="Question: " + questionText, clue_location=imageLocation,
                            answer_a=a, answer_b=b, answer_c=c, answer_d=d)
@@ -204,7 +214,11 @@ def retryQuestion():
 
 @game_page.route('/confirmAnswer', methods=['POST'])
 def checkQuestion():
-    # checks he progress of the student to ensure the correct question is loaded
+    """
+    Checks the users answer is correct
+    :return: returns a new clue if the answer is correct and reasks the question if wrong
+    """
+    # checks the progress of the student to ensure the correct question is loaded
     progress = session['progress']
     # Get their answer to the question
     answer = request.form.get('answer')
@@ -213,18 +227,16 @@ def checkQuestion():
         return redirect(url_for('game_page.retryQuestion'))
     # Retreive the correct answer
     locationID = getLocation(session['routeID'], session['progress'])[0]['LOCATION_ID']
+
     questionData = getQuestionLocationID(locationID)
     answer = answer.upper()
     correctAnswer = questionData[0]['ANSWER'];
 
-    if (str(answer[0]) == str(correctAnswer[0])):
-        # If it was the las question load the end screen
-
-
-            # If not load the lext location clue
+    if str(answer[0]) == str(correctAnswer[0]):
         session['progress'] = session.get('progress') + 1
         updateTeamRoute(session['routeID'],session['progress'],session['teamID'])
-        if (int(progress) == int(session['numOfQuestions'])+1):
+
+        if int(progress) == int(session['numOfQuestions'])+1:
             return redirect(url_for('game_page.endScreen'))
         else:
             return redirect(url_for('game_page.showLocationClue'))
@@ -237,14 +249,21 @@ def checkQuestion():
 
 @game_page.route('/finished')
 def endScreen():
+    """
+    Shows the endgame leaderboard and marks the session for reset
+    :return: the leaderboard
+    """
     teamID = session['teamID']
     teamscore = session['teamScore']
     routeID = session['routeID']
     routeName = getRouteName(routeID)[0]['ROUTE_NAME']
+    #Adds the score to the database unless its been done already
     if 'resetTeamFlag' not in session:
         insertScore(routeID, routeName, teamID, teamscore)
+
     teamName = getTeamFromID(teamID)[0]['TEAM_NAME']
     teamreturn = getTeamsScores()
+    # marks the session for reset on logout
     session['resetTeamFlag'] = True
 
     return render_template('mobile/End_Game_Page.html', group_name=teamName, final_score=teamscore,

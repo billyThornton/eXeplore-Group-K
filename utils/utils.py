@@ -12,19 +12,29 @@ provided with the distribution.
 Created on 26/02/2020
 
 @author: Billy Thornton
-@Last Edited: 26/02/2020
+@Last Edited: 12/03/2020
 @edited by: Billy Thornton
+updated doc comments
 
 This file contains some extra function and utilities
 """
 EMAILEXTENSION = "@exeter.ac.uk"
 
-#Checks if a string has numbers
+
 def hasNumbers(inputString):
+     """
+     :param inputString : the input to check for numbers
+     :return: True if the email contains a number
+     """
      return any(char.isdigit() for char in inputString)
  
-#Checkes email is of the right email extension (@exeter.ac.uk)
+
 def checkEmail(email):
+    """
+    :var EMAILEXTENSION the chosen email extension
+    :param email : the email to check for an extension
+    :return: True if the email has the right extension
+    """
     global EMAILEXTENSION
     if(email[-len(EMAILEXTENSION):]==EMAILEXTENSION):
         return True

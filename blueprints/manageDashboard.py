@@ -13,34 +13,33 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “AS IS” 
 
 Created on 19/02/2020
 @author: Billy Thornton
-@Last Edited: 26/02/2020
+@Last Edited: 12/03/2020
 @edited by: Billy Thornton
+Updated doc strings
 
-This file contains all the URL routing for the backend/front end, it takes urls
-and displays the required html files.
-It also processes data passed using post/get request.
+This file contains all the data regarding the dashboard funcctionality
 """
 from flask import render_template, redirect, url_for, request, send_file, session, jsonify, Blueprint, flash
-from utils.auth import *
-from utils.login import *
 from databaseAdapter import *
 from functools import wraps
 import os
 from werkzeug.utils import secure_filename
 
-from utils.utils import *
 ######################
 # GAMEKEEPER DASHBOARD#
 ######################
+#Sets up this page as a blueprint
 dashboard_page = Blueprint('dashboard_page',__name__,template_folder='templates')
+
 app = Flask(__name__)
 
-app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["PNG", "JPG", "JPEG"]
 
-
-# Used to restrict access to ceratin site areas
 def requires_access_level(access_level):
-    # Uses a decorator function
+    """
+    Decorator function use to lock parts of the site so that only staff memebers can gain access
+    :return: Allows access if staff, redirects to login if user not logged in
+    , redirects to game if user isstudent
+    """
     def decorator(f):
         @wraps(f)
         def decorated_function(*args, **kwargs):
@@ -58,49 +57,50 @@ def requires_access_level(access_level):
     return decorator
 
 
-# Loads the dashboard for game masters
 @dashboard_page.route('/dashboard')
 @requires_access_level('staff')
 def dashboard():
+    """
+    Loads the game keeper dashboard main page
+    :return: Game keeper dashboard html
+    """
     return render_template('Desktop/Game_Keeper_Page.html')
 
 
-# Loads the add location form page
+
 @dashboard_page.route('/Add_Location')
 @requires_access_level('staff')
 def addLocation():
+    """
+    Serves the addlocation screen
+    :return: Add location html
+    """
     return render_template('Desktop/add_location_page.html')
-
-
-def allowedImage(filename):
-    if not "." in filename:
-        return False
-
-    extension = filename.rsplit(".", 1)[1]
-    if extension.upper() in app.config["ALLOWED_IMAGE_EXTENSIONS"]:
-        return True
-    else:
-        return False
 
 
 @dashboard_page.route('/Add_Location_Submit', methods=['POST'])
 @requires_access_level('staff')
 def addLocationSubmit():
+    """
+    Add a new location to the game
+    :return: redirect to dashboard main screen with flash message
+    """
+    #Get form entry
     location = request.form.get('location')
     clue = request.form.get('clue')
-
     photo = request.files['location_photo']
 
+    #Check if image has a file name
     if photo.filename == "":
-        print("Image must have a filename")
+        flash("Image must have a filename")
         return redirect(url_for('dashboard_page.dashboard'))
-
+    #Check file is an image extension
     if not allowedImage(photo.filename):
-        print("Image extension is not allowed")
+        flash("Image extension is not allowed")
         return redirect(url_for('dashboard_page.dashboard'))
+    #Save the image to the server and stor the name in the DB
     else:
         filename = secure_filename(photo.filename)
-
         photo.save(os.path.join("static/images", photo.filename))
 
     # No checks
@@ -113,6 +113,10 @@ def addLocationSubmit():
 @dashboard_page.route('/Add_Question')
 @requires_access_level('staff')
 def addQuestion():
+    """
+    Serves the add location screen
+    :return: add location html
+    """
     gameLocations = getLocations()
     return render_template('Desktop/Add_Question_Page.html', locations=gameLocations)
 
@@ -120,6 +124,10 @@ def addQuestion():
 @dashboard_page.route('/Add_Question_Submit', methods=['POST'])
 @requires_access_level('staff')
 def addQuestionSubmit():
+    """
+    Adds new question to the Db
+    :return: the dashboard_page
+    """
     location = request.form.get('location')
     question = request.form.get('question')
     answer_a = request.form.get('answer_a')
@@ -137,6 +145,11 @@ def addQuestionSubmit():
 @dashboard_page.route('/Delete_Location', methods=['POST'])
 @requires_access_level('staff')
 def deleteLocation():
+    """
+    Delete a location from the database
+    :return: dashboard page
+    """
+
     name = request.form.get('locations')
     removeLocation(name)
     locationNames = []
@@ -148,10 +161,14 @@ def deleteLocation():
     return redirect(url_for('dashboard_page.dashboard'))
 
 
-# Loads the add clues and questions dashboard tool
+
 @dashboard_page.route('/Manage_Locations_Page')
 @requires_access_level('staff')
 def manageLocations():
+    """
+    Loads the manage location page with al the locations
+    :return: object
+    """
     # Creates a list of locations from the db
     locations = getLocations()
     locationNames = []
@@ -165,7 +182,10 @@ def manageLocations():
 @dashboard_page.route('/Manage_Groups_Page')
 @requires_access_level('staff')
 def manageGroups():
-
+    """
+    Show the manage groups page displaying all the groups teams and students
+    :return: the manage groups template
+    """
     tutors = getTutors()
     teams = getTeams()
     students = getStudents()
@@ -173,31 +193,43 @@ def manageGroups():
     return render_template('Desktop/Manage_Groups_Page.html', tutors=tutors, teams=teams, students=students)
 
 
-# Sets a new selected team leader
+
 @dashboard_page.route('/assignTeamLeader', methods=['POST'])
 @requires_access_level('staff')
 def assignUpdateTeamLeader():
+    """
+    Assign a new team leader to a team
+    :return: Returns the dashboard with a confimartion message
+    """
     teamID = request.form['team']
     studentID = request.form.get('student')
     name = getStudentName(studentID)[0]['NAME']
-    print("STUDENT ID",studentID)
+
     team = getTeamFromStudentID(studentID)[0]['TEAM_NAME']
+    #Set the new team leader
     updateTeamLeader(studentID, teamID)
     flash(name+' has been assigned as the team leader for team: '+team)
     return redirect(url_for('dashboard_page.dashboard'))
 
 
-# Loads the gamekeepers dashboard tool
+
 @dashboard_page.route('/Leaderboard_Page')
 @requires_access_level('staff')
 def leaderboard():
+    """
+    Load the leaderboard
+    :return: leaderboard html
+    """
     routes = getRoutes()
     return render_template('Desktop/Leaderboard_Page.html', routes=routes)
 
-# Dynamically loads the leaderboard
 @dashboard_page.route('/Show_Leader_Board', methods=['POST'])
 @requires_access_level('staff')
 def process():
+    """
+    Filter the leaderboard based on route selected
+    :return: json object containg team scores for given route
+    """
     routeID = request.form['routeID']
     teams = getTeamScoresFromRouteID(routeID)
 
@@ -205,11 +237,14 @@ def process():
 
 
 
-# Loads the gamekeepers dashboard tool
+
 @dashboard_page.route('/Manage_Routes_Page')
 @requires_access_level('staff')
 def manageRoutes():
-    print("ENTERED MANAGE ROUTES PAGE\n")
+    """
+    Load the manage routes page giveing access to all the route data
+    :return: the manageroutes.html
+    """
     locationData = getLocations()
     locations = []
     for location in locationData :
@@ -227,8 +262,14 @@ def manageRoutes():
 @dashboard_page.route('/Add_Route_Submit', methods=['POST'])
 @requires_access_level('staff')
 def addRouteSubmit():
+    """
+    Very basic implementation of the add route function
+    Adds a route (location,question,order) to the dabase
+    :return: object
+    """
+    #TODO completely redo this function
     form = request.form
-    print(form.keys())
+
     routeName = request.form.get('create_route_input')
     location1 = request.form.get('location_1')
     question1 = request.form.get('question_1')
@@ -251,13 +292,10 @@ def addRouteSubmit():
     location10 = request.form.get('location_10')
     question10 = request.form.get('question_10')
 
-    print("ENTERED SUBMIT ROUTE")
-    print("QUESTION 1", question1)
-    print("LOCATION 1", location1)
-    print(getLocationID(location1), "\n", getQuestionID(question1))
+
 
     if location1 == "n/a":
-        print("Error Check")
+        flash("You arent adding locations")
     elif location2 == "n/a":
         insertRoute(routeName)
         routeID = getRouteIDFromRouteName(routeName)[0]['ROUTE_ID']
@@ -268,7 +306,7 @@ def addRouteSubmit():
         insertRouteSequence(routeID, getLocationID(location1)['LOCATION_ID'], 0, getQuestionID(question1)['QUESTION_ID'])
         insertRouteSequence(routeID, getLocationID(location2)['LOCATION_ID'], 1, getQuestionID(question2)['QUESTION_ID'])
     elif location4 == "n/a":
-        print("ADDING THREE LOCATIONS")
+
         insertRoute(routeName)
         routeID = getRouteIDFromRouteName(routeName)['ROUTE_ID']
         insertRouteSequence(routeID, getLocationID(location1)['LOCATION_ID'], 0, getQuestionID(question1)['QUESTION_ID'])
@@ -352,7 +390,7 @@ def addRouteSubmit():
 @dashboard_page.route('/Display_Questions', methods=['POST'])
 @requires_access_level('staff')
 def displayQuestions():
-    print("ENTERED DISPLAY QUESTIONS\n")
+
     locationName = request.form['locationName']
     locationID = getLocationID(locationName)
     questionData = getQuestionLocationID(locationID[0]['LOCATION_ID'])
@@ -364,24 +402,30 @@ def displayQuestions():
         separator = "','"
         json = "{'questions' : ['" + separator.join(questions) + "'], LOCATION_ID : }"
 
-        print("THESE ARE THE QUESTIONS FOR THE CHOSEN LOCATION", questions)
-
         return jsonify(questions)
 
-# Loads the gamekeepers dashboard tool
+
 @dashboard_page.route('/Assign_Routes_Page')
 @requires_access_level('staff')
 def assignRoutes():
+    """
+    Loadds the asign routes page
+    :return:
+    """
     gameTeams = getTeams()
     gameRoutes = getRoutes()
 
     return render_template('Desktop/Assign_Routes_Page.html', teams=gameTeams, routes=gameRoutes)
 
 
-# Set a team to a selected route
+
 @dashboard_page.route('/assignRoute', methods=['POST'])
 @requires_access_level('staff')
 def assignUpdateRoute():
+    """
+    Set the route for a given team to a given route
+    :return: change the databse
+    """
     teamNameID = request.form['team']
     routeNameID = request.form.get('route')
     updateTeamRoute(routeNameID, 0, teamNameID)
@@ -393,6 +437,7 @@ def assignUpdateRoute():
 @dashboard_page.route('/FAQGameKeeper')
 @requires_access_level('staff')
 def loadFAQGameKeeperPage():
+
 	return render_template('Desktop/FAQ_Staff_page.html')
 
 
@@ -401,3 +446,18 @@ def loadFAQGameKeeperPage():
 @requires_access_level('staff')
 def loadLanguagePage():
     return render_template('Desktop/Change_Lang_Page.html')
+
+
+def allowedImage(filename):
+    """
+    Checks if the file uploaded is of the correct extension
+    :return: True if file is of correct extension
+    """
+    if not "." in filename:
+        return False
+
+    extension = filename.rsplit(".", 1)[1]
+    if extension.upper() in app.config["ALLOWED_IMAGE_EXTENSIONS"]:
+        return True
+    else:
+        return False
