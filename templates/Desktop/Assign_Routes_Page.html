@@ -1,7 +1,7 @@
 <!--
 Created on 19/02/2020
 @author: Jamie Butler
-@Last Edited: 26/02/2020
+@Last Edited: 12/03/2020
 @edited by: Teo Reed
 
 Copyright (c) “2020, by Group K
@@ -23,8 +23,7 @@ INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT
 OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 This file contains html is dynamically loaded into the content div from Game_Keeper_Page.html when assign routes button is
-clicked from Game_Keeper_Page.html. It allows a gamekeeper to assign routes for certain groups that. This is done by
-using select boxes which are obtained from the database..
+clicked from Game_Keeper_Page.html. It allows a gamekeeper to assign routes to team playing the game.
 -->
 <!DOCTYPE html>
 <html>
@@ -33,7 +32,7 @@ using select boxes which are obtained from the database..
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="{{url_for('static',filename='styles/Assign_Routes_Style.css')}}" rel='stylesheet' type='text/css'/>
-<title>Add Location Page</title>
+<title>Assign Routes Page</title>
 
 </head>
 
@@ -80,6 +79,7 @@ using select boxes which are obtained from the database..
 					</tr>
 				</thead>
 
+				<!-- Flask loop to show list of teams and their route -->
 				{% for team in teams %}
 				{% for route in routes %}
 				{% if team['CURRENT_ROUTE_ID'] == route['ROUTE_ID'] %}
@@ -93,5 +93,6 @@ using select boxes which are obtained from the database..
 
 			</table>
 	</div>
+
 </body>
 </html>

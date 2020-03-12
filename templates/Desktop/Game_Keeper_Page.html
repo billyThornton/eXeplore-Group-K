@@ -1,7 +1,7 @@
 <!--
 Created on 26/02/2020
 @author: Ben Trotter
-@Last Edited: 26/02/2020
+@Last Edited: 13/02/2020
 @edited by: Jamie Butler
 
 Copyright (c) “2020, by Group K
@@ -28,30 +28,29 @@ Subsequent tabs from the side bar have html dynamically loaded into the content 
 -->
 <!DOCTYPE html>
 <html lang="en-US">
-  <head>
-    <meta name="viewport" content="width=device-width, user-scalable=no"/>
-     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-     <link rel="icon" type="image/png" src="{{url_for('static',filename='images/logo.png')}}">
-    <link href="{{url_for('static',filename='styles/Game_Keeper_Style.css')}}" rel='stylesheet' type='text/css'/>
-    <script src="{{url_for('static',filename='js/JSFunctions.js')}}"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<head>
+<meta name="viewport" content="width=device-width, user-scalable=no"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="icon" type="image/png" src="{{url_for('static',filename='images/logo.png')}}">
+<link href="{{url_for('static',filename='styles/Game_Keeper_Style.css')}}" rel='stylesheet' type='text/css'/>
+<script src="{{url_for('static',filename='js/JSFunctions.js')}}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-    <!-- JavaScript function to load current screen -->
-    <script>
-      $(function(){
+<!-- JavaScript function to load current screen -->
+<script>
+    $(function(){
         var currentScreen = localStorage.currentScreen;
         if(currentScreen != "default")
         {
-          loadDoc(currentScreen);
+            loadDoc(currentScreen);
         }
-      });
-    </script>
+        });
+</script>
 
-    <title>Gamekeeper Dashboard</title>
-  </head>
+<title>Gamekeeper Dashboard</title>
+</head>
 
-  <body>
+<body>
 
     <!-- Pop up sidebar -->
     <div id="mySidebar" class="sidebar">
@@ -109,7 +108,7 @@ Subsequent tabs from the side bar have html dynamically loaded into the content 
     <!-- Content -->
     <div id="content">
       <div id="text_content">
-		    <h1>Welcome Game Keeper!</h1>
+	    <h1>Welcome Game Keeper!</h1>
           <p>
            Please see on the left of your screen the features you've been given.
             Use these pages to configure, update and change the game.
@@ -120,8 +119,9 @@ Subsequent tabs from the side bar have html dynamically loaded into the content 
             Groups and Routes.</li>
             <li>View the leaderboard</li>
             <li>Assign Groups to Routes</li>
-		      </ul>
+	      </ul>
       </div>
     </div>
-  </body>
+
+</body>
 <html>

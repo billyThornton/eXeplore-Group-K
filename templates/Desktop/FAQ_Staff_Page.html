@@ -1,7 +1,7 @@
 <!--
 Created on 19/02/2020
 @author: Jamie Butler
-@Last Edited: 26/02/2020
+@Last Edited: 12/03/2020
 @edited by: Teo Reed
 
 Copyright (c) “2020, by Group K
@@ -22,8 +22,8 @@ DAMGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVIC
 INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INLUDING NEGLIGENCE
 OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-This file contains html is dynamically loaded into the content div from Game_Keeper_Page.html when manage groups button is
-clicked from Game_Keeper_Page.html. It allows a gamekeeper to configure routes and store them in the database.
+This file contains html is dynamically loaded into the content div from Game_Keeper_Page.html. Gives the game keeper access
+to a list of FAQs to help them navigate the dashboard.
 -->
 <!DOCTYPE html>
 <html>
@@ -35,7 +35,6 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to configure routes a
 <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 <link href="{{url_for('static',filename='styles/FAQ_Style.css')}}" rel='stylesheet' type='text/css'/>
 <title>Game Keeper FAQ</title>
-
 </head>
 
 <body>
@@ -44,14 +43,9 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to configure routes a
         <h1>Game Keeper FAQs</h1>
         <div id="question_list">
 
-
-
-
-
-
             <p><b>Q:</b> What do I do if I get lost/get separated from my team?n</p>
             <p><b>A:</b>  Use the map and game progress to find where you next location should be. Also, don’t be afraid to ask others around you for guidance.</p>
-<p><b>.</b></p>
+            <p><b>.</b></p>
 
             <p><b>Q:</b> How long should the game take for a team to complete?</p>
             <p><b>A:</b> The game should take roughly half an hour to complete, at a good pace.</p>
@@ -61,8 +55,8 @@ clicked from Game_Keeper_Page.html. It allows a gamekeeper to configure routes a
             <p><b>A:</b> The purpose of the game is to get freshers familiar with the university campus and locations that they will most likely frequent over their course.</p>
             <p><b>.</b></p>
 
-
           </div>
     </div>
+
 </body>
 </html>
