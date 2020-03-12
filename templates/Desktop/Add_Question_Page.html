@@ -1,7 +1,7 @@
 <!--
 Created on 19/02/2020
 @author: Ben Trotter
-@Last Edited: 26/02/2020
+@Last Edited: 12/03/2020
 @edited by: Jamie Butler
 
 Copyright (c) “2020, by Group K
@@ -22,9 +22,8 @@ DAMGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVIC
 INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INLUDING NEGLIGENCE
 OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-This file contains html is dynamically loaded into the content div from Game_Keeper_Page.html when edit location button is
-clicked from Manage_Locations_Page.html. It allows a gamekeeper to edit existing locations. Changes are then reflected in the
-database. This is done by using a form that the game keeper is to fill in.
+This file contains html is dynamically loaded into the content div from Game_Keeper_Page.html. Allows a game keeper to create
+custom questions for the game.
 -->
 <!DOCTYPE html>
 <html>
@@ -32,16 +31,18 @@ database. This is done by using a form that the game keeper is to fill in.
 <meta charset="utf-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="../JSFunctions.js"></script>
+<script src="{{url_for('static',filename='js/JSFunctions.js')}}"></script>
 <link href="{{url_for('static',filename='styles/Location_Style.css')}}" rel='stylesheet' type='text/css'/>
-<title>Add Clue Page</title>
-
+<title>Add Question Page</title>
 </head>
+
 <body>
 	<div id="edit_location_page">
 
-		<!-- Edit location details form -->
+		<!-- Add question details form -->
 		<form id="form" action="Add_Question_Submit" method="POST">
+
+			<!-- Flask alert message to indicate when question has been created -->
 	        {% with messages = get_flashed_messages() %}
 	          {% if messages %}
 	            {% for message in messages %}
@@ -49,14 +50,18 @@ database. This is done by using a form that the game keeper is to fill in.
 	            {% endfor %}
 	          {% endif %}
 	        {% endwith %}
+
 			<div class="location_inputs" id="add_location_container">
 
 				<div class="location_inputs">
 					<label id="input_label">Location for question:</label>
 					<select name="location">
+
+						<!-- Flask loop to show dropdown of locations -->
 						{% for location in locations %}
 	  					<option value="{{location['LOCATION_ID']}}">{{location["LOCATION_NAME"]}}</option>
 	  					{% endfor %}
+
 					</select>
 				</div>
 
@@ -106,5 +111,6 @@ database. This is done by using a form that the game keeper is to fill in.
 		</form>
 
 	</div>
+
 </body>
 </html>

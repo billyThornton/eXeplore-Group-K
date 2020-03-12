@@ -1,8 +1,8 @@
 /**
  * Created on 19/02/2020
  * @author: Ben Trotter
- * @Last Edited: 26/02/2020
- * @edited by: Billy Thornton
+ * @Last Edited: 11/03/2020
+ * @edited by: Ben Trotter
  *
  * Copyright (c) “2020, by Group K
  * Contributors: Jamie Butler, Rahul Pankhania, Teo Reed, Billy Thornton, Ben Trotter,
@@ -31,6 +31,7 @@
  * the application.
  */
 
+// Global for reloading screens after form submission
  var currentScreen = "default";
 
 /**
@@ -50,6 +51,11 @@ function loadDoc(file)
   });
 }
 
+/**
+ * @brief Reverts the page back to the dashboard page and sets the global variable
+ * to default.
+ *
+ */
 function clearRedirect()
 {
   localStorage.currentScreen = "default";
@@ -276,32 +282,35 @@ function validateCreate()
 }
 
 /**
-* Checks to see if there isn't an uppercase or lowercase letter in a string.
-*
-* @param {string} Str String to be checked.
-*
-* @return {boolean} true if there is no upper or lower case letter in the string.
-*/
+ * Checks to see if there isn't an uppercase or lowercase letter in a string.
+ *
+ * @param {string} Str String to be checked.
+ *
+ * @return {boolean} true if there is no upper or lower case letter in the string.
+ */
 function noMixedCase(str)
 {
   return !(/[a-z]/.test(str)) || !(/[A-Z]/.test(str));
 }
 
 /**
-* Checks to see if there isn't a number in a string.
-*
-* @param {string} Str String to be checked.
-*
-* @return {boolean} true if there is no number in the string.
-*/
+ * Checks to see if there isn't a number in a string.
+ *
+ * @param {string} Str String to be checked.
+ *
+ * @return {boolean} true if there is no number in the string.
+ */
 function noNumber(str)
 {
   return !(/[0-9]/.test(str));
 }
 
 /**
-* Filters list of locations live for search bar
-*/
+ * Filters list of locations live for search bar
+ * 
+ * @param {int} inputID the search box tag id.
+ * @param {int} ulID the id of the unsorted list.
+ */
 function searchList(inputID, ulID) {
     var input, filter, ul, li, i, txtValue;
     input = document.getElementById(inputID);
@@ -350,3 +359,70 @@ function getDropDown(locationName, dropDownID) {
         });
     });
 }
+
+
+function showLeaderBoard(routeID) {
+    $(document).ready(function() {
+        $.ajax({
+            url : '/Show_Leader_Board',
+            data : {
+                routeID : routeID
+            },
+            type : 'POST'
+        })
+        .done(function(data) {
+            // Create HTML table
+            var table = document.createElement("TABLE");
+            table.border = "1";
+            // Get the count of columns
+            var columnCount  = 3;
+            // Add the header row
+            var row = table.insertRow(-1);
+            var headerCell = document.createElement("TH");
+            var headerCell1 = document.createElement("TH");
+            var headerCell2 = document.createElement("TH");
+
+            headerCell.innerHTML = "Position";
+            row.appendChild(headerCell);
+
+            headerCell1.innerHTML = "Team Name";
+            row.appendChild(headerCell1);
+
+            headerCell2.innerHTML = "Score";
+            row.appendChild(headerCell2);
+
+            // Add the data rows
+            // Number of rows
+            for (var i = 1; i < data.length; i++) {
+                row = table.insertRow(-1);
+                // Number of columns
+                for (var j = 0; j < columnCount; j++) {
+                    if(j == 0) {
+                        var cell = row.insertCell(-1);
+                        cell.innerHTML = i;
+                    } else if (j > 0) {
+                        var cell = row.insertCell(-1);
+                        cell.innerHTML = Object.values(data[i])[j-1];
+                    }
+                }
+            }
+            var dvTable = document.getElementById("groups_list_container");
+            dvTable.innerHTML = "";
+            dvTable.appendChild(table);
+        });
+    });
+}
+
+
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+}
+
+
+$(document).ready(function(){
+    $('input[type="file"]').change(function(e){
+        var fileName = e.target.files[0].name;
+        $('p[id="filename"]').text('The file ' + fileName +  ' has been selected.');
+    });
+});
+

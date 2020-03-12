@@ -1,7 +1,7 @@
 <!--
 Created on 19/02/2020
 @author: Ben Trotter
-@Last Edited: 26/02/2020
+@Last Edited: 12/03/2020
 @edited by: Teo Reed
 
 Copyright (c) “2020, by Group K
@@ -34,25 +34,17 @@ This is done by using a form that the game keeper is to fill in.
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="{{url_for('static',filename='styles/Location_Style.css')}}" rel='stylesheet' type='text/css'/>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<script>
-    $(document).ready(function(){
-        $('input[type="file"]').change(function(e){
-            var fileName = e.target.files[0].name;
-            $('p[id="filename"]').text('The file ' + fileName +  ' has been selected.');
-        });
-    });
-</script>
-
-
+<script src="{{url_for('static',filename='js/JSFunctions.js')}}"></script>
 <title>Add Location Page</title>
 </head>
-
 
 <body>
 	<div id="add_location_page">
 
 		<!-- Add location details form -->
 		<form id="form" action="Add_Location_Submit" method="POST" enctype="multipart/form-data">
+
+            <!-- Flask alert message to indicate when location has been made -->
 	        {% with messages = get_flashed_messages() %}
 	          {% if messages %}
 	            {% for message in messages %}
@@ -60,6 +52,7 @@ This is done by using a form that the game keeper is to fill in.
 	            {% endfor %}
 	          {% endif %}
 	        {% endwith %}
+
 			<div class="location_inputs" id="add_location_container">
 				<div class="location_inputs">
 					<label id="input_label">Location Name:</label>
@@ -79,14 +72,9 @@ This is done by using a form that the game keeper is to fill in.
 
 			</div>
 
-		<div id="transparent_button_container">
-			<button type="submit" id="save_transparent_button" name="add_location_button">Add Location</button>
-			<button type="button" href="#" id="transparent_button" onclick="loadDoc('/Manage_Locations_Page')" name="goback_button">Go Back</button>
-		</div>
-
         </form>
 
 	</div>
-</body>
 
+</body>
 </html>

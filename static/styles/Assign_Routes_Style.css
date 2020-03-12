@@ -1,8 +1,8 @@
 /*
 Created on 07/03/2020
 @author: Ben Trotter
-@Last Edited: 07/03/2020
-@edited by: Ben Trotter
+@Last Edited: 11/03/2020
+@edited by: Teo Reed
 
 Copyright (c) “2020, by Group K
 Contributors: Jamie Butler, Rahul Pankhania, Teo Reed, Billy Thornton, Ben Trotter, Kristian Woolhouse
@@ -24,7 +24,7 @@ HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABI
 NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 
-Provides style for the Assign_Routes_Page.html. Provides style for buttons and select forms. Also
+Provides style for the Assign_Routes_Page.html, aswell as the Manage_Groups_Page.html . Provides style for buttons and select forms. Also
 provides the style for the groups-routes table.
 */
 body {
@@ -40,7 +40,7 @@ h2 {
 	margin-left: 50px;
 }
 
-/* Dashboard Leaderboard styling */
+
 .table{
 	color: black;
 	background-color: white;
@@ -61,6 +61,7 @@ tr {
 	background-color: #afe3a3;
 }
 
+/* table styling to display routes */
 .table tbody{
 	display:block;
 	overflow: auto;
@@ -87,16 +88,6 @@ label {
 #student_label {
 	margin-left: 5px;
 }
-
-/* input[type="radio"] {
-	display: none;
-} */
-
-
-
-
-
-
 
 
 select {
@@ -125,6 +116,8 @@ select {
 	border-radius: 50px;
 }
 
+/* List styling to display teams. */
+
 ul {
 	margin-left: auto;
 	margin-right: auto;
@@ -138,37 +131,26 @@ ul {
 	overflow-y: scroll;
 	padding-left: 0px;
 	border: solid black 1px;
-
-
 }
-
 li {
 	height: 30px;
 	padding-left: 10px;
 	padding-top: 5px;
 }
-
 li:hover {
 	background-color: #b4d9bd;
 
 }
-
-
-
 label:hover {
 		cursor: pointer;
 }
 
-/* input[type="radio"] {
-	position: absolute;
-opacity: 0;
-cursor: pointer;
-} */
 
 #transparent_button:hover {
 	cursor: pointer;
 }
 
+/* Breakpoint in order to maintain a responsive design */
 @media screen and (max-width: 650px) {
 	#Groups {
 		width: 50%;

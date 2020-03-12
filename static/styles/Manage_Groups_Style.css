@@ -24,11 +24,10 @@ HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABI
 NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 
-Provides style for the Manage_Groups_Page.html. The stylesheet uses the scroll bar webkit in order to
+Provides style for the Manage_Routes_Page.html. The stylesheet uses the scroll bar webkit in order to
 present the scrollbar track and thumb in a way that doesn’t obstruct or disrupt the styling of the webpage.
 A near transparent track is used and a thumb in keeping to the general colour pallette is used. Provides
-style for buttons and input forms. The radio buttons used have been styled using a label that links to the
-radio button, this has allowed a much more customisable checkbox to be used.
+style for buttons and input forms.
 */
 
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
@@ -60,7 +59,7 @@ radio button, this has allowed a much more customisable checkbox to be used.
 }
 
 
-
+/* Table styles for larger screens */
 table {
 	margin-left: 10px;
 }
@@ -82,30 +81,12 @@ td {
 
 }
 
+
+/* rows of table excluding the table heads */
 .manage_route_td {
 	width: 50%;
 	padding-right: 5%;
 	padding-left: 5%;
-}
-
-#create_group_container {
-	height: 370px;
-	margin-bottom: 0px;
-}
-
-#delete_group_container {
-	height: 100px;
-	top: 0px;
-	margin-bottom: 20px;
-}
-
-#student_list_container {
-	height: 500px;
-	overflow-y: scroll;
-	scrollbar-color: black;
-	background-color: white;
-	border-radius: 10px;
-	color: #414141;
 }
 
 #group_list_container {
@@ -146,7 +127,7 @@ input[type=text] {
 	padding-right: 5px;
 	overflow: scroll;
 }
-
+/* Transparent Button Styles */
 #transparent_button:hover,#delete_group_button:hover{
 	cursor: pointer;
 }
@@ -163,12 +144,6 @@ input[type=text] {
 	border-radius: 50px;
 	margin-left: auto;
 }
-
-#button_container {
-	height: 100px;
-	padding-top: 10px;
-}
-
 #delete_transparent_button {
 	font-size: 20px;
 	color: #FF3B3B;
@@ -182,7 +157,17 @@ input[type=text] {
 	margin-left: auto;
 }
 
-#student_label, #group_label {
+
+
+
+#button_container {
+	height: 100px;
+	padding-top: 10px;
+}
+
+
+
+/* #student_label, #group_label {
 	font-size: 1rem;
 	font-weight: bold;
 	line-height: 1;
@@ -197,11 +182,13 @@ input[type=text] {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	transition: all 0.15s ease;
-}
+} */
+
 #mobile_header {
 	display: none;
 }
 
+/* Breakpoint that allows rows to stack ontop eachother so that it fits on smaller screens. It also hides one header and displays another. */
 @media screen and (max-width:830px) {
 	td {
 		display: block;
@@ -220,6 +207,7 @@ input[type=text] {
 	}
 }
 
+/*  Further resizing to accomodate a very small screen  */
 @media screen and (max-width:450px) {
 
 	.manage_route_td {
@@ -233,7 +221,4 @@ input[type=text] {
 		display: inline-block;
 		font-size: 13px;
 	}
-
-
-
 }

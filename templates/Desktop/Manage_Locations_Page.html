@@ -1,8 +1,8 @@
 <!--
 Created on 19/02/2020
 @author: Ben Trotter
-@Last Edited: 26/02/2020
-@edited by: Teo Reed
+@Last Edited: 12/03/2020
+@edited by: Teo Reed, Jamie Butler
 
 Copyright (c) “2020, by Group K
 Contributors: Jamie Butler, Rahul Pankhania, Teo Reed, Billy Thornton, Ben Trotter, Kristian Woolhouse
@@ -22,9 +22,9 @@ DAMGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVIC
 INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INLUDING NEGLIGENCE
 OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-This file contains the html that is dynamically loaded into the content div from Game_Keeper_Page.html when the manage locations
-sidebar tab is clicked. The html allows a game keeper to add, edit or delete a certain location on the treasure hunt. The page
-displays a table containing all of the locations that the game keeper can select.
+This file contains the html that is dynamically loaded into the content div from Game_Keeper_Page.html when the Add Locations/Questions
+sidebar tab is clicked. The page shows a game keeper the current locations in the game, along with a search bar to help find existing
+locations. As well as buttons to lead to the add locations and questions pages.
 -->
 <!DOCTYPE html>
 <html>
@@ -35,29 +35,30 @@ displays a table containing all of the locations that the game keeper can select
 <script src="{{url_for('static',filename='js/JSFunctions.js')}}"></script>
 <link href="{{url_for('static',filename='styles/Manage_Locations_Style.css')}}" rel='stylesheet' type='text/css'/>
 <title>Add Questions and Locations</title>
-
 </head>
 
 <body>
-    <form action="Delete_Location">
 
-		<h3>Locations:</h3>
-		<input type="text" id="location_search" onkeyup="searchList('location_search', 'location_list')" placeholder="Search locations..." title="Type in a location">
+	<h3>Add locations and Questions:</h3>
 
-		<div id="manage_location_page">
+    <!-- Search bar -->
+	<input type="text" id="location_search" onkeyup="searchList('location_search', 'location_list')" placeholder="Search locations..." title="Type in a location">
 
-			<ul id="location_list">
-				{% for location in locations %}
-				<li type="radio" id="location_element" name="locations">{{location}}</li>
-				{% endfor %}
-			</ul>
-		</div>
+	<div id="manage_location_page">
 
-	<div id="transparent_button_container">
-		<button type="button" href="#" id="transparent_button" onclick="loadDoc('/Add_Location')" name="new_location_button">Add Location</button>
-		<button type="button" href="#" id="transparent_button" onclick="loadDoc('/Add_Question')" name="edit_location_button">Add Question</button>
+		<ul id="location_list">
+            <!-- Flask loop to list current locations -->
+			{% for location in locations %}
+			<li type="radio" id="location_element" name="locations">{{location}}</li>
+			{% endfor %}
+		</ul>
+
 	</div>
-    </form>
+
+    <div id="transparent_button_container">
+    	<button type="button" href="#" id="transparent_button" onclick="loadDoc('/Add_Location')" name="new_location_button">Add Location</button>
+    	<button type="button" href="#" id="transparent_button" onclick="loadDoc('/Add_Question')" name="edit_location_button">Add Question</button>
+    </div>
 
 </body>
 </html>
