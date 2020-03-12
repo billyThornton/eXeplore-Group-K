@@ -52,7 +52,7 @@ clicked from the side bar. It allows a gamekeeper to view the current leaderboar
 				{% for route in routes %}
 							<Li>
 						{% if loop.index == 1 %}
-								<input type="radio" class="route_radio_button" id="{{route['ROUTE_ID']}}" name="route" value="{{route['ROUTE_ID']}}" onclick="showLeaderBoard({{route['ROUTE_ID']}})" selected>
+								<input type="radio" class="route_radio_button" id="{{route['ROUTE_ID']}}" name="route" value="{{route['ROUTE_ID']}}" onclick="showLeaderBoard({{route['ROUTE_ID']}})" checked>
 								<label for="{{route['ROUTE_ID']}}">{{route['ROUTE_NAME']}}</label><br/>
 						{% else %}
 								<input type="radio" class="route_radio_button" id="{{route['ROUTE_ID']}}" name="route" value="{{route['ROUTE_ID']}}" onclick="showLeaderBoard({{route['ROUTE_ID']}})">
