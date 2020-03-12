@@ -35,8 +35,9 @@ body {
 	background-size: cover;
 }
 
-h3 {
+h2 {
 	margin-left: 50px;
+	text-align: left;
 }
 
 /* Dashboard Leaderboard styling */
