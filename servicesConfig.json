@@ -1,0 +1,30 @@
+{
+  "dashDB For Transactions": [{
+    "credentials": {
+      "db": "BLUDB",
+      "hostname": "dashdb-txn-sbox-yp-lon02-02.services.eu-gb.bluemix.net",
+      "password": "70852r6bqw-s8dgn",
+      "port": 50000,
+      "username": "xkm27482"
+    }
+  }],
+  "Email settings": [{
+  	"credentials": {
+  		"extension": "@exeter.ac.uk",
+  		"security_password_salt": "BFR241199",
+  		"mail_server": "smtp.googlemail.com",
+  		"mail_port": 465,
+  		"mail_use_tls": false,
+  		"mail_use_ssl": true,
+  		"mail_username": "exeploregeneral",
+  		"mail_password": "24BBT11TR99",
+  		"mail_default_sender": "exeploregeneral@example.com"
+  		}
+  	}],
+ 	"Security": [{
+  	 "credentials": {
+  		"pepper": "B24B11T99",
+  		"secret_key": "eXeplore_241199_brjbtk"
+  	}
+  }]
+}
