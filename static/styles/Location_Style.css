@@ -1,7 +1,7 @@
 /*
 Created on 19/02/2020
 @author: Teo Reed
-@Last Edited: 26/02/2020
+@Last Edited: 11/03/2020
 @edited by: Teo Reed
 
 Copyright (c) “2020, by Group K
@@ -51,14 +51,6 @@ input[type=radio]{
 	display: none;
 }
 
-.active-label {
-	color: #414141;
-}
-
-.active-label:before {
-	background-color: #414141;
-	border-color: green;
- }
 
 form {
 	width: 100%;
@@ -70,70 +62,6 @@ form {
 	text-align: center;
 }
 
-/* How it should look when checked */
-input[type="radio"]:checked + #location_label:before {
-	border-color: white;
-	border: none;
-	background: #31750E;
-}
-
-/* How it should look when disabled */
-input[type="radio"]:disabled + #location_label {
-	background: #efefef;
-	color: rgba(0, 0, 0, 0.5);
-	cursor: not-allowed;
-}
-
-input[type="radio"]:disabled + #location_label:hover {
-	border-color: rgba(0, 0, 0, 0.1);
-}
-
-input[type="radio"]:disabled + #location_label:before {
-	border-color: white;
-	background: white;
-}
-
-/* New radio styling */
-#location_label {
-	font-size: 1rem;
-	font-weight: bold;
-	line-height: 1;
-	cursor: pointer;
-	display: block;
-	color: white;
-	font-family: sans-serif;
-	padding: 1rem 1rem 1rem 3rem;
-	position: relative;
-	border-top: 1px solid rgba(black, 0.1);
-	background: #414141;
-	whitespace: no-wrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-
-#location_label:first-of-type {
-	border: 0;
-}
-
-#location_label:before {
-	content: "";
-	position: absolute;
-	left: 1rem;
-	top: 1rem;
-	width: 16px;
-	height: 16px;
-	border-radius: 50%;
-	border: 0.2rem solid #ccc;
-}
-
-.active-label, #location_label:focus, #location_label:hover, #location_label:active, #location_label:checked + #location_label {
-    color: #31750E;
-}
-
-.active-label:before, #location_label:focus:before, #location_label:hover:before, #location_label:active:before, #location_label:checked + #location_label:before {
-    background: #414141;
-    border-color: #31750E;
-}
 
 #manage_location_page{
     width: 100%;
@@ -211,6 +139,7 @@ input[type=text] {
 	display: block;
 }
 
+/* input for correct answer */
 #input_label {
 	padding: 7px;
 	padding-top: 5px;
@@ -221,6 +150,8 @@ input[type=text] {
 #not_text_input{
 	margin-left: 5px;
 }
+
+/* ---------transparen button styles----------- */
 
 #transparent_button:hover, #save_transparent_button:hover, #delete_transparent_button:hover {
 	cursor: pointer;
@@ -285,6 +216,8 @@ input[type=text] {
 	display: none;
 }
 
+
+/* Breakpoint to adjust style properties for smaller screen. changes main widths and font size. */
 @media screen and (max-width: 600px) {
 	input[type=text] {
 		width: 90px;

@@ -2,7 +2,7 @@
 Created on 19/02/2020
 @author: Ben Trotter
 @Last Edited: 26/02/2020
-@edited by: Ben Trotter
+@edited by: Teo Reed
 
 Copyright (c) “2020, by Group K
 Contributors: Jamie Butler, Rahul Pankhania, Teo Reed, Billy Thornton, Ben Trotter, Kristian Woolhouse
@@ -26,10 +26,8 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 This file contains CSS that adds style to the gamekeeper dashboard. It provides style for the left menu
 (sidebar), The content div, the pop-up sidebar and the topbar. Each logo and image is individually styled
-too.
+too. It also includes breakpoints to maintain a responsive design.
 */
-
-
 html {
 	font-family: 'Roboto', sans-serif
 }
@@ -197,6 +195,7 @@ h1 {
 
 }
 
+/* Breakpoints that reformat the sidebar, content and top bar image sizing. */
 @media screen and (max-width: 850px) {
 	#sidebar {width: 20%}
 	#content {width: 80%}
